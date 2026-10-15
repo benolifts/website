@@ -1,0 +1,1972 @@
+<html><head><title>BENO LOGIC GATES</title><script type="text/javascript">
+  ;
+  ;
+
+window.onerror=function(msg, url, linenumber){
+alert("error")
+alert(msg)
+alert(url)
+alert(linenumber)
+}
+gfdgfdgfd = ""
+cccc = 0;numberinuse = 0;speednumber = 4;mrmode = 0;mrgate = 0;mrin = 0;mrout = 0;mrp1 = 0;mrp2 = 0;mrp3 = 0;mrp4 = 0;fps = 100;x = 10;y = 10;
+wires = 0
+gates = 0
+good_logic = true
+wowx = 0
+wowy = 0
+mrdrag = 0
+xwow = 150
+ywow = 100
+rhabx = 0
+rhaby = 0
+mrrotate = 0
+gx = -1000
+gy = -1000
+key_tf = false
+key_num = 0
+key_count = 0
+key_num2 = 0
+asdpoi = "100000000000000"
+asdpoia = "100000000000000"
+
+
+doafunction = 0
+mrcolor = "rgb(255,255,255)"
+function moo1(){
+setTimeout("moo2()",4);
+}
+function moo2(){
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+imgpoo = new Image()
+imgpoo.onload = function(){  
+setTimeout("moo3()",4);
+}  
+imgpoo.src = 'a.png'
+}
+function moo3(){
+duhfsdupgh()
+document.frm.aaqq.disabled = false;
+document.frm.aaqqa.disabled = false;
+document.frm.b2.disabled = false;
+document.frm.b3.disabled = false;
+document.frm.b4.disabled = false;
+document.frm.b5.disabled = false;
+document.frm.b6.disabled = false;
+document.frm.b7.disabled = false;
+mrmode = 6
+numbertoday = 0
+nowtime = (((new Date()).getTime()) - 100)
+lasttime = (nowtime - 10)
+lasttimea = nowtime
+begintime = nowtime
+time = 100
+centercenter()
+cccc = 1
+lets_go()
+}
+
+function duhfsdupgh(){
+xwow = ((window.innerWidth) - 170)
+ywow = window.innerHeight
+canvas.width = xwow
+canvas.height = ywow
+if ((mrmode != 6) && (mrmode != 0)){
+go_draw()
+}}
+
+function centercenter(){
+if (gates > 0){
+rhab = 1
+rhabx = gate1x
+rhaby = gate1y
+while (rhab <= gates){
+rhabxx = eval("gate" + rhab + "x")
+rhabyy = eval("gate" + rhab + "y")
+if (rhabxx < rhabx){
+rhabx = rhabxx
+}
+if (rhabyy < rhaby){
+rhaby = rhabyy
+}
+rhab++
+}
+wowx = ((0 - rhabx) + 64)
+wowy = ((0 - rhaby) + 64)
+}else{
+wowx = 0
+wowy = 0
+}}
+//////////////////////////////////////////////////////////////////////////
+function mouseup(ev) {
+if (mrmode != 0){
+if (mrdrag == 2){
+if ((gx > (x - 10)) && (gx < (x + 10)) && (gy > (y - 10)) && (gy < (y + 10))){
+gx = -1000
+gy = -1000
+
+
+if (doafunction == 1){
+
+
+q = 1
+while (q <= gates){
+q1 = eval("gate" + q + "x")
+q2 = eval("gate" + q + "y")
+if ((x > (q1 + 15)) && (x < (q1 + 65)) && (y > (q2 + 15)) && (y < (q2 + 65))){
+q3 = (q + 1)
+while (q3 <= gates){
+mrin = eval("gate" + q3 + "ins")
+mrout = eval("gate" + q3 + "outs")
+go_gatee()
+q3++
+}
+gates--
+}
+q++
+}
+q = 1
+while (q <= wires){
+q1 = eval("wire" + q + "x")
+q2 = eval("wire" + q + "y")
+q11 = eval("wire" + q + "x2")
+q22 = eval("wire" + q + "y2")
+if ((((x > (q1 - 4)) && (x < (q11 + 4))) || ((x < (q1 + 4)) && (x > (q11 - 4)))) && (((y > (q2 - 4)) && (y < (q22 + 4))) || ((y < (q2 + 4)) && (y > (q22 - 4))))){
+q3 = (q + 1)
+while (q3 <= wires){
+window["wire" + (q3 - 1) + "x"] = eval("wire" + q3 + "x")
+window["wire" + (q3 - 1) + "y"] = eval("wire" + q3 + "y")
+window["wire" + (q3 - 1) + "x2"] = eval("wire" + q3 + "x2")
+window["wire" + (q3 - 1) + "y2"] = eval("wire" + q3 + "y2")
+window["wire" + (q3 - 1) + "value"] = false
+q3++
+}
+wires--
+}
+q++
+}
+go_draw()
+}
+
+
+
+
+if (doafunction == 2){
+q = 1
+while (q <= wires){
+q1 = eval("wire" + q + "x")
+q2 = eval("wire" + q + "y")
+q11 = eval("wire" + q + "x2")
+q22 = eval("wire" + q + "y2")
+if ((((x > (q1 - 4)) && (x < (q11 + 4))) || ((x < (q1 + 4)) && (x > (q11 - 4)))) && (((y > (q2 - 4)) && (y < (q22 + 4))) || ((y < (q2 + 4)) && (y > (q22 - 4))))){
+q3 = (q + 1)
+while (q3 <= wires){
+window["wire" + (q3 - 1) + "x"] = eval("wire" + q3 + "x")
+window["wire" + (q3 - 1) + "y"] = eval("wire" + q3 + "y")
+window["wire" + (q3 - 1) + "x2"] = eval("wire" + q3 + "x2")
+window["wire" + (q3 - 1) + "y2"] = eval("wire" + q3 + "y2")
+window["wire" + (q3 - 1) + "value"] = false
+q3++
+}
+wires--
+
+}
+q++
+}
+go_draw()
+}
+
+
+
+
+
+if (doafunction == 3){
+if (mrgate != 0){
+go_gate()
+ghfghgf = gates
+ghfghgf7 = eval("gate" + ghfghgf + "ins")
+ghfghgf8 = eval("gate" + ghfghgf + "outs")
+if (mrrotate == 1){
+ghfghgf9 = 0
+apje()
+}
+if (mrrotate == 2){
+ghfghgf9 = 0
+apje()
+ghfghgf9 = 1
+apje()
+}
+if (mrrotate == 3){
+ghfghgf9 = 0
+apje()
+ghfghgf9 = 1
+apje()
+ghfghgf9 = 2
+apje()
+}}}
+
+
+if (doafunction == 4){
+ghfghgf = 1
+while (ghfghgf <= gates){
+ghfghgf1 = eval("gate" + ghfghgf + "x")
+ghfghgf2 = eval("gate" + ghfghgf + "y")
+ghfghgf7 = eval("gate" + ghfghgf + "ins")
+ghfghgf8 = eval("gate" + ghfghgf + "outs")
+ghfghgf9 = eval("gate" + ghfghgf + "rotate")
+if ((x > (ghfghgf1 + 15)) && (x < (ghfghgf1 + 65)) && (y > (ghfghgf2 + 15)) && (y < (ghfghgf2 + 65))){
+hjdshsd = 1
+apje()
+go_draw()
+}
+ghfghgf++
+}
+go_draw()
+}
+
+
+
+
+
+}}
+doafunction = 0
+mrdrag = 0
+if (mrmode == 2){
+mrmode = 1
+go_checkwire()
+}
+if (mrmode == 8){
+mrmode = 3
+go_draw()
+}}}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// MOUSE MOVE
+///////////////////////////////////////////////////////////////////////////////////////////
+function mousemove (ev) {
+if ((cccc == 1) && (mrmode != 0)){
+cccc = 0
+zzzx = ev.clientX
+zzzy = ev.clientY
+x = (zzzx - wowx)
+y = (zzzy - wowy)
+
+if (mrdrag == 2){
+if (!((gx > (x - 10)) && (gx < (x + 10)) && (gy > (y - 10)) && (gy < (y + 10)))){
+gx = -1000
+gy = -1000
+doafunction = 0
+mrdrag = 1
+}}
+if (mrdrag == 1){
+wowx = ((zzzx - wowmx) + wowxx)
+wowy = ((zzzy - wowmy) + wowyy)
+if (mrmode != 6){
+go_draw()
+}}else{
+if (mrmode == 2){
+window["wire" + wires + "x2"] = ((Math.floor((x + 10) / 20)) * 20)
+window["wire" + wires + "y2"] = ((Math.floor((y + 10) / 20)) * 20)
+go_checkwire()
+go_draw()
+}
+if (mrmode == 5){
+go_draw()
+}
+if (mrmode == 8){
+q6 = ((Math.floor((x - 40) / 20)) * 20)
+q7 = ((Math.floor((y - 40) / 20)) * 20)
+window["gate" + poopoo + "x"] = q6
+window["gate" + poopoo + "y"] = q7
+q3 = 1
+while (q3 <= q77){
+window["gate" + poopoo + "in" + q3 + "x"] = (((eval("gatee" + poopoo + "in" + q3 + "x")) - poopoox) + q6)
+window["gate" + poopoo + "in" + q3 + "y"] = (((eval("gatee" + poopoo + "in" + q3 + "y")) - poopooy) + q7)
+q3++
+}
+q3 = 1
+while (q3 <= q88){
+window["gate" + poopoo + "out" + q3 + "x"] = (((eval("gatee" + poopoo + "out" + q3 + "x")) - poopoox) + q6)
+window["gate" + poopoo + "out" + q3 + "y"] = (((eval("gatee" + poopoo + "out" + q3 + "y")) - poopooy) + q7)
+q3++
+}
+go_draw()
+}}
+cccc = 1
+}}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// MOUSE DOWN
+///////////////////////////////////////////////////////////////////////////////////////////
+function mousedown (ev) {
+if ((cccc == 1) && (mrmode != 0)){
+cccc = 0
+doafunction = 0
+zzzx = ev.clientX
+zzzy = ev.clientY
+x = (zzzx - wowx)
+y = (zzzy - wowy)
+hjdshsd = 0
+sadsdfgg = ev.button
+
+if (sadsdfgg == 1){
+hjdshsd = 1
+}
+
+if (sadsdfgg == 2){
+if ((mrmode == 1) || (mrmode == 4)){
+hjdshsd = 2
+doafunction = 2
+gx = x
+gy = y
+}
+
+if (mrmode == 5){
+hjdshsd = 2
+doafunction = 0
+gx = x
+gy = y
+
+mrrotate++
+if (mrrotate > 3){
+mrrotate = 0
+}
+go_draw()
+}
+
+//////////////////////// rotate
+if (mrmode == 3){
+hjdshsd = 2
+doafunction = 4
+gx = x
+gy = y
+}}
+
+
+if (sadsdfgg == 0){
+if (mrmode == 6){
+q = 1
+while (q <= gates){
+q1 = eval("gate" + q + "x")
+q2 = eval("gate" + q + "y")
+q3 = eval("gate" + q + "type")
+if ((hjdshsd == 0) && (q3 < 3) && (x > (q1 + 15)) && (x < (q1 + 65)) && (y > (q2 + 15)) && (y < (q2 + 65))){
+hjdshsd = 1
+if (q3 == 1){
+window["gate" + q + "type"] = 2
+}else{
+window["gate" + q + "type"] = 1
+}}
+q++
+}}
+if ((mrmode != 6) && (mrmode != 0)){
+if (mrmode == 2){
+mrmode = 1
+}
+
+
+
+//////////////////////// move
+if (mrmode == 3){
+q = 1
+poopoo = 0
+while (q <= gates){
+if (poopoo == 0){
+q1 = eval("gate" + q + "x")
+q2 = eval("gate" + q + "y")
+q77 = eval("gate" + q + "ins")
+q88 = eval("gate" + q + "outs")
+if ((x > (q1 + 15)) && (x < (q1 + 65)) && (y > (q2 + 15)) && (y < (q2 + 65))){
+hjdshsd = 1
+poopoo = q
+poopoox = q1
+poopooy = q2
+q3 = 1
+while (q3 <= q77){
+window["gatee" + q + "in" + q3 + "x"] = eval("gate" + q + "in" + q3 + "x")
+window["gatee" + q + "in" + q3 + "y"] = eval("gate" + q + "in" + q3 + "y")
+q3++
+}
+q3 = 1
+while (q3 <= q88){
+window["gatee" + q + "out" + q3 + "x"] = eval("gate" + q + "out" + q3 + "x")
+window["gatee" + q + "out" + q3 + "y"] = eval("gate" + q + "out" + q3 + "y")
+q3++
+}}}
+q++
+}
+if (poopoo != 0){
+mrmode = 8
+}}
+
+//////////////////////// delete
+if (mrmode == 4){
+hjdshsd = 2
+doafunction = 1
+gx = x
+gy = y
+}
+
+//////////////////////// create wire
+if (mrmode == 1){
+hjdshsd = 1
+wires++
+window["wire" + wires + "x"] = ((Math.floor((x + 10) / 20)) * 20)
+window["wire" + wires + "y"] = ((Math.floor((y + 10) / 20)) * 20)
+window["wire" + wires + "x2"] = ((Math.floor((x + 10) / 20)) * 20)
+window["wire" + wires + "y2"] = ((Math.floor((y + 10) / 20)) * 20)
+window["wire" + wires + "value"] = false
+go_checkwire()
+go_draw()
+mrmode = 2
+}
+///////////////////////////////
+if (mrmode == 5){
+hjdshsd = 2
+doafunction = 3
+gx = x
+gy = y
+
+}}}
+if (hjdshsd == 0){
+wowxx = wowx
+wowyy = wowy
+wowmx = zzzx
+wowmy = zzzy
+mrdrag = 1
+}
+if (hjdshsd == 2){
+wowxx = wowx
+wowyy = wowy
+wowmx = zzzx
+wowmy = zzzy
+mrdrag = 2
+}
+cccc = 1
+}}
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// GO DRAW
+///////////////////////////////////////////////////////////////////////////////////////////
+function go_draw(){
+ctx.fillStyle = mrcolor
+ctx.fillRect(0,0,xwow,ywow)
+q = 1
+while (q <= wires){
+q1 = eval("wire" + q + "x")
+q2 = eval("wire" + q + "y")
+q3 = eval("wire" + q + "x2")
+q4 = eval("wire" + q + "y2")
+q5 = eval("wire" + q + "value")
+if (q5){
+ctx.fillStyle = "rgb(170,64,255)"
+}else{
+ctx.fillStyle = "rgb(0,0,0)"
+}
+ctx.fillRect((q1 - 2) + wowx,(q2 - 2) + wowy,((q3 - q1) + 2),((q4 - q2) + 2))
+q++
+}
+ctx.fillStyle = "rgb(155,0,0)"
+q = 1
+while (q <= wires){
+q1 = eval("wire" + q + "x")
+q2 = eval("wire" + q + "y")
+q3 = eval("wire" + q + "x2")
+q4 = eval("wire" + q + "y2")
+ctx.fillRect((q1 - 4) + wowx,(q2 - 4) + wowy,6,6)
+ctx.fillRect((q3 - 4) + wowx,(q4 - 4) + wowy,6,6)
+q++
+}
+if ((mrmode == 5) && (mrgate != 0)){
+go_gate()
+ghfghgf = gates
+ghfghgf7 = eval("gate" + ghfghgf + "ins")
+ghfghgf8 = eval("gate" + ghfghgf + "outs")
+if (mrrotate == 1){
+ghfghgf9 = 0
+apje()
+}
+if (mrrotate == 2){
+ghfghgf9 = 0
+apje()
+ghfghgf9 = 1
+apje()
+}
+if (mrrotate == 3){
+ghfghgf9 = 0
+apje()
+ghfghgf9 = 1
+apje()
+ghfghgf9 = 2
+apje()
+}}
+q = 1
+while (q <= gates){
+q1 = eval("gate" + q + "x")
+q2 = eval("gate" + q + "y")
+q3 = eval("gate" + q + "type")
+q4 = eval("gate" + q + "ins")
+q5 = eval("gate" + q + "outs")
+q8 = eval("gate" + q + "rotate")
+ctx.drawImage(imgpoo, ((q3 * 80) - 80), (q8 * 80), 80, 80, (q1 + wowx), (q2 + wowy), 80, 80)
+ctx.fillStyle = "rgb(0,0,255)"
+qq = 1
+while (qq <= q4){
+qq1 = eval("gate" + q + "in" + qq + "x")
+qq2 = eval("gate" + q + "in" + qq + "y")
+ctx.fillRect((qq1 - 4) + wowx,(qq2 - 4) + wowy,6,6)
+qq++
+}
+ctx.fillStyle = "rgb(255,0,0)"
+qq = 1
+while (qq <= q5){
+qq1 = eval("gate" + q + "out" + qq + "x")
+qq2 = eval("gate" + q + "out" + qq + "y")
+ctx.fillRect((qq1 - 4) + wowx,(qq2 - 4) + wowy,6,6)
+qq++
+}
+if (q3 == 15){
+fghfherwmnbpio = eval("gate" + q + "in" + 7 + "value")
+if (fghfherwmnbpio != false){
+ctx.fillStyle = "rgb(255,0,0)"
+ctx.font = '10pt Arial'
+ctx.fillText(fghfherwmnbpio, (q1 + 19) + wowx, (q2 + 44) + wowy)
+}}
+if (q3 == 18){
+ctx.fillStyle = eval("gate" + q + "p3")
+ctx.font = (eval("gate" + q + "p2") + "pt Arial")
+ctx.fillText(eval("gate" + q + "p1"), (q1 - 40) + wowx, (q2 + 60) + wowy)
+}
+if (q3 == 20){
+fghfherwmnbpio = eval("gate" + q + "in" + 9 + "value")
+if (fghfherwmnbpio != false){
+ctx.fillStyle = "rgb(255,0,0)"
+ctx.font = '16pt Arial'
+ctx.fillText(fghfherwmnbpio, (q1 + 26) + wowx, (q2 + 46) + wowy)
+}}
+q++
+}
+if ((mrmode == 5) && (mrgate != 0)){
+gates--
+}
+if (mrmode == 6){
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '10pt Arial'
+if (fps < 10){
+ctx.fillText(("Logic FPS: " + ((Math.floor(fps * 10)) / 10)), 4, 16)
+}else{
+ctx.fillText(("Logic FPS: " + Math.floor(fps)), 4, 16)
+}
+if (time > 100){
+ctx.fillText(("Display FPS:" + ((Math.floor((1000 / time) * 10)) / 10)), 4, 32)
+}else{
+ctx.fillText(("Display FPS:" + (Math.floor(1000 / time))), 4, 32)
+}}
+if (mrmode == 5){
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '10pt Arial'
+ctx.fillText('Click to place object. Click "properties" to configure the object. Right click to rotate it.', 4, 16)
+}
+if (mrmode == 4){
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '10pt Arial'
+ctx.fillText('Click and object or wire to delete it.', 4, 16)
+}
+if (mrmode == 3){
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '10pt Arial'
+ctx.fillText('Click and drag an object to move it. Right click an object to rotate it.', 4, 16)
+}
+if ((mrmode == 1) || (mrmode == 2)){
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '10pt Arial'
+ctx.fillText('Click and drag to create a wire. Right click a wire to delete it.', 4, 16)
+}
+
+}
+
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// CREATE GATE
+///////////////////////////////////////////////////////////////////////////////////////////
+function go_gate(){
+if (mrgate != 0){
+gates++
+window["gate" + gates + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "y"] = ((Math.floor((y - 40) / 20)) * 20)
+window["gate" + gates + "type"] = mrgate
+window["gate" + gates + "rotate"] = 0
+window["gate" + gates + "p1"] = mrp1
+window["gate" + gates + "p2"] = mrp2
+window["gate" + gates + "p3"] = mrp3
+window["gate" + gates + "p4"] = mrp4
+window["gate" + gates + "ins"] = mrin
+window["gate" + gates + "outs"] = mrout
+if (mrin == 1){
+window["gate" + gates + "in" + 1 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 1 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 40)
+}else if (mrin < 8){
+window["gate" + gates + "in" + 1 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 1 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 20)
+window["gate" + gates + "in" + 2 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 2 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 60)
+window["gate" + gates + "in" + 3 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 3 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 40)
+window["gate" + gates + "in" + 4 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 4 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 0)
+window["gate" + gates + "in" + 5 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 5 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 80)
+window["gate" + gates + "in" + 6 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 6 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 20)
+window["gate" + gates + "in" + 7 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 7 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 100)
+window["gate" + gates + "in" + 8 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 8 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 40)
+window["gate" + gates + "in" + 9 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 9 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 120)
+}else{
+window["gate" + gates + "in" + 1 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 1 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 20)
+window["gate" + gates + "in" + 2 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 2 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 0)
+window["gate" + gates + "in" + 3 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 3 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 20)
+window["gate" + gates + "in" + 4 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 4 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 40)
+window["gate" + gates + "in" + 5 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 5 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 60)
+window["gate" + gates + "in" + 6 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 6 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 80)
+window["gate" + gates + "in" + 7 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 7 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 100)
+window["gate" + gates + "in" + 8 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 8 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 120)
+window["gate" + gates + "in" + 9 + "x"] = ((Math.floor((x - 40) / 20)) * 20)
+window["gate" + gates + "in" + 9 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 140)
+}
+if (mrout == 1){
+window["gate" + gates + "out" + 1 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 1 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 40)
+}else if (mrout < 8){
+window["gate" + gates + "out" + 1 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 1 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 20)
+window["gate" + gates + "out" + 2 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 2 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 60)
+window["gate" + gates + "out" + 3 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 3 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 40)
+window["gate" + gates + "out" + 4 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 4 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 0)
+window["gate" + gates + "out" + 5 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 5 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 6 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 6 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 20)
+window["gate" + gates + "out" + 7 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 7 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 100)
+window["gate" + gates + "out" + 8 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 8 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 40)
+window["gate" + gates + "out" + 9 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 9 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 140)
+}else{
+window["gate" + gates + "out" + 1 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 1 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 40)
+window["gate" + gates + "out" + 2 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 2 + "y"] = (((Math.floor((y - 40) / 20)) * 20) - 20)
+window["gate" + gates + "out" + 3 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 3 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 0)
+window["gate" + gates + "out" + 4 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 4 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 20)
+window["gate" + gates + "out" + 5 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 5 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 40)
+window["gate" + gates + "out" + 6 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 6 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 60)
+window["gate" + gates + "out" + 7 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 7 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 8 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 8 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 100)
+window["gate" + gates + "out" + 9 + "x"] = (((Math.floor((x - 40) / 20)) * 20) + 80)
+window["gate" + gates + "out" + 9 + "y"] = (((Math.floor((y - 40) / 20)) * 20) + 140)
+}
+window["gate" + gates + "in" + 1 + "value"] = false
+window["gate" + gates + "in" + 2 + "value"] = false
+window["gate" + gates + "in" + 3 + "value"] = false
+window["gate" + gates + "in" + 4 + "value"] = false
+window["gate" + gates + "in" + 5 + "value"] = false
+window["gate" + gates + "in" + 6 + "value"] = false
+window["gate" + gates + "in" + 7 + "value"] = false
+window["gate" + gates + "in" + 8 + "value"] = false
+window["gate" + gates + "in" + 9 + "value"] = false
+window["gate" + gates + "out" + 1 + "value"] = false
+window["gate" + gates + "out" + 2 + "value"] = false
+window["gate" + gates + "out" + 3 + "value"] = false
+window["gate" + gates + "out" + 4 + "value"] = false
+window["gate" + gates + "out" + 5 + "value"] = false
+window["gate" + gates + "out" + 6 + "value"] = false
+window["gate" + gates + "out" + 7 + "value"] = false
+window["gate" + gates + "out" + 8 + "value"] = false
+window["gate" + gates + "out" + 9 + "value"] = false
+}}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// EXTRA GATE FUNCTIONS
+///////////////////////////////////////////////////////////////////////////////////////////
+function go_gatee(){
+window["gate" + (q3 - 1) + "x"] = eval("gate" + q3 + "x")
+window["gate" + (q3 - 1) + "y"] = eval("gate" + q3 + "y")
+window["gate" + (q3 - 1) + "type"] = eval("gate" + q3 + "type")
+window["gate" + (q3 - 1) + "rotate"] = eval("gate" + q3 + "rotate")
+window["gate" + (q3 - 1) + "p1"] = eval("gate" + q3 + "p1")
+window["gate" + (q3 - 1) + "p2"] = eval("gate" + q3 + "p2")
+window["gate" + (q3 - 1) + "p3"] = eval("gate" + q3 + "p3")
+window["gate" + (q3 - 1) + "p4"] = eval("gate" + q3 + "p4")
+window["gate" + (q3 - 1) + "ins"] = mrin
+window["gate" + (q3 - 1) + "outs"] = mrout
+q9 = 1
+while (q9 <= mrin){
+window["gate" + (q3 - 1) + "in" + q9 + "x"] = eval("gate" + q3 + "in" + q9 + "x")
+window["gate" + (q3 - 1) + "in" + q9 + "y"] = eval("gate" + q3 + "in" + q9 + "y")
+q9++
+}
+q9 = 1
+while (q9 <= mrout){
+window["gate" + (q3 - 1) + "out" + q9 + "x"] = eval("gate" + q3 + "out" + q9 + "x")
+window["gate" + (q3 - 1) + "out" + q9 + "y"] = eval("gate" + q3 + "out" + q9 + "y")
+q9++
+}
+window["gate" + (q3 - 1) + "in" + 1 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 2 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 3 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 4 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 5 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 6 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 7 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 8 + "value"] = false
+window["gate" + (q3 - 1) + "in" + 9 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 1 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 2 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 3 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 4 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 5 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 6 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 7 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 8 + "value"] = false
+window["gate" + (q3 - 1) + "out" + 9 + "value"] = false
+}
+
+function go_checkwire(){
+w1 = eval("wire" + wires + "x")
+w2 = eval("wire" + wires + "y")
+w3 = eval("wire" + wires + "x2")
+w4 = eval("wire" + wires + "y2")
+w3 = (w1 - w3)
+w4 = (w2 - w4)
+if (w3 < 0){
+w3 = (0 - w3)
+}
+if (w4 < 0){
+w4 = (0 - w4)
+}
+if (w3 > w4){
+window["wire" + wires + "y2"] = w2
+}else{
+window["wire" + wires + "x2"] = w1
+}}
+function go_draww(){
+qz = 1
+while (qz <= gates){
+window["gate" + qz + "in" + 1 + "value"] = false
+window["gate" + qz + "in" + 2 + "value"] = false
+window["gate" + qz + "in" + 3 + "value"] = false
+window["gate" + qz + "in" + 4 + "value"] = false
+window["gate" + qz + "in" + 5 + "value"] = false
+window["gate" + qz + "in" + 6 + "value"] = false
+window["gate" + qz + "in" + 7 + "value"] = false
+window["gate" + qz + "in" + 8 + "value"] = false
+window["gate" + qz + "in" + 9 + "value"] = false
+window["gate" + qz + "out" + 1 + "value"] = false
+window["gate" + qz + "out" + 2 + "value"] = false
+window["gate" + qz + "out" + 3 + "value"] = false
+window["gate" + qz + "out" + 4 + "value"] = false
+window["gate" + qz + "out" + 5 + "value"] = false
+window["gate" + qz + "out" + 6 + "value"] = false
+window["gate" + qz + "out" + 7 + "value"] = false
+window["gate" + qz + "out" + 8 + "value"] = false
+window["gate" + qz + "out" + 9 + "value"] = false
+if ((eval("gate" + qz + "type")) == 4){
+window["gate" + qz + "type"] = 3
+}
+qz++
+}
+qz = 1
+while (qz <= wires){
+window["wire" + qz + "value"] = false
+qz++
+}}
+
+function go_drawwa(){
+qz = 1
+while (qz <= aagates){
+window["gate" + qz + "in" + 1 + "value"] = false
+window["gate" + qz + "in" + 2 + "value"] = false
+window["gate" + qz + "in" + 3 + "value"] = false
+window["gate" + qz + "in" + 4 + "value"] = false
+window["gate" + qz + "in" + 5 + "value"] = false
+window["gate" + qz + "in" + 6 + "value"] = false
+window["gate" + qz + "in" + 7 + "value"] = false
+window["gate" + qz + "in" + 8 + "value"] = false
+window["gate" + qz + "in" + 9 + "value"] = false
+window["gate" + qz + "out" + 1 + "value"] = false
+window["gate" + qz + "out" + 2 + "value"] = false
+window["gate" + qz + "out" + 3 + "value"] = false
+window["gate" + qz + "out" + 4 + "value"] = false
+window["gate" + qz + "out" + 5 + "value"] = false
+window["gate" + qz + "out" + 6 + "value"] = false
+window["gate" + qz + "out" + 7 + "value"] = false
+window["gate" + qz + "out" + 8 + "value"] = false
+window["gate" + qz + "out" + 9 + "value"] = false
+if ((eval("gate" + qz + "type")) == 4){
+window["gate" + qz + "type"] = 3
+}
+qz++
+}
+qz = 1
+while (qz <= aawires){
+window["wire" + qz + "value"] = false
+qz++
+}}
+
+function go_drawww(){
+if (mrmode == 6){
+numbertoday = 0
+if (the_big_check()){
+nowtime = (((new Date()).getTime()) - 4)
+lasttime = (nowtime - 10)
+lasttimea = nowtime
+begintime = nowtime
+lets_go()
+}else{
+alert("EPIC FAIL\n\nYour program has outputs that are connected together\n\nThe logic circuit will NOT work properly.")
+if (confirm("You must NOT have outputs connected.\n\nThis is logic simulation not electricity simulation.\n\nYou should use OR gates to connect these outputs.\n\nDo you want to continue anyway?\n\nClick OK to run anyway (not recomended)")){
+nowtime = (((new Date()).getTime()) - 4)
+lasttime = (nowtime - 10)
+lasttimea = nowtime
+begintime = nowtime
+lets_go()
+}}
+}else{
+go_draw()
+}}
+
+
+
+function set_output(bbzz,cczz){
+if ((eval("gate" + e + "out" + bbzz + "value")) != cczz){
+jjjj = 1
+while (jjjj <= wires){
+window["wire" + jjjj + "done"] = 0
+jjjj++
+}
+window["gate" + e + "out" + bbzz + "value"] = cczz
+go_wire(eval("gate" + e + "out" + bbzz + "x"),eval("gate" + e + "out" + bbzz + "y"),eval("gate" + e + "out" + bbzz + "x"),eval("gate" + e + "out" + bbzz + "y"),cczz)
+}}
+
+
+function set_value(bbzz,cczz){
+window["gate" + e + "in" + bbzz + "value"] = cczz
+window["e" + bbzz] = cczz
+}
+
+
+
+
+
+
+function go_wire(aaxx,aayy,aaxx2,aayy2,aavv){
+var jjj = 1
+while (jjj <= wires){
+var jjj5 = eval("wire" + jjj + "done")
+if (jjj5 == 0){
+var jjj1 = eval("wire" + jjj + "x")
+var jjj2 = eval("wire" + jjj + "y")
+var jjj3 = eval("wire" + jjj + "x2")
+var jjj4 = eval("wire" + jjj + "y2")
+if (jjj1 > jjj3){
+var jjj1a = jjj3
+jjj3 = jjj1
+jjj1 = jjj1a
+}
+if (jjj2 > jjj4){
+var jjj2a = jjj4
+jjj4 = jjj2
+jjj2 = jjj2a
+}
+if ((jjj1 >= aaxx) && (jjj1 <= aaxx2) && (jjj2 >= aayy) && (jjj2 <= aayy2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+window["wire" + jjj + "value"] = aavv
+go_wire(jjj1,jjj2,jjj3,jjj4,aavv)
+}else if ((jjj3 >= aaxx) && (jjj3 <= aaxx2) && (jjj4 >= aayy) && (jjj4 <= aayy2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+window["wire" + jjj + "value"] = aavv
+go_wire(jjj1,jjj2,jjj3,jjj4,aavv)
+}else if ((((jjj2 == jjj4) && (jjj4 == aayy)) || ((jjj2 == jjj4) && (jjj4 == aayy2))) && (jjj1 <= aaxx) && (jjj3 >= aaxx2) && (aaxx == aaxx2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+window["wire" + jjj + "value"] = aavv
+go_wire(jjj1,jjj2,jjj3,jjj4,aavv)
+}else if ((((jjj1 == jjj3) && (jjj3 == aaxx)) || ((jjj1 == jjj3) && (jjj3 == aaxx2))) && (jjj2 <= aayy) && (jjj4 >= aayy2) && (aayy == aayy2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+window["wire" + jjj + "value"] = aavv
+go_wire(jjj1,jjj2,jjj3,jjj4,aavv)
+}}
+jjj++
+}
+oo = 1
+while (oo <= gates){
+ooo = eval("gate" + oo + "ins")
+oooo = 1
+while (oooo <= ooo){
+ooo = eval("gate" + oo + "ins")
+oooox = eval("gate" + oo + "in" + oooo + "x")
+ooooy = eval("gate" + oo + "in" + oooo + "y")
+if ((oooox >= aaxx) && (oooox <= aaxx2) && (ooooy >= aayy) && (ooooy <= aayy2)){
+window["gate" + oo + "in" + oooo + "value"] = aavv
+}
+oooo++
+}
+oo++
+}
+
+}
+
+///////////// CHECK THAT OUTPUTS ARE NOT CONECTED
+function the_big_check(){
+good_logic = true
+e = 1
+while (e <= gates){
+e_outs = eval("gate" + e + "outs")
+qqqe = 1
+while (qqqe <= e_outs){
+the_big_checker(qqqe)
+qqqe++
+}
+e++
+}
+if (good_logic){
+return(true)
+}else{
+return(false)
+}}
+
+function the_big_checker(bbzz){
+jjjj = 1
+while (jjjj <= wires){
+window["wire" + jjjj + "done"] = 0
+jjjj++
+}
+go_wire2(eval("gate" + e + "out" + bbzz + "x"),eval("gate" + e + "out" + bbzz + "y"),eval("gate" + e + "out" + bbzz + "x"),eval("gate" + e + "out" + bbzz + "y"))
+}
+
+
+function go_wire2(aaxx,aayy,aaxx2,aayy2){
+var jjj = 1
+while (jjj <= wires){
+var jjj5 = eval("wire" + jjj + "done")
+if (jjj5 == 0){
+var jjj1 = eval("wire" + jjj + "x")
+var jjj2 = eval("wire" + jjj + "y")
+var jjj3 = eval("wire" + jjj + "x2")
+var jjj4 = eval("wire" + jjj + "y2")
+if (jjj1 > jjj3){
+var jjj1a = jjj3
+jjj3 = jjj1
+jjj1 = jjj1a
+}
+if (jjj2 > jjj4){
+var jjj2a = jjj4
+jjj4 = jjj2
+jjj2 = jjj2a
+}
+if ((jjj1 >= aaxx) && (jjj1 <= aaxx2) && (jjj2 >= aayy) && (jjj2 <= aayy2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+go_wire2(jjj1,jjj2,jjj3,jjj4)
+}else if ((jjj3 >= aaxx) && (jjj3 <= aaxx2) && (jjj4 >= aayy) && (jjj4 <= aayy2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+go_wire2(jjj1,jjj2,jjj3,jjj4)
+}else if ((((jjj2 == jjj4) && (jjj4 == aayy)) || ((jjj2 == jjj4) && (jjj4 == aayy2))) && (jjj1 <= aaxx) && (jjj3 >= aaxx2) && (aaxx == aaxx2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+go_wire2(jjj1,jjj2,jjj3,jjj4)
+}else if ((((jjj1 == jjj3) && (jjj3 == aaxx)) || ((jjj1 == jjj3) && (jjj3 == aaxx2))) && (jjj2 <= aayy) && (jjj4 >= aayy2) && (aayy == aayy2) && (jjj5 == 0)){
+window["wire" + jjj + "done"] = 1
+go_wire2(jjj1,jjj2,jjj3,jjj4)
+}}
+jjj++
+}
+oo = 1
+while (oo <= gates){
+ooo = eval("gate" + oo + "outs")
+oooo = 1
+while (oooo <= ooo){
+ooo = eval("gate" + oo + "outs")
+oooox = eval("gate" + oo + "out" + oooo + "x")
+ooooy = eval("gate" + oo + "out" + oooo + "y")
+if ((oooox >= aaxx) && (oooox <= aaxx2) && (ooooy >= aayy) && (ooooy <= aayy2) && ((oo != e) || (oooo != qqqe))){
+good_logic = false
+}
+oooo++
+}
+oo++
+}
+
+
+
+}
+
+
+
+
+function apje(){
+if (ghfghgf9 == 3){
+window["gate" + ghfghgf + "rotate"] = 4
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf7){
+window["gate" + ghfghgf + "in" + ghfghgf3 + "y"] -= (((eval("gate" + ghfghgf + "x")) + 80) - (eval("gate" + ghfghgf + "in" + ghfghgf3 + "x")))
+window["gate" + ghfghgf + "in" + ghfghgf3 + "x"] -= ((eval("gate" + ghfghgf + "in" + ghfghgf3 + "x")) - (eval("gate" + ghfghgf + "x")))
+ghfghgf3++
+}
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf8){
+window["gate" + ghfghgf + "out" + ghfghgf3 + "y"] += ((eval("gate" + ghfghgf + "out" + ghfghgf3 + "x")) - (eval("gate" + ghfghgf + "x")))
+window["gate" + ghfghgf + "out" + ghfghgf3 + "x"] += (((eval("gate" + ghfghgf + "x")) + 80) - (eval("gate" + ghfghgf + "out" + ghfghgf3 + "x")))
+ghfghgf3++
+}}
+if (ghfghgf9 == 2){
+window["gate" + ghfghgf + "rotate"] = 3
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf7){
+window["gate" + ghfghgf + "in" + ghfghgf3 + "x"] -= ((eval("gate" + ghfghgf + "in" + ghfghgf3 + "y")) - (eval("gate" + ghfghgf + "y")))
+window["gate" + ghfghgf + "in" + ghfghgf3 + "y"] += (((eval("gate" + ghfghgf + "y")) + 80) - (eval("gate" + ghfghgf + "in" + ghfghgf3 + "y")))
+ghfghgf3++
+}
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf8){
+window["gate" + ghfghgf + "out" + ghfghgf3 + "x"] += (((eval("gate" + ghfghgf + "y")) + 80) - (eval("gate" + ghfghgf + "out" + ghfghgf3 + "y")))
+window["gate" + ghfghgf + "out" + ghfghgf3 + "y"] -= ((eval("gate" + ghfghgf + "out" + ghfghgf3 + "y")) - (eval("gate" + ghfghgf + "y")))
+ghfghgf3++
+}}
+if (ghfghgf9 == 1){
+window["gate" + ghfghgf + "rotate"] = 2
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf7){
+window["gate" + ghfghgf + "in" + ghfghgf3 + "y"] += ((eval("gate" + ghfghgf + "in" + ghfghgf3 + "x")) - (eval("gate" + ghfghgf + "x")))
+window["gate" + ghfghgf + "in" + ghfghgf3 + "x"] += (((eval("gate" + ghfghgf + "x")) + 80) - (eval("gate" + ghfghgf + "in" + ghfghgf3 + "x")))
+ghfghgf3++
+}
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf8){
+window["gate" + ghfghgf + "out" + ghfghgf3 + "y"] -= (((eval("gate" + ghfghgf + "x")) + 80) - (eval("gate" + ghfghgf + "out" + ghfghgf3 + "x")))
+window["gate" + ghfghgf + "out" + ghfghgf3 + "x"] -= ((eval("gate" + ghfghgf + "out" + ghfghgf3 + "x")) - (eval("gate" + ghfghgf + "x")))
+ghfghgf3++
+}}
+if (ghfghgf9 == 0){
+window["gate" + ghfghgf + "rotate"] = 1
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf7){
+window["gate" + ghfghgf + "in" + ghfghgf3 + "x"] += (((eval("gate" + ghfghgf + "y")) + 80) - (eval("gate" + ghfghgf + "in" + ghfghgf3 + "y")))
+window["gate" + ghfghgf + "in" + ghfghgf3 + "y"] -= ((eval("gate" + ghfghgf + "in" + ghfghgf3 + "y")) - (eval("gate" + ghfghgf + "y")))
+ghfghgf3++
+}
+ghfghgf3 = 1
+while (ghfghgf3 <= ghfghgf8){
+window["gate" + ghfghgf + "out" + ghfghgf3 + "x"] -= ((eval("gate" + ghfghgf + "out" + ghfghgf3 + "y")) - (eval("gate" + ghfghgf + "y")))
+window["gate" + ghfghgf + "out" + ghfghgf3 + "y"] += (((eval("gate" + ghfghgf + "y")) + 80) - (eval("gate" + ghfghgf + "out" + ghfghgf3 + "y")))
+ghfghgf3++
+}}
+if (ghfghgf9 == 3){
+window["gate" + ghfghgf + "rotate"] = 0
+}
+}
+
+function isstring(aqaqaqaqgffdg){
+if ((typeof (aqaqaqaqgffdg)) == "string"){
+return("\"" + aqaqaqaqgffdg + "\"")
+}else{
+return(aqaqaqaqgffdg)
+}}
+
+function hfsdhughfd(){
+if (the_big_check()){
+qwerasdf = ("aagates = " + gates + ";aawires = " + wires)
+qk = 1
+while (qk <= gates){
+qwerasdf += (";gate" + qk + "x = ")
+qwerasdf += eval("gate" + qk + "x")
+qwerasdf += (";gate" + qk + "y = ")
+qwerasdf += eval("gate" + qk + "y")
+qwerasdf += (";gate" + qk + "type = ")
+qwerasdf += eval("gate" + qk + "type")
+qwerasdf += (";gate" + qk + "rotate = ")
+qwerasdf += eval("gate" + qk + "rotate")
+qwerasdf += (";gate" + qk + "p1 = ")
+qwerasdf += isstring(eval("gate" + qk + "p1"))
+qwerasdf += (";gate" + qk + "p2 = ")
+qwerasdf += isstring(eval("gate" + qk + "p2"))
+qwerasdf += (";gate" + qk + "p3 = ")
+qwerasdf += isstring(eval("gate" + qk + "p3"))
+qwerasdf += (";gate" + qk + "p4 = ")
+qwerasdf += isstring(eval("gate" + qk + "p4"))
+qwerasdf += (";gate" + qk + "ins = ")
+qwerasdf += eval("gate" + qk + "ins")
+qwerasdf += (";gate" + qk + "outs = ")
+qwerasdf += eval("gate" + qk + "outs")
+mmrin = eval("gate" + qk + "ins")
+mmrout = eval("gate" + qk + "outs")
+qk9 = 1
+while (qk9 <= mmrin){
+qwerasdf += (";gate" + qk + "in" + qk9 + "x = ")
+qwerasdf += eval("gate" + qk + "in" + qk9 + "x")
+qwerasdf += (";gate" + qk + "in" + qk9 + "y = ")
+qwerasdf += eval("gate" + qk + "in" + qk9 + "y")
+qk9++
+}
+qk9 = 1
+while (qk9 <= mmrout){
+qwerasdf += (";gate" + qk + "out" + qk9 + "x = ")
+qwerasdf += eval("gate" + qk + "out" + qk9 + "x")
+qwerasdf += (";gate" + qk + "out" + qk9 + "y = ")
+qwerasdf += eval("gate" + qk + "out" + qk9 + "y")
+qk9++
+}
+qk++
+}
+qk = 1
+while (qk <= wires){
+qwerasdf += (";wire" + qk + "x = ")
+qwerasdf += eval("wire" + qk + "x")
+qwerasdf += (";wire" + qk + "y = ")
+qwerasdf += eval("wire" + qk + "y")
+qwerasdf += (";wire" + qk + "x2 = ")
+qwerasdf += eval("wire" + qk + "x2")
+qwerasdf += (";wire" + qk + "y2 = ")
+qwerasdf += eval("wire" + qk + "y2")
+qk++
+}
+qwerasdf += (";\n")
+document.getElementById('moocowwowyaya').style.display = 'inline'
+document.getElementById("ineedapoo").value = qwerasdf
+document.getElementById("ineedapoo").focus()
+document.getElementById("ineedapoo").select()
+}else{
+alert("I will not let you save because your circuit has ouputs connected.")
+}}
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// LETS GO
+///////////////////////////////////////////////////////////////////////////////////////////
+function lets_go(){
+if (mrmode == 6){
+wqeqwr = (new Date()).getTime()
+numberinuse += speednumber
+if (speednumber > 1){
+if ((Math.floor((Math.random())*2)) == 1){
+numberinuse++
+}}
+numbertoday = 0
+while (numberinuse > 0){
+numbertoday++
+numberinuse--
+e = 1
+while (e <= gates){
+ee = eval("gate" + e + "type")
+e1 = eval("gate" + e + "in" + 1 + "value")
+e2 = eval("gate" + e + "in" + 2 + "value")
+e3 = eval("gate" + e + "in" + 3 + "value")
+e4 = eval("gate" + e + "in" + 4 + "value")
+e5 = eval("gate" + e + "in" + 5 + "value")
+e6 = eval("gate" + e + "in" + 6 + "value")
+e7 = eval("gate" + e + "in" + 7 + "value")
+e8 = eval("gate" + e + "in" + 8 + "value")
+e9 = eval("gate" + e + "in" + 9 + "value")
+ep1 = eval("gate" + e + "p1")
+ep2 = eval("gate" + e + "p2")
+ep3 = eval("gate" + e + "p3")
+ep4 = eval("gate" + e + "p4")
+e_ins = eval("gate" + e + "ins")
+e_outs = eval("gate" + e + "outs")
+
+//////////// switch
+if (ee == 1){
+set_output(1,false)
+}
+if (ee == 2){
+set_output(1,true)
+}
+//////////// LED
+if (ee == 3){
+if (e1){
+if (ep1 == 2){
+window["gate" + e + "type"] = 4
+}else if (ep1 == 1){
+window["gate" + e + "type"] = 16
+}else if (ep1 == 3){
+window["gate" + e + "type"] = 17
+}}}
+if ((ee == 4) || (ee == 16) || (ee == 17)){
+if (!e1){
+window["gate" + e + "type"] = 3
+}}
+//////////// CONSTANTS
+if (ee == 5){
+if (!e9){
+set_output(1,true)
+set_output(2,true)
+set_output(3,true)
+set_output(4,true)
+set_output(5,true)
+set_value(9,true)
+}}
+if (ee == 6){
+if (!e9){
+set_output(1,false)
+set_output(2,false)
+set_output(3,false)
+set_output(4,false)
+set_output(5,false)
+set_value(9,true)
+}}
+//////////// NOT
+if (ee == 7){
+if (e1){
+set_output(1,false)
+}else{
+set_output(1,true)
+}}
+//////////// AND
+if (ee == 8){
+z = 1
+zz = 0
+while (z <= e_ins){
+if ((eval("e" + z)) == true){
+zz++
+}
+z++
+}
+if (zz >= e_ins){
+set_output(1,true)
+}else{
+set_output(1,false)
+}}
+//////////// OR
+if (ee == 9){
+z = 1
+zz = 0
+while (z <= e_ins){
+if ((eval("e" + z)) == true){
+zz++
+}
+z++
+}
+if (zz > 0){
+set_output(1,true)
+}else{
+set_output(1,false)
+}}
+//////////// NAND
+if (ee == 10){
+z = 1
+zz = 0
+while (z <= e_ins){
+if ((eval("e" + z)) == true){
+zz++
+}
+z++
+}
+if (zz >= e_ins){
+set_output(1,false)
+}else{
+set_output(1,true)
+}}
+//////////// NOR
+if (ee == 11){
+z = 1
+zz = 0
+while (z <= e_ins){
+if ((eval("e" + z)) == true){
+zz++
+}
+z++
+}
+if (zz > 0){
+set_output(1,false)
+}else{
+set_output(1,true)
+}}
+//////////// XOR
+if (ee == 12){
+z = 1
+zz = 0
+while (z <= e_ins){
+if ((eval("e" + z)) == true){
+zz++
+}
+z++
+}
+if (zz == 1){
+set_output(1,true)
+}else{
+set_output(1,false)
+}}
+//////////// XNOR
+if (ee == 13){
+z = 1
+zz = 0
+while (z <= e_ins){
+if ((eval("e" + z)) == true){
+zz++
+}
+z++
+}
+if (zz == 1){
+set_output(1,false)
+}else{
+set_output(1,true)
+}}
+//////////// SIGNAL GENERATOR
+if (ee == 14){
+if (ep3){
+if (e6){
+
+if (e7){
+if ((wqeqwr - e9) > ep1){
+set_value(7,false)
+set_value(9,wqeqwr)
+set_output(1,false)
+}
+}else{
+if ((wqeqwr - e9) > ep2){
+set_value(7,true)
+set_value(9,wqeqwr)
+set_output(1,true)
+}
+}}else{
+set_value(6,true)
+set_value(7,true)
+set_value(9,wqeqwr)
+}}else{
+if (e6){
+if (e7){
+e8--
+if (e8 < 0){
+set_value(7,false)
+set_value(9,(e9 + ep2))
+}
+set_value(8,e8)
+
+}else{
+
+e9--
+if (e9 < 0){
+set_value(7,true)
+set_value(8,(e8 + ep1))
+}
+set_value(9,e9)
+
+}
+set_output(1,e7)
+
+}else{
+set_value(6,true)
+set_value(7,true)
+set_output(1,e7)
+set_value(8,(-0.5 + ep1))
+set_value(9,(-0.5))
+}
+
+
+}}
+//////////// COUNTER
+if (ee == 15){
+if ((!e6) || (e3)){
+set_value(6,true)
+set_value(7,ep1)
+}else{
+if (e1 && !e8){
+set_value(7,(e7 + ep2))
+}
+if (e2 && !e9){
+set_value(7,(e7 + ep3))
+}
+set_value(8,e1)
+set_value(9,e2)
+}}
+
+
+
+//////////// KEYBOARD
+if (ee == 19){
+if (e9){
+if (ep1){
+if (asdpoi[14] == 1){
+set_output(1,true)
+}else{
+set_output(1,false)
+}
+if (asdpoi[13] == 1){
+set_output(2,true)
+}else{
+set_output(2,false)
+}
+if (asdpoi[12] == 1){
+set_output(3,true)
+}else{
+set_output(3,false)
+}
+if (asdpoi[11] == 1){
+set_output(4,true)
+}else{
+set_output(4,false)
+}
+if (asdpoi[10] == 1){
+set_output(5,true)
+}else{
+set_output(5,false)
+}
+if (asdpoi[9] == 1){
+set_output(6,true)
+}else{
+set_output(6,false)
+}
+if (asdpoi[8] == 1){
+set_output(7,true)
+}else{
+set_output(7,false)
+}
+if (asdpoi[7] == 1){
+set_output(8,true)
+}else{
+set_output(8,false)
+}
+if (key_count == e7){
+set_output(9,false)
+set_value(8,wqeqwr)
+}else{
+set_output(9,true)
+if ((wqeqwr - e8) > 20){
+set_value(7,key_count)
+}}}else{
+if (asdpoia[14] == 1){
+set_output(1,true)
+}else{
+set_output(1,false)
+}
+if (asdpoia[13] == 1){
+set_output(2,true)
+}else{
+set_output(2,false)
+}
+if (asdpoia[12] == 1){
+set_output(3,true)
+}else{
+set_output(3,false)
+}
+if (asdpoia[11] == 1){
+set_output(4,true)
+}else{
+set_output(4,false)
+}
+if (asdpoia[10] == 1){
+set_output(5,true)
+}else{
+set_output(5,false)
+}
+if (asdpoia[9] == 1){
+set_output(6,true)
+}else{
+set_output(6,false)
+}
+if (asdpoia[8] == 1){
+set_output(7,true)
+}else{
+set_output(7,false)
+}
+if (asdpoia[7] == 1){
+set_output(8,true)
+}else{
+set_output(8,false)
+}
+set_output(9,key_tf)
+}}else{
+set_value(9,true)
+set_value(8,wqeqwr)
+set_value(7,key_count)
+}}
+
+
+//////////// DISPLAY
+if (ee == 20){
+sdghsdfasndofwesdofjsdijxc = 0
+if (e1){
+sdghsdfasndofwesdofjsdijxc += 1
+}
+if (e2){
+sdghsdfasndofwesdofjsdijxc += 2
+}
+if (e3){
+sdghsdfasndofwesdofjsdijxc += 4
+}
+if (e4){
+sdghsdfasndofwesdofjsdijxc += 8
+}
+if (e5){
+sdghsdfasndofwesdofjsdijxc += 16
+}
+if (e6){
+sdghsdfasndofwesdofjsdijxc += 32
+}
+if (e7){
+sdghsdfasndofwesdofjsdijxc += 64
+}
+if (e8){
+sdghsdfasndofwesdofjsdijxc += 128
+}
+if (ep1){
+set_value(9,String.fromCharCode(sdghsdfasndofwesdofjsdijxc))
+}else{
+set_value(9,sdghsdfasndofwesdofjsdijxc)
+}}
+
+
+//////////// DELAY                 e1 - input           e2 - run            e3 - timer value                 ep1 - time otherwise tick          ep2 - time limit                ep3 - 1 ontrue 2 onfalse 3 both
+if (ee == 21){
+if (e2){
+if (ep1){
+if (e1){  // time based
+e3 += (wqeqwr - e9)
+if (ep3 == 2){
+e3 = (ep2 + 1)
+}}else{
+e3 -= (wqeqwr - e9)
+if (ep3 == 1){
+e3 = -1
+}}}else{  // tick based
+if (e1){
+e3++
+if (ep3 == 2){
+e3 = (ep2 + 1)
+}}else{
+e3--
+if (ep3 == 1){
+e3 = -1
+}}}
+if (e3 > ep2){  //  timer reached top - output true
+e3 = ep2
+set_output(1,true)
+}
+if (e3 < 0){  //  timer reached bottom - output false
+e3 = 0
+set_output(1,false)
+}
+set_value(3,e3)
+}else{
+set_value(2,true)
+set_value(3,0)
+}
+set_value(9,wqeqwr)
+}
+
+
+
+
+//////////// FLIP FLOP                 e1 - input   e2 - input   e3 - value   e4 - is not the first time              ep1 - default value
+if (ee == 22){
+if (e4 == false){  //  is it the first time
+e3 = ep1
+set_value(4,true)
+}
+if ((e1 == true) && (e2 == false)){
+e3 = true
+}
+if ((e1 == false) && (e2 == true)){
+e3 = false
+}
+set_value(3,e3)
+set_output(1,e3)
+set_output(2,!(e3))
+}
+
+
+
+//////////// DO EVERY                e1 - input   e2 - input   e3 - value   e4 - is not the first time   e5  - last output            ep1 - count to
+if (ee == 23){
+if (e4 == false){  //  is it the first time
+e3 = 0
+e5 = false
+set_value(4,true)
+}
+
+
+if (e2 == true){
+e3 = 0
+}
+
+if ((e1 == true) && (e2 == false) && (e5 == false)){
+e3++
+}
+
+if ((e1 == false) && (e2 == false) && (e5 == true) && (e3 == ep1)){
+e3 = 0
+}
+
+
+if ((e1 == true) && (e3 == ep1) && (e2 == false)){
+set_output(1,true)
+}else{
+set_output(1,false)
+}
+if (e3 > ep1){
+e3 = 0
+}
+set_value(5,e1)
+set_value(3,e3)
+}
+
+
+
+
+
+
+
+
+e++
+}
+wqeqwr = (new Date()).getTime()
+if ((wqeqwr - lasttime) > 164){
+if (speednumber > 1){
+if ((wqeqwr - begintime) > 1000){
+speednumber /= 2;document.getElementById('jqce').innerHTML=(speednumber)
+while (numberinuse > 0){
+numberinuse--
+}}}}
+qz = 1
+}
+if (numbertoday > 0){
+lasttime = nowtime
+nowtime = (new Date()).getTime()
+time = (nowtime - lasttime)
+fps = ((1000 / time) * numbertoday)
+if (mrdrag == 1){
+time = (nowtime - lasttimea)
+}
+lasttimea = nowtime
+go_draw()
+}else{
+if (mrdrag == 1){
+lasttime = lasttimea
+lasttimea = (new Date()).getTime()
+time = (lasttimea - lasttime)
+go_draw()
+}}
+if (mrmode == 6){
+setTimeout("lets_go()",0)
+}}}
+
+///////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////// INTERFACE
+///////////////////////////////////////////////////////////////////////////////////////////
+function ihateie1(eatmybigfatpoo){
+mrdrag = 0
+mrrotate = 0
+if (eatmybigfatpoo == 0){// RUN CURCUIT
+numberinuse = 0
+if (speednumber > 80){
+speednumber = 64;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+}
+if (speednumber < 0.06){
+speednumber = 0.0625;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+}
+document.frm.b1.disabled = true;mrdrag = 0;mrmode = 6;
+}
+if (eatmybigfatpoo == 1){// DRAW WIRE
+mrmode = 1;document.frm.b1.disabled = true;
+}
+if (eatmybigfatpoo == 2){// CREATE OBJECT
+mrmode = 5;document.frm.b1.disabled = false;
+}
+if (eatmybigfatpoo == 3){// MOVE OBJECT
+mrmode = 3;document.frm.b1.disabled = true;
+}
+if (eatmybigfatpoo == 4){// DELETE OBJECT
+mrmode = 4;document.frm.b1.disabled = true;
+}
+if (mrmode == 6){
+aaqq.blur();
+}
+go_draww();
+go_drawww();
+}
+function ihateie2(eatmybigfatpoo){
+mrdrag = 0
+mrrotate = 0
+mrin = 0;mrout = 0;mrp1 = 0;mrp2 = 0;mrp3 = 0;mrp4 = 0;
+if (eatmybigfatpoo == 0){// SWITCH
+mrgate = 1;mrin = 0;mrout = 1;
+}
+if (eatmybigfatpoo == 1){// LED LIGHT
+mrgate = 3;mrin = 1;mrout = 0;mrp1 = 2;
+}
+if (eatmybigfatpoo == 2){// TRUE
+mrgate = 5;mrin = 0;mrout = 5;
+}
+if (eatmybigfatpoo == 3){// FALSE
+mrgate = 6;mrin = 0;mrout = 5;
+}
+if (eatmybigfatpoo == 4){// NOT
+mrgate = 7;mrin = 1;mrout = 1;
+}
+if (eatmybigfatpoo == 5){// AND
+mrgate = 8;mrin = 2;mrout = 1;
+}
+if (eatmybigfatpoo == 6){// OR
+mrgate = 9;mrin = 2;mrout = 1;
+}
+if (eatmybigfatpoo == 7){// NAND
+mrgate = 10;mrin = 2;mrout = 1;
+}
+if (eatmybigfatpoo == 8){// NOR
+mrgate = 11;mrin = 2;mrout = 1;
+}
+if (eatmybigfatpoo == 9){// XOR
+mrgate = 12;mrin = 2;mrout = 1;
+}
+if (eatmybigfatpoo == 10){// XNOR
+mrgate = 13;mrin = 2;mrout = 1;
+}
+if (eatmybigfatpoo == 11){// FLIP FLOP
+mrgate = 22;mrin = 2;mrout = 2;mrp1 = false
+}
+if (eatmybigfatpoo == 12){// Delay Timer
+mrgate = 21;mrin = 1;mrout = 1;mrp1 = true;mrp2 = 100;mrp3 = 1
+}
+if (eatmybigfatpoo == 13){// Signal generator
+mrgate = 14;mrin = 0;mrout = 1;mrp1 = 1;mrp2 = 1;mrp3 = false;
+}
+if (eatmybigfatpoo == 14){// Counter
+mrgate = 15;mrin = 3;mrout = 0;mrp2 = 1;mrp3 = -1;
+}
+if (eatmybigfatpoo == 15){// EVERY
+mrgate = 23;mrin = 2;mrout = 1;mrp1 = 3
+}
+if (eatmybigfatpoo == 16){// Keyboard
+mrgate = 19;mrin = 0;mrout = 9;mrp1 = true
+}
+if (eatmybigfatpoo == 17){// Display
+mrgate = 20;mrin = 8;mrout = 0;mrp1 = true
+}
+if (eatmybigfatpoo == 18){// Text
+mrgate = 18;mrin = 0;mrout = 0;mrp1 = "Your text goes here";mrp2 = 20;mrp3 = "rgb(0,0,0)"
+}
+}
+
+function hasdohsidhsdoj(){
+if (mrmode != 5){
+mrdrag = 0
+mrrotate = 0
+document.getElementById('option3').selected=true;
+mrmode = 5;document.frm.b1.disabled = false;
+go_draww();
+go_drawww();
+}}
+//////////////////////////////// Properties button
+function cust(){
+if ((mrgate > 7) && (mrgate < 12)){
+mrin = eval(prompt("How many inputs? (2 - 7)",2))
+}else if (mrgate == 0){
+alert("You have not selected an item")
+}else if (mrgate == 3){
+mrp1 = eval(prompt("Enter 1 for red, 2 for yellow, 3 for green.",mrp1))
+}else if (mrgate == 14){
+mrp3 = confirm("Click OK for the signal generator to be time based (e.g. every 2 seconds)\nClick cancel for it to be based on the simulation frames (e.g. every 20 frames)")
+if (mrp3){
+mrp1 = eval(prompt("This signal generator will generate an oscillating signal (between true and false)\nFirstly, how many mili-seconds shall it be true for?",1000))
+mrp2 = eval(prompt("And how many mili-seconds shall it be false for?",1000))
+}else{
+alert("PLEASE NOTE:\n\nThe signal generators will generate the correct signal, even if it doesn't appear so on the screen.\n\nWhen the program is running faster than around 16fps, not all the frames will be shown to allow the program to be more efficent (at 100fps less than a quarter of the frames are shown). This means the signal generators may look like they're producing the wrong signal, but everything IS actually working correctly. (if in doubt, slow the program right down so you can see see it working clearly).")
+mrp1 = eval(prompt("This signal generator will generate an oscillating signal (between true and false)\nFirstly, how many frames shall it be true for?",1))
+mrp2 = eval(prompt("And how many frames shall it be false for?",1))
+}}else if (mrgate == 15){
+mrp1 = eval(prompt("This is a number counter.\nFirstly, what number shall it start at",0))
+mrp2 = eval(prompt("And how much shall it increase by on the '+' input?",1))
+mrp3 = eval(prompt("And how much for the '-' input?",-1))
+}else if (mrgate == 18){
+mrp1 = prompt("Enter your text here",mrp1)
+mrp2 = eval(prompt("Enter Text size",mrp2))
+mrp3 = prompt("Enter Text color.\nYou can enter a name of a color (e.g. red).\nor you can enter it as RGB (e.g. rgb(255,0,0) for red)",mrp3)
+}else if (mrgate == 19){
+mrp1 = confirm("Do you want a ASCII Keyboard, or a Gaming Keyboard\n\nThe ASCII outputs the ASCII value of the charactor (case sensitive), the 9th output turns true for 20 miliseconds on each key press\n\nThe Gaming Keyboard outputs the value of the actuall key itself (this includes the arrow keys etc.), the 9th key turns true while the key is being pressed.\n\nClick OK for ASCII Keyboard (default), or cancel for Gaming Keyboard.")
+}else if (mrgate == 20){
+mrp1 = confirm("Click OK for the display to show a letter.\nClick Cancel for the display to show a number.")
+}else if (mrgate == 21){
+mrp1 = confirm("Click OK for the delay timer to be time based (e.g. every 2 seconds)\nClick cancel for it to be based on the simulation frames (e.g. every 20 frames)")
+if (mrp1){
+mrp2 = eval(prompt("How many mili-seconds shall it delay for?",100))
+}else{
+mrp2 = eval(prompt("How many frames shall it delay for?",100))
+}
+mrp3 = eval(prompt("Enter 1 for the delay to be ONTRUE\nEnter 2 for the delay to be ONFALSE\nEnter 3 for the delay to be both ONTRUE and ONFALSE",1))
+}else if (mrgate == 22){
+mrp1 = confirm("What is the default value?\n\nOK = TRUE, CANCEL = FALSE.")
+}else if (mrgate == 23){
+mrp1 = eval(prompt("Every X TRUEs it will output true.\n\nWhat is X",3))
+}else{
+alert("THERE ARE NO PROPERTIES FOR THIS OBJECT")
+}}
+
+
+function fgfdsghgf(e){ //key press
+key_count++
+key_num2 = event.which
+sgsdfgfdgf = (key_num2 + 16384)
+asdpoi = sgsdfgfdgf.toString(2);asdpoi.split('');
+}
+function fgfdssghgf(e){ //key down
+key_num = event.which
+sgsdfgfdgfa = (key_num + 16384)
+asdpoia = sgsdfgfdgfa.toString(2);asdpoi.split('');
+key_tf = true;
+if (key_num == 9){
+gfdgfdgfd = prompt("Beno Logic Gates Testing Center.\nEnter some javascript in the box. Type in a varables name to check its value. Or manually set a varable (e.g. varname = 5).",gfdgfdgfd)
+try{
+alert(eval(gfdgfdgfd))
+}catch(err){
+alert("ERROR\n" + err.message)
+}}}
+function fgfdssdfghgf(e){ //key up
+key_tf = false;
+}
+
+
+
+
+function demo_keyboard(){
+begintime = (((new Date()).getTime()) - 4);aagates = 0; aawires = 0;mrcolor = 'rgb(255,255,255)';mrdrag = 0;wires = 0;gates = 0;speednumber = 4;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+aagates = 18;aawires = 38;gate1x = 240;gate1y = 240;gate1type = 19;gate1rotate = 0;gate1p1 = true;gate1p2 = 0;gate1p3 = 0;gate1p4 = 0;gate1ins = 0;gate1outs = 9;gate1out1x = 320;gate1out1y = 200;gate1out2x = 320;gate1out2y = 220;gate1out3x = 320;gate1out3y = 240;gate1out4x = 320;gate1out4y = 260;gate1out5x = 320;gate1out5y = 280;gate1out6x = 320;gate1out6y = 300;gate1out7x = 320;gate1out7y = 320;gate1out8x = 320;gate1out8y = 340;gate1out9x = 320;gate1out9y = 380;gate2x = 540;gate2y = 220;gate2type = 20;gate2rotate = 0;gate2p1 = true;gate2p2 = 0;gate2p3 = 0;gate2p4 = 0;gate2ins = 8;gate2outs = 0;gate2in1x = 540;gate2in1y = 200;gate2in2x = 540;gate2in2y = 220;gate2in3x = 540;gate2in3y = 240;gate2in4x = 540;gate2in4y = 260;gate2in5x = 540;gate2in5y = 280;gate2in6x = 540;gate2in6y = 300;gate2in7x = 540;gate2in7y = 320;gate2in8x = 540;gate2in8y = 340;gate3x = 580;gate3y = 520;gate3type = 3;gate3rotate = 0;gate3p1 = 2;gate3p2 = 0;gate3p3 = 0;gate3p4 = 0;gate3ins = 1;gate3outs = 0;gate3in1x = 580;gate3in1y = 560;gate4x = 580;gate4y = 600;gate4type = 3;gate4rotate = 0;gate4p1 = 2;gate4p2 = 0;gate4p3 = 0;gate4p4 = 0;gate4ins = 1;gate4outs = 0;gate4in1x = 580;gate4in1y = 640;gate5x = 540;gate5y = 420;gate5type = 20;gate5rotate = 0;gate5p1 = false;gate5p2 = 0;gate5p3 = 0;gate5p4 = 0;gate5ins = 8;gate5outs = 0;gate5in1x = 540;gate5in1y = 400;gate5in2x = 540;gate5in2y = 420;gate5in3x = 540;gate5in3y = 440;gate5in4x = 540;gate5in4y = 460;gate5in5x = 540;gate5in5y = 480;gate5in6x = 540;gate5in6y = 500;gate5in7x = 540;gate5in7y = 520;gate5in8x = 540;gate5in8y = 540;gate6x = 540;gate6y = 680;gate6type = 20;gate6rotate = 0;gate6p1 = false;gate6p2 = 0;gate6p3 = 0;gate6p4 = 0;gate6ins = 8;gate6outs = 0;gate6in1x = 540;gate6in1y = 660;gate6in2x = 540;gate6in2y = 680;gate6in3x = 540;gate6in3y = 700;gate6in4x = 540;gate6in4y = 720;gate6in5x = 540;gate6in5y = 740;gate6in6x = 540;gate6in6y = 760;gate6in7x = 540;gate6in7y = 780;gate6in8x = 540;gate6in8y = 800;gate7x = 140;gate7y = 220;gate7type = 18;gate7rotate = 0;gate7p1 = "ASCII Keyboard";gate7p2 = 14;gate7p3 = "rgb(0,0,0)";gate7p4 = 0;gate7ins = 0;gate7outs = 0;gate8x = 100;gate8y = 680;gate8type = 18;gate8rotate = 0;gate8p1 = "Gaming Keyboard";gate8p2 = 14;gate8p3 = "rgb(0,0,0)";gate8p4 = 0;gate8ins = 0;gate8outs = 0;gate9x = 700;gate9y = 500;gate9type = 18;gate9rotate = 0;gate9p1 = "Becomes true for 20 miliseconds when key is pressed";gate9p2 = 10;gate9p3 = "rgb(0,0,0)";gate9p4 = 0;gate9ins = 0;gate9outs = 0;gate10x = 700;gate10y = 580;gate10type = 18;gate10rotate = 0;gate10p1 = "Becomes true the entire time the key is pressed";gate10p2 = 10;gate10p3 = "rgb(0,0,0)";gate10p4 = 0;gate10ins = 0;gate10outs = 0;gate11x = 660;gate11y = 640;gate11type = 18;gate11rotate = 0;gate11p1 = "Shows number of the actuall key that is pressed";gate11p2 = 10;gate11p3 = "rgb(0,0,0)";gate11p4 = 0;gate11ins = 0;gate11outs = 0;gate12x = 660;gate12y = 660;gate12type = 18;gate12rotate = 0;gate12p1 = "This includes things like the arrow keys etc.";gate12p2 = 10;gate12p3 = "rgb(0,0,0)";gate12p4 = 0;gate12ins = 0;gate12outs = 0;gate13x = 660;gate13y = 400;gate13type = 18;gate13rotate = 0;gate13p1 = "Shows the ASCII number of the character";gate13p2 = 10;gate13p3 = "rgb(0,0,0)";gate13p4 = 0;gate13ins = 0;gate13outs = 0;gate14x = 660;gate14y = 180;gate14type = 18;gate14rotate = 0;gate14p1 = "Shows the keyboard character";gate14p2 = 10;gate14p3 = "rgb(0,0,0)";gate14p4 = 0;gate14ins = 0;gate14outs = 0;gate15x = 660;gate15y = 200;gate15type = 18;gate15rotate = 0;gate15p1 = "This keyboard can only show keys that have a character";gate15p2 = 10;gate15p3 = "rgb(0,0,0)";gate15p4 = 0;gate15ins = 0;gate15outs = 0;gate16x = 660;gate16y = 220;gate16type = 18;gate16rotate = 0;gate16p1 = "Using shift for capital letters count as a different character";gate16p2 = 10;gate16p3 = "rgb(0,0,0)";gate16p4 = 0;gate16ins = 0;gate16outs = 0;gate17x = 660;gate17y = 680;gate17type = 18;gate17rotate = 0;gate17p1 = "This can't show capital letters, as shift is a key in its own right";gate17p2 = 10;gate17p3 = "rgb(0,0,0)";gate17p4 = 0;gate17ins = 0;gate17outs = 0;gate18x = 240;gate18y = 700;gate18type = 19;gate18rotate = 0;gate18p1 = false;gate18p2 = 0;gate18p3 = 0;gate18p4 = 0;gate18ins = 0;gate18outs = 9;gate18out1x = 320;gate18out1y = 660;gate18out2x = 320;gate18out2y = 680;gate18out3x = 320;gate18out3y = 700;gate18out4x = 320;gate18out4y = 720;gate18out5x = 320;gate18out5y = 740;gate18out6x = 320;gate18out6y = 760;gate18out7x = 320;gate18out7y = 780;gate18out8x = 320;gate18out8y = 800;gate18out9x = 320;gate18out9y = 840;wire1x = 540;wire1y = 200;wire1x2 = 320;wire1y2 = 200;wire2x = 320;wire2y = 220;wire2x2 = 540;wire2y2 = 220;wire3x = 540;wire3y = 240;wire3x2 = 320;wire3y2 = 240;wire4x = 320;wire4y = 260;wire4x2 = 540;wire4y2 = 260;wire5x = 540;wire5y = 280;wire5x2 = 320;wire5y2 = 280;wire6x = 320;wire6y = 300;wire6x2 = 540;wire6y2 = 300;wire7x = 540;wire7y = 320;wire7x2 = 320;wire7y2 = 320;wire8x = 320;wire8y = 340;wire8x2 = 540;wire8y2 = 340;wire9x = 540;wire9y = 400;wire9x2 = 500;wire9y2 = 400;wire10x = 500;wire10y = 400;wire10x2 = 500;wire10y2 = 200;wire11x = 480;wire11y = 220;wire11x2 = 480;wire11y2 = 420;wire12x = 480;wire12y = 420;wire12x2 = 540;wire12y2 = 420;wire13x = 540;wire13y = 440;wire13x2 = 460;wire13y2 = 440;wire14x = 540;wire14y = 460;wire14x2 = 440;wire14y2 = 460;wire15x = 440;wire15y = 460;wire15x2 = 440;wire15y2 = 260;wire16x = 460;wire16y = 240;wire16x2 = 460;wire16y2 = 440;wire17x = 420;wire17y = 280;wire17x2 = 420;wire17y2 = 480;wire18x = 420;wire18y = 480;wire18x2 = 540;wire18y2 = 480;wire19x = 400;wire19y = 300;wire19x2 = 400;wire19y2 = 500;wire20x = 400;wire20y = 500;wire20x2 = 540;wire20y2 = 500;wire21x = 380;wire21y = 320;wire21x2 = 380;wire21y2 = 520;wire22x = 380;wire22y = 520;wire22x2 = 540;wire22y2 = 520;wire23x = 540;wire23y = 540;wire23x2 = 360;wire23y2 = 540;wire24x = 360;wire24y = 540;wire24x2 = 360;wire24y2 = 340;wire25x = 320;wire25y = 380;wire25x2 = 340;wire25y2 = 380;wire26x = 340;wire26y = 380;wire26x2 = 340;wire26y2 = 560;wire27x = 340;wire27y = 560;wire27x2 = 580;wire27y2 = 560;wire28x = 580;wire28y = 640;wire28x2 = 340;wire28y2 = 640;wire29x = 340;wire29y = 640;wire29x2 = 340;wire29y2 = 840;wire30x = 320;wire30y = 840;wire30x2 = 340;wire30y2 = 840;wire31x = 320;wire31y = 800;wire31x2 = 540;wire31y2 = 800;wire32x = 540;wire32y = 780;wire32x2 = 320;wire32y2 = 780;wire33x = 320;wire33y = 760;wire33x2 = 540;wire33y2 = 760;wire34x = 540;wire34y = 740;wire34x2 = 320;wire34y2 = 740;wire35x = 320;wire35y = 720;wire35x2 = 540;wire35y2 = 720;wire36x = 540;wire36y = 700;wire36x2 = 320;wire36y2 = 700;wire37x = 320;wire37y = 680;wire37x2 = 540;wire37y2 = 680;wire38x = 540;wire38y = 660;wire38x2 = 320;wire38y2 = 660;
+document.getElementById('moocowwowyayaaa').style.display = 'none';go_drawwa();gates = aagates;wires = aawires;centercenter();if (mrmode != 6){document.getElementById('option1').selected=true;mrmode = 6;lets_go();}
+}
+function demo_logic(){
+begintime = (((new Date()).getTime()) - 4);aagates = 0; aawires = 0;mrcolor = 'rgb(255,255,255)';mrdrag = 0;wires = 0;gates = 0;speednumber = 4;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+aagates = 34;aawires = 29;gate1x = 300;gate1y = 240;gate1type = 8;gate1rotate = 0;gate1p1 = 0;gate1p2 = 0;gate1p3 = 0;gate1p4 = 0;gate1ins = 2;gate1outs = 1;gate1in1x = 300;gate1in1y = 260;gate1in2x = 300;gate1in2y = 300;gate1out1x = 380;gate1out1y = 280;gate2x = 440;gate2y = 240;gate2type = 3;gate2rotate = 0;gate2p1 = 2;gate2p2 = 0;gate2p3 = 0;gate2p4 = 0;gate2ins = 1;gate2outs = 0;gate2in1x = 440;gate2in1y = 280;gate3x = 140;gate3y = 220;gate3type = 1;gate3rotate = 0;gate3p1 = 0;gate3p2 = 0;gate3p3 = 0;gate3p4 = 0;gate3ins = 0;gate3outs = 1;gate3out1x = 220;gate3out1y = 260;gate4x = 140;gate4y = 280;gate4type = 1;gate4rotate = 0;gate4p1 = 0;gate4p2 = 0;gate4p3 = 0;gate4p4 = 0;gate4ins = 0;gate4outs = 1;gate4out1x = 220;gate4out1y = 320;gate5x = 140;gate5y = 400;gate5type = 1;gate5rotate = 0;gate5p1 = 0;gate5p2 = 0;gate5p3 = 0;gate5p4 = 0;gate5ins = 0;gate5outs = 1;gate5out1x = 220;gate5out1y = 440;gate6x = 140;gate6y = 460;gate6type = 1;gate6rotate = 0;gate6p1 = 0;gate6p2 = 0;gate6p3 = 0;gate6p4 = 0;gate6ins = 0;gate6outs = 1;gate6out1x = 220;gate6out1y = 500;gate7x = 140;gate7y = 580;gate7type = 1;gate7rotate = 0;gate7p1 = 0;gate7p2 = 0;gate7p3 = 0;gate7p4 = 0;gate7ins = 0;gate7outs = 1;gate7out1x = 220;gate7out1y = 620;gate8x = 140;gate8y = 640;gate8type = 1;gate8rotate = 0;gate8p1 = 0;gate8p2 = 0;gate8p3 = 0;gate8p4 = 0;gate8ins = 0;gate8outs = 1;gate8out1x = 220;gate8out1y = 680;gate9x = 620;gate9y = 220;gate9type = 1;gate9rotate = 0;gate9p1 = 0;gate9p2 = 0;gate9p3 = 0;gate9p4 = 0;gate9ins = 0;gate9outs = 1;gate9out1x = 700;gate9out1y = 260;gate10x = 620;gate10y = 280;gate10type = 1;gate10rotate = 0;gate10p1 = 0;gate10p2 = 0;gate10p3 = 0;gate10p4 = 0;gate10ins = 0;gate10outs = 1;gate10out1x = 700;gate10out1y = 320;gate11x = 620;gate11y = 400;gate11type = 1;gate11rotate = 0;gate11p1 = 0;gate11p2 = 0;gate11p3 = 0;gate11p4 = 0;gate11ins = 0;gate11outs = 1;gate11out1x = 700;gate11out1y = 440;gate12x = 620;gate12y = 460;gate12type = 1;gate12rotate = 0;gate12p1 = 0;gate12p2 = 0;gate12p3 = 0;gate12p4 = 0;gate12ins = 0;gate12outs = 1;gate12out1x = 700;gate12out1y = 500;gate13x = 620;gate13y = 580;gate13type = 1;gate13rotate = 0;gate13p1 = 0;gate13p2 = 0;gate13p3 = 0;gate13p4 = 0;gate13ins = 0;gate13outs = 1;gate13out1x = 700;gate13out1y = 620;gate14x = 620;gate14y = 640;gate14type = 1;gate14rotate = 0;gate14p1 = 0;gate14p2 = 0;gate14p3 = 0;gate14p4 = 0;gate14ins = 0;gate14outs = 1;gate14out1x = 700;gate14out1y = 680;gate15x = 1060;gate15y = 220;gate15type = 1;gate15rotate = 0;gate15p1 = 0;gate15p2 = 0;gate15p3 = 0;gate15p4 = 0;gate15ins = 0;gate15outs = 1;gate15out1x = 1140;gate15out1y = 260;gate16x = 300;gate16y = 420;gate16type = 9;gate16rotate = 0;gate16p1 = 0;gate16p2 = 0;gate16p3 = 0;gate16p4 = 0;gate16ins = 2;gate16outs = 1;gate16in1x = 300;gate16in1y = 440;gate16in2x = 300;gate16in2y = 480;gate16out1x = 380;gate16out1y = 460;gate17x = 300;gate17y = 600;gate17type = 12;gate17rotate = 0;gate17p1 = 0;gate17p2 = 0;gate17p3 = 0;gate17p4 = 0;gate17ins = 2;gate17outs = 1;gate17in1x = 300;gate17in1y = 620;gate17in2x = 300;gate17in2y = 660;gate17out1x = 380;gate17out1y = 640;gate18x = 780;gate18y = 240;gate18type = 10;gate18rotate = 0;gate18p1 = 0;gate18p2 = 0;gate18p3 = 0;gate18p4 = 0;gate18ins = 2;gate18outs = 1;gate18in1x = 780;gate18in1y = 260;gate18in2x = 780;gate18in2y = 300;gate18out1x = 860;gate18out1y = 280;gate19x = 780;gate19y = 420;gate19type = 11;gate19rotate = 0;gate19p1 = 0;gate19p2 = 0;gate19p3 = 0;gate19p4 = 0;gate19ins = 2;gate19outs = 1;gate19in1x = 780;gate19in1y = 440;gate19in2x = 780;gate19in2y = 480;gate19out1x = 860;gate19out1y = 460;gate20x = 780;gate20y = 600;gate20type = 13;gate20rotate = 0;gate20p1 = 0;gate20p2 = 0;gate20p3 = 0;gate20p4 = 0;gate20ins = 2;gate20outs = 1;gate20in1x = 780;gate20in1y = 620;gate20in2x = 780;gate20in2y = 660;gate20out1x = 860;gate20out1y = 640;gate21x = 920;gate21y = 240;gate21type = 4;gate21rotate = 0;gate21p1 = 2;gate21p2 = 0;gate21p3 = 0;gate21p4 = 0;gate21ins = 1;gate21outs = 0;gate21in1x = 920;gate21in1y = 280;gate22x = 920;gate22y = 420;gate22type = 4;gate22rotate = 0;gate22p1 = 2;gate22p2 = 0;gate22p3 = 0;gate22p4 = 0;gate22ins = 1;gate22outs = 0;gate22in1x = 920;gate22in1y = 460;gate23x = 920;gate23y = 600;gate23type = 4;gate23rotate = 0;gate23p1 = 2;gate23p2 = 0;gate23p3 = 0;gate23p4 = 0;gate23ins = 1;gate23outs = 0;gate23in1x = 920;gate23in1y = 640;gate24x = 440;gate24y = 420;gate24type = 3;gate24rotate = 0;gate24p1 = 2;gate24p2 = 0;gate24p3 = 0;gate24p4 = 0;gate24ins = 1;gate24outs = 0;gate24in1x = 440;gate24in1y = 460;gate25x = 440;gate25y = 600;gate25type = 3;gate25rotate = 0;gate25p1 = 2;gate25p2 = 0;gate25p3 = 0;gate25p4 = 0;gate25ins = 1;gate25outs = 0;gate25in1x = 440;gate25in1y = 640;gate26x = 1300;gate26y = 220;gate26type = 4;gate26rotate = 0;gate26p1 = 2;gate26p2 = 0;gate26p3 = 0;gate26p4 = 0;gate26ins = 1;gate26outs = 0;gate26in1x = 1300;gate26in1y = 260;gate27x = 1180;gate27y = 220;gate27type = 7;gate27rotate = 0;gate27p1 = 0;gate27p2 = 0;gate27p3 = 0;gate27p4 = 0;gate27ins = 1;gate27outs = 1;gate27in1x = 1180;gate27in1y = 260;gate27out1x = 1260;gate27out1y = 260;gate28x = 340;gate28y = 540;gate28type = 18;gate28rotate = 0;gate28p1 = "XOR";gate28p2 = 32;gate28p3 = "rgb(0,0,0)";gate28p4 = 0;gate28ins = 0;gate28outs = 0;gate29x = 340;gate29y = 360;gate29type = 18;gate29rotate = 0;gate29p1 = "OR";gate29p2 = 32;gate29p3 = "rgb(0,0,0)";gate29p4 = 0;gate29ins = 0;gate29outs = 0;gate30x = 340;gate30y = 180;gate30type = 18;gate30rotate = 0;gate30p1 = "AND";gate30p2 = 32;gate30p3 = "rgb(0,0,0)";gate30p4 = 0;gate30ins = 0;gate30outs = 0;gate31x = 800;gate31y = 180;gate31type = 18;gate31rotate = 0;gate31p1 = "NAND";gate31p2 = 32;gate31p3 = "rgb(0,0,0)";gate31p4 = 0;gate31ins = 0;gate31outs = 0;gate32x = 800;gate32y = 360;gate32type = 18;gate32rotate = 0;gate32p1 = "NOR";gate32p2 = 32;gate32p3 = "rgb(0,0,0)";gate32p4 = 0;gate32ins = 0;gate32outs = 0;gate33x = 800;gate33y = 540;gate33type = 18;gate33rotate = 0;gate33p1 = "XNOR";gate33p2 = 32;gate33p3 = "rgb(0,0,0)";gate33p4 = 0;gate33ins = 0;gate33outs = 0;gate34x = 1200;gate34y = 160;gate34type = 18;gate34rotate = 0;gate34p1 = "NOT";gate34p2 = 32;gate34p3 = "rgb(0,0,0)";gate34p4 = 0;gate34ins = 0;gate34outs = 0;wire1x = 1180;wire1y = 260;wire1x2 = 1140;wire1y2 = 260;wire2x = 1260;wire2y = 260;wire2x2 = 1300;wire2y2 = 260;wire3x = 780;wire3y = 260;wire3x2 = 700;wire3y2 = 260;wire4x = 780;wire4y = 300;wire4x2 = 740;wire4y2 = 300;wire5x = 740;wire5y = 300;wire5x2 = 740;wire5y2 = 320;wire6x = 740;wire6y = 320;wire6x2 = 700;wire6y2 = 320;wire7x = 440;wire7y = 280;wire7x2 = 380;wire7y2 = 280;wire8x = 380;wire8y = 460;wire8x2 = 440;wire8y2 = 460;wire9x = 860;wire9y = 460;wire9x2 = 920;wire9y2 = 460;wire10x = 780;wire10y = 440;wire10x2 = 700;wire10y2 = 440;wire11x = 780;wire11y = 480;wire11x2 = 740;wire11y2 = 480;wire12x = 740;wire12y = 480;wire12x2 = 740;wire12y2 = 500;wire13x = 740;wire13y = 500;wire13x2 = 700;wire13y2 = 500;wire14x = 780;wire14y = 620;wire14x2 = 700;wire14y2 = 620;wire15x = 780;wire15y = 660;wire15x2 = 740;wire15y2 = 660;wire16x = 740;wire16y = 660;wire16x2 = 740;wire16y2 = 680;wire17x = 740;wire17y = 680;wire17x2 = 700;wire17y2 = 680;wire18x = 860;wire18y = 640;wire18x2 = 920;wire18y2 = 640;wire19x = 440;wire19y = 640;wire19x2 = 380;wire19y2 = 640;wire20x = 300;wire20y = 620;wire20x2 = 220;wire20y2 = 620;wire21x = 300;wire21y = 440;wire21x2 = 220;wire21y2 = 440;wire22x = 220;wire22y = 260;wire22x2 = 300;wire22y2 = 260;wire23x = 260;wire23y = 300;wire23x2 = 260;wire23y2 = 320;wire24x = 260;wire24y = 320;wire24x2 = 220;wire24y2 = 320;wire25x = 260;wire25y = 300;wire25x2 = 300;wire25y2 = 300;wire26x = 260;wire26y = 660;wire26x2 = 260;wire26y2 = 680;wire27x = 260;wire27y = 680;wire27x2 = 220;wire27y2 = 680;wire28x = 260;wire28y = 660;wire28x2 = 300;wire28y2 = 660;wire29x = 920;wire29y = 280;wire29x2 = 860;wire29y2 = 280;
+document.getElementById('moocowwowyayaaa').style.display = 'none';go_drawwa();gates = aagates;wires = aawires;centercenter();if (mrmode != 6){document.getElementById('option1').selected=true;mrmode = 6;lets_go();}
+}
+function demo_signal(){
+begintime = (((new Date()).getTime()) - 4);aagates = 0; aawires = 0;mrcolor = 'rgb(255,255,255)';mrdrag = 0;wires = 0;gates = 0;speednumber = 4;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+aagates = 19;aawires = 13;gate1x = 140;gate1y = 180;gate1type = 14;gate1rotate = 0;gate1p1 = 1;gate1p2 = 1;gate1p3 = false;gate1p4 = 0;gate1ins = 0;gate1outs = 1;gate1out1x = 220;gate1out1y = 220;gate2x = 140;gate2y = 320;gate2type = 14;gate2rotate = 0;gate2p1 = 1000;gate2p2 = 1000;gate2p3 = true;gate2p4 = 0;gate2ins = 0;gate2outs = 1;gate2out1x = 220;gate2out1y = 360;gate3x = 140;gate3y = 460;gate3type = 14;gate3rotate = 0;gate3p1 = 200;gate3p2 = 800;gate3p3 = true;gate3p4 = 0;gate3ins = 0;gate3outs = 1;gate3out1x = 220;gate3out1y = 500;gate4x = 260;gate4y = 140;gate4type = 18;gate4rotate = 0;gate4p1 = "This signal generator runs at the fastest possible speed";gate4p2 = 14;gate4p3 = "rgb(0,0,0)";gate4p4 = 0;gate4ins = 0;gate4outs = 0;gate5x = 260;gate5y = 280;gate5type = 18;gate5rotate = 0;gate5p1 = "This signal generator is true for 1 second then false for 1 second";gate5p2 = 13;gate5p3 = "rgb(0,0,0)";gate5p4 = 0;gate5ins = 0;gate5outs = 0;gate6x = 260;gate6y = 420;gate6type = 18;gate6rotate = 0;gate6p1 = "This signal generator is true for 0.2 seconds then false for 0.8 seconds";gate6p2 = 12;gate6p3 = "rgb(0,0,0)";gate6p4 = 0;gate6ins = 0;gate6outs = 0;gate7x = 260;gate7y = 540;gate7type = 18;gate7rotate = 0;gate7p1 = "This signal generator is frame based rather than time based";gate7p2 = 14;gate7p3 = "rgb(0,0,0)";gate7p4 = 0;gate7ins = 0;gate7outs = 0;gate8x = 140;gate8y = 600;gate8type = 14;gate8rotate = 0;gate8p1 = 1;gate8p2 = 200;gate8p3 = false;gate8p4 = 0;gate8ins = 0;gate8outs = 1;gate8out1x = 220;gate8out1y = 640;gate9x = 260;gate9y = 560;gate9type = 18;gate9rotate = 0;gate9p1 = "It is true for 1 frame then false for 200 frames";gate9p2 = 12;gate9p3 = "rgb(0,0,0)";gate9p4 = 0;gate9ins = 0;gate9outs = 0;gate10x = 160;gate10y = 640;gate10type = 18;gate10rotate = 0;gate10p1 = "It will not always look like its working on screen because some frames are not displayed (see the top left corner of the screen)";gate10p2 = 12;gate10p3 = "rgb(0,0,0)";gate10p4 = 0;gate10ins = 0;gate10outs = 0;gate11x = 160;gate11y = 660;gate11type = 18;gate11rotate = 0;gate11p1 = "To view that it is actually working, slow down the simulation until you can see each frame";gate11p2 = 12;gate11p3 = "rgb(0,0,0)";gate11p4 = 0;gate11ins = 0;gate11outs = 0;gate12x = 720;gate12y = 260;gate12type = 3;gate12rotate = 3;gate12p1 = 2;gate12p2 = 0;gate12p3 = 0;gate12p4 = 0;gate12ins = 1;gate12outs = 0;gate12in1x = 760;gate12in1y = 340;gate13x = 720;gate13y = 400;gate13type = 3;gate13rotate = 3;gate13p1 = 2;gate13p2 = 0;gate13p3 = 0;gate13p4 = 0;gate13ins = 1;gate13outs = 0;gate13in1x = 760;gate13in1y = 480;gate14x = 720;gate14y = 120;gate14type = 4;gate14rotate = 3;gate14p1 = 2;gate14p2 = 0;gate14p3 = 0;gate14p4 = 0;gate14ins = 1;gate14outs = 0;gate14in1x = 760;gate14in1y = 200;gate15x = 720;gate15y = 540;gate15type = 3;gate15rotate = 3;gate15p1 = 2;gate15p2 = 0;gate15p3 = 0;gate15p4 = 0;gate15ins = 1;gate15outs = 0;gate15in1x = 760;gate15in1y = 620;gate16x = 800;gate16y = 540;gate16type = 15;gate16rotate = 3;gate16p1 = 0;gate16p2 = 1;gate16p3 = -1;gate16p4 = 0;gate16ins = 3;gate16outs = 0;gate16in1x = 820;gate16in1y = 620;gate16in2x = 860;gate16in2y = 620;gate16in3x = 840;gate16in3y = 620;gate17x = 800;gate17y = 400;gate17type = 15;gate17rotate = 3;gate17p1 = 0;gate17p2 = 1;gate17p3 = -1;gate17p4 = 0;gate17ins = 3;gate17outs = 0;gate17in1x = 820;gate17in1y = 480;gate17in2x = 860;gate17in2y = 480;gate17in3x = 840;gate17in3y = 480;gate18x = 800;gate18y = 260;gate18type = 15;gate18rotate = 3;gate18p1 = 0;gate18p2 = 1;gate18p3 = -1;gate18p4 = 0;gate18ins = 3;gate18outs = 0;gate18in1x = 820;gate18in1y = 340;gate18in2x = 860;gate18in2y = 340;gate18in3x = 840;gate18in3y = 340;gate19x = 800;gate19y = 120;gate19type = 15;gate19rotate = 3;gate19p1 = 0;gate19p2 = 1;gate19p3 = -1;gate19p4 = 0;gate19ins = 3;gate19outs = 0;gate19in1x = 820;gate19in1y = 200;gate19in2x = 860;gate19in2y = 200;gate19in3x = 840;gate19in3y = 200;wire1x = 820;wire1y = 200;wire1x2 = 820;wire1y2 = 220;wire2x = 820;wire2y = 220;wire2x2 = 220;wire2y2 = 220;wire3x = 220;wire3y = 360;wire3x2 = 820;wire3y2 = 360;wire4x = 820;wire4y = 360;wire4x2 = 820;wire4y2 = 340;wire5x = 760;wire5y = 340;wire5x2 = 760;wire5y2 = 360;wire6x = 220;wire6y = 500;wire6x2 = 760;wire6y2 = 500;wire7x = 760;wire7y = 500;wire7x2 = 760;wire7y2 = 480;wire8x = 760;wire8y = 500;wire8x2 = 820;wire8y2 = 500;wire9x = 820;wire9y = 500;wire9x2 = 820;wire9y2 = 480;wire10x = 220;wire10y = 640;wire10x2 = 820;wire10y2 = 640;wire11x = 820;wire11y = 640;wire11x2 = 820;wire11y2 = 620;wire12x = 760;wire12y = 640;wire12x2 = 760;wire12y2 = 620;wire13x = 760;wire13y = 200;wire13x2 = 760;wire13y2 = 220;
+document.getElementById('moocowwowyayaaa').style.display = 'none';go_drawwa();gates = aagates;wires = aawires;centercenter();if (mrmode != 6){document.getElementById('option1').selected=true;mrmode = 6;lets_go();}
+}
+function demo_delay(){
+begintime = (((new Date()).getTime()) - 4);aagates = 0; aawires = 0;mrcolor = 'rgb(255,255,255)';mrdrag = 0;wires = 0;gates = 0;speednumber = 4;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+aagates = 25;aawires = 12;gate1x = 400;gate1y = 200;gate1type = 21;gate1rotate = 0;gate1p1 = true;gate1p2 = 1000;gate1p3 = 1;gate1p4 = 0;gate1ins = 1;gate1outs = 1;gate1in1x = 400;gate1in1y = 240;gate1out1x = 480;gate1out1y = 240;gate2x = 400;gate2y = 340;gate2type = 21;gate2rotate = 0;gate2p1 = true;gate2p2 = 1000;gate2p3 = 2;gate2p4 = 0;gate2ins = 1;gate2outs = 1;gate2in1x = 400;gate2in1y = 380;gate2out1x = 480;gate2out1y = 380;gate3x = 400;gate3y = 480;gate3type = 21;gate3rotate = 0;gate3p1 = true;gate3p2 = 1000;gate3p3 = 3;gate3p4 = 0;gate3ins = 1;gate3outs = 1;gate3in1x = 400;gate3in1y = 520;gate3out1x = 480;gate3out1y = 520;gate4x = 580;gate4y = 200;gate4type = 3;gate4rotate = 0;gate4p1 = 2;gate4p2 = 0;gate4p3 = 0;gate4p4 = 0;gate4ins = 1;gate4outs = 0;gate4in1x = 580;gate4in1y = 240;gate5x = 580;gate5y = 340;gate5type = 3;gate5rotate = 0;gate5p1 = 2;gate5p2 = 0;gate5p3 = 0;gate5p4 = 0;gate5ins = 1;gate5outs = 0;gate5in1x = 580;gate5in1y = 380;gate6x = 580;gate6y = 480;gate6type = 3;gate6rotate = 0;gate6p1 = 2;gate6p2 = 0;gate6p3 = 0;gate6p4 = 0;gate6ins = 1;gate6outs = 0;gate6in1x = 580;gate6in1y = 520;gate7x = 220;gate7y = 200;gate7type = 1;gate7rotate = 0;gate7p1 = 0;gate7p2 = 0;gate7p3 = 0;gate7p4 = 0;gate7ins = 0;gate7outs = 1;gate7out1x = 300;gate7out1y = 240;gate8x = 220;gate8y = 340;gate8type = 1;gate8rotate = 0;gate8p1 = 0;gate8p2 = 0;gate8p3 = 0;gate8p4 = 0;gate8ins = 0;gate8outs = 1;gate8out1x = 300;gate8out1y = 380;gate9x = 220;gate9y = 480;gate9type = 1;gate9rotate = 0;gate9p1 = 0;gate9p2 = 0;gate9p3 = 0;gate9p4 = 0;gate9ins = 0;gate9outs = 1;gate9out1x = 300;gate9out1y = 520;gate10x = 340;gate10y = 140;gate10type = 18;gate10rotate = 0;gate10p1 = "Delay 1 second ONTRUE";gate10p2 = 16;gate10p3 = "rgb(0,0,0)";gate10p4 = 0;gate10ins = 0;gate10outs = 0;gate11x = 340;gate11y = 280;gate11type = 18;gate11rotate = 0;gate11p1 = "Delay 1 second ONFALSE";gate11p2 = 16;gate11p3 = "rgb(0,0,0)";gate11p4 = 0;gate11ins = 0;gate11outs = 0;gate12x = 340;gate12y = 420;gate12type = 18;gate12rotate = 0;gate12p1 = "Delay 1 second both ONTRUE and ONFALSE";gate12p2 = 16;gate12p3 = "rgb(0,0,0)";gate12p4 = 0;gate12ins = 0;gate12outs = 0;gate13x = 940;gate13y = 200;gate13type = 21;gate13rotate = 0;gate13p1 = false;gate13p2 = 100;gate13p3 = 1;gate13p4 = 0;gate13ins = 1;gate13outs = 1;gate13in1x = 940;gate13in1y = 240;gate13out1x = 1020;gate13out1y = 240;gate14x = 940;gate14y = 340;gate14type = 21;gate14rotate = 0;gate14p1 = false;gate14p2 = 100;gate14p3 = 2;gate14p4 = 0;gate14ins = 1;gate14outs = 1;gate14in1x = 940;gate14in1y = 380;gate14out1x = 1020;gate14out1y = 380;gate15x = 940;gate15y = 480;gate15type = 21;gate15rotate = 0;gate15p1 = false;gate15p2 = 100;gate15p3 = 3;gate15p4 = 0;gate15ins = 1;gate15outs = 1;gate15in1x = 940;gate15in1y = 520;gate15out1x = 1020;gate15out1y = 520;gate16x = 1120;gate16y = 200;gate16type = 3;gate16rotate = 0;gate16p1 = 2;gate16p2 = 0;gate16p3 = 0;gate16p4 = 0;gate16ins = 1;gate16outs = 0;gate16in1x = 1120;gate16in1y = 240;gate17x = 1120;gate17y = 340;gate17type = 3;gate17rotate = 0;gate17p1 = 2;gate17p2 = 0;gate17p3 = 0;gate17p4 = 0;gate17ins = 1;gate17outs = 0;gate17in1x = 1120;gate17in1y = 380;gate18x = 1120;gate18y = 480;gate18type = 3;gate18rotate = 0;gate18p1 = 2;gate18p2 = 0;gate18p3 = 0;gate18p4 = 0;gate18ins = 1;gate18outs = 0;gate18in1x = 1120;gate18in1y = 520;gate19x = 760;gate19y = 200;gate19type = 1;gate19rotate = 0;gate19p1 = 0;gate19p2 = 0;gate19p3 = 0;gate19p4 = 0;gate19ins = 0;gate19outs = 1;gate19out1x = 840;gate19out1y = 240;gate20x = 760;gate20y = 340;gate20type = 1;gate20rotate = 0;gate20p1 = 0;gate20p2 = 0;gate20p3 = 0;gate20p4 = 0;gate20ins = 0;gate20outs = 1;gate20out1x = 840;gate20out1y = 380;gate21x = 760;gate21y = 480;gate21type = 1;gate21rotate = 0;gate21p1 = 0;gate21p2 = 0;gate21p3 = 0;gate21p4 = 0;gate21ins = 0;gate21outs = 1;gate21out1x = 840;gate21out1y = 520;gate22x = 880;gate22y = 140;gate22type = 18;gate22rotate = 0;gate22p1 = "Delay 100 frames ONTRUE";gate22p2 = 16;gate22p3 = "rgb(0,0,0)";gate22p4 = 0;gate22ins = 0;gate22outs = 0;gate23x = 880;gate23y = 280;gate23type = 18;gate23rotate = 0;gate23p1 = "Delay 100 frames ONFALSE";gate23p2 = 16;gate23p3 = "rgb(0,0,0)";gate23p4 = 0;gate23ins = 0;gate23outs = 0;gate24x = 880;gate24y = 420;gate24type = 18;gate24rotate = 0;gate24p1 = "Delay 100 frames both ONTRUE and ONFALSE";gate24p2 = 16;gate24p3 = "rgb(0,0,0)";gate24p4 = 0;gate24ins = 0;gate24outs = 0;gate25x = 260;gate25y = 540;gate25type = 18;gate25rotate = 0;gate25p1 = "Notice the difference between frame based delay and time based delay. Change the simulation speed to test this.";gate25p2 = 16;gate25p3 = "rgb(0,0,0)";gate25p4 = 0;gate25ins = 0;gate25outs = 0;wire1x = 400;wire1y = 380;wire1x2 = 300;wire1y2 = 380;wire2x = 480;wire2y = 380;wire2x2 = 580;wire2y2 = 380;wire3x = 480;wire3y = 240;wire3x2 = 580;wire3y2 = 240;wire4x = 480;wire4y = 520;wire4x2 = 580;wire4y2 = 520;wire5x = 400;wire5y = 520;wire5x2 = 300;wire5y2 = 520;wire6x = 300;wire6y = 240;wire6x2 = 400;wire6y2 = 240;wire7x = 940;wire7y = 240;wire7x2 = 840;wire7y2 = 240;wire8x = 840;wire8y = 380;wire8x2 = 940;wire8y2 = 380;wire9x = 940;wire9y = 520;wire9x2 = 840;wire9y2 = 520;wire10x = 1020;wire10y = 520;wire10x2 = 1120;wire10y2 = 520;wire11x = 1120;wire11y = 380;wire11x2 = 1020;wire11y2 = 380;wire12x = 1020;wire12y = 240;wire12x2 = 1120;wire12y2 = 240;
+document.getElementById('moocowwowyayaaa').style.display = 'none';go_drawwa();gates = aagates;wires = aawires;centercenter();if (mrmode != 6){document.getElementById('option1').selected=true;mrmode = 6;lets_go();}
+}
+function demo_chaser(){
+begintime = (((new Date()).getTime()) - 4);aagates = 0; aawires = 0;mrcolor = 'rgb(255,255,255)';mrdrag = 0;wires = 0;gates = 0;speednumber = 4;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000)
+aagates = 12;aawires = 31;gate1x = 340;gate1y = 340;gate1type = 21;gate1rotate = 0;gate1p1 = true;gate1p2 = 200;gate1p3 = 1;gate1p4 = 0;gate1ins = 1;gate1outs = 1;gate1in1x = 340;gate1in1y = 380;gate1out1x = 420;gate1out1y = 380;gate2x = 560;gate2y = 340;gate2type = 21;gate2rotate = 0;gate2p1 = true;gate2p2 = 200;gate2p3 = 1;gate2p4 = 0;gate2ins = 1;gate2outs = 1;gate2in1x = 560;gate2in1y = 380;gate2out1x = 640;gate2out1y = 380;gate3x = 780;gate3y = 340;gate3type = 21;gate3rotate = 0;gate3p1 = true;gate3p2 = 200;gate3p3 = 1;gate3p4 = 0;gate3ins = 1;gate3outs = 1;gate3in1x = 780;gate3in1y = 380;gate3out1x = 860;gate3out1y = 380;gate4x = 120;gate4y = 340;gate4type = 21;gate4rotate = 0;gate4p1 = true;gate4p2 = 200;gate4p3 = 1;gate4p4 = 0;gate4ins = 1;gate4outs = 1;gate4in1x = 120;gate4in1y = 380;gate4out1x = 200;gate4out1y = 380;gate5x = 220;gate5y = 360;gate5type = 22;gate5rotate = 0;gate5p1 = false;gate5p2 = 0;gate5p3 = 0;gate5p4 = 0;gate5ins = 2;gate5outs = 2;gate5in1x = 220;gate5in1y = 380;gate5in2x = 220;gate5in2y = 420;gate5out1x = 300;gate5out1y = 380;gate5out2x = 300;gate5out2y = 420;gate6x = 440;gate6y = 360;gate6type = 22;gate6rotate = 0;gate6p1 = false;gate6p2 = 0;gate6p3 = 0;gate6p4 = 0;gate6ins = 2;gate6outs = 2;gate6in1x = 440;gate6in1y = 380;gate6in2x = 440;gate6in2y = 420;gate6out1x = 520;gate6out1y = 380;gate6out2x = 520;gate6out2y = 420;gate7x = 660;gate7y = 360;gate7type = 22;gate7rotate = 0;gate7p1 = false;gate7p2 = 0;gate7p3 = 0;gate7p4 = 0;gate7ins = 2;gate7outs = 2;gate7in1x = 660;gate7in1y = 380;gate7in2x = 660;gate7in2y = 420;gate7out1x = 740;gate7out1y = 380;gate7out2x = 740;gate7out2y = 420;gate8x = 880;gate8y = 360;gate8type = 22;gate8rotate = 0;gate8p1 = true;gate8p2 = 0;gate8p3 = 0;gate8p4 = 0;gate8ins = 2;gate8outs = 2;gate8in1x = 880;gate8in1y = 380;gate8in2x = 880;gate8in2y = 420;gate8out1x = 960;gate8out1y = 380;gate8out2x = 960;gate8out2y = 420;gate9x = 340;gate9y = 180;gate9type = 3;gate9rotate = 3;gate9p1 = 2;gate9p2 = 0;gate9p3 = 0;gate9p4 = 0;gate9ins = 1;gate9outs = 0;gate9in1x = 380;gate9in1y = 260;gate10x = 420;gate10y = 180;gate10type = 3;gate10rotate = 3;gate10p1 = 2;gate10p2 = 0;gate10p3 = 0;gate10p4 = 0;gate10ins = 1;gate10outs = 0;gate10in1x = 460;gate10in1y = 260;gate11x = 500;gate11y = 180;gate11type = 3;gate11rotate = 3;gate11p1 = 2;gate11p2 = 0;gate11p3 = 0;gate11p4 = 0;gate11ins = 1;gate11outs = 0;gate11in1x = 540;gate11in1y = 260;gate12x = 580;gate12y = 180;gate12type = 3;gate12rotate = 3;gate12p1 = 2;gate12p2 = 0;gate12p3 = 0;gate12p4 = 0;gate12ins = 1;gate12outs = 0;gate12in1x = 620;gate12in1y = 260;wire1x = 220;wire1y = 380;wire1x2 = 200;wire1y2 = 380;wire2x = 300;wire2y = 380;wire2x2 = 340;wire2y2 = 380;wire3x = 860;wire3y = 380;wire3x2 = 880;wire3y2 = 380;wire4x = 780;wire4y = 380;wire4x2 = 740;wire4y2 = 380;wire5x = 960;wire5y = 380;wire5x2 = 960;wire5y2 = 340;wire6x = 960;wire6y = 340;wire6x2 = 120;wire6y2 = 340;wire7x = 120;wire7y = 340;wire7x2 = 120;wire7y2 = 380;wire8x = 560;wire8y = 380;wire8x2 = 520;wire8y2 = 380;wire9x = 660;wire9y = 380;wire9x2 = 640;wire9y2 = 380;wire10x = 440;wire10y = 380;wire10x2 = 420;wire10y2 = 380;wire11x = 760;wire11y = 380;wire11x2 = 760;wire11y2 = 460;wire12x = 760;wire12y = 460;wire12x2 = 440;wire12y2 = 460;wire13x = 440;wire13y = 460;wire13x2 = 440;wire13y2 = 420;wire14x = 660;wire14y = 440;wire14x2 = 660;wire14y2 = 420;wire15x = 540;wire15y = 380;wire15x2 = 540;wire15y2 = 440;wire16x = 540;wire16y = 440;wire16x2 = 220;wire16y2 = 440;wire17x = 220;wire17y = 440;wire17x2 = 220;wire17y2 = 420;wire18x = 320;wire18y = 380;wire18x2 = 320;wire18y2 = 480;wire19x = 320;wire19y = 480;wire19x2 = 880;wire19y2 = 480;wire20x = 880;wire20y = 480;wire20x2 = 880;wire20y2 = 420;wire21x = 960;wire21y = 380;wire21x2 = 980;wire21y2 = 380;wire22x = 980;wire22y = 380;wire22x2 = 980;wire22y2 = 440;wire23x = 980;wire23y = 440;wire23x2 = 660;wire23y2 = 440;wire24x = 540;wire24y = 380;wire24x2 = 540;wire24y2 = 260;wire25x = 320;wire25y = 380;wire25x2 = 320;wire25y2 = 320;wire26x = 320;wire26y = 320;wire26x2 = 460;wire26y2 = 320;wire27x = 460;wire27y = 320;wire27x2 = 460;wire27y2 = 260;wire28x = 380;wire28y = 260;wire28x2 = 380;wire28y2 = 340;wire29x = 620;wire29y = 260;wire29x2 = 620;wire29y2 = 300;wire30x = 620;wire30y = 300;wire30x2 = 760;wire30y2 = 300;wire31x = 760;wire31y = 300;wire31x2 = 760;wire31y2 = 380;
+document.getElementById('moocowwowyayaaa').style.display = 'none';go_drawwa();gates = aagates;wires = aawires;centercenter();if (mrmode != 6){document.getElementById('option1').selected=true;mrmode = 6;lets_go();}
+}
+
+
+
+
+</script></head><body style="margin: 0pt;background-color:#000000;overflow: hidden;" onkeydown="fgfdssghgf(event)" onkeypress="fgfdsghgf(event)" onkeyup="fgfdssdfghgf(event)" onmousemove="mousemove(event)" onresize="duhfsdupgh()" onload="moo1();">
+<canvas oncontextmenu="return(false);" id="canvas" width="150" height="100" onmousedown="mousedown(event)" onmouseup="mouseup()" ></canvas>
+<div oncontextmenu="return(false);" id="moocowwowyay" style="position: fixed; top: 0px; right: 0px; width: 164px; bottom: 0px; background-color:#DDDDDD; padding:2px; margin:0px; -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;"><form name="frm" id="myform"><font face="arial">
+<font size="3"><b>Select mouse action</b></font><br />
+<SELECT onchange="ihateie1(this.selectedIndex)" NAME = "aaqq" id="aaqq" SIZE = 5 STYLE = "Width: 140" disabled="disabled">
+<OPTION id="option1" selected="selected">RUN CURCUIT!</OPTION>
+<OPTION id="option2">DRAW WIRE</OPTION>
+<OPTION id="option3">CREATE OBJECT</OPTION>
+<OPTION id="option4">MOVE OBJECT</OPTION>
+<OPTION id="option6">DELETE OBJECT</OPTION>
+</SELECT>
+<hr />
+<font size="3"><b>Logic gates</b></font><br />
+<SELECT onmousedown="hasdohsidhsdoj()" onchange="ihateie2(this.selectedIndex)" NAME = "aaqqa" id="aaqqa" SIZE = 18 STYLE = "Width: 140" disabled="disabled">
+<OPTION>SWITCH</OPTION>
+<OPTION>LED LIGHT</OPTION>
+<OPTION>TRUE (hi)</OPTION>
+<OPTION>FALSE (low)</OPTION>
+<OPTION>NOT</OPTION>
+<OPTION>AND</OPTION>
+<OPTION>OR</OPTION>
+<OPTION>NAND</OPTION>
+<OPTION>NOR</OPTION>
+<OPTION>XOR</OPTION>
+<OPTION>XNOR</OPTION>
+<OPTION>FLIP FLOP</OPTION>
+<OPTION>DELAY TIMER</OPTION>
+<OPTION>Signal generator</OPTION>
+<OPTION>Number counter</OPTION>
+<OPTION>Do every X frames</OPTION>
+<OPTION>KEYBOARD</OPTION>
+<OPTION>DISPLAY</OPTION>
+<OPTION>TEXT</OPTION>
+
+
+
+
+</SELECT>
+<input NAME = "b1" id="b1" type="button" value="PROPERTIES" onClick="cust()" disabled="disabled" />
+<hr />
+<font size="3">Speed:</font> <input NAME = "b6" id="b6" disabled="disabled" type="button" value="+" onClick="if (speednumber < 40000){speednumber *= 2;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000);}" />
+<input NAME = "b7" id="b7" disabled="disabled" type="button" value="-" onClick="if (speednumber > 0.01){speednumber /= 2;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000);}" /> <font size = 3 id="jqce">4</font>
+<hr />
+<font size="4">Load and Save</font>
+<input NAME = "b4" id="b4" disabled="disabled" type="button" value="NEW BLANK PROJECT" onClick="begintime = (((new Date()).getTime()) - 4);mrcolor = 'rgb(255,255,255)';mrdrag = 0;if (confirm('Any unsaved changes to your current project will be lost\n\nDo you want to continue')){wires = 0;gates = 0;centercenter();speednumber = 8;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000);if (mrmode != 6){go_draww();go_drawww();}}" />
+<input NAME = "b3" id="b3" disabled="disabled" type="button" value="OPEN PROJECT" onClick="mrdrag = 0;document.getElementById('moocowwowyayaa').style.display = 'inline';document.getElementById('ineedapooa').value = '';" />
+<input NAME = "b2" id="b2" disabled="disabled" type="button" value="SAVE PROJECT" onClick="mrdrag = 0;hfsdhughfd()" />
+<input NAME = "b5" id="b5" disabled="disabled" type="button" value="EXAMPLE PROJECTS" onClick="mrdrag = 0;document.getElementById('moocowwowyayaaa').style.display = 'inline';" />
+<a class="poo" href="#" onclick="cust();"></a>
+<hr />
+<font size="3">See the rest of my games on my website<br /><a href="https://beno.uk/games">beno.uk/games</a></font>
+
+<hr />
+<font size="3">Beno Logic Gates</font><font size="2"><br />Version 1.3<br />Copyright (C) Beno<br />All rights reserved</font>
+
+</form></font></div>
+
+<div id="moocowwowyaya" style="position: fixed; top: 4px; right: 173px; width: 300px; height: 230px; background-color:#DDDDDD; border:1px solid black; padding:2px; margin:0px; display:none;"><form name="frma" id="myforma">
+<font size="3" face="arial">Here is your code, Copy and paste it to a file on your computer, so that you can carry on with your project at a later date.</font>
+<textarea id="ineedapoo" rows="8" cols="34" readonly></textarea>
+<input type="button" value="CLOSE" onClick="mrdrag = 0;document.getElementById('moocowwowyaya').style.display = 'none';" />
+</form></div>
+
+<div id="moocowwowyayaa" style="position: fixed; top: 240px; right: 173px; width: 300px; height: 200px; background-color:#DDDDDD; border:1px solid black; padding:2px; margin:0px; display:none;"><form name="frmaa" id="myformaa">
+<font size="4" face="arial">Paste your code into the box.</font>
+<textarea id="ineedapooa" rows="8" cols="34"></textarea>
+<input type="button" value="INPORT CODE" onClick="begintime = (((new Date()).getTime()) - 4);aagates = 0; aawires = 0;mrcolor = 'rgb(255,255,255)';mrdrag = 0;wires = 0;gates = 0;speednumber = 8;document.getElementById('jqce').innerHTML=((Math.floor(speednumber*1000)) / 1000);eval(document.getElementById('ineedapooa').value);document.getElementById('moocowwowyayaa').style.display = 'none';go_drawwa();gates = aagates;wires = aawires;centercenter();if (mrmode != 6){document.getElementById('option1').selected=true;mrmode = 6;lets_go();}" />
+<input type="button" value="CANCEL" onClick="mrdrag = 0;document.getElementById('moocowwowyayaa').style.display = 'none';" />
+</form></div>
+
+
+<div id="moocowwowyayaaa" style="position: fixed; top: 4px; right: 173px; width: 300px; height: 460px; background-color:#DDDDDD; border:1px solid black; padding:2px; margin:0px; display:none;">
+<font size="4" face="arial">Here are my example projects...</font>
+<form name="frmaaa" id="myformaaa">
+<hr />
+<input type="button" value="LOGIC GATES" onClick="demo_logic();" /><br />
+<input type="button" value="SIGNAL GENERATOR" onClick="demo_signal();" /><br />
+<input type="button" value="DELAY" onClick="demo_delay();" /><br />
+<input type="button" value="KEYBOARD DEMO" onClick="demo_keyboard();" /><br />
+<input type="button" value="CHASER LIGHTS" onClick="demo_chaser();" /><br />
+<hr />
+<input type="button" value="CLOSE" onClick="document.getElementById('moocowwowyayaaa').style.display = 'none';" />
+</form>
+</div>
+
+</body></html>

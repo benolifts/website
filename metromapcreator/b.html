@@ -1,0 +1,2143 @@
+<html><head><meta http-equiv="content-type" content="text/html;">
+<title>METRO MAP CREATOR</title><style type="text/css">
+a.poo:link, a.poo:visited, a.poo:active
+{
+background-color:#999999; border:1px solid black; padding:1px; margin:4px;font-size:16px;font-weight: bold;text-decoration:none;font-family:arial;color:#000000;
+}
+a.poo:hover
+{
+background-color:#BBBBBB
+}
+a.poo2 img
+{
+margin:1px;border:none;vertical-align: top;align: center; padding:0px;float: left
+}
+</style><script type="text/javascript">
+  ;
+
+  ;
+
+
+function addrouteyay(qqwweerr){
+//var x=document.getElementById("aaqq");
+//var option=document.createElement("option");
+//option.text=qqwweerr
+//option.setAttribute('onclick', 'currentroute = ' + (numlines + 1) + '; routechange();');
+//option.setAttribute('id', 'option' + (numlines + 1));
+//option.setAttribute('selected', 'selected');
+//try
+//{
+//x.add(option,x.options[null]);
+//}
+//catch (e)
+//{
+//x.add(option,null);
+//}
+numlines++
+currentroute = numlines
+window["line" + numlines + "stations"] = 0
+window["line" + numlines + "ver"] = 0
+window["line" + numlines + "hor"] = 0
+window["line" + numlines + "topleft"] = 0
+window["line" + numlines + "topright"] = 0
+window["line" + numlines + "col"] = '#000000'
+window["line" + numlines + "width"] = 4
+routechange()
+}
+
+function routechange(){
+//document.getElementById('colbox').color.fromString(eval("line" + currentroute + "col"))
+//document.forms['myform'].widbox.value = (eval("line" + currentroute + "width"))
+//document.forms['myform'].nambox.value = document.getElementById('option' + currentroute).innerHTML
+}
+
+function setroutes(zzxxccvv){
+undo = 0
+redo = 0
+while (numlines > 0){
+//var parent = document.getElementsByTagName('aaqq');
+//var elem = document.getElementById('option' + numlines);
+//var old = (elem.parentNode).removeChild(elem);
+numlines--
+}
+while (numlines < zzxxccvv){
+addrouteyay('ROUTE ' + (numlines + 1))
+}}
+
+
+function makebig(){
+thedata = ""
+fsdagershfgt = 5
+if (!(confirm("Welcome to the high res map image creator.\n\nClick OK for default scale, click cancel for custom."))){
+fsdagershfgt = eval(prompt("Enter the scale of the high res image. The default is 5.","5"))
+}
+
+
+thedata += (";fontzsize = " + (fontzsize * fsdagershfgt) )
+
+q1 = 1
+while ((q1 - 1) < numlines ){
+thedata += (";line" + q1 + "width = " + ((eval ("line" + q1 + "width")) * fsdagershfgt))
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "ver"))){
+thedata += (";line" + q1 + "ver" + q2 + "x = " + ((eval ("line" + q1 + "ver" + q2 + "x")) * fsdagershfgt))
+thedata += (";line" + q1 + "ver" + q2 + "y1 = " + ((eval ("line" + q1 + "ver" + q2 + "y1")) * fsdagershfgt))
+thedata += (";line" + q1 + "ver" + q2 + "y2 = " + ((eval ("line" + q1 + "ver" + q2 + "y2")) * fsdagershfgt))
+q2++
+}
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "hor"))){
+thedata += (";line" + q1 + "hor" + q2 + "x1 = " + ((eval ("line" + q1 + "hor" + q2 + "x1")) * fsdagershfgt))
+thedata += (";line" + q1 + "hor" + q2 + "x2 = " + ((eval ("line" + q1 + "hor" + q2 + "x2")) * fsdagershfgt))
+thedata += (";line" + q1 + "hor" + q2 + "y = " + ((eval ("line" + q1 + "hor" + q2 + "y")) * fsdagershfgt))
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+thedata += (";line" + q1 + "topleft" + q2 + "x = " + ((eval ("line" + q1 + "topleft" + q2 + "x")) * fsdagershfgt))
+thedata += (";line" + q1 + "topleft" + q2 + "y = " + ((eval ("line" + q1 + "topleft" + q2 + "y")) * fsdagershfgt))
+thedata += (";line" + q1 + "topleft" + q2 + "width = " + ((eval ("line" + q1 + "topleft" + q2 + "width")) * fsdagershfgt))
+q2++
+}
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+thedata += (";line" + q1 + "topright" + q2 + "x = " + ((eval ("line" + q1 + "topright" + q2 + "x")) * fsdagershfgt))
+thedata += (";line" + q1 + "topright" + q2 + "y = " + ((eval ("line" + q1 + "topright" + q2 + "y")) * fsdagershfgt))
+thedata += (";line" + q1 + "topright" + q2 + "width = " + ((eval ("line" + q1 + "topright" + q2 + "width")) * fsdagershfgt))
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "stations"))){
+thedata += (";line" + q1 + "station" + q2 + "x = " + ((eval ("line" + q1 + "station" + q2 + "x")) * fsdagershfgt))
+thedata += (";line" + q1 + "station" + q2 + "y = " + ((eval ("line" + q1 + "station" + q2 + "y")) * fsdagershfgt))
+q2++
+}
+
+
+
+
+
+
+q1++
+}
+
+
+
+eval(thedata)
+}
+
+
+function fdjgnqaqag(){
+
+
+if (confirm('Do you want the image to have a white background or a alpha transparent background?\n\nIf you want to add your own image as the background using anouther program you must have an alpha transparent background\n\nClick OK for a white background\nClick CANCLE for an alpha transparent background')){
+cowpatuuuuu = 0
+drawmap(1)
+cowpatuuuuu = 1
+}else{
+cowpatuuuuu = 1
+drawmap(1)
+cowpatuuuuu = 1
+}
+
+setTimeout("juhy = canvas.toDataURL();window.open(juhy,'_self')",20);
+
+
+}
+
+
+
+
+
+
+/////////////////////////////////////////////
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////set up
+//////////////////////////////////////////////////////
+
+function moo(){
+setTimeout("moosghjghjgh()",32)
+}
+function moosghjghjgh(){
+var currentURL = window.location;
+canvas = document.getElementById("canvas");
+ctx = canvas.getContext("2d");
+if ((currentURL.hostname == 'beno.uk') || (currentURL.hostname == 'www.beno.uk')){
+wow()
+}else{
+alert('This app is from my website: beno.uk\nYou are not running it from this site.\n\nI have put a lot of time and effort to make this app for you.\nThe very least you can do in return is to run it from my website,\nso that my website gets lots of page views.\n\nOtherwise I will not feel like making any more games.')
+}}
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////set up vars
+//////////////////////////////////////////////////////
+
+
+numlines = 2
+line1ver = 0
+line1hor = 0
+line1topleft = 0
+line1topright = 0
+line1col = '#0000F0'
+line1width = 4
+line1stations = 0
+
+line1hor1x1 = 100
+line1hor1x2 = 500
+line1hor1y = 200
+
+line1station1x = 200
+line1station1y = 200
+line1station1type = 1
+line1station1dir = 2
+line1station1text = "00000000000"
+line1station2x = 250
+line1station2y = 200
+line1station2type = 4
+line1station2dir = 2
+line1station2text = "00000000000"
+line1station3x = 300
+line1station3y = 200
+line1station3type = 3
+line1station3dir = 2
+line1station3text = "00000000000"
+line1station4x = 350
+line1station4y = 200
+line1station4type = 2
+line1station4dir = 2
+line1station4text = "00000000000"
+line1station5x = 400
+line1station5y = 200
+line1station5type = 5
+line1station5dir = 2
+line1station5text = "00000000000"
+
+
+
+
+line2ver = 0
+line2hor = 0
+line2topleft = 0
+line2topright = 0
+line2col = '#f00000'
+line2width = 4
+line2stations = 0
+
+
+stat1q = 1.2
+stat2q = 2
+stat3q = 1.85
+stat3aq = 1.2
+stat4q = 1.2
+stat4aq = 0.95
+stat5q = 3
+stat5aq = 2.25
+
+
+
+
+mousemodem = 0
+mousemodeu = 0
+mousemoded = 1
+
+currentroute = 1
+
+startx = 0
+starty = 0
+endx = 0
+endy = 0
+eendx = 0
+eendy = 0
+angleaa = 0
+
+undo = 0
+redo = 0
+
+curvenum = 2
+jumpnum = 2.4
+cowpatuuuuu = 1
+fontzsize = 10
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////at last! it is now time for the game
+//////////////////////////////////////////////////////
+
+
+function wow(){
+document.getElementById('loader').style.display = 'block'
+}
+
+
+function ev_mousemove (ev) {
+if (ev.layerX || ev.layerX == 0) { // Firefox
+axmouse = ev.layerX;
+aymouse = ev.layerY;
+} else if (ev.offsetX || ev.offsetX == 0) { // Opera
+axmouse = ev.offsetX;
+aymouse = ev.offsetY;
+}
+
+if (mousemodem == 3){
+s1 = startxjumper(axmouse, aymouse)
+s2 = startyjumper(aymouse, axmouse)
+if ((yjumped == 1) || (xjumped == 1)){
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'x'] = s1
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'y'] = s2
+drawmap(0)
+}}
+
+if (mousemodem == 1){
+
+endx = axmouse
+endy = aymouse
+if ((startx != endx) || (starty != endy)){
+asdasd = ((Math.atan2((endx-startx),(endy-starty)))*(180/Math.PI) + 180)
+angleaa = 0
+mooaaa = (endx - startx)
+
+if ((asdasd < 30) || (asdasd > 329)){
+aeendx = startx
+aeendy = endy
+angleaa = 1
+}
+
+if ((asdasd < 60) && (asdasd > 29)){
+aeendx = (startx + mooaaa)
+aeendy = (starty + mooaaa)
+angleaa = 2
+}
+
+if ((asdasd < 120) && (asdasd > 59)){
+aeendx = endx
+aeendy = starty
+angleaa = 3
+}
+
+if ((asdasd < 150) && (asdasd > 119)){
+aeendx = (startx + mooaaa)
+aeendy = (starty - mooaaa)
+angleaa = 4
+}
+
+if ((asdasd < 210) && (asdasd > 149)){
+aeendx = startx
+aeendy = endy
+angleaa = 5
+}
+
+if ((asdasd < 240) && (asdasd > 209)){
+aeendx = (startx + mooaaa)
+aeendy = (starty + mooaaa)
+angleaa = 6
+}
+
+if ((asdasd < 300) && (asdasd > 239)){
+aeendx = endx
+aeendy = starty
+angleaa = 7
+}
+
+if ((asdasd < 330) && (asdasd > 299)){
+aeendx = (startx + mooaaa)
+aeendy = (starty - mooaaa)
+angleaa = 8
+}
+
+
+
+
+s1 = startxjumper(aeendx, aeendy)
+s2 = startyjumper(aeendy, aeendx)
+endx = s1
+endy = s2
+
+mooaaa = (s1 - startx)
+
+
+if ((asdasd < 30) || (asdasd > 329)){
+eendx = startx
+eendy = endy
+angleaa = 1
+}
+
+if ((asdasd < 60) && (asdasd > 29)){
+eendx = (startx + mooaaa)
+eendy = (starty + mooaaa)
+mooaaaa = startyjumper(eendy, eendx)
+mooaaa = mooaaaa - starty
+eendx = (startx + mooaaa)
+eendy = (starty + mooaaa)
+angleaa = 2
+}
+
+if ((asdasd < 120) && (asdasd > 59)){
+eendx = endx
+eendy = starty
+angleaa = 3
+}
+
+if ((asdasd < 150) && (asdasd > 119)){
+eendx = (startx + mooaaa)
+eendy = (starty - mooaaa)
+mooaaaa = startyjumper(eendy, eendx)
+mooaaa = starty - mooaaaa
+eendx = (startx + mooaaa)
+eendy = (starty - mooaaa)
+angleaa = 4
+}
+
+if ((asdasd < 210) && (asdasd > 149)){
+eendx = startx
+eendy = endy
+angleaa = 5
+}
+
+if ((asdasd < 240) && (asdasd > 209)){
+eendx = (startx + mooaaa)
+eendy = (starty + mooaaa)
+mooaaaa = startyjumper(eendy, eendx)
+mooaaa = mooaaaa - starty
+eendx = (startx + mooaaa)
+eendy = (starty + mooaaa)
+
+angleaa = 6
+}
+
+if ((asdasd < 300) && (asdasd > 239)){
+eendx = endx
+eendy = starty
+angleaa = 7
+}
+
+if ((asdasd < 330) && (asdasd > 299)){
+eendx = (startx + mooaaa)
+eendy = (starty - mooaaa)
+angleaa = 8
+mooaaaa = startyjumper(eendy, eendx)
+mooaaa = starty - mooaaaa
+eendx = (startx + mooaaa)
+eendy = (starty - mooaaa)
+}
+
+
+
+
+
+
+
+
+
+drawmap(0)
+if ((startx != eendx) || (starty != eendy)){
+ctx.strokeStyle = (eval ("line" + currentroute + "col"))
+ctx.lineWidth = (eval ("line" + currentroute + "width"))
+ctx.beginPath()
+ctx.moveTo(startx,starty)
+ctx.lineTo(eendx,eendy) 
+ctx.stroke()
+}}}
+
+
+
+}
+
+
+function ev_mouseup (ev) {
+
+if (mousemodeu == 3){
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'text'] = prompt('Enter a name for your station\n\n(If you want more than one line of text type \\n)','station')
+drawmap(1)
+mousemodem = 0
+mousemodeu = 0
+mousemoded = 3
+undo++
+redo = undo
+window["undo" + undo] = ('line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'type = 0')
+window["redo" + undo] = ('line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'type = ' + (eval('line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'type')))
+}
+
+if (mousemodeu == 1){
+if ((startx != endx) || (starty != endy)){
+if ((startx != eendx) || (starty != eendy)){
+
+if (angleaa == 1){
+window['line' + currentroute + 'ver']++
+window['line' + currentroute + 'ver' + (eval('line' + currentroute + 'ver')) + 'x'] = startx
+window['line' + currentroute + 'ver' + (eval('line' + currentroute + 'ver')) + 'y1'] = eendy
+window['line' + currentroute + 'ver' + (eval('line' + currentroute + 'ver')) + 'y2'] = starty
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "ver--")
+window["redo" + undo] = ("line" + currentroute + "ver++")
+}
+
+if (angleaa == 5){
+window['line' + currentroute + 'ver']++
+window['line' + currentroute + 'ver' + (eval('line' + currentroute + 'ver')) + 'x'] = startx
+window['line' + currentroute + 'ver' + (eval('line' + currentroute + 'ver')) + 'y2'] = eendy
+window['line' + currentroute + 'ver' + (eval('line' + currentroute + 'ver')) + 'y1'] = starty
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "ver--")
+window["redo" + undo] = ("line" + currentroute + "ver++")
+}
+
+if (angleaa == 3){
+window['line' + currentroute + 'hor']++
+window['line' + currentroute + 'hor' + (eval('line' + currentroute + 'hor')) + 'y'] = starty
+window['line' + currentroute + 'hor' + (eval('line' + currentroute + 'hor')) + 'x1'] = eendx
+window['line' + currentroute + 'hor' + (eval('line' + currentroute + 'hor')) + 'x2'] = startx
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "hor--")
+window["redo" + undo] = ("line" + currentroute + "hor++")
+}
+
+if (angleaa == 7){
+window['line' + currentroute + 'hor']++
+window['line' + currentroute + 'hor' + (eval('line' + currentroute + 'hor')) + 'y'] = starty
+window['line' + currentroute + 'hor' + (eval('line' + currentroute + 'hor')) + 'x2'] = eendx
+window['line' + currentroute + 'hor' + (eval('line' + currentroute + 'hor')) + 'x1'] = startx
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "hor--")
+window["redo" + undo] = ("line" + currentroute + "hor++")
+}
+
+if (angleaa == 6){
+window['line' + currentroute + 'topleft']++
+window['line' + currentroute + 'topleft' + (eval('line' + currentroute + 'topleft')) + 'x'] = startx
+window['line' + currentroute + 'topleft' + (eval('line' + currentroute + 'topleft')) + 'y'] = starty
+window['line' + currentroute + 'topleft' + (eval('line' + currentroute + 'topleft')) + 'width'] = mooaaa
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "topleft--")
+window["redo" + undo] = ("line" + currentroute + "topleft++")
+}
+
+
+if (angleaa == 4){
+window['line' + currentroute + 'topright']++
+window['line' + currentroute + 'topright' + (eval('line' + currentroute + 'topright')) + 'x'] = startx
+window['line' + currentroute + 'topright' + (eval('line' + currentroute + 'topright')) + 'y'] = starty
+window['line' + currentroute + 'topright' + (eval('line' + currentroute + 'topright')) + 'width'] = (0 - mooaaa)
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "topright--")
+window["redo" + undo] = ("line" + currentroute + "topright++")
+}
+
+
+if (angleaa == 2){
+window['line' + currentroute + 'topleft']++
+window['line' + currentroute + 'topleft' + (eval('line' + currentroute + 'topleft')) + 'x'] = (startx + mooaaa)
+window['line' + currentroute + 'topleft' + (eval('line' + currentroute + 'topleft')) + 'y'] = (starty + mooaaa)
+window['line' + currentroute + 'topleft' + (eval('line' + currentroute + 'topleft')) + 'width'] = (0 - mooaaa)
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "topleft--")
+window["redo" + undo] = ("line" + currentroute + "topleft++")
+}
+
+
+
+if (angleaa == 8){
+window['line' + currentroute + 'topright']++
+window['line' + currentroute + 'topright' + (eval('line' + currentroute + 'topright')) + 'x'] = (startx + mooaaa)
+window['line' + currentroute + 'topright' + (eval('line' + currentroute + 'topright')) + 'y'] = (starty - mooaaa)
+window['line' + currentroute + 'topright' + (eval('line' + currentroute + 'topright')) + 'width'] = mooaaa
+undo++
+redo = undo
+window["undo" + undo] = ("line" + currentroute + "topright--")
+window["redo" + undo] = ("line" + currentroute + "topright++")
+}
+
+
+
+}}
+mousemodem = 0
+mousemodeu = 0
+mousemoded = 1
+drawmap(1)
+}
+
+}
+
+function ev_mousedown (ev) {
+if (ev.layerX || ev.layerX == 0) { // Firefox
+axmouse = ev.layerX;
+aymouse = ev.layerY;
+} else if (ev.offsetX || ev.offsetX == 0) { // Opera
+axmouse = ev.offsetX;
+aymouse = ev.offsetY;
+}
+
+if (mousemoded == 1){
+s1 = startxjumper(axmouse, aymouse)
+s2 = startyjumper(aymouse, axmouse)
+startx = s1
+starty = s2
+endx = s1
+endy = s2
+eendx = s1
+eendy = s2
+angleaa = 0
+mousemodem = 1
+mousemodeu = 1
+mousemoded = 0
+}
+
+if (mousemoded == 4){
+s1 = axmouse
+s2 = aymouse
+
+q5 = 1
+q6 = eval('line' + currentroute + 'stations')
+
+
+while((q5 - 1) < q6){
+
+if ((axmouse - ((eval('line' + currentroute + 'width')) * 2)) < (eval('line' + currentroute + 'station' + q5 + 'x'))){
+if ((axmouse + ((eval('line' + currentroute + 'width')) * 2)) > (eval('line' + currentroute + 'station' + q5 + 'x'))){
+if ((aymouse - ((eval('line' + currentroute + 'width')) * 2)) < (eval('line' + currentroute + 'station' + q5 + 'y'))){
+if ((aymouse + ((eval('line' + currentroute + 'width')) * 2)) > (eval('line' + currentroute + 'station' + q5 + 'y'))){
+
+
+undo++
+redo = undo
+window["undo" + undo] = ('line' + currentroute + 'station' + q5 + 'type = ' + (eval('line' + currentroute + 'station' + q5 + 'type')))
+window["redo" + undo] = ('line' + currentroute + 'station' + q5 + 'type = 0')
+window['line' + currentroute + 'station' + q5 + 'type'] = 0
+
+
+}}}}
+q5++
+}
+drawmap(1)
+}
+
+
+if (mousemoded == 3){
+s1 = startxjumper(axmouse, aymouse)
+s2 = startyjumper(aymouse, axmouse)
+if ((yjumped == 1) || (xjumped == 1)){
+window['line' + currentroute + 'stations']++
+chosen = ""
+len = document.frm3.qkk.length
+for (i = 0; i <len; i++) {
+if (document.frm3.qkk[i].checked) {
+chosen = document.frm3.qkk[i].value
+}
+}
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'type'] = eval(chosen)
+chosen = ""
+len = document.frm3.qk.length
+for (i = 0; i <len; i++) {
+if (document.frm3.qk[i].checked) {
+chosen = document.frm3.qk[i].value
+}
+}
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'dir'] = eval(chosen)
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'x'] = s1
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'y'] = s2
+window['line' + currentroute + 'station' + (eval('line' + currentroute + 'stations')) + 'text'] = ' '
+drawmap(0)
+mousemodem = 3
+mousemodeu = 3
+mousemoded = 0
+}}
+
+
+
+if (mousemoded == 2){
+s1 = startxjumper(axmouse, aymouse)
+s2 = startyjumper(aymouse, axmouse)
+
+qq1 = currentroute
+
+qq2 = 1
+while ((qq2 - 1) < (eval ("line" + qq1 + "ver"))){
+if (((eval ("line" + qq1 + "ver" + qq2 + "x")) == s1) && ((eval ("line" + qq1 + "ver" + qq2 + "y1")) <= s2) && ((eval ("line" + qq1 + "ver" + qq2 + "y2")) >= s2)){
+undo++
+redo = undo
+window["undo" + undo] = ("line" + qq1 + "ver" + qq2 + "x = " + eval("line" + qq1 + "ver" + qq2 + "x") + ";line" + qq1 + "ver" + qq2 + "y1 = " + eval("line" + qq1 + "ver" + qq2 + "y1") + ";line" + qq1 + "ver" + qq2 + "y2 = " + eval("line" + qq1 + "ver" + qq2 + "y2"))
+window["redo" + undo] = ("line" + qq1 + "ver" + qq2 + "x = " + -10 + ";line" + qq1 + "ver" + qq2 + "y1 = " + -10 + ";line" + qq1 + "ver" + qq2 + "y2 = " + -10)
+eval(eval("redo" + undo))
+drawmap(1)
+}
+qq2++
+}
+qq2 = 1
+while ((qq2 - 1) < (eval ("line" + qq1 + "hor"))){
+if (((eval ("line" + qq1 + "hor" + qq2 + "y")) == s2) && ((eval ("line" + qq1 + "hor" + qq2 + "x1")) <= s1) && ((eval ("line" + qq1 + "hor" + qq2 + "x2")) >= s1)){
+undo++
+redo = undo
+window["undo" + undo] = ("line" + qq1 + "hor" + qq2 + "y = " + eval("line" + qq1 + "hor" + qq2 + "y") + ";line" + qq1 + "hor" + qq2 + "x1 = " + eval("line" + qq1 + "hor" + qq2 + "x1") + ";line" + qq1 + "hor" + qq2 + "x2 = " + eval("line" + qq1 + "hor" + qq2 + "x2"))
+window["redo" + undo] = ("line" + qq1 + "hor" + qq2 + "y = " + -20 + ";line" + qq1 + "hor" + qq2 + "x1 = " + -20 + ";line" + qq1 + "hor" + qq2 + "x2 = " + -20)
+eval(eval("redo" + undo))
+drawmap(1)
+}
+qq2++
+}
+
+qq2 = 1
+while ((qq2 - 1) < (eval ("line" + qq1 + "topleft"))){
+if (((eval ("line" + qq1 + "topleft" + qq2 + "y")) == s2) && ((eval ("line" + qq1 + "topleft" + qq2 + "x")) == s1)){
+undo++
+redo = undo
+window["undo" + undo] = ("line" + qq1 + "topleft" + qq2 + "y = " + eval("line" + qq1 + "topleft" + qq2 + "y") + ";line" + qq1 + "topleft" + qq2 + "x = " + eval("line" + qq1 + "topleft" + qq2 + "x") + ";line" + qq1 + "topleft" + qq2 + "width = " + eval("line" + qq1 + "topleft" + qq2 + "width"))
+window["redo" + undo] = ("line" + qq1 + "topleft" + qq2 + "y = " + -30 + ";line" + qq1 + "topleft" + qq2 + "x = " + -30 + ";line" + qq1 + "topleft" + qq2 + "width = " + 0)
+eval(eval("redo" + undo))
+drawmap(1)
+}
+qq2++
+}
+
+qq2 = 1
+while ((qq2 - 1) < (eval ("line" + qq1 + "topleft"))){
+if ((((eval ("line" + qq1 + "topleft" + qq2 + "y")) + (eval ("line" + qq1 + "topleft" + qq2 + "width"))) == s2) && (((eval ("line" + qq1 + "topleft" + qq2 + "x")) + (eval ("line" + qq1 + "topleft" + qq2 + "width"))) == s1)){
+undo++
+redo = undo
+window["undo" + undo] = ("line" + qq1 + "topleft" + qq2 + "y = " + eval("line" + qq1 + "topleft" + qq2 + "y") + ";line" + qq1 + "topleft" + qq2 + "x = " + eval("line" + qq1 + "topleft" + qq2 + "x") + ";line" + qq1 + "topleft" + qq2 + "width = " + eval("line" + qq1 + "topleft" + qq2 + "width"))
+window["redo" + undo] = ("line" + qq1 + "topleft" + qq2 + "y = " + -30 + ";line" + qq1 + "topleft" + qq2 + "x = " + -30 + ";line" + qq1 + "topleft" + qq2 + "width = " + 0)
+eval(eval("redo" + undo))
+drawmap(1)
+}
+qq2++
+}
+
+
+qq2 = 1
+while ((qq2 - 1) < (eval ("line" + qq1 + "topright"))){
+if (((eval ("line" + qq1 + "topright" + qq2 + "y")) == s2) && ((eval ("line" + qq1 + "topright" + qq2 + "x")) == s1)){
+undo++
+redo = undo
+window["undo" + undo] = ("line" + qq1 + "topright" + qq2 + "y = " + eval("line" + qq1 + "topright" + qq2 + "y") + ";line" + qq1 + "topright" + qq2 + "x = " + eval("line" + qq1 + "topright" + qq2 + "x") + ";line" + qq1 + "topright" + qq2 + "width = " + eval("line" + qq1 + "topright" + qq2 + "width"))
+window["redo" + undo] = ("line" + qq1 + "topright" + qq2 + "y = " + -40 + ";line" + qq1 + "topright" + qq2 + "x = " + -40 + ";line" + qq1 + "topright" + qq2 + "width = " + 0)
+eval(eval("redo" + undo))
+drawmap(1)
+}
+qq2++
+}
+
+qq2 = 1
+while ((qq2 - 1) < (eval ("line" + qq1 + "topright"))){
+if ((((eval ("line" + qq1 + "topright" + qq2 + "y")) + (eval ("line" + qq1 + "topright" + qq2 + "width"))) == s2) && (((eval ("line" + qq1 + "topright" + qq2 + "x")) - (eval ("line" + qq1 + "topright" + qq2 + "width"))) == s1)){
+undo++
+redo = undo
+window["undo" + undo] = ("line" + qq1 + "topright" + qq2 + "y = " + eval("line" + qq1 + "topright" + qq2 + "y") + ";line" + qq1 + "topright" + qq2 + "x = " + eval("line" + qq1 + "topright" + qq2 + "x") + ";line" + qq1 + "topright" + qq2 + "width = " + eval("line" + qq1 + "topright" + qq2 + "width"))
+window["redo" + undo] = ("line" + qq1 + "topright" + qq2 + "y = " + -40 + ";line" + qq1 + "topright" + qq2 + "x = " + -40 + ";line" + qq1 + "topright" + qq2 + "width = " + 0)
+eval(eval("redo" + undo))
+drawmap(1)
+}
+qq2++
+}
+
+
+
+
+
+
+
+
+
+}
+
+
+}
+
+
+///////////////////////////////////////////////////////////////////////// THE MAIN DRAW FUNCTION - FIRST CREATE A COPY OF THE VARS
+function drawmap(asdqnf){
+q1 = 1
+while ((q1 - 1) < numlines ){
+q2 = 1
+window["aline" + q1 + "ver"] = eval ("line" + q1 + "ver")
+while ((q2 - 1) < (eval ("aline" + q1 + "ver"))){
+window["aline" + q1 + "ver" + q2 + "x"] = eval ("line" + q1 + "ver" + q2 + "x")
+window["aline" + q1 + "ver" + q2 + "y1"] = eval ("line" + q1 + "ver" + q2 + "y1")
+window["aline" + q1 + "ver" + q2 + "y2"] = eval ("line" + q1 + "ver" + q2 + "y2")
+q2++
+}
+q2 = 1
+window["aline" + q1 + "hor"] = eval ("line" + q1 + "hor")
+while ((q2 - 1) < (eval ("aline" + q1 + "hor"))){
+window["aline" + q1 + "hor" + q2 + "x1"] = eval ("line" + q1 + "hor" + q2 + "x1")
+window["aline" + q1 + "hor" + q2 + "x2"] = eval ("line" + q1 + "hor" + q2 + "x2")
+window["aline" + q1 + "hor" + q2 + "y"] = eval ("line" + q1 + "hor" + q2 + "y")
+q2++
+}
+q2 = 1
+window["aline" + q1 + "topleft"] = eval ("line" + q1 + "topleft")
+while ((q2 - 1) < (eval ("aline" + q1 + "topleft"))){
+window["aline" + q1 + "topleft" + q2 + "y"] = eval ("line" + q1 + "topleft" + q2 + "y")
+window["aline" + q1 + "topleft" + q2 + "x"] = eval ("line" + q1 + "topleft" + q2 + "x")
+window["aline" + q1 + "topleft" + q2 + "width"] = eval ("line" + q1 + "topleft" + q2 + "width")
+q2++
+}
+q2 = 1
+window["aline" + q1 + "topright"] = eval ("line" + q1 + "topright")
+while ((q2 - 1) < (eval ("aline" + q1 + "topright"))){
+window["aline" + q1 + "topright" + q2 + "y"] = eval ("line" + q1 + "topright" + q2 + "y")
+window["aline" + q1 + "topright" + q2 + "x"] = eval ("line" + q1 + "topright" + q2 + "x")
+window["aline" + q1 + "topright" + q2 + "width"] = eval ("line" + q1 + "topright" + q2 + "width")
+q2++
+}
+q1++
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////// NOW ADD SOME CURVES
+if (cowpatuuuuu == 1){
+ctx.clearRect(0, 0, canvas.width, canvas.height);
+}else{
+ctx.fillStyle = "rgb(255,255,255)";  
+ctx.fillRect (0, 0, canvas.width, canvas.height);  
+}
+
+
+q1 = 1
+while ((q1 - 1) < numlines ){
+ctx.strokeStyle = (eval ("line" + q1 + "col"))
+ctx.lineWidth = (eval ("line" + q1 + "width"))
+ewidth = (eval ("line" + q1 + "width"))
+
+if (asdqnf == 1){
+
+/////////////////////////////////////////////// 1
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "ver"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "topleft"))){
+if (((eval ("line" + q1 + "ver" + q2 + 'x'))  ) == ((eval ("line" + q1 + "topleft" + q3 + 'x')) + (eval ("line" + q1 + "topleft" + q3 + 'width')))){
+if (((eval ("line" + q1 + "ver" + q2 + 'y1'))  ) == ((eval ("line" + q1 + "topleft" + q3 + 'y')) + (eval ("line" + q1 + "topleft" + q3 + 'width')))){
+window["aline" + q1 + "ver" + q2 + 'y1'] += Math.round(ewidth * curvenum)
+window["aline" + q1 + "topleft" + q3 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "ver" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "ver" + q2 + 'y1')
+hjkl3 = eval ("aline" + q1 + "ver" + q2 + 'x')
+hjkl4 = eval ("aline" + q1 + "ver" + q2 + 'y1')
+hjkl5 = ((eval ("aline" + q1 + "topleft" + q3 + 'x')) + (eval ("aline" + q1 + "topleft" + q3 + 'width')))
+hjkl6 = ((eval ("aline" + q1 + "topleft" + q3 + 'y')) + (eval ("aline" + q1 + "topleft" + q3 + 'width')))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q2 + 'y1'] -= 0.5
+window["aline" + q1 + "topleft" + q3 + 'width'] += 0.5
+}}
+q3++
+}
+q2++
+}
+
+/////////////////////////////////////////////// 2
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "ver"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "topright"))){
+if (((eval ("line" + q1 + "ver" + q2 + 'x'))  ) == ((eval ("line" + q1 + "topright" + q3 + 'x')) - (eval ("line" + q1 + "topright" + q3 + 'width')))){
+if (((eval ("line" + q1 + "ver" + q2 + 'y1'))  ) == ((eval ("line" + q1 + "topright" + q3 + 'y')) + (eval ("line" + q1 + "topright" + q3 + 'width')))){
+window["aline" + q1 + "ver" + q2 + 'y1'] += Math.round(ewidth * curvenum)
+window["aline" + q1 + "topright" + q3 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "ver" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "ver" + q2 + 'y1')
+hjkl3 = eval ("aline" + q1 + "ver" + q2 + 'x')
+hjkl4 = eval ("aline" + q1 + "ver" + q2 + 'y1')
+hjkl5 = ((eval ("aline" + q1 + "topright" + q3 + 'x')) - (eval ("aline" + q1 + "topright" + q3 + 'width')))
+hjkl6 = ((eval ("aline" + q1 + "topright" + q3 + 'y')) + (eval ("aline" + q1 + "topright" + q3 + 'width')))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q2 + 'y1'] -= 0.5
+window["aline" + q1 + "topright" + q3 + 'width'] += 0.5
+}}
+q3++
+}
+q2++
+}
+
+
+/////////////////////////////////////////////// 3
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x'))  ) == ((eval ("line" + q1 + "hor" + q3 + 'x2'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y'))  ) == ((eval ("line" + q1 + "hor" + q3 + 'y'))  )){
+window["aline" + q1 + "hor" + q3 + 'x2'] -= Math.round(ewidth * curvenum)
+window["aline" + q1 + "topleft" + q2 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topleft" + q2 + 'x'] += Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topleft" + q2 + 'y'] += Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "topleft" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topleft" + q2 + 'y')
+hjkl3 = eval ("aline" + q1 + "hor" + q3 + 'x2')
+hjkl4 = eval ("aline" + q1 + "hor" + q3 + 'y')
+hjkl5 = (eval ("aline" + q1 + "topleft" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topleft" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q3 + 'x2'] += 0.5
+window["aline" + q1 + "topleft" + q2 + 'width'] += 0.5
+window["aline" + q1 + "topleft" + q2 + 'x'] -= 0.5
+window["aline" + q1 + "topleft" + q2 + 'y'] -= 0.5
+}}
+q3++
+}
+q2++
+}
+
+/////////////////////////////////////////////// 4
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x'))  ) == ((eval ("line" + q1 + "ver" + q3 + 'x'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y'))  ) == ((eval ("line" + q1 + "ver" + q3 + 'y2'))  )){
+window["aline" + q1 + "ver" + q3 + 'y2'] -= Math.round(ewidth * curvenum)
+window["aline" + q1 + "topleft" + q2 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topleft" + q2 + 'x'] += Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topleft" + q2 + 'y'] += Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "topleft" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topleft" + q2 + 'y')
+hjkl3 = eval ("aline" + q1 + "ver" + q3 + 'x')
+hjkl4 = eval ("aline" + q1 + "ver" + q3 + 'y2')
+hjkl5 = (eval ("aline" + q1 + "topleft" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topleft" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q2 + 'y3'] += 0.5
+window["aline" + q1 + "topleft" + q2 + 'width'] += 0.5
+window["aline" + q1 + "topleft" + q2 + 'x'] -= 0.5
+window["aline" + q1 + "topleft" + q2 + 'y'] -= 0.5
+
+}}
+q3++
+}
+q2++
+}
+
+/////////////////////////////////////////////// 5
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+if (((eval ("line" + q1 + "topright" + q2 + 'x'))  ) == ((eval ("line" + q1 + "hor" + q3 + 'x1'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'y'))  ) == ((eval ("line" + q1 + "hor" + q3 + 'y'))  )){
+window["aline" + q1 + "hor" + q3 + 'x1'] += Math.round(ewidth * curvenum)
+window["aline" + q1 + "topright" + q2 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topright" + q2 + 'x'] -= Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topright" + q2 + 'y'] += Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "topright" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topright" + q2 + 'y')
+hjkl3 = eval ("aline" + q1 + "hor" + q3 + 'x1')
+hjkl4 = eval ("aline" + q1 + "hor" + q3 + 'y')
+hjkl5 = (eval ("aline" + q1 + "topright" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topright" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q3 + 'x1'] -= 0.5
+window["aline" + q1 + "topright" + q2 + 'width'] += 0.5
+window["aline" + q1 + "topright" + q2 + 'x'] += 0.5
+window["aline" + q1 + "topright" + q2 + 'y'] -= 0.5
+}}
+q3++
+}
+q2++
+}
+
+/////////////////////////////////////////////// 6
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "hor"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "topleft"))){
+if (((eval ("line" + q1 + "hor" + q2 + 'x1'))  ) == ((eval ("line" + q1 + "topleft" + q3 + 'x')) + (eval ("line" + q1 + "topleft" + q3 + 'width')))){
+if (((eval ("line" + q1 + "hor" + q2 + 'y'))  ) == ((eval ("line" + q1 + "topleft" + q3 + 'y')) + (eval ("line" + q1 + "topleft" + q3 + 'width')))){
+window["aline" + q1 + "hor" + q2 + 'x1'] += Math.round(ewidth * curvenum)
+window["aline" + q1 + "topleft" + q3 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "hor" + q2 + 'x1')
+hjkl2 = eval ("line" + q1 + "hor" + q2 + 'y')
+hjkl3 = eval ("aline" + q1 + "hor" + q2 + 'x1')
+hjkl4 = eval ("aline" + q1 + "hor" + q2 + 'y')
+hjkl5 = ((eval ("aline" + q1 + "topleft" + q3 + 'x')) + (eval ("aline" + q1 + "topleft" + q3 + 'width')))
+hjkl6 = ((eval ("aline" + q1 + "topleft" + q3 + 'y')) + (eval ("aline" + q1 + "topleft" + q3 + 'width')))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q2 + 'x1'] -= 0.5
+window["aline" + q1 + "topleft" + q3 + 'width'] += 0.5
+}}
+q3++
+}
+q2++
+}
+
+/////////////////////////////////////////////// 7
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "hor"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "topright"))){
+if (((eval ("line" + q1 + "hor" + q2 + 'x2'))  ) == ((eval ("line" + q1 + "topright" + q3 + 'x')) - (eval ("line" + q1 + "topright" + q3 + 'width')))){
+if (((eval ("line" + q1 + "hor" + q2 + 'y'))  ) == ((eval ("line" + q1 + "topright" + q3 + 'y')) + (eval ("line" + q1 + "topright" + q3 + 'width')))){
+window["aline" + q1 + "hor" + q2 + 'x2'] -= Math.round(ewidth * curvenum)
+window["aline" + q1 + "topright" + q3 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "hor" + q2 + 'x2')
+hjkl2 = eval ("line" + q1 + "hor" + q2 + 'y')
+hjkl3 = eval ("aline" + q1 + "hor" + q2 + 'x2')
+hjkl4 = eval ("aline" + q1 + "hor" + q2 + 'y')
+hjkl5 = ((eval ("aline" + q1 + "topright" + q3 + 'x')) - (eval ("aline" + q1 + "topright" + q3 + 'width')))
+hjkl6 = ((eval ("aline" + q1 + "topright" + q3 + 'y')) + (eval ("aline" + q1 + "topright" + q3 + 'width')))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q2 + 'x2'] += 0.5
+window["aline" + q1 + "topright" + q3 + 'width'] += 0.5
+}}
+q3++
+}
+q2++
+}
+
+/////////////////////////////////////////////// 8
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+if (((eval ("line" + q1 + "topright" + q2 + 'x'))  ) == ((eval ("line" + q1 + "ver" + q3 + 'x'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'y'))  ) == ((eval ("line" + q1 + "ver" + q3 + 'y2'))  )){
+window["aline" + q1 + "ver" + q3 + 'y2'] -= Math.round(ewidth * curvenum)
+window["aline" + q1 + "topright" + q2 + 'width'] -= Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topright" + q2 + 'x'] -= Math.round((ewidth * curvenum) * 0.65)
+window["aline" + q1 + "topright" + q2 + 'y'] += Math.round((ewidth * curvenum) * 0.65)
+hjkl1 = eval ("line" + q1 + "topright" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topright" + q2 + 'y')
+hjkl3 = eval ("aline" + q1 + "ver" + q3 + 'x')
+hjkl4 = eval ("aline" + q1 + "ver" + q3 + 'y2')
+hjkl5 = (eval ("aline" + q1 + "topright" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topright" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q3 + 'y2'] += 0.5
+window["aline" + q1 + "topright" + q2 + 'width'] += 0.5
+window["aline" + q1 + "topright" + q2 + 'x'] += 0.5
+window["aline" + q1 + "topright" + q2 + 'y'] -= 0.5
+}}
+q3++
+}
+q2++
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+if (((eval ("line" + q1 + "topright" + q2 + 'x'))  ) == ((eval ("line" + q1 + "ver" + q3 + 'x'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'y'))  ) > ((eval ("line" + q1 + "ver" + q3 + 'y1'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'y'))  ) < ((eval ("line" + q1 + "ver" + q3 + 'y2'))  )){
+window["aline" + q1 + "topright" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+window["aline" + q1 + "topright" + q2 + 'x'] -= Math.round((ewidth * curvenum))
+window["aline" + q1 + "topright" + q2 + 'y'] += Math.round((ewidth * curvenum))
+hjkl1 = eval ("line" + q1 + "topright" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topright" + q2 + 'y')
+hjkl3 = eval ("line" + q1 + "topright" + q2 + 'x')
+hjkl4 = ((eval ("line" + q1 + "topright" + q2 + 'y')) - (Math.round((ewidth * curvenum))))
+hjkl5 = (eval ("aline" + q1 + "topright" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topright" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topright" + q3 + 'width'] += 0.5
+window["aline" + q1 + "topright" + q3 + 'x'] += 0.5
+window["aline" + q1 + "topright" + q3 + 'y'] -= 0.5
+}}}
+q3++
+}
+q2++
+}
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x'))  ) == ((eval ("line" + q1 + "ver" + q3 + 'x'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y'))  ) > ((eval ("line" + q1 + "ver" + q3 + 'y1'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y'))  ) < ((eval ("line" + q1 + "ver" + q3 + 'y2'))  )){
+window["aline" + q1 + "topleft" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+window["aline" + q1 + "topleft" + q2 + 'x'] += Math.round((ewidth * curvenum))
+window["aline" + q1 + "topleft" + q2 + 'y'] += Math.round((ewidth * curvenum))
+hjkl1 = eval ("line" + q1 + "topleft" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topleft" + q2 + 'y')
+hjkl3 = eval ("line" + q1 + "topleft" + q2 + 'x')
+hjkl4 = ((eval ("line" + q1 + "topleft" + q2 + 'y')) - (Math.round((ewidth * curvenum))))
+hjkl5 = (eval ("aline" + q1 + "topleft" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topleft" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topleft" + q3 + 'width'] += 0.5
+window["aline" + q1 + "topleft" + q3 + 'x'] -= 0.5
+window["aline" + q1 + "topleft" + q3 + 'y'] -= 0.5
+}}}
+q3++
+}
+q2++
+}
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x')) + (eval ("line" + q1 + "topleft" + q2 + 'width'))) == ((eval ("line" + q1 + "ver" + q3 + 'x'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y')) + (eval ("line" + q1 + "topleft" + q2 + 'width'))  ) > ((eval ("line" + q1 + "ver" + q3 + 'y1'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y')) + (eval ("line" + q1 + "topleft" + q2 + 'width'))  ) < ((eval ("line" + q1 + "ver" + q3 + 'y2'))  )){
+window["aline" + q1 + "topleft" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+
+hjkl1 = ((eval ("line" + q1 + "topleft" + q2 + 'x')) + (eval ("line" + q1 + "topleft" + q2 + 'width')))
+hjkl2 = ((eval ("line" + q1 + "topleft" + q2 + 'y')) + (eval ("line" + q1 + "topleft" + q2 + 'width')))
+hjkl3 = ((eval ("line" + q1 + "topleft" + q2 + 'x')) + (eval ("line" + q1 + "topleft" + q2 + 'width')))
+hjkl4 = (((eval ("line" + q1 + "topleft" + q2 + 'y')) + (eval ("line" + q1 + "topleft" + q2 + 'width'))) + (Math.round((ewidth * curvenum))))
+hjkl5 = ((eval ("aline" + q1 + "topleft" + q2 + 'x')) + (eval ("aline" + q1 + "topleft" + q2 + 'width')))
+hjkl6 = ((eval ("aline" + q1 + "topleft" + q2 + 'y')) + (eval ("aline" + q1 + "topleft" + q2 + 'width')))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topleft" + q3 + 'width'] += 1
+}}}
+q3++
+}
+q2++
+}
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+if (((eval ("line" + q1 + "topright" + q2 + 'x')) - (eval ("line" + q1 + "topright" + q2 + 'width'))) == ((eval ("line" + q1 + "ver" + q3 + 'x'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'y')) + (eval ("line" + q1 + "topright" + q2 + 'width'))  ) > ((eval ("line" + q1 + "ver" + q3 + 'y1'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'y')) + (eval ("line" + q1 + "topright" + q2 + 'width'))  ) < ((eval ("line" + q1 + "ver" + q3 + 'y2'))  )){
+window["aline" + q1 + "topright" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+
+hjkl1 = ((eval ("line" + q1 + "topright" + q2 + 'x')) - (eval ("line" + q1 + "topright" + q2 + 'width')))
+hjkl2 = ((eval ("line" + q1 + "topright" + q2 + 'y')) + (eval ("line" + q1 + "topright" + q2 + 'width')))
+hjkl3 = ((eval ("line" + q1 + "topright" + q2 + 'x')) - (eval ("line" + q1 + "topright" + q2 + 'width')))
+hjkl4 = (((eval ("line" + q1 + "topright" + q2 + 'y')) + (eval ("line" + q1 + "topright" + q2 + 'width'))) + (Math.round((ewidth * curvenum))))
+hjkl5 = ((eval ("aline" + q1 + "topright" + q2 + 'x')) - (eval ("aline" + q1 + "topright" + q2 + 'width')))
+hjkl6 = ((eval ("aline" + q1 + "topright" + q2 + 'y')) + (eval ("aline" + q1 + "topright" + q2 + 'width')))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topright" + q3 + 'width'] += 1
+}}}
+q3++
+}
+q2++
+}
+
+//////////////////////////////
+
+
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+if (((eval ("line" + q1 + "topright" + q2 + 'y'))  ) == ((eval ("line" + q1 + "hor" + q3 + 'y'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'x'))  ) > ((eval ("line" + q1 + "hor" + q3 + 'x1'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'x'))  ) < ((eval ("line" + q1 + "hor" + q3 + 'x2'))  )){
+window["aline" + q1 + "topright" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+window["aline" + q1 + "topright" + q2 + 'x'] -= Math.round((ewidth * curvenum))
+window["aline" + q1 + "topright" + q2 + 'y'] += Math.round((ewidth * curvenum))
+hjkl1 = eval ("line" + q1 + "topright" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topright" + q2 + 'y')
+hjkl3 = ((eval ("line" + q1 + "topright" + q2 + 'x')) + (Math.round((ewidth * curvenum))))
+hjkl4 = eval ("line" + q1 + "topright" + q2 + 'y')
+hjkl5 = (eval ("aline" + q1 + "topright" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topright" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topright" + q3 + 'width'] += 0.5
+window["aline" + q1 + "topright" + q3 + 'x'] += 0.5
+window["aline" + q1 + "topright" + q3 + 'y'] -= 0.5
+}}}
+q3++
+}
+q2++
+}
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y'))  ) == ((eval ("line" + q1 + "hor" + q3 + 'y'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x'))  ) > ((eval ("line" + q1 + "hor" + q3 + 'x1'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x'))  ) < ((eval ("line" + q1 + "hor" + q3 + 'x2'))  )){
+window["aline" + q1 + "topleft" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+window["aline" + q1 + "topleft" + q2 + 'x'] += Math.round((ewidth * curvenum))
+window["aline" + q1 + "topleft" + q2 + 'y'] += Math.round((ewidth * curvenum))
+hjkl1 = eval ("line" + q1 + "topleft" + q2 + 'x')
+hjkl2 = eval ("line" + q1 + "topleft" + q2 + 'y')
+hjkl3 = ((eval ("line" + q1 + "topleft" + q2 + 'x')) - (Math.round((ewidth * curvenum))))
+hjkl4 = eval ("line" + q1 + "topleft" + q2 + 'y')
+hjkl5 = (eval ("aline" + q1 + "topleft" + q2 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "topleft" + q2 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topleft" + q3 + 'width'] += 0.5
+window["aline" + q1 + "topleft" + q3 + 'x'] -= 0.5
+window["aline" + q1 + "topleft" + q3 + 'y'] -= 0.5
+}}}
+q3++
+}
+q2++
+}
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+if (((eval ("line" + q1 + "topleft" + q2 + 'y')) + (eval ("line" + q1 + "topleft" + q2 + 'width')) ) == ((eval ("line" + q1 + "hor" + q3 + 'y'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x')) + (eval ("line" + q1 + "topleft" + q2 + 'width')) ) > ((eval ("line" + q1 + "hor" + q3 + 'x1'))  )){
+if (((eval ("line" + q1 + "topleft" + q2 + 'x')) + (eval ("line" + q1 + "topleft" + q2 + 'width')) ) < ((eval ("line" + q1 + "hor" + q3 + 'x2'))  )){
+window["aline" + q1 + "topleft" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+hjkl1 = ((eval ("line" + q1 + "topleft" + q2 + 'x'))       + (eval ("line" + q1 + "topleft" + q2 + 'width'))     )
+hjkl2 = ((eval ("line" + q1 + "topleft" + q2 + 'y'))        + (eval ("line" + q1 + "topleft" + q2 + 'width'))    )
+hjkl3 = (((eval ("line" + q1 + "topleft" + q2 + 'x'))  + (eval ("line" + q1 + "topleft" + q2 + 'width'))  ) + (Math.round((ewidth * curvenum))))
+hjkl4 = ((eval ("line" + q1 + "topleft" + q2 + 'y'))       + (eval ("line" + q1 + "topleft" + q2 + 'width'))     )
+hjkl5 = ((eval ("aline" + q1 + "topleft" + q2 + 'x'))      + (eval ("aline" + q1 + "topleft" + q2 + 'width'))      )
+hjkl6 = ((eval ("aline" + q1 + "topleft" + q2 + 'y'))       + (eval ("aline" + q1 + "topleft" + q2 + 'width'))     )
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topleft" + q3 + 'width'] += 0.5
+}}}
+q3++
+}
+q2++
+}
+
+
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+if (((eval ("line" + q1 + "topright" + q2 + 'y')) + (eval ("line" + q1 + "topright" + q2 + 'width')) ) == ((eval ("line" + q1 + "hor" + q3 + 'y'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'x')) - (eval ("line" + q1 + "topright" + q2 + 'width')) ) > ((eval ("line" + q1 + "hor" + q3 + 'x1'))  )){
+if (((eval ("line" + q1 + "topright" + q2 + 'x')) - (eval ("line" + q1 + "topright" + q2 + 'width')) ) < ((eval ("line" + q1 + "hor" + q3 + 'x2'))  )){
+window["aline" + q1 + "topright" + q2 + 'width'] -= Math.round((ewidth * curvenum))
+hjkl1 = ((eval ("line" + q1 + "topright" + q2 + 'x'))       - (eval ("line" + q1 + "topright" + q2 + 'width'))     )
+hjkl2 = ((eval ("line" + q1 + "topright" + q2 + 'y'))        + (eval ("line" + q1 + "topright" + q2 + 'width'))    )
+hjkl3 = (((eval ("line" + q1 + "topright" + q2 + 'x'))  - (eval ("line" + q1 + "topright" + q2 + 'width'))  ) - (Math.round((ewidth * curvenum))))
+hjkl4 = ((eval ("line" + q1 + "topright" + q2 + 'y'))       + (eval ("line" + q1 + "topright" + q2 + 'width'))     )
+hjkl5 = ((eval ("aline" + q1 + "topright" + q2 + 'x'))      - (eval ("aline" + q1 + "topright" + q2 + 'width'))      )
+hjkl6 = ((eval ("aline" + q1 + "topright" + q2 + 'y'))       + (eval ("aline" + q1 + "topright" + q2 + 'width'))     )
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "topright" + q3 + 'width'] += 0.5
+}}}
+q3++
+}
+q2++
+}
+
+//////////////////////////////////////////////////////////////////
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+xd = eval ("line" + q1 + "topright" + q2 + 'x')
+yd = eval ("line" + q1 + "topright" + q2 + 'y')
+ld = eval ("line" + q1 + "topright" + q2 + 'width')
+xp = eval ("line" + q1 + "hor" + q3 + 'x2')
+yp = eval ("line" + q1 + "hor" + q3 + 'y')
+if (((xd - xp) == (yp - yd)) && (xp > (xd - ld)) && (xp < xd) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "hor" + q3 + 'x2'] -= ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "hor" + q3 + 'x2'))
+hjkl2 = (eval ("line" + q1 + "hor" + q3 + 'y'))
+hjkl3 = ((eval ("line" + q1 + "hor" + q3 + 'x2')) + Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "hor" + q3 + 'y')) - Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "hor" + q3 + 'x2'))
+hjkl6 = (eval ("aline" + q1 + "hor" + q3 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q3 + 'x2'] += 0.5
+}
+q3++
+}
+q2++
+}
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+xd = eval ("line" + q1 + "topright" + q2 + 'x')
+yd = eval ("line" + q1 + "topright" + q2 + 'y')
+ld = eval ("line" + q1 + "topright" + q2 + 'width')
+xp = eval ("line" + q1 + "hor" + q3 + 'x1')
+yp = eval ("line" + q1 + "hor" + q3 + 'y')
+if (((xd - xp) == (yp - yd)) && (xp > (xd - ld)) && (xp < xd) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "hor" + q3 + 'x1'] += ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "hor" + q3 + 'x1'))
+hjkl2 = (eval ("line" + q1 + "hor" + q3 + 'y'))
+hjkl3 = ((eval ("line" + q1 + "hor" + q3 + 'x1')) - Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "hor" + q3 + 'y')) + Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "hor" + q3 + 'x1'))
+hjkl6 = (eval ("aline" + q1 + "hor" + q3 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q3 + 'x1'] -= 0.5
+}
+q3++
+}
+q2++
+}
+
+
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+xd = eval ("line" + q1 + "topright" + q2 + 'x')
+yd = eval ("line" + q1 + "topright" + q2 + 'y')
+ld = eval ("line" + q1 + "topright" + q2 + 'width')
+xp = eval ("line" + q1 + "ver" + q3 + 'x')
+yp = eval ("line" + q1 + "ver" + q3 + 'y2')
+if (((xd - xp) == (yp - yd)) && (xp > (xd - ld)) && (xp < xd) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "ver" + q3 + 'y2'] -= ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "ver" + q3 + 'x'))
+hjkl2 = (eval ("line" + q1 + "ver" + q3 + 'y2'))
+hjkl3 = ((eval ("line" + q1 + "ver" + q3 + 'x')) - Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "ver" + q3 + 'y2')) + Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "ver" + q3 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "ver" + q3 + 'y2'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q3 + 'y2'] += 0.5
+}
+q3++
+}
+q2++
+}
+
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topright"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+xd = eval ("line" + q1 + "topright" + q2 + 'x')
+yd = eval ("line" + q1 + "topright" + q2 + 'y')
+ld = eval ("line" + q1 + "topright" + q2 + 'width')
+xp = eval ("line" + q1 + "ver" + q3 + 'x')
+yp = eval ("line" + q1 + "ver" + q3 + 'y1')
+if (((xd - xp) == (yp - yd)) && (xp > (xd - ld)) && (xp < xd) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "ver" + q3 + 'y1'] += ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "ver" + q3 + 'x'))
+hjkl2 = (eval ("line" + q1 + "ver" + q3 + 'y1'))
+hjkl3 = ((eval ("line" + q1 + "ver" + q3 + 'x')) + Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "ver" + q3 + 'y1')) - Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "ver" + q3 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "ver" + q3 + 'y1'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q3 + 'y1'] -= 0.5
+}
+q3++
+}
+q2++
+}
+
+///////////////////////////////
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+xd = eval ("line" + q1 + "topleft" + q2 + 'x')
+yd = eval ("line" + q1 + "topleft" + q2 + 'y')
+ld = eval ("line" + q1 + "topleft" + q2 + 'width')
+xp = eval ("line" + q1 + "ver" + q3 + 'x')
+yp = eval ("line" + q1 + "ver" + q3 + 'y1')
+if (((xp - xd) == (yp - yd)) && (xp > xd) && (xp < (xd + ld)) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "ver" + q3 + 'y1'] += ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "ver" + q3 + 'x'))
+hjkl2 = (eval ("line" + q1 + "ver" + q3 + 'y1'))
+hjkl3 = ((eval ("line" + q1 + "ver" + q3 + 'x')) - Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "ver" + q3 + 'y1')) - Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "ver" + q3 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "ver" + q3 + 'y1'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q3 + 'y1'] -= 0.5
+}
+q3++
+}
+q2++
+}
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "ver"))){
+xd = eval ("line" + q1 + "topleft" + q2 + 'x')
+yd = eval ("line" + q1 + "topleft" + q2 + 'y')
+ld = eval ("line" + q1 + "topleft" + q2 + 'width')
+xp = eval ("line" + q1 + "ver" + q3 + 'x')
+yp = eval ("line" + q1 + "ver" + q3 + 'y2')
+if (((xp - xd) == (yp - yd)) && (xp > xd) && (xp < (xd + ld)) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "ver" + q3 + 'y2'] -= ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "ver" + q3 + 'x'))
+hjkl2 = (eval ("line" + q1 + "ver" + q3 + 'y2'))
+hjkl3 = ((eval ("line" + q1 + "ver" + q3 + 'x')) + Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "ver" + q3 + 'y2')) + Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "ver" + q3 + 'x'))
+hjkl6 = (eval ("aline" + q1 + "ver" + q3 + 'y2'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "ver" + q3 + 'y2'] += 0.5
+}
+q3++
+}
+q2++
+}
+
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+xd = eval ("line" + q1 + "topleft" + q2 + 'x')
+yd = eval ("line" + q1 + "topleft" + q2 + 'y')
+ld = eval ("line" + q1 + "topleft" + q2 + 'width')
+xp = eval ("line" + q1 + "hor" + q3 + 'x2')
+yp = eval ("line" + q1 + "hor" + q3 + 'y')
+if (((xp - xd) == (yp - yd)) && (xp > xd) && (xp < (xd + ld)) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "hor" + q3 + 'x2'] -= ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "hor" + q3 + 'x2'))
+hjkl2 = (eval ("line" + q1 + "hor" + q3 + 'y'))
+hjkl3 = ((eval ("line" + q1 + "hor" + q3 + 'x2')) + Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "hor" + q3 + 'y')) + Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "hor" + q3 + 'x2'))
+hjkl6 = (eval ("aline" + q1 + "hor" + q3 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q3 + 'x2'] += 0.5
+}
+q3++
+}
+q2++
+}
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "topleft"))){
+q3 = 1
+while ((q3 - 1) < (eval ("line" + q1 + "hor"))){
+xd = eval ("line" + q1 + "topleft" + q2 + 'x')
+yd = eval ("line" + q1 + "topleft" + q2 + 'y')
+ld = eval ("line" + q1 + "topleft" + q2 + 'width')
+xp = eval ("line" + q1 + "hor" + q3 + 'x1')
+yp = eval ("line" + q1 + "hor" + q3 + 'y')
+if (((xp - xd) == (yp - yd)) && (xp > xd) && (xp < (xd + ld)) && (yp > yd) && (yp < (yd + ld))){
+window["aline" + q1 + "hor" + q3 + 'x1'] += ((Math.round((ewidth * curvenum))) * 1.4)
+hjkl1 = (eval ("line" + q1 + "hor" + q3 + 'x1'))
+hjkl2 = (eval ("line" + q1 + "hor" + q3 + 'y'))
+hjkl3 = ((eval ("line" + q1 + "hor" + q3 + 'x1')) - Math.round((ewidth * curvenum)))
+hjkl4 = ((eval ("line" + q1 + "hor" + q3 + 'y')) - Math.round((ewidth * curvenum)))
+hjkl5 = (eval ("aline" + q1 + "hor" + q3 + 'x1'))
+hjkl6 = (eval ("aline" + q1 + "hor" + q3 + 'y'))
+ctx.beginPath()
+ctx.moveTo(hjkl5, hjkl6)
+ctx.quadraticCurveTo(hjkl1, hjkl2, hjkl3, hjkl4);
+ctx.stroke()
+window["aline" + q1 + "hor" + q3 + 'x1'] -= 0.5
+}
+q3++
+}
+q2++
+}
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+}
+
+gpoogg = (eval ("line" + q1 + "col"))
+ctx.strokeStyle = gpoogg
+gpooggq = (eval ("line" + q1 + "width"))
+ctx.lineWidth = gpooggq
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("aline" + q1 + "ver"))){
+
+
+ctx.beginPath()
+ctx.moveTo((eval ("aline" + q1 + "ver" + q2 + "x")), (eval ("aline" + q1 + "ver" + q2 + "y1")))
+ctx.lineTo((eval ("aline" + q1 + "ver" + q2 + "x")), (eval ("aline" + q1 + "ver" + q2 + "y2"))) 
+ctx.stroke()
+
+
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("aline" + q1 + "hor"))){
+
+ctx.beginPath()
+ctx.moveTo((eval ("aline" + q1 + "hor" + q2 + "x1")), (eval ("aline" + q1 + "hor" + q2 + "y")))
+ctx.lineTo((eval ("aline" + q1 + "hor" + q2 + "x2")), (eval ("aline" + q1 + "hor" + q2 + "y"))) 
+ctx.stroke()
+
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("aline" + q1 + "topleft"))){
+
+
+ctx.beginPath()
+ctx.moveTo((eval ("aline" + q1 + "topleft" + q2 + "x")), (eval ("aline" + q1 + "topleft" + q2 + "y")))
+ctx.lineTo((eval ("aline" + q1 + "topleft" + q2 + "x") + (eval ("aline" + q1 + "topleft" + q2 + "width"))), ((eval ("aline" + q1 + "topleft" + q2 + "y")) + (eval ("aline" + q1 + "topleft" + q2 + "width"))))
+ctx.stroke()
+
+
+q2++
+}
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("aline" + q1 + "topright"))){
+
+
+ctx.beginPath()
+ctx.moveTo((eval ("aline" + q1 + "topright" + q2 + "x")), (eval ("aline" + q1 + "topright" + q2 + "y")))
+ctx.lineTo((eval ("aline" + q1 + "topright" + q2 + "x") - (eval ("aline" + q1 + "topright" + q2 + "width"))), ((eval ("aline" + q1 + "topright" + q2 + "y")) + (eval ("aline" + q1 + "topright" + q2 + "width"))))
+ctx.stroke()
+
+
+q2++
+}
+
+q1++
+}
+
+q1 = 1
+while ((q1 - 1) < numlines ){
+gpoogg = (eval ("line" + q1 + "col"))
+ctx.strokeStyle = gpoogg
+gpooggq = (eval ("line" + q1 + "width"))
+ctx.lineWidth = gpooggq
+
+
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + q1 + "stations"))){
+gaagpootype = (eval ("line" + q1 + "station" + q2 + "type"))
+gaagpoodir = (eval ("line" + q1 + "station" + q2 + "dir"))
+gaagpootext = (eval ("line" + q1 + "station" + q2 + "text"))
+gaagpoox = (eval ("line" + q1 + "station" + q2 + "x"))
+gaagpooy = (eval ("line" + q1 + "station" + q2 + "y"))
+if (gaagpootype == 1){
+ctx.fillStyle = gpoogg
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat1q),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+}
+
+if (gaagpootype == 2){
+stat2qq = (stat2q * gpooggq)
+if (gaagpoodir == 1){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox - (stat2qq * 0.65)), (gaagpooy - (stat2qq * 0.65)))
+ctx.stroke()
+}
+if (gaagpoodir == 2){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox), (gaagpooy - (stat2qq * 1)))
+ctx.stroke()
+}
+if (gaagpoodir == 3){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox + (stat2qq * 0.65)), (gaagpooy - (stat2qq * 0.65)))
+ctx.stroke()
+}
+if (gaagpoodir == 4){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox - (stat2qq * 1)), (gaagpooy))
+ctx.stroke()
+}
+if (gaagpoodir == 5){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox + (stat2qq * 1)), (gaagpooy))
+ctx.stroke()
+}
+if (gaagpoodir == 6){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox - (stat2qq * 0.65)), (gaagpooy + (stat2qq * 0.65)))
+ctx.stroke()
+}
+if (gaagpoodir == 7){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox), (gaagpooy + (stat2qq * 1)))
+ctx.stroke()
+}
+if (gaagpoodir == 8){
+ctx.beginPath()
+ctx.moveTo(gaagpoox, gaagpooy)
+ctx.lineTo((gaagpoox + (stat2qq * 0.65)), (gaagpooy + (stat2qq * 0.65)))
+ctx.stroke()
+}
+
+
+
+
+
+}
+
+
+if (gaagpootype == 3){
+ctx.fillStyle = "#000000"
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat3q),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+ctx.fillStyle = "#FFFFFF"
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat3aq),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+}
+if (gaagpootype == 4){
+ctx.fillStyle = gpoogg
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat4q),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+ctx.fillStyle = "#FFFFFF"
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat4aq),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+}
+if (gaagpootype == 5){
+ctx.fillStyle = "#000000"
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat5q),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+ctx.fillStyle = "#FFFFFF"
+ctx.beginPath();
+ctx.arc(gaagpoox,gaagpooy,(gpooggq*stat5aq),0,Math.PI*2,true);
+ctx.closePath();
+ctx.fill();
+}
+
+ctx.font = (fontzsize + "pt Arial")
+ctx.fillStyle = "#000000"
+asssassssx = ctx.measureText(gaagpootext);
+asssassss = asssassssx.width
+
+if ((gaagpootype > 0) && (asdqnf == 1)){
+weeweeweewee = (eval('line' + q1 + 'station' + q2 + 'text'))
+if (gaagpoodir == 1){
+ctx.textAlign = 'right';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox - (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.75)), ((gaagpooy - (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.75)) - (gpooggq / 4)), (fontzsize + (fontzsize / 2)), cutOff, "top");
+
+}
+if (gaagpoodir == 2){
+ctx.textAlign = 'center';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox), ((gaagpooy - (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 1)) - (gpooggq / 4)), (fontzsize + (fontzsize / 2)), cutOff, "top");
+}
+if (gaagpoodir == 3){
+ctx.textAlign = 'left';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox + (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.75)), ((gaagpooy - (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.75)) - (gpooggq / 4)), (fontzsize + (fontzsize / 2)), cutOff, "top");
+
+}
+if (gaagpoodir == 4){
+ctx.textAlign = 'right';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox - (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 1.5)), (gaagpooy - (gpooggq / 4)), (fontzsize + (fontzsize / 2)), cutOff, "middle");
+
+}
+if (gaagpoodir == 5){
+ctx.textAlign = 'left';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox + (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 1.5)), (gaagpooy - (gpooggq / 4)), (fontzsize + (fontzsize / 2)), cutOff, "middle");
+
+}
+if (gaagpoodir == 6){
+ctx.textAlign = 'right';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox - (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.65)), (gaagpooy + (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.65)), (fontzsize + (fontzsize / 2)), cutOff, "bottom");
+
+}
+if (gaagpoodir == 7){
+ctx.textAlign = 'center';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox), (gaagpooy + (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 1)), (fontzsize + (fontzsize / 2)), cutOff, "bottom");
+
+}
+if (gaagpoodir == 8){
+ctx.textAlign = 'left';
+ctx.textBaseline = 'top';
+multiFillText(weeweeweewee, (gaagpoox + (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.65)), (gaagpooy + (((eval('stat' + gaagpootype + 'q')) * gpooggq) * 0.65)), (fontzsize + (fontzsize / 2)), cutOff, "bottom");
+
+}
+
+}
+
+
+
+
+
+
+q2++
+}
+
+
+
+
+q1++
+}}
+
+
+
+
+var cutOff = 800,
+    DEBUG = false;
+
+var multiFillText = function(text, x, y, lineHeight, fitWidth, verticala) {
+    var draw = x !== null && y !== null;
+    var amount = 0
+	
+try
+  {
+    sections = text.split("%");
+  }
+catch(err)
+  {
+  sections = text
+  }	
+
+	
+	
+	if (verticala == "top"){
+    amount = ((sections.length) * lineHeight)
+	}
+	if (verticala == "middle"){
+    amount = ((sections.length) * (lineHeight / 2))
+	}
+	
+	
+    var i, str, wordWidth, words, currentLine = 0,
+        maxHeight = 0,
+        maxWidth = 0;
+
+    var printNextLine = function(str) {
+        if (draw) {
+            ctx.fillText(str, x, y + ((lineHeight * currentLine) - amount));
+        }
+
+        currentLine++;
+        wordWidth = ctx.measureText(str).width;
+        if (wordWidth > maxWidth) {
+            maxWidth = wordWidth;
+        }
+    };
+
+    for (i = 0; i < sections.length; i++) {
+        words = sections[i].split(' ');
+        index = 1;
+
+        while (words.length > 0 && index <= words.length) {
+
+            str = words.slice(0, index).join(' ');
+            wordWidth = ctx.measureText(str).width;
+
+            if (wordWidth > fitWidth) {
+                if (index === 1) {
+                    // Falls to this case if the first word in words[] is bigger than fitWidth
+                    // so we print this word on its own line; index = 2 because slice is
+                    str = words.slice(0, 1).join(' ');
+                    words = words.splice(1);
+                } else {
+                    str = words.slice(0, index - 1).join(' ');
+                    words = words.splice(index - 1);
+                }
+
+                printNextLine(str);
+
+                index = 1;
+            } else {
+                index++;
+            }
+        }
+
+        // The left over words on the last line
+        if (index > 0) {
+            printNextLine(words.join(' '));
+        }
+
+
+    }
+
+    maxHeight = lineHeight * (currentLine);
+
+    if (DEBUG) {
+        ctx.strokeRect(x, y, maxWidth, maxHeight);
+    }
+
+    if (!draw) {
+        return {
+            height: maxHeight,
+            width: maxWidth
+        };
+    }
+};
+
+var multiMeasureText = function(text, lineHeight, fitWidth) {
+    return multiFillText(text, null,null, lineHeight, fitWidth);
+}
+
+
+
+function startxjumper(asdf, asdf2){
+jumpnumm = ((eval ("line" + currentroute + "width")) * jumpnum)
+asdfg = asdf
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "ver"))){
+if (((eval ("line" + currentroute + "ver" + q2 + "x")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "ver" + q2 + "x")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "ver" + q2 + "y2")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "ver" + q2 + "y1")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "ver" + q2 + "x"))
+}
+}
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "hor"))){
+if (((eval ("line" + currentroute + "hor" + q2 + "x1")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "hor" + q2 + "x1")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "hor" + q2 + "y")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "hor" + q2 + "y")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "hor" + q2 + "x1"))
+}
+}
+if (((eval ("line" + currentroute + "hor" + q2 + "x2")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "hor" + q2 + "x2")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "hor" + q2 + "y")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "hor" + q2 + "y")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "hor" + q2 + "x2"))
+}
+}
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "topleft"))){
+asdfghjkl = (eval ("line" + currentroute + "topleft" + q2 + "width"))
+asdf3 = (asdf2 - (eval ("line" + currentroute + "topleft" + q2 + "y")))
+if (((eval ("line" + currentroute + "topleft" + q2 + "x")) < asdf) && (((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl) > asdf)){
+if (((eval ("line" + currentroute + "topleft" + q2 + "y")) < asdf2) && (((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl) > asdf2)){
+if ((((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdf3) < (asdf + jumpnumm)) && (((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdf3) > (asdf - jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdf3)
+}
+}
+}
+
+
+if (((eval ("line" + currentroute + "topleft" + q2 + "x")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "topleft" + q2 + "x")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "topleft" + q2 + "y")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "topleft" + q2 + "y")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "topleft" + q2 + "x"))
+}
+}
+
+if ((((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl) < (asdf + jumpnumm)) && (((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl) > (asdf - jumpnumm))){
+if ((((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl) > (asdf2 - jumpnumm)) && (((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl) < (asdf2 + jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl)
+}
+}
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "topright"))){
+asdfghjkl = (eval ("line" + currentroute + "topright" + q2 + "width"))
+
+
+asdf3 = (asdf2 - (eval ("line" + currentroute + "topright" + q2 + "y")))
+if (((eval ("line" + currentroute + "topright" + q2 + "x")) > asdf) && (((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl) < asdf)){
+if (((eval ("line" + currentroute + "topright" + q2 + "y")) < asdf2) && (((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl) > asdf2)){
+if ((((eval ("line" + currentroute + "topright" + q2 + "x")) - asdf3) < (asdf + jumpnumm)) && (((eval ("line" + currentroute + "topright" + q2 + "x")) - asdf3) > (asdf - jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topright" + q2 + "x")) - asdf3)
+}
+}
+}
+
+
+
+
+if (((eval ("line" + currentroute + "topright" + q2 + "x")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "topright" + q2 + "x")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "topright" + q2 + "y")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "topright" + q2 + "y")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "topright" + q2 + "x"))
+}
+}
+if ((((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl) < (asdf + jumpnumm)) && (((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl) > (asdf - jumpnumm))){
+if ((((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl) > (asdf2 - jumpnumm)) && (((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl) < (asdf2 + jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl)
+}
+}
+q2++
+}
+
+if (asdfg == asdf){
+xjumped = 0
+}else{
+xjumped = 1
+}
+return(asdfg)
+}
+
+function startyjumper(asdf, asdf2){
+jumpnumm = ((eval ("line" + currentroute + "width")) * jumpnum)
+asdfg = asdf
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "hor"))){
+if (((eval ("line" + currentroute + "hor" + q2 + "y")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "hor" + q2 + "y")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "hor" + q2 + "x2")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "hor" + q2 + "x1")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "hor" + q2 + "y"))
+}
+}
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "ver"))){
+if (((eval ("line" + currentroute + "ver" + q2 + "y1")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "ver" + q2 + "y1")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "ver" + q2 + "x")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "ver" + q2 + "x")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "ver" + q2 + "y1"))
+}
+}
+if (((eval ("line" + currentroute + "ver" + q2 + "y2")) < (asdf + jumpnumm)) && ((eval ("line" + currentroute + "ver" + q2 + "y2")) > (asdf - jumpnumm))){
+if (((eval ("line" + currentroute + "ver" + q2 + "x")) > (asdf2 - jumpnumm)) && ((eval ("line" + currentroute + "ver" + q2 + "x")) < (asdf2 + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "ver" + q2 + "y2"))
+}
+}
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "topleft"))){
+asdfghjkl = (eval ("line" + currentroute + "topleft" + q2 + "width"))
+asdf3 = (asdf2 - (eval ("line" + currentroute + "topleft" + q2 + "x")))
+if (((eval ("line" + currentroute + "topleft" + q2 + "x")) < asdf2) && (((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl) > asdf2)){
+if (((eval ("line" + currentroute + "topleft" + q2 + "y")) < asdf) && (((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl) > asdf)){
+if ((((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdf3) < (asdf + jumpnumm)) && (((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdf3) > (asdf - jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdf3)
+}
+}
+}
+
+
+if (((eval ("line" + currentroute + "topleft" + q2 + "x")) < (asdf2 + jumpnumm)) && ((eval ("line" + currentroute + "topleft" + q2 + "x")) > (asdf2 - jumpnumm))){
+if (((eval ("line" + currentroute + "topleft" + q2 + "y")) > (asdf - jumpnumm)) && ((eval ("line" + currentroute + "topleft" + q2 + "y")) < (asdf + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "topleft" + q2 + "y"))
+}
+}
+
+if ((((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl) < (asdf2 + jumpnumm)) && (((eval ("line" + currentroute + "topleft" + q2 + "x")) + asdfghjkl) > (asdf2 - jumpnumm))){
+if ((((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl) > (asdf - jumpnumm)) && (((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl) < (asdf + jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topleft" + q2 + "y")) + asdfghjkl)
+}
+}
+q2++
+}
+
+q2 = 1
+while ((q2 - 1) < (eval ("line" + currentroute + "topright"))){
+asdfghjkl = (eval ("line" + currentroute + "topright" + q2 + "width"))
+
+
+asdf3 = ((eval ("line" + currentroute + "topright" + q2 + "x")) - asdf2)
+if (((eval ("line" + currentroute + "topright" + q2 + "y")) < asdf) && (((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl) > asdf)){
+if (((eval ("line" + currentroute + "topright" + q2 + "x")) > asdf2) && (((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl) < asdf2)){
+if ((((eval ("line" + currentroute + "topright" + q2 + "y")) + asdf3) < (asdf + jumpnumm)) && (((eval ("line" + currentroute + "topright" + q2 + "y")) + asdf3) > (asdf - jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topright" + q2 + "y")) + asdf3)
+}
+}
+}
+
+
+
+
+if (((eval ("line" + currentroute + "topright" + q2 + "x")) < (asdf2 + jumpnumm)) && ((eval ("line" + currentroute + "topright" + q2 + "x")) > (asdf2 - jumpnumm))){
+if (((eval ("line" + currentroute + "topright" + q2 + "y")) > (asdf - jumpnumm)) && ((eval ("line" + currentroute + "topright" + q2 + "y")) < (asdf + jumpnumm))){
+asdfg = (eval ("line" + currentroute + "topright" + q2 + "y"))
+}
+}
+if ((((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl) < (asdf2 + jumpnumm)) && (((eval ("line" + currentroute + "topright" + q2 + "x")) - asdfghjkl) > (asdf2 - jumpnumm))){
+if ((((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl) > (asdf - jumpnumm)) && (((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl) < (asdf + jumpnumm))){
+asdfg = ((eval ("line" + currentroute + "topright" + q2 + "y")) + asdfghjkl)
+}
+}
+q2++
+}
+
+
+if (asdfg == asdf){
+yjumped = 0
+}else{
+yjumped = 1
+}
+
+return(asdfg)
+}
+
+
+function undof(){
+if (undo > 0){
+eval(eval("undo" + undo))
+undo--
+drawmap(1)
+}}
+
+function redof(){
+if (undo < redo){
+undo++
+eval(eval("redo" + undo))
+drawmap(1)
+}}
+
+function thedel(){
+undo++
+redo = undo
+window["undo" + undo] = ('line' + currentroute + 'stations = ' + (eval('line' + currentroute + 'stations')) + ';line' + currentroute + 'ver = ' + (eval('line' + currentroute + 'ver')) + ';line' + currentroute + 'hor = ' + (eval('line' + currentroute + 'hor')) + ';line' + currentroute + 'topleft = ' + (eval('line' + currentroute + 'topleft')) + ';line' + currentroute + 'topright = ' + (eval('line' + currentroute + 'topright')) + ';')
+window["redo" + undo] = ('line' + currentroute + 'stations = 0;line' + currentroute + 'ver = 0;line' + currentroute + 'hor = 0;line' + currentroute + 'topleft = 0;line' + currentroute + 'topright = 0;')
+eval(eval("redo" + undo))
+drawmap(1)
+}
+
+
+
+
+
+
+
+
+</script></head><body style="margin: 0pt;" onload="moo();">
+
+
+
+<canvas id="canvas" width="5500" height="4600"></canvas>
+
+
+
+<div id="loader" style="display: none; position: fixed; top: 30px; left: 30px; width: 400px; height: 320px; background-color:#BBFFFF; border:1px solid black; padding:2px; margin:0px;">
+<font face="arial"><center><font size="5">HIGH RES MAP CREATOR</font><hr />
+<font size="4">Paste your map code into the box</font><br />
+<font size="2">WARNING: This uses a LOT of ram (about 0.5 GB). This may crash your browser, Please save any work you are doing and close other running programs and other browser tabs.</font><br />
+<form name="frm1"><textarea name="txt1" rows="6" cols="26"></textarea></form><br />
+<a class="poo" href="#" onclick="woopoo = document.frm1.txt1.value;document.frm1.txt1.value = '';document.getElementById('loader').style.display = 'none';eval(woopoo);makebig();drawmap(1);fdjgnqaqag()">SAVE IMAGE (HIGH RES)</a><br />
+<font size="1">When the image appears, right click it and chose save</font><br />
+</center></font></div>
+
+
+
+
+
+</body></html>

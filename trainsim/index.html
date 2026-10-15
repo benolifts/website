@@ -1,0 +1,452 @@
+<html><head><title>BENO TRAIN SIM</title>
+<script type="application/javascript" src="../canvas3dapi/c3dapi.js" ></script><script>
+
+  ;
+
+  ;
+
+  
+function poosoundplay(sdafhbasjfhsod){
+eval ("sound" + sdafhbasjfhsod + ".play()")
+}
+function poosoundstop(sdafhbasjfhsod){
+eval ("sound" + sdafhbasjfhsod + ".pause()")
+}
+function poosoundsetPosition(sdafhbasjfhsod,fhgdfdfhfdh){
+eval ("sound" + sdafhbasjfhsod + ".currentTime = " + (fhgdfdfhfdh / 1000))
+}
+function poosoundsetVolume(sdafhbasjfhsod,fhgdfdfhfdh){
+if (sdafhbasjfhsod == "slow"){
+eval ("sound" + sdafhbasjfhsod + ".volume = " + (fhgdfdfhfdh / 200))
+}else{
+eval ("sound" + sdafhbasjfhsod + ".volume = " + (fhgdfdfhfdh / 100))
+}}
+function stopAll(){
+soundstart.pause()
+soundstop.pause()
+soundfast.pause()
+soundmedfast.pause()
+soundmed.pause()
+soundslow.pause()
+soundidle.pause()
+soundcom.pause()
+soundclose.pause()
+}
+cowpat = 0
+
+soundstart = new Audio()
+soundstart.addEventListener('canplaythrough', function(){cowpat++})
+soundstart.src = "start.mp3"
+
+soundstop = new Audio()
+soundstop.addEventListener('canplaythrough', function(){cowpat++})
+soundstop.src = "stop.mp3"
+
+soundfast = new Audio()
+soundfast.addEventListener('canplaythrough', function(){cowpat++})
+soundfast.addEventListener('ended', function(){soundfast.currentTime = 0.1;soundfast.play()})
+soundfast.src = "fast.mp3"
+
+soundmedfast = new Audio()
+soundmedfast.addEventListener('canplaythrough', function(){cowpat++})
+soundmedfast.addEventListener('ended', function(){soundmedfast.currentTime = 0.1;soundmedfast.play()})
+soundmedfast.src = "medfast.mp3"
+
+soundmed = new Audio()
+soundmed.addEventListener('canplaythrough', function(){cowpat++})
+soundmed.addEventListener('ended', function(){soundmed.currentTime = 0.1;soundmed.play()})
+soundmed.src = "med.mp3"
+
+soundslow = new Audio()
+soundslow.addEventListener('canplaythrough', function(){cowpat++})
+soundslow.addEventListener('ended', function(){soundslow.currentTime = 0.1;soundslow.play()})
+soundslow.src = "slow.mp3"
+
+soundidle = new Audio()
+soundidle.addEventListener('canplaythrough', function(){cowpat++})
+soundidle.addEventListener('ended', function(){soundidle.currentTime = 0.1;soundidle.play()})
+soundidle.src = "idle.mp3"
+
+soundcom = new Audio()
+soundcom.addEventListener('canplaythrough', function(){cowpat++})
+soundcom.src = "com.mp3"
+
+soundclose = new Audio()
+soundclose.addEventListener('canplaythrough', function(){cowpat++})
+soundclose.src = "close.mp3"
+
+
+
+/*
+
+    var mySound = soundManager.createSound({id: 'fast',url: 'fast.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'medfast',url: 'medfast.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'med',url: 'med.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'slow',url: 'slow.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'idle',url: 'idle.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+
+*/
+
+
+c3dl.addMainCallBack(canvasMain, "tutorial");
+c3dl.addModel("duck.dae");
+c3dl.addModel("duck2.dae");
+var duck;
+var timesincelastchange=0;
+var y=-0.001;
+speedfactor = 0.018
+speed = 0
+acc = 0
+keyw = false
+keys = false
+keya = false
+keyd = false
+keyup = false
+keydown = false
+keycam = false
+keychange = false
+keyenter = false
+blar1 = 0
+blar2 = 0
+blar3 = -1000000
+blar4 = 1000000
+blar5 = 1
+mrtest = 0
+aaaa = -6660.000001
+thegovar = 1
+doors = 2
+messageready = 0
+
+
+/////////////////////////////////////////////////////// SPEED & SOUND
+function spinduck(time){
+if (thegovar == 1){
+if (time > 0){
+
+if (doors == 0){
+acc = 0
+if ((keyup == true) && (keydown == false)){
+acc = 1.5
+if (speed > 15){
+speed += ((acc * ((32 - (speed - 15)) / 32)) * (time / 1000))
+}else{
+speed += (acc * (time / 1000))
+}
+if ((mrtest != 1) && (speed < 41)){
+mrtest = 1
+poosoundstop('slow');poosoundstop('med');poosoundstop('medfast');poosoundstop('fast');
+if (speed > 15){
+poosoundsetPosition('start',(10005 + ((speed - 15) * ((667 + ((speed - 15) * 1.04) * ((speed - 15) * 1.04))    ))));
+poosoundplay('start')
+}else{
+poosoundsetPosition('start',(speed * 667));
+poosoundplay('start')
+}}}
+if ((keyup == false) && (keydown == true) && (speed > 0)){
+speed -= (3 * (time / 1000))
+if (mrtest != -1){
+mrtest = -1
+poosoundstop('slow');poosoundstop('med');poosoundstop('medfast');poosoundstop('fast');poosoundsetPosition('stop',((47 - speed) * 360));poosoundplay('stop');
+}}
+if (((keyup == false) && (keydown == false) && (mrtest != 0)) || ((keyup == true) && (keydown == true) && (mrtest != 0)) || ((keydown == true) && (speed == 0) && (mrtest != 0)) || ((speed >= 41) && (keydown == false) && (mrtest != 0))){
+mrtest = 0
+poosoundstop('start');poosoundstop('stop');
+if (speed == 11){
+poosoundsetVolume('slow', 100);poosoundplay('slow');
+}
+if (speed == 18){
+poosoundsetVolume('med', 100);poosoundplay('med');
+}
+if (speed == 29){
+poosoundsetVolume('medfast', 100);poosoundplay('medfast');
+}
+if (speed >= 41){
+poosoundsetVolume('fast', 100);poosoundplay('fast');
+}
+if ((speed > 0) && (speed < 11)){
+poosoundsetVolume('slow', ((speed / 11) * 100));poosoundplay('slow');
+}
+if ((speed > 11) && (speed < 18)){
+poosoundsetVolume('slow', (100 - (((speed - 11) / 7) * 100)));poosoundplay('slow');poosoundsetVolume('med', (((speed - 11) / 7) * 100));poosoundplay('med');
+}
+if ((speed > 18) && (speed < 29)){
+poosoundsetVolume('med', (100 - (((speed - 18) / 11) * 100)));poosoundplay('med');poosoundsetVolume('medfast', (((speed - 18) / 11) * 100));poosoundplay('medfast');
+}
+if ((speed > 29) && (speed < 41)){
+poosoundsetVolume('medfast', (100 - (((speed - 29) / 12) * 100)));poosoundplay('medfast');poosoundsetVolume('fast', (((speed - 29) / 12) * 100));poosoundplay('fast');
+}}
+if (speed < 0){
+speed = 0
+}
+if (speed > 47){
+speed = 47
+}}else{
+acc = 0
+speed = 0
+}
+
+if ((speed == 0) && (keyenter == true)){
+if (doors == 0){
+doors = 1
+setTimeout("veryannoyingfunctionaa()",2000);
+document.myform.textarea.value = 'DOORS OPENING'
+}
+if (doors == 2){
+doors = 3
+poosoundplay('close')
+setTimeout('veryannoyingfunctiona()',4500);
+document.myform.textarea.value = 'DOORS CLOSEING'
+}}
+
+
+
+/////////////////////////////////////////////////////// ???
+if (((keyd == true) && (keya == false) && (blar5 == 1)) || ((keyd == false) && (keya == true) && (blar5 == 0))){
+blar1 += (400*time)
+}
+if (((keyd == false) && (keya == true) && (blar5 == 1)) || ((keyd == true) && (keya == false) && (blar5 == 0))){
+blar1 -= (400*time)
+}
+if ((keyw == true) && (keys == false)){
+blar2 += (400*time)
+}
+if ((keyw == false) && (keys == true)){
+blar2 -= (400*time)
+}
+if (blar1 > 400000){
+blar1 = 400000
+}
+if (blar2 > 400000){
+blar2 = 400000
+}
+if (blar1 < -400000){
+blar1 = -400000
+}
+if (blar2 < -400000){
+blar2 = -400000
+}
+
+
+/////////////////////////////////////////////////////// MOVE
+
+if (blar5 == 1){
+aaaa -= ((speed * speedfactor)*time)
+}else{
+aaaa += ((speed * speedfactor)*time)
+}
+duck2.setPosition(new Array(32, -38, (aaaa + 3518)));
+
+
+/////////////////////////////////////////////////////// GAME OVER
+if (((aaaa < -150920) && (aaaa > -250920) && (blar5 == 1)) || ((aaaa > -6460) && (blar5 == 0))){
+messageready = 0
+if (speed < 5){
+keyup = false
+speed = 0
+mrtest = 10
+document.myform.textarea.value = 'YOU HAVE CRASHED - STUPID DRIVER\nBut luckiy at less than 5mph\nso it is NOT game over'
+if (blar5 == 1){
+aaaa = -150920
+}else{
+aaaa = -6460
+}}else{
+aaaa = -350920
+keyup = false
+keydown = false
+speed = 0
+stopAll();
+clearInterval(mrpoooooooooo)
+thegovar = 0
+mrtest = 10
+document.myform.textarea.value = 'GAME OVER\npress F5 to restart'
+alert("gameover\n\n\nyou crashed at more than 5 mph\n\npress F5 to restart")
+}}
+
+
+/////////////////////////////////////////////////////// CAM
+if (keycam){
+if (aaaa > -13000){
+cam.setPosition([180,20,-4400])
+cam.setLookAtPoint([22,20,(aaaa + 2820)]);
+}else{
+if ((aaaa < -45000) && (aaaa > -56000)){
+cam.setPosition([-100,20,-50000])
+cam.setLookAtPoint([22,20,aaaa]);
+}else{
+if ((aaaa < -61000) && (aaaa > -74000)){
+cam.setPosition([-100,20,-66000])
+cam.setLookAtPoint([22,20,aaaa]);
+}else{
+if ((aaaa < -144000) && (aaaa > -250000)){
+cam.setPosition([-100,20,-150000])
+cam.setLookAtPoint([22,20,aaaa]);
+}else{
+
+
+if (blar5 == 1){
+cam.setPosition([45,8,(aaaa - 700)])
+cam.setLookAtPoint([0,0,blar4]);
+}else{
+cam.setPosition([45,8,(aaaa + 3680)])
+cam.setLookAtPoint([0,0,blar3]);
+}
+
+}}}}}else{
+
+if (blar5 == 1){
+cam.setPosition([22,18,aaaa])
+cam.setLookAtPoint([blar1,blar2,blar3]);
+}else{
+cam.setPosition([74,18,(aaaa + 2780)])
+cam.setLookAtPoint([blar1,blar2,blar4]);
+}
+
+}
+
+
+/////////////////////////////////////////////////////// SPEEDOMETER
+
+if (speed > 0){
+messageready = 1
+document.myform.textarea.value = (((Math.floor(speed * 10)) / 10) + ' mph\n' + ((Math.floor  ((0 - (((aaaa + 6450) / 144190) * 2.4)) * 100)) / 100   ) + ' miles')
+}else{
+if (messageready == 1){
+messageready = 0
+if ((aaaa > -7102) || ((aaaa < -50518) && (aaaa > -51132)) || ((aaaa < -67273) && (aaaa > -67870)) || (aaaa < -149611)){
+document.myform.textarea.value = 'Press Enter to open doors'
+}else{
+document.myform.textarea.value = 'You are NOT properly at a station'
+}}}
+if ((keychange == true) && (speed == 0) && (keyup == false) && (keydown == false)){
+blar1 = 0;blar2 = 0;blar3 = -1000000;blar4 = 1000000
+if (blar5 == 1){
+blar5 = 0
+document.myform.textarea.value = 'CHANGED ENDS\nyou are now going towards Dalston'
+}else{
+blar5 = 1
+document.myform.textarea.value = 'CHANGED ENDS\nyou are now going towards Kings Cross st Pancras'
+}}
+keychange = false
+keyenter = false
+}}}
+
+
+
+
+
+
+
+if (!document.addEventListener && document.attachEvent){
+document.attachEvent('onkeydown', handleKeyDown)
+document.attachEvent('onkeyup', handleKeyUp)
+}else{
+window.addEventListener('keydown', handleKeyDown, true)
+window.addEventListener('keyup', handleKeyUp, true)
+}
+function handleKeyDown(event){
+if (event.keyCode == 87) // w
+keyw = true;
+else if (event.keyCode == 65) // a
+keya = true;
+else if (event.keyCode == 83) // s
+keys = true;
+else if (event.keyCode == 68) // d
+keyd = true;
+else if (event.keyCode == 38) // up
+keyup = true;
+else if (event.keyCode == 40) // down
+keydown = true;
+else if (event.keyCode == 32) // space
+keycam = true;
+else if (event.keyCode == 80) // P
+keychange = true;
+else if (event.keyCode == 13) // enter
+keyenter = true;
+}
+function handleKeyUp(event){
+if (event.keyCode == 87) // w
+keyw = false;
+else if (event.keyCode == 65) // a
+keya = false;
+else if (event.keyCode == 83) // s
+keys = false;
+else if (event.keyCode == 68) // d
+keyd = false;
+else if (event.keyCode == 38) // up
+keyup = false;
+else if (event.keyCode == 40) // down
+keydown = false;
+else if (event.keyCode == 32) // space
+keycam = false;
+}
+
+
+
+
+//////////////////// The program main ///////////////////////////
+function canvasMain(canvasName){
+document.myform.textarea.value = 'LOADING...'
+scn = new c3dl.Scene();
+scn.setCanvasTag(canvasName);
+scn.setBackgroundColor(new Array(0, 0, 0)) 
+renderer = new c3dl.WebGL();
+renderer.createRenderer(this);
+scn.setRenderer(renderer);
+scn.init(canvasName);
+if(renderer.isReady() )
+{
+duck = new c3dl.Collada();
+duck.init("duck.dae");
+scn.addObjectToScene(duck);
+duck2 = new c3dl.Collada();
+duck2.init("duck2.dae");
+scn.addObjectToScene(duck2);
+duck2.setPosition(new Array(0, 0, 0));
+cam = new c3dl.FreeCamera();
+
+//////////////////// set up the camera ///////////////////////////
+cam.setPosition(new Array(22, 20, aaaa));
+cam.setLookAtPoint([blar1,blar2,blar3]);
+cam.setFarClippingPlane(9000)
+cam.setFieldOfView(40)
+scn.setCamera(cam);
+setTimeout("moomoo()",400);
+}}
+function moomoo(){
+if (cowpat == 9){
+scn.startScene();
+poosoundplay('idle');
+document.myform.textarea.value = '---BENO TRAIN SIM---\nYou are currently at Dalston, going towards Kings Cross\n\nPRESS ENTER TO CLOSE DOORS'
+mrpoooooooooo=setInterval("if ((Math.floor(Math.random()*2)) == 0){;poosoundplay('com');poosoundstop('idle');setTimeout('veryannoyingfunction()',16000);};",60000);
+setTimeout("cam.setPosition(new Array(22.0, 22.0, -1300.0));scn.setUpdateCallback(spinduck);",100);
+}else{
+setTimeout("moomoo()",400);
+}}
+function veryannoyingfunction(){
+poosoundplay('idle');poosoundstop('com')
+}
+function veryannoyingfunctiona(){
+doors = 0;document.myform.textarea.value = ("DOORS HAVE NOW CLOSED\nready to depart")
+}
+function veryannoyingfunctionaa(){
+if (aaaa > -7102){
+doors = 2;document.myform.textarea.value = 'DOORS HAVE NOW OPENED\nThis station is Dalston\nPress P to change ends'
+}else{
+if ((aaaa < -50518) && (aaaa > -51132)){
+doors = 2;document.myform.textarea.value = 'DOORS HAVE NOW OPENED\nThis station is Ecclesborough road'
+}else{
+if ((aaaa < -67273) && (aaaa > -67870)){
+doors = 2;document.myform.textarea.value = 'DOORS HAVE NOW OPENED\nThis station is Essex road'
+}else{
+if (aaaa < -149611){
+doors = 2;document.myform.textarea.value = 'DOORS HAVE NOW OPENED\nThis station is Kings Cross st Pancras\nPress P to change ends'
+}else{
+doors = 2;document.myform.textarea.value = 'DOORS HAVE NOW OPENED\nYOU ARE NOT PROPERLY AT A STATION\nSTUPID DRIVER'
+}}}}}
+
+
+
+
+</script></head>
+<body BGCOLOR="#000000" TOPMARGIN=0 LEFTMARGIN=0 MARGINHEIGHT=0 MARGINWIDTH=0><center><table border="0" cellpadding="0" cellspacing="0" height="100%"><tr><td align="center" valign="middle"><canvas id="tutorial" width="800" height="580"></canvas></td><td align="center" valign="middle"><img src="a.jpg"><font size=4><br><br><br><a href="https://beno.uk/games/">CLICK HERE TO SEE<br>OTHER GAMES ON<br>MY WEBSITE</a><br><br><br></font><form action="" name="myform"><textarea name="textarea" rows="6" cols="22" readonly="readonly"></textarea></form></td></tr></table></center>
+</body></html>

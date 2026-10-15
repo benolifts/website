@@ -1,0 +1,10 @@
+ErrorDocument 404 /error.html
+Options -Indexes 
+#CheckSpelling Off
+
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{HTTP_HOST} !beno.uk$ [NC]
+RewriteRule ^(.*)$ https://beno.uk/$1 [L,R=301]
+

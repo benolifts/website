@@ -1,0 +1,6864 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+<title>Pigs Pooing Problems</title>
+
+<script type="text/javascript">
+
+
+
+var Endian={BIG:0,LITTLE:1};var ZipConstants={LOCSIG:67324752,LOCHDR:30,LOCVER:4,LOCNAM:26,EXTSIG:134695760,EXTHDR:16,CENSIG:33639248,CENHDR:46,CENVER:6,CENNAM:28,CENOFF:42,ENDSIG:101010256,ENDHDR:22,ENDTOT:10,ENDOFF:16,STORED:0,DEFLATED:8};var Base64=function(s){var u=undefined;if(navigator.userAgent.toLowerCase().indexOf(" chrome/")>=0||navigator.userAgent.toLowerCase().indexOf(" firefox/")>=0||navigator.userAgent.toLowerCase().indexOf(" gecko/")>=0){u=function(){this.str="";this.length=0;this.append=function(a){this.str+=a;this.length+=a.length};this.prepend=function(a){this.str=a+this.str;this.length+=a.length};this.toString=function(){return this.str}}}else{u=function(){this.parts=[];this.length=0;this.append=function(a){this.parts.push(a);this.length+=a.length};this.prepend=function(a){this.parts.unshift(a);this.length+=a.length};this.toString=function(){return this.parts.join("")}}}var j="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";var e=new u(),t,r,q,p,n,m,l,k=0;while(k<s.length){t=s.charCodeAt(k++);r=s.charCodeAt(k++);q=s.charCodeAt(k++);p=t>>2;n=((t&3)<<4)|(r>>4);m=((r&15)<<2)|(q>>6);l=q&63;if(isNaN(r)){m=l=64}else{if(isNaN(q)){l=64}}e.append(j.charAt(p)+j.charAt(n)+j.charAt(m)+j.charAt(l))}return e.toString()};var BA=function(h,f){var e="",b=0,a=0,c=0;if(h){e=h||"";c=f!==undefined?f:c;b=h.length}var d=typeof h!="string"&&h!==undefined;var g=function(i){throw i};return{position:function(i){if(i){a=i}else{return a}},move:function(i){a+=i},bytesAvailable:function(){return b-a},length:function(){return b},endian:function(i){if(i){c=i}else{return c}},data:function(i){if(i){e=i||"";b=e.length;d=typeof i!="string"&&i!==undefined}else{return e}},readByte:function(){if(this.bytesAvailable()===0){g("readByte::End of stream!")}return d?e[a++]&255:(e.charCodeAt(a++)&255)},readByteAt:function(i){if(i<b){return d?e[i]&255:e.charCodeAt(i)&255}return g("readByteAt::End of stream")},writeByte:function(i){if(d){if(a<b){e[a]=i&255}else{e[e.length++]=i}a++;return}if(a<b){e=e.substr(0,a)+String.fromCharCode(i&255)+e.substring(a+1)}else{e+=String.fromCharCode(i&255);b+=1}a++},readBytes:function(r,o){if(o===undefined){var q=a;a+=r;if(d){var n="";for(var m=q;m<q+r;m++){n+=String.fromCharCode(e[m])}return n}else{return e.substr(q,r)}}if(d){var k="";for(var l=r;l<r+o;l++){k+=String.fromCharCode(e[l])}return k}return e.substr(r,o)},readUnsignedInt:function(){if(this.bytesAvailable()<4){throw"End of stream!"}var j=0,i=0;if(c==Endian.BIG){j=(a+=4)-4;if(d){i=((e[j]&255)<<24)|((e[++j]&255)<<16)|((e[++j]&255)<<8)|(e[++j]&255)}else{i=((e.charCodeAt(j)&255)<<24)|((e.charCodeAt(++j)&255)<<16)|((e.charCodeAt(++j)&255)<<8)|(e.charCodeAt(++j)&255)}}else{j=(a+=4);if(d){i=((e[--j]&255)<<24)|((e[--j]&255)<<16)|((e[--j]&255)<<8)|(e[--j]&255)}else{i=((e.charCodeAt(--j)&255)<<24)|((e.charCodeAt(--j)&255)<<16)|((e.charCodeAt(--j)&255)<<8)|(e.charCodeAt(--j)&255)}}return i},readUnsignedShort:function(){if(this.bytesAvailable()<2){throw"End of stream!"}var i=0;if(c==Endian.BIG){i=(a+=2)-2;if(d){return((e[i]&255)<<8)|(e[++i]&255)}else{return((e.charCodeAt(i)&255)<<8)|(e.charCodeAt(++i)&255)}}else{i=(a+=2);if(d){return((e[--i]&255)<<8)|(e[--i]&255)}else{return((e.charCodeAt(--i)&255)<<8)|(e.charCodeAt(--i)&255)}}},readShort:function(){if(this.bytesAvailable()<2){throw"End of stream!"}var j=0,i=0;if(c==Endian.BIG){j=(a+=2)-2;if(d){i=((e[j]&255)<<8)|(e[++j]&255)}else{i=((e.charCodeAt(j)&255)<<8)|(e.charCodeAt(++j)&255)}}else{j=(a+=2);if(d){i=((e[--j]&255)<<8)|(e[--j]&255)}else{i=((e.charCodeAt(--j)&255)<<8)|(e.charCodeAt(--j)&255)}}return(i>=32768)?i-65536:i},readUTFBytes:function(l){l=l||0;var j="";for(var k=0;k<l;k++){j+=String.fromCharCode(this.readByte())}return j}}};var Inflater=function(){var p=15,g=286,d=30,e=316,k=288,b=[3,4,5,6,7,8,9,10,11,13,15,17,19,23,27,31,35,43,51,59,67,83,99,115,131,163,195,227,258],o=[0,0,0,0,0,0,0,0,1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5,0],l=[1,2,3,4,5,7,9,13,17,25,33,49,65,97,129,193,257,385,513,769,1025,1537,2049,3073,4097,6145,8193,12289,16385,24577],h=[0,0,0,0,1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10,11,11,12,12,13,13],a=undefined,v=0,u=0,r=0,s=undefined,c=undefined;function q(w){var x=u;while(r<w){if(v==a.length()){throw"available inflate data did not terminate"}x|=a.readByteAt(v++)<<r;r+=8}u=x>>w;r-=w;return x&((1<<w)-1)}function n(x,y,C){var A=new Array();for(var w=0;w<=p;w++){x.count[w]=0}for(var z=0;z<C;z++){x.count[y[z]]++}if(x.count[0]==C){return 0}var B=1;for(w=1;w<=p;w++){B<<=1;B-=x.count[w];if(B<0){return B}}A[1]=0;for(w=1;w<p;w++){A[w+1]=A[w]+x.count[w]}for(z=0;z<C;z++){if(y[z]!==0){x.symbol[A[y[z]]++]=z}}return B}function j(y){var A=0,B=0,x=0;for(var w=1;w<=p;w++){A|=q(1);var z=y.count[w];if(A<B+z){return y.symbol[x+(A-B)]}x+=z;B+=z;B<<=1;A<<=1}return -9}function t(x){do{var y=j(s);if(y<0){return y}if(y<256){x.position(x.length());x.writeByte(y)}else{if(y>256){y-=257;if(y>=29){throw"invalid literal/length or distance code in fixed or dynamic block"}var w=b[y]+q(o[y]);y=j(c);if(y<0){return y}var z=l[y]+q(h[y]);if(z>x.length()){throw"distance is too far back in fixed or dynamic block"}x.position(x.length());while(w--){x.writeByte(x.readByteAt(x.length()-z))}}}}while(y!=256);return 0}function i(x){u=0;r=0;if(v+4>a.length()){throw"available inflate data did not terminate"}var w=a[v++];w|=a[v++]<<8;if(a[v++]!=(~w&255)||a[v++]!=((~w>>8)&255)){throw"stored block length did not match one's complement"}if(v+w>a.length()){throw"available inflate data did not terminate"}while(w--){x[x.length]=a[v++]}}function m(){var x=new Array();for(var w=0;w<144;w++){x[w]=8}for(;w<256;w++){x[w]=9}for(;w<280;w++){x[w]=7}for(;w<k;w++){x[w]=8}n(s,x,k);for(w=0;w<d;w++){x[w]=5}n(c,x,d)}function f(){var y=new Array(),x=[16,17,18,0,8,7,9,6,10,5,11,4,12,3,13,2,14,1,15],E=q(5)+257,w=q(5)+1,C=q(4)+4;if(E>g||w>d){throw"dynamic block code description: too many length or distance codes"}for(var D=0;D<C;D++){y[x[D]]=q(3)}for(;D<19;D++){y[x[D]]=0}var A=n(s,y,19);if(A!==0){throw"dynamic block code description: code lengths codes incomplete"}D=0;while(D<E+w){var z=j(s),B;if(z<16){y[D++]=z}else{B=0;if(z==16){if(D===0){throw"dynamic block code description: repeat lengths with no first length"}B=y[D-1];z=3+q(2)}else{if(z==17){z=3+q(3)}else{z=11+q(7)}}if(D+z>E+w){throw"dynamic block code description: repeat more than specified lengths"}while(z--){y[D++]=B}}}A=n(s,y,E);if(A<0||(A>0&&E-s.count[0]!=1)){throw"dynamic block code description: invalid literal/length code lengths"}A=n(c,y.slice(E),w);if(A<0||(A>0&&w-c.count[0]!=1)){throw"dynamic block code description: invalid distance code lengths"}return A}return{setInput:function(w){a=w;a.endian(Endian.LITTLE);a.position(0)},inflate:function(w){v=u=r=0;var z=0;do{var y=q(1);var x=q(2);if(x===0){i(w)}else{if(x==3){throw"invalid block type (type == 3)"}else{s={count:new Array(0),symbol:new Array(0)};c={count:new Array(0),symbol:new Array(0)};if(x==1){m()}else{if(x==2){z=f()}}if(z!==0){return z}z=t(w)}}if(z!==0){break}}while(!y);return z}}};var ZipEntry=function(e){var c=e,d=0,b=0,a=0,f=0;return{name:function(){return c},time:function(h){var g;if(h){g=new Date(time);d=(g.fullYear-1980&127)<<25|(g.month+1)<<21|g.day<<16|g.hours<<11|g.minutes<<5|g.seconds>>1}else{g=new Date(((d>>25)&127)+1980,((d>>21)&15)-1,(d>>16)&31,(d>>11)&31,(d>>5)&63,(d&31)<<1);return g.getTime()}},size:0,compressedSize:0,crc:0,method:0,extra:undefined,comment:"",isDirectory:function(){return c.charAt(c.length-1)=="/"}}};var ZipFile=function(f){var c=undefined,h=[],e={},b={};c=new BA(f.data(),Endian.LITTLE);a();function a(){g();e={};b={};for(var k=0;k<h.length;k++){var m=new BA(c.readBytes(ZipConstants.CENHDR),Endian.LITTLE);if(m.readUnsignedInt()!=ZipConstants.CENSIG){throw"readEntries::Invalid CEN header (bad signature)"}m.position(28);var j=m.readUnsignedShort();if(j===0){throw"missing entry name"}var l=new ZipEntry(c.readUTFBytes(j));j=m.readUnsignedShort();l.extra=new BA();if(j>0){l.extra.data(c.readBytes(j))}c.move(m.readUnsignedShort());m.position(6);l.version=m.readUnsignedShort();l.flag=m.readUnsignedShort();if((l.flag&1)==1){throw"readEntries::Encrypted ZIP entry not supported"}l.method=m.readUnsignedShort();l.dostime=m.readUnsignedInt();l.crc=m.readUnsignedInt();l.compressedSize=m.readUnsignedInt();l.size=m.readUnsignedInt();h[k]=l;e[l.name()]=l;m.position(42);b[l.name()]=m.readUnsignedInt()}}function g(){var i=new BA();i.endian(Endian.LITTLE);i.data(c.readBytes(d(),ZipConstants.ENDHDR));i.position(ZipConstants.ENDTOT);h=new Array(i.readUnsignedShort());i.position(ZipConstants.ENDOFF);c.position(i.readUnsignedInt())}function d(){var j=c.length()-ZipConstants.ENDHDR;var k=Math.max(0,j-65535);for(j;j>=k;j--){c.position(j);if(c.readByte()!=80){continue}c.position(j);if(c.readUnsignedInt()==101010256){return j}}throw"findEND::Invalid zip"}return{entries:function(){return h},size:function(){return h.length},getEntry:function(i){return e[i]},getInput:function(l){c.position(b[l.name()]+30-2);var i=c.readShort();c.move(l.name().length+i);var k=new BA();if(l.compressedSize>0){k.data(c.readBytes(l.compressedSize))}switch(l.method){case 0:return k;break;case 8:var j=new BA();var m=new Inflater();m.setInput(k);m.inflate(j);j.position(0);return j;break;default:throw"zipEntry::getInput::Invalid compression method"}}}};var ZipLoader=function(zipURL){var ZIP_CACHE={},ZIP_FILE_REG=new RegExp(".*?.zip$","i"),ZIP_ENTRY_REG=new RegExp("(.*?.zip)://(.*$)","i"),_zipUrl=zipURL,_entryUrl="",_entryDataFormat="",iscr=true,data=undefined;if(_zipUrl){loadBinaryResource(_zipUrl)}function isIE(){return navigator.userAgent.match(/MSIE/)!==null}function getXMLHttpObj(){if(typeof(XMLHttpRequest)!="undefined"){return new XMLHttpRequest()}var axO=["Msxml2.XMLHTTP.6.0","Msxml2.XMLHTTP.4.0","Msxml2.XMLHTTP.3.0","Msxml2.XMLHTTP","Microsoft.XMLHTTP"],i;for(i=0;i<axO.length;i++){try{return new ActiveXObject(axO[i])}catch(e){}}return null}function loadBinaryResource(url){var req=getXMLHttpObj();req.open("GET",url,false);if(!req.overrideMimeType){var vbScript='<script type="text/vbscript">\n<!--\nFunction BinaryToArray(Binary)\n  Dim i\n  ReDim byteArray(LenB(Binary))\n  For i = 1 To LenB(Binary)\n    byteArray(i-1) = AscB(MidB(Binary, i, 1))\n  Next\n  BinaryToArray = byteArray\nEnd Function\n-->\n<\/script>';document.write(vbScript);req.setRequestHeader("Accept-Charset","x-user-defined");req.send();var fileContents=BinaryToArray(req.responseBody).toArray();onlc(fileContents)}else{req.overrideMimeType("text/plain; charset=x-user-defined");req.send();onlc(req.responseText)}}function onlc(data){if(iscr){var zipfile=new ZipFile(new BA(data,Endian.LITTLE));ZIP_CACHE[_zipUrl]=zipfile;dataFromZip(zipfile)}}function dataFromZip(zip){if(zip&&_entryUrl){data=getZipEntry(zip,_entryUrl)}}function getZipEntry(zip,entryUrl){if(ZIP_ENTRY_REG.test(entryUrl)){var result=ZIP_ENTRY_REG.exec(entryUrl);var outerEntry=result[1];var innerEntry=result[2];var innerZip=new ZipFile(zip.getInput(zip.getEntry(outerEntry)));return getZipEntry(innerZip,innerEntry)}else{var entry=zip.getEntry(entryUrl);if(entry){return zip.getInput(entry)}else{throw"Requested file was not found in the archive"}}}function appendChild(node,text){if(null===node.canHaveChildren||node.canHaveChildren){node.appendChild(document.createTextNode(text))}else{node.text=text}}function getFileExtension(filename){return(/[.]/.exec(filename))&&/[^.]+$/.exec(filename)[0]||""}return{load:function(url){iscr=false;switch(true){case ZIP_ENTRY_REG.test(url):var result=ZIP_ENTRY_REG.exec(url);_zipUrl=result[1];_entryUrl=result[2];var zip=ZIP_CACHE[_zipUrl];if(zip){dataFromZip(zip)}else{iscr=true;loadBinaryResource(url)}break;case ZIP_FILE_REG.test(url):iscr=true;_zipUrl=url;_entryDataFormat="Text";loadBinaryResource(url);break;default:loadBinaryResource(url);break}if(data){data.position(0);return data.readBytes(0,data.length())}else{return""}},loadImage:function(url){var data=this.load(url);if(data){var tmp="data:";switch(getFileExtension(url).toLowerCase()){case"gif":tmp+="image/gif;base64,";break;case"png":tmp+="image/png;base64,";break;case"jpg":case"jpeg":tmp+="image/jpeg;base64,";break}tmp+=Base64(data)}return tmp},loadCSS:function(url){var data=this.load(url);if(data){var pa=document.getElementsByTagName("head")[0];var el=document.createElement("style");el.type="text/css";el.media="screen";if(el.styleSheet){el.styleSheet.cssText=data}else{el.appendChild(document.createTextNode(data))}pa.appendChild(el)}},loadScript:function(url){var data=this.load(url);if(data){var fileRef=window.document.createElement("script");fileRef.setAttribute("type","text/javascript");if(isIE()){eval(data)}else{var head=document.getElementsByTagName("head")[0]||document.documentElement;head.insertBefore(fileRef,head.firstChild);appendChild(fileRef,data)}}}}};
+
+
+
+
+var boss = 20
+var wooYayIntervalId = 0
+var pigx = 0
+var pigy = 0
+var pigdir = 1
+var pigdir2 = 1
+var pigdir3 = 1
+var key_left = false;
+var key_right = false;
+var key_up = false;
+var key_down = false;
+var key_poo = false;
+var pig1 = false;
+var pig2 = false;
+var pig3 = false;
+var pig4 = false;
+var piga1 = false;
+var piga2 = false;
+var piga3 = false;
+var piga4 = false;
+var pig5 = false;
+var pig6 = false;
+var pig7 = false;
+var pig8 = false;
+var tttt = false;
+var ladder = 0;
+var stage = 1;
+var level = 1;
+var world = 1;
+var done = 0;
+var keyer = 0;
+var allow = 1;
+
+
+
+var em1a1a1x = 444;
+var em1a1a1y = 444;
+var em1a1a1a = 0;
+var em1a1a2x = 233;
+var em1a1a2y = 333;
+var em1a1a2a = 0;
+var em1a1a3x = 222;
+var em1a1a3y = 222;
+var em1a1a3a = 0;
+var em1a2a1x = 444;
+var em1a2a1y = 444;
+var em1a2a1a = 0;
+var em1a2a2x = 333;
+var em1a2a2y = 333;
+var em1a2a2a = 0;
+var em1a2a3x = 222;
+var em1a2a3y = 222;
+var em1a2a3a = 0;
+var em1a3a1x = 444;
+var em1a3a1y = 444;
+var em1a3a1a = 0;
+var em1a3a2x = 333;
+var em1a3a2y = 333;
+var em1a3a2a = 0;
+var em1a3a3x = 222;
+var em1a3a3y = 222;
+var em1a3a3a = 0;
+var em1a4a1x = 244;
+var em1a4a1y = 438;
+var em1a4a1a = 1;
+var em1a4a2x = 333;
+var em1a4a2y = 333;
+var em1a4a2a = 0;
+var em1a4a3x = 222;
+var em1a4a3y = 222;
+var em1a4a3a = 0;
+var em1a5a1x = 18;
+var em1a5a1y = (468 - 30);
+var em1a5a1a = 0;
+var em1a5a2x = 333;
+var em1a5a2y = 333;
+var em1a5a2a = 0;
+var em1a5a3x = 222;
+var em1a5a3y = 222;
+var em1a5a3a = 0;
+var em1a6a1x = 444;
+var em1a6a1y = (249 - 30);
+var em1a6a1a = 1;
+var em1a6a2x = 333;
+var em1a6a2y = (468 - 30);
+var em1a6a2a = 1;
+var em1a6a3x = 222;
+var em1a6a3y = 222;
+var em1a6a3a = 0;
+var em1a7a1x = 444;
+var em1a7a1y = 444;
+var em1a7a1a = 0;
+var em1a7a2x = 333;
+var em1a7a2y = 333;
+var em1a7a2a = 0;
+var em1a7a3x = 222;
+var em1a7a3y = 222;
+var em1a7a3a = 0;
+var em1a8a1x = 50;
+var em1a8a1y = (339 + 30);
+var em1a8a1a = 1;
+var em1a8a2x = 333;
+var em1a8a2y = 333;
+var em1a8a2a = 0;
+var em1a8a3x = 222;
+var em1a8a3y = 222;
+var em1a8a3a = 0;
+var em1a9a1x = 418;
+var em1a9a1y = (468 - 30);
+var em1a9a1a = 1;
+var em1a9a2x = 333;
+var em1a9a2y = 333;
+var em1a9a2a = 0;
+var em1a9a3x = 222;
+var em1a9a3y = 222;
+var em1a9a3a = 0;
+var em1a10a1x = 444;
+var em1a10a1y = 444;
+var em1a10a1a = 0;
+var em1a10a2x = 333;
+var em1a10a2y = 333;
+var em1a10a2a = 0;
+var em1a10a3x = 222;
+var em1a10a3y = 222;
+var em1a10a3a = 0;
+
+
+
+var em2a1a1x = 620;
+var em2a1a1y = (468 - 30);
+var em2a1a1a = 1;
+var em2a1a2x = 20
+var em2a1a2y = (468 - 30);
+var em2a1a2a = 1;
+var em2a1a3x = 222;
+var em2a1a3y = 222;
+var em2a1a3a = 0;
+var em2a2a1x = 444;
+var em2a2a1y = 444;
+var em2a2a1a = 0;
+var em2a2a2x = 333;
+var em2a2a2y = 333;
+var em2a2a2a = 0;
+var em2a2a3x = 222;
+var em2a2a3y = 222;
+var em2a2a3a = 0;
+var em2a3a1x = 444;
+var em2a3a1y = 444;
+var em2a3a1a = 0;
+var em2a3a2x = 333;
+var em2a3a2y = 333;
+var em2a3a2a = 0;
+var em2a3a3x = 222;
+var em2a3a3y = 222;
+var em2a3a3a = 0;
+var em2a4a1x = 12;
+var em2a4a1y = (338 - 30);
+var em2a4a1a = 1;
+var em2a4a2x = 312;
+var em2a4a2y = (338 - 30);
+var em2a4a2a = 1;
+var em2a4a3x = 612;
+var em2a4a3y = (338 - 30);
+var em2a4a3a = 1;
+var em2a5a1x = 20;
+var em2a5a1y = (462 - 30);
+var em2a5a1a = 1;
+var em2a5a2x = 420;
+var em2a5a2y = (468 - 30);
+var em2a5a2a = 0;
+var em2a5a3x = 222;
+var em2a5a3y = 222;
+var em2a5a3a = 0;
+var em2a8a1x = 444;
+var em2a8a1y = 444;
+var em2a8a1a = 0;
+var em2a8a2x = 333;
+var em2a8a2y = 333;
+var em2a8a2a = 0;
+var em2a8a3x = 222;
+var em2a8a3y = 222;
+var em2a8a3a = 0;
+var em2a7a1x = 20;
+var em2a7a1y = (462 - 30);
+var em2a7a1a = 1;
+var em2a7a2x = 620;
+var em2a7a2y = (462 - 30);
+var em2a7a2a = 1;
+var em2a7a3x = 222;
+var em2a7a3y = 222;
+var em2a7a3a = 0;
+var em2a6a1x = 155;
+var em2a6a1y = (290 - 30);
+var em2a6a1a = 1;
+var em2a6a2x = 205;
+var em2a6a2y = (338 - 30);
+var em2a6a2a = 1;
+var em2a6a3x = 255;
+var em2a6a3y = (385 - 30);
+var em2a6a3a = 1;
+var em2a9a1x = 20;
+var em2a9a1y = (462 - 30);
+var em2a9a1a = 1;
+var em2a9a2x = 420;
+var em2a9a2y = (468 - 30);
+var em2a9a2a = 1;
+var em2a9a3x = 222;
+var em2a9a3y = 222;
+var em2a9a3a = 0;
+var em2a10a1x = 444;
+var em2a10a1y = 444;
+var em2a10a1a = 0;
+var em2a10a2x = 333;
+var em2a10a2y = 333;
+var em2a10a2a = 0;
+var em2a10a3x = 222;
+var em2a10a3y = 222;
+var em2a10a3a = 0;
+
+
+
+
+var em3a1a1x = 444;
+var em3a1a1y = 444;
+var em3a1a1a = 0;
+var em3a1a2x = 333;
+var em3a1a2y = 333;
+var em3a1a2a = 0;
+var em3a1a3x = 222;
+var em3a1a3y = 222;
+var em3a1a3a = 0;
+
+var em3a2a1x = 105;
+var em3a2a1y = (295 - 30);
+var em3a2a1a = 1;
+var em3a2a2x = 105;
+var em3a2a2y = (402 - 30);
+var em3a2a2a = 1;
+var em3a2a3x = 105;
+var em3a2a3y = (462 - 30);
+var em3a2a3a = 1;
+
+
+var em3a3a1x = 141;
+var em3a3a1y = 235;
+var em3a3a1a = 1;
+var em3a3a2x = 242;
+var em3a3a2y = 300;
+var em3a3a2a = 1;
+var em3a3a3x = 343;
+var em3a3a3y = 350;
+var em3a3a3a = 1;
+var em3a4a1x = 418;
+var em3a4a1y = (468 - 30);
+var em3a4a1a = 1;
+var em3a4a2x = 333;
+var em3a4a2y = 333;
+var em3a4a2a = 0;
+var em3a4a3x = 222;
+var em3a4a3y = 222;
+var em3a4a3a = 0;
+var em3a5a1x = 444;
+var em3a5a1y = 444;
+var em3a5a1a = 0;
+var em3a5a2x = 333;
+var em3a5a2y = 333;
+var em3a5a2a = 0;
+var em3a5a3x = 222;
+var em3a5a3y = 222;
+var em3a5a3a = 0;
+var em3a6a1x = 444;
+var em3a6a1y = 444;
+var em3a6a1a = 0;
+var em3a6a2x = 333;
+var em3a6a2y = 333;
+var em3a6a2a = 0;
+var em3a6a3x = 222;
+var em3a6a3y = 222;
+var em3a6a3a = 0;
+var em3a7a1x = 12;
+var em3a7a1y = (454 - 30);
+var em3a7a1a = 1;
+var em3a7a2x = 333;
+var em3a7a2y = 333;
+var em3a7a2a = 0;
+var em3a7a3x = 222;
+var em3a7a3y = 222;
+var em3a7a3a = 0;
+var em3a8a1x = 13;
+var em3a8a1y = (277 - 30);
+var em3a8a1a = 1;
+var em3a8a2x = 168;
+var em3a8a2y = (329 - 30);
+var em3a8a2a = 1;
+var em3a8a3x = 286;
+var em3a8a3y = (383 - 30);
+var em3a8a3a = 1;
+var em3a9a1x = 20;
+var em3a9a1y = (462 - 30);
+var em3a9a1a = 1;
+var em3a9a2x = 170;
+var em3a9a2y = (462 - 30);
+var em3a9a2a = 1;
+var em3a9a3x = 300;
+var em3a9a3y = (462 - 30);
+var em3a9a3a = 1;
+var em3a10a1x = 444;
+var em3a10a1y = 444;
+var em3a10a1a = 0;
+var em3a10a2x = 333;
+var em3a10a2y = 333;
+var em3a10a2a = 0;
+var em3a10a3x = 222;
+var em3a10a3y = 222;
+var em3a10a3a = 0;
+
+
+
+
+var em4a1a1x = 20;
+var em4a1a1y = (459 - 30);
+var em4a1a1a = 1;
+var em4a1a2x = 333;
+var em4a1a2y = 333;
+var em4a1a2a = 0;
+var em4a1a3x = 222;
+var em4a1a3y = 222;
+var em4a1a3a = 0;
+var em4a2a1x = 418;
+var em4a2a1y = (461 - 30);
+var em4a2a1a = 1;
+var em4a2a2x = 20;
+var em4a2a2y = (461 - 30);
+var em4a2a2a = 1;
+var em4a2a3x = 222;
+var em4a2a3y = (415 - 30);
+var em4a2a3a = 1;
+var em4a3a1x = 444;
+var em4a3a1y = 444;
+var em4a3a1a = 0;
+var em4a3a2x = 333;
+var em4a3a2y = 333;
+var em4a3a2a = 0;
+var em4a3a3x = 222;
+var em4a3a3y = 222;
+var em4a3a3a = 0;
+var em4a4a1x = 620;
+var em4a4a1y = (249 - 30);
+var em4a4a1a = 1;
+var em4a4a2x = 333;
+var em4a4a2y = 333;
+var em4a4a2a = 0;
+var em4a4a3x = 222;
+var em4a4a3y = 222;
+var em4a4a3a = 0;
+var em4a5a1x = 444;
+var em4a5a1y = 444;
+var em4a5a1a = 0;
+var em4a5a2x = 333;
+var em4a5a2y = 333;
+var em4a5a2a = 0;
+var em4a5a3x = 222;
+var em4a5a3y = 222;
+var em4a5a3a = 0;
+var em4a6a1x = 444;
+var em4a6a1y = 444;
+var em4a6a1a = 0;
+var em4a6a2x = 333;
+var em4a6a2y = 333;
+var em4a6a2a = 0;
+var em4a6a3x = 222;
+var em4a6a3y = 222;
+var em4a6a3a = 0;
+var em4a7a1x = 444;
+var em4a7a1y = 444;
+var em4a7a1a = 0;
+var em4a7a2x = 333;
+var em4a7a2y = 333;
+var em4a7a2a = 0;
+var em4a7a3x = 222;
+var em4a7a3y = 222;
+var em4a7a3a = 0;
+var em4a8a1x = 444;
+var em4a8a1y = 444;
+var em4a8a1a = 0;
+var em4a8a2x = 333;
+var em4a8a2y = 333;
+var em4a8a2a = 0;
+var em4a8a3x = 222;
+var em4a8a3y = 222;
+var em4a8a3a = 0;
+var em4a9a1x = 444;
+var em4a9a1y = 444;
+var em4a9a1a = 0;
+var em4a9a2x = 470;
+var em4a9a2y = (330 - 30);
+var em4a9a2a = 1;
+var em4a9a3x = 212;
+var em4a9a3y = (465 - 30);
+var em4a9a3a = 1;
+var em4a10a1x = 444;
+var em4a10a1y = 444;
+var em4a10a1a = 0;
+var em4a10a2x = 333;
+var em4a10a2y = 333;
+var em4a10a2a = 0;
+var em4a10a3x = 222;
+var em4a10a3y = 222;
+var em4a10a3a = 0;
+
+
+
+
+var em5a1a1x = 480;
+var em5a1a1y = (409 - 30);
+var em5a1a1a = 1;
+var em5a1a2x = 333;
+var em5a1a2y = 333;
+var em5a1a2a = 0;
+var em5a1a3x = 222;
+var em5a1a3y = 222;
+var em5a1a3a = 0;
+var em5a2a1x = 260;
+var em5a2a1y = (402 - 30);
+var em5a2a1a = 1;
+var em5a2a2x = 105;
+var em5a2a2y = (295 - 30);
+var em5a2a2a = 1;
+var em5a2a3x = 222;
+var em5a2a3y = (462 - 30);
+var em5a2a3a = 1;
+var em5a3a1x = 20;
+var em5a3a1y = (462 - 30);
+var em5a3a1a = 1;
+var em5a3a2x = 310;
+var em5a3a2y = (462 - 30);
+var em5a3a2a = 1;
+var em5a3a3x = 222;
+var em5a3a3y = 222;
+var em5a3a3a = 0;
+var em5a4a1x = 444;
+var em5a4a1y = 444;
+var em5a4a1a = 0;
+var em5a4a2x = 333;
+var em5a4a2y = 333;
+var em5a4a2a = 0;
+var em5a4a3x = 222;
+var em5a4a3y = 222;
+var em5a4a3a = 0;
+var em5a5a1x = 444;
+var em5a5a1y = 444;
+var em5a5a1a = 0;
+var em5a5a2x = 333;
+var em5a5a2y = 333;
+var em5a5a2a = 0;
+var em5a5a3x = 222;
+var em5a5a3y = 222;
+var em5a5a3a = 0;
+var em5a6a1x = 200;
+var em5a6a1y = (290 - 30);
+var em5a6a1a = 1;
+var em5a6a2x = 200;
+var em5a6a2y = (338 - 30);
+var em5a6a2a = 1;
+var em5a6a3x = 200;
+var em5a6a3y = (385 - 30);
+var em5a6a3a = 1;
+var em5a7a1x = 20;
+var em5a7a1y = (459 - 30);
+var em5a7a1a = 1;
+var em5a7a2x = 550;
+var em5a7a2y = (459 - 30);
+var em5a7a2a = 1;
+var em5a7a3x = 235;
+var em5a7a3y = (459 - 30);
+var em5a7a3a = 1;
+var em5a8a1x = 444;
+var em5a8a1y = 444;
+var em5a8a1a = 0;
+var em5a8a2x = 333;
+var em5a8a2y = 333;
+var em5a8a2a = 0;
+var em5a8a3x = 222;
+var em5a8a3y = 222;
+var em5a8a3a = 0;
+var em5a9a1x = 444;
+var em5a9a1y = 444;
+var em5a9a1a = 0;
+var em5a9a2x = 333;
+var em5a9a2y = 333;
+var em5a9a2a = 0;
+var em5a9a3x = 222;
+var em5a9a3y = 222;
+var em5a9a3a = 0;
+var em5a10a1x = 444;
+var em5a10a1y = 444;
+var em5a10a1a = 0;
+var em5a10a2x = 333;
+var em5a10a2y = 333;
+var em5a10a2a = 0;
+var em5a10a3x = 222;
+var em5a10a3y = 222;
+var em5a10a3a = 0;
+
+
+
+
+var em6a1a1x = 444;
+var em6a1a1y = 444;
+var em6a1a1a = 0;
+var em6a1a2x = 333;
+var em6a1a2y = 333;
+var em6a1a2a = 0;
+var em6a1a3x = 222;
+var em6a1a3y = 222;
+var em6a1a3a = 0;
+var em6a2a1x = 444;
+var em6a2a1y = 444;
+var em6a2a1a = 0;
+var em6a2a2x = 333;
+var em6a2a2y = 333;
+var em6a2a2a = 0;
+var em6a2a3x = 222;
+var em6a2a3y = 222;
+var em6a2a3a = 0;
+var em6a3a1x = 444;
+var em6a3a1y = 444;
+var em6a3a1a = 0;
+var em6a3a2x = 333;
+var em6a3a2y = 333;
+var em6a3a2a = 0;
+var em6a3a3x = 222;
+var em6a3a3y = 222;
+var em6a3a3a = 0;
+var em6a4a1x = 444;
+var em6a4a1y = 444;
+var em6a4a1a = 0;
+var em6a4a2x = 333;
+var em6a4a2y = 333;
+var em6a4a2a = 0;
+var em6a4a3x = 222;
+var em6a4a3y = 222;
+var em6a4a3a = 0;
+var em6a5a1x = 444;
+var em6a5a1y = 444;
+var em6a5a1a = 0;
+var em6a5a2x = 333;
+var em6a5a2y = 333;
+var em6a5a2a = 0;
+var em6a5a3x = 222;
+var em6a5a3y = 222;
+var em6a5a3a = 0;
+var em6a6a1x = 444;
+var em6a6a1y = 444;
+var em6a6a1a = 0;
+var em6a6a2x = 333;
+var em6a6a2y = 333;
+var em6a6a2a = 0;
+var em6a6a3x = 222;
+var em6a6a3y = 222;
+var em6a6a3a = 0;
+var em6a7a1x = 444;
+var em6a7a1y = 444;
+var em6a7a1a = 0;
+var em6a7a2x = 333;
+var em6a7a2y = 333;
+var em6a7a2a = 0;
+var em6a7a3x = 222;
+var em6a7a3y = 222;
+var em6a7a3a = 0;
+var em6a8a1x = 444;
+var em6a8a1y = 444;
+var em6a8a1a = 0;
+var em6a8a2x = 333;
+var em6a8a2y = 333;
+var em6a8a2a = 0;
+var em6a8a3x = 222;
+var em6a8a3y = 222;
+var em6a8a3a = 0;
+var em6a9a1x = 444;
+var em6a9a1y = 444;
+var em6a9a1a = 0;
+var em6a9a2x = 333;
+var em6a9a2y = 333;
+var em6a9a2a = 0;
+var em6a9a3x = 222;
+var em6a9a3y = 222;
+var em6a9a3a = 0;
+var em6a10a1x = 444;
+var em6a10a1y = 444;
+var em6a10a1a = 0;
+var em6a10a2x = 333;
+var em6a10a2y = 333;
+var em6a10a2a = 0;
+var em6a10a3x = 222;
+var em6a10a3y = 222;
+var em6a10a3a = 0;
+
+
+
+
+var em7a1a1x = 444;
+var em7a1a1y = 444;
+var em7a1a1a = 0;
+var em7a1a2x = 333;
+var em7a1a2y = 333;
+var em7a1a2a = 0;
+var em7a1a3x = 222;
+var em7a1a3y = 222;
+var em7a1a3a = 0;
+var em7a2a1x = 444;
+var em7a2a1y = 444;
+var em7a2a1a = 0;
+var em7a2a2x = 333;
+var em7a2a2y = 333;
+var em7a2a2a = 0;
+var em7a2a3x = 222;
+var em7a2a3y = 222;
+var em7a2a3a = 0;
+var em7a3a1x = 444;
+var em7a3a1y = 444;
+var em7a3a1a = 0;
+var em7a3a2x = 333;
+var em7a3a2y = 333;
+var em7a3a2a = 0;
+var em7a3a3x = 222;
+var em7a3a3y = 222;
+var em7a3a3a = 0;
+var em7a4a1x = 444;
+var em7a4a1y = 444;
+var em7a4a1a = 0;
+var em7a4a2x = 333;
+var em7a4a2y = 333;
+var em7a4a2a = 0;
+var em7a4a3x = 222;
+var em7a4a3y = 222;
+var em7a4a3a = 0;
+var em7a5a1x = 444;
+var em7a5a1y = 444;
+var em7a5a1a = 0;
+var em7a5a2x = 333;
+var em7a5a2y = 333;
+var em7a5a2a = 0;
+var em7a5a3x = 222;
+var em7a5a3y = 222;
+var em7a5a3a = 0;
+var em7a6a1x = 444;
+var em7a6a1y = 444;
+var em7a6a1a = 0;
+var em7a6a2x = 333;
+var em7a6a2y = 333;
+var em7a6a2a = 0;
+var em7a6a3x = 222;
+var em7a6a3y = 222;
+var em7a6a3a = 0;
+var em7a7a1x = 444;
+var em7a7a1y = 444;
+var em7a7a1a = 0;
+var em7a7a2x = 333;
+var em7a7a2y = 333;
+var em7a7a2a = 0;
+var em7a7a3x = 222;
+var em7a7a3y = 222;
+var em7a7a3a = 0;
+var em7a8a1x = 444;
+var em7a8a1y = 444;
+var em7a8a1a = 0;
+var em7a8a2x = 333;
+var em7a8a2y = 333;
+var em7a8a2a = 0;
+var em7a8a3x = 222;
+var em7a8a3y = 222;
+var em7a8a3a = 0;
+var em7a9a1x = 444;
+var em7a9a1y = 444;
+var em7a9a1a = 0;
+var em7a9a2x = 333;
+var em7a9a2y = 333;
+var em7a9a2a = 0;
+var em7a9a3x = 222;
+var em7a9a3y = 222;
+var em7a9a3a = 0;
+var em7a10a1x = 444;
+var em7a10a1y = 444;
+var em7a10a1a = 0;
+var em7a10a2x = 333;
+var em7a10a2y = 333;
+var em7a10a2a = 0;
+var em7a10a3x = 222;
+var em7a10a3y = 222;
+var em7a10a3a = 0;
+
+
+
+
+var em8a1a1x = 93;
+var em8a1a1y = (462 - 30);
+var em8a1a1a = 1;
+var em8a1a2x = 201;
+var em8a1a2y = (386 - 30);
+var em8a1a2a = 1;
+var em8a1a3x = 315;
+var em8a1a3y = (296 - 30);
+var em8a1a3a = 1;
+var em8a2a1x = 20;
+var em8a2a1y = (459 - 30);
+var em8a2a1a = 1;
+var em8a2a2x = 250;
+var em8a2a2y = (459 - 30);
+var em8a2a2a = 1;
+var em8a2a3x = 480;
+var em8a2a3y = (459 - 30);
+var em8a2a3a = 1;
+
+var em8a3a1x = 93;
+var em8a3a1y = (395 - 30);
+var em8a3a1a = 1;
+var em8a3a2x = 257;
+var em8a3a2y = (320 - 30);
+var em8a3a2a = 1;
+var em8a3a3x = 192;
+var em8a3a3y = (241 - 30);
+var em8a3a3a = 1;
+var em8a4a1x = 20;
+var em8a4a1y = (468 - 30);
+var em8a4a1a = 1;
+var em8a4a2x = 250;
+var em8a4a2y = (468 - 30);
+var em8a4a2a = 1;
+var em8a4a3x = 580;
+var em8a4a3y = (468 - 30);
+var em8a4a3a = 1;
+var em8a5a1x = 270;
+var em8a5a1y = (407 - 30);
+var em8a5a1a = 1;
+var em8a5a2x = 333;
+var em8a5a2y = 333;
+var em8a5a2a = 0;
+var em8a5a3x = 222;
+var em8a5a3y = 222;
+var em8a5a3a = 0;
+var em8a6a1x = 20;
+var em8a6a1y = (382 - 30);
+var em8a6a1a = 0;
+var em8a6a2x = 333;
+var em8a6a2y = 333;
+var em8a6a2a = 0;
+var em8a6a3x = 222;
+var em8a6a3y = 222;
+var em8a6a3a = 0;
+var em8a7a1x = 20;
+var em8a7a1y = (459 - 30);
+var em8a7a1a = 1;
+var em8a7a2x = 550;
+var em8a7a2y = (459 - 30);
+var em8a7a2a = 1;
+var em8a7a3x = 235;
+var em8a7a3y = (459 - 30);
+var em8a7a3a = 1;
+var em8a8a1x = 444;
+var em8a8a1y = 444;
+var em8a8a1a = 0;
+var em8a8a2x = 333;
+var em8a8a2y = 333;
+var em8a8a2a = 0;
+var em8a8a3x = 222;
+var em8a8a3y = 222;
+var em8a8a3a = 0;
+var em8a9a1x = 444;
+var em8a9a1y = 444;
+var em8a9a1a = 0;
+var em8a9a2x = 333;
+var em8a9a2y = 333;
+var em8a9a2a = 0;
+var em8a9a3x = 222;
+var em8a9a3y = 222;
+var em8a9a3a = 0;
+var em8a10a1x = 444;
+var em8a10a1y = 444;
+var em8a10a1a = 0;
+var em8a10a2x = 333;
+var em8a10a2y = 333;
+var em8a10a2a = 0;
+var em8a10a3x = 222;
+var em8a10a3y = 222;
+var em8a10a3a = 0;
+
+
+var em3a2a1x = 105;
+var em3a2a1y = (295 - 30);
+var em3a2a1a = 1;
+var em3a2a2x = 105;
+var em3a2a2y = (385 - 30);
+var em3a2a2a = 1;
+var em3a2a3x = 105;
+var em3a2a3y = (462 - 30);
+var em3a2a3a = 1;
+
+
+var em9a1a1x = 444;
+var em9a1a1y = 444;
+var em9a1a1a = 0;
+var em9a1a2x = 333;
+var em9a1a2y = 333;
+var em9a1a2a = 0;
+var em9a1a3x = 222;
+var em9a1a3y = 222;
+var em9a1a3a = 0;
+var em9a2a1x = 444;
+var em9a2a1y = 444;
+var em9a2a1a = 0;
+var em9a2a2x = 333;
+var em9a2a2y = 333;
+var em9a2a2a = 0;
+var em9a2a3x = 222;
+var em9a2a3y = 222;
+var em9a2a3a = 0;
+
+var em9a3a1x = 19;
+var em9a3a1y = (468 - 30);
+var em9a3a1a = 1;
+var em9a3a2x = 100;
+var em9a3a2y = (468 - 30);
+var em9a3a2a = 1;
+var em9a3a3x = 518;
+var em9a3a3y = (468 - 30);
+var em9a3a3a = 1;
+
+
+
+
+var em9a4a1x = 444;
+var em9a4a1y = 444;
+var em9a4a1a = 0;
+var em9a4a2x = 333;
+var em9a4a2y = 333;
+var em9a4a2a = 0;
+var em9a4a3x = 222;
+var em9a4a3y = 222;
+var em9a4a3a = 0;
+var em9a5a1x = 444;
+var em9a5a1y = 444;
+var em9a5a1a = 0;
+var em9a5a2x = 333;
+var em9a5a2y = 333;
+var em9a5a2a = 0;
+var em9a5a3x = 222;
+var em9a5a3y = 222;
+var em9a5a3a = 0;
+var em9a6a1x = 444;
+var em9a6a1y = 444;
+var em9a6a1a = 0;
+var em9a6a2x = 333;
+var em9a6a2y = 333;
+var em9a6a2a = 0;
+var em9a6a3x = 222;
+var em9a6a3y = 222;
+var em9a6a3a = 0;
+var em9a7a1x = 444;
+var em9a7a1y = 444;
+var em9a7a1a = 0;
+var em9a7a2x = 333;
+var em9a7a2y = 333;
+var em9a7a2a = 0;
+var em9a7a3x = 222;
+var em9a7a3y = 222;
+var em9a7a3a = 0;
+var em9a8a1x = 444;
+var em9a8a1y = 444;
+var em9a8a1a = 0;
+var em9a8a2x = 333;
+var em9a8a2y = 333;
+var em9a8a2a = 0;
+var em9a8a3x = 222;
+var em9a8a3y = 222;
+var em9a8a3a = 0;
+var em9a9a1x = 444;
+var em9a9a1y = 444;
+var em9a9a1a = 0;
+var em9a9a2x = 333;
+var em9a9a2y = 333;
+var em9a9a2a = 0;
+var em9a9a3x = 222;
+var em9a9a3y = 222;
+var em9a9a3a = 0;
+var em9a10a1x = 444;
+var em9a10a1y = 444;
+var em9a10a1a = 0;
+var em9a10a2x = 333;
+var em9a10a2y = 333;
+var em9a10a2a = 0;
+var em9a10a3x = 222;
+var em9a10a3y = 222;
+var em9a10a3a = 0;
+
+
+
+
+var em10a1a1x = 444;
+var em10a1a1y = 444;
+var em10a1a1a = 0;
+var em10a1a2x = 333;
+var em10a1a2y = 333;
+var em10a1a2a = 0;
+var em10a1a3x = 222;
+var em10a1a3y = 222;
+var em10a1a3a = 0;
+var em10a2a1x = 444;
+var em10a2a1y = 444;
+var em10a2a1a = 0;
+var em10a2a2x = 333;
+var em10a2a2y = 333;
+var em10a2a2a = 0;
+var em10a2a3x = 222;
+var em10a2a3y = 222;
+var em10a2a3a = 0;
+var em10a3a1x = 444;
+var em10a3a1y = 444;
+var em10a3a1a = 0;
+var em10a3a2x = 333;
+var em10a3a2y = 333;
+var em10a3a2a = 0;
+var em10a3a3x = 222;
+var em10a3a3y = 222;
+var em10a3a3a = 0;
+var em10a4a1x = 444;
+var em10a4a1y = 444;
+var em10a4a1a = 0;
+var em10a4a2x = 333;
+var em10a4a2y = 333;
+var em10a4a2a = 0;
+var em10a4a3x = 222;
+var em10a4a3y = 222;
+var em10a4a3a = 0;
+var em10a5a1x = 444;
+var em10a5a1y = 444;
+var em10a5a1a = 0;
+var em10a5a2x = 333;
+var em10a5a2y = 333;
+var em10a5a2a = 0;
+var em10a5a3x = 222;
+var em10a5a3y = 222;
+var em10a5a3a = 0;
+var em10a6a1x = 444;
+var em10a6a1y = 444;
+var em10a6a1a = 0;
+var em10a6a2x = 333;
+var em10a6a2y = 333;
+var em10a6a2a = 0;
+var em10a6a3x = 222;
+var em10a6a3y = 222;
+var em10a6a3a = 0;
+var em10a7a1x = 444;
+var em10a7a1y = 444;
+var em10a7a1a = 0;
+var em10a7a2x = 333;
+var em10a7a2y = 333;
+var em10a7a2a = 0;
+var em10a7a3x = 222;
+var em10a7a3y = 222;
+var em10a7a3a = 0;
+var em10a8a1x = 444;
+var em10a8a1y = 444;
+var em10a8a1a = 0;
+var em10a8a2x = 333;
+var em10a8a2y = 333;
+var em10a8a2a = 0;
+var em10a8a3x = 222;
+var em10a8a3y = 222;
+var em10a8a3a = 0;
+var em10a9a1x = 444;
+var em10a9a1y = 444;
+var em10a9a1a = 0;
+var em10a9a2x = 333;
+var em10a9a2y = 333;
+var em10a9a2a = 0;
+var em10a9a3x = 222;
+var em10a9a3y = 222;
+var em10a9a3a = 0;
+var em10a10a1x = 444;
+var em10a10a1y = 444;
+var em10a10a1a = 0;
+var em10a10a2x = 333;
+var em10a10a2y = 333;
+var em10a10a2a = 0;
+var em10a10a3x = 222;
+var em10a10a3y = 222;
+var em10a10a3a = 0;
+
+
+
+
+
+var drink1a1a1x = 444;
+var drink1a1a1y = 444;
+var drink1a1a1a = 0;
+var drink1a1a2x = 333;
+var drink1a1a2y = 333;
+var drink1a1a2a = 0;
+var drink1a1a3x = 222;
+var drink1a1a3y = 222;
+var drink1a1a3a = 0;
+var drink1a2a1x = 317;
+var drink1a2a1y = (468 - 25);
+var drink1a2a1a = 1;
+var drink1a2a2x = 509;
+var drink1a2a2y = (353 - 25);
+var drink1a2a2a = 1;
+var drink1a2a3x = 222;
+var drink1a2a3y = 222;
+var drink1a2a3a = 0;
+var drink1a3a1x = 108;
+var drink1a3a1y = (468 - 25);
+var drink1a3a1a = 1;
+var drink1a3a2x = 200;
+var drink1a3a2y = (468 - 25);
+var drink1a3a2a = 1;
+var drink1a3a3x = 300;
+var drink1a3a3y = (468 - 25);
+var drink1a3a3a = 1;
+var drink1a4a1x = 444;
+var drink1a4a1y = 444;
+var drink1a4a1a = 0;
+var drink1a4a2x = 333;
+var drink1a4a2y = 333;
+var drink1a4a2a = 0;
+var drink1a4a3x = 222;
+var drink1a4a3y = 222;
+var drink1a4a3a = 0;
+var drink1a6a1x = 444;
+var drink1a6a1y = 444;
+var drink1a6a1a = 0;
+var drink1a6a2x = 333;
+var drink1a6a2y = 333;
+var drink1a6a2a = 0;
+var drink1a6a3x = 222;
+var drink1a6a3y = 222;
+var drink1a6a3a = 0;
+var drink1a5a1x = 50;
+var drink1a5a1y = (382 - 25);
+var drink1a5a1a = 1;
+var drink1a5a2x = 80;
+var drink1a5a2y = (382 - 25);
+var drink1a5a2a = 1;
+var drink1a5a3x = 110;
+var drink1a5a3y = (382 - 25);
+var drink1a5a3a = 1;
+var drink1a7a1x = 106;
+var drink1a7a1y = (468 - 25);
+var drink1a7a1a = 1;
+var drink1a7a2x = 320;
+var drink1a7a2y = (468 - 25);
+var drink1a7a2a = 1;
+var drink1a7a3x = 360;
+var drink1a7a3y = (468 - 25);
+var drink1a7a3a = 1;
+var drink1a8a1x = 134;
+var drink1a8a1y = (330 - 25);
+var drink1a8a1a = 1;
+var drink1a8a2x = 333;
+var drink1a8a2y = 333;
+var drink1a8a2a = 0;
+var drink1a8a3x = 222;
+var drink1a8a3y = 222;
+var drink1a8a3a = 0;
+var drink1a9a1x = 444;
+var drink1a9a1y = 444;
+var drink1a9a1a = 0;
+var drink1a9a2x = 333;
+var drink1a9a2y = 333;
+var drink1a9a2a = 0;
+var drink1a9a3x = 222;
+var drink1a9a3y = 222;
+var drink1a9a3a = 0;
+var drink1a10a1x = 444;
+var drink1a10a1y = 444;
+var drink1a10a1a = 0;
+var drink1a10a2x = 333;
+var drink1a10a2y = 333;
+var drink1a10a2a = 0;
+var drink1a10a3x = 222;
+var drink1a10a3y = 222;
+var drink1a10a3a = 0;
+
+
+
+var drink2a1a1x = 444;
+var drink2a1a1y = 444;
+var drink2a1a1a = 0;
+var drink2a1a2x = 333;
+var drink2a1a2y = 333;
+var drink2a1a2a = 0;
+var drink2a1a3x = 222;
+var drink2a1a3y = 222;
+var drink2a1a3a = 0;
+var drink2a2a1x = 12;
+var drink2a2a1y = (295 - 25);
+var drink2a2a1a = 1;
+var drink2a2a2x = 333;
+var drink2a2a2y = 333;
+var drink2a2a2a = 0;
+var drink2a2a3x = 222;
+var drink2a2a3y = 222;
+var drink2a2a3a = 0;
+var drink2a3a1x = 120;
+var drink2a3a1y = (468 - 25);
+var drink2a3a1a = 1;
+var drink2a3a2x = 100;
+var drink2a3a2y = (468 - 25);
+var drink2a3a2a = 1;
+var drink2a3a3x = 222;
+var drink2a3a3y = 222;
+var drink2a3a3a = 0;
+
+var drink2a4a1x = 444;
+var drink2a4a1y = 444;
+var drink2a4a1a = 0;
+var drink2a4a2x = 333;
+var drink2a4a2y = 333;
+var drink2a4a2a = 0;
+var drink2a4a3x = 222;
+var drink2a4a3y = 222;
+var drink2a4a3a = 0;
+var drink2a5a1x = 444;
+var drink2a5a1y = 444;
+var drink2a5a1a = 0;
+var drink2a5a2x = 333;
+var drink2a5a2y = 333;
+var drink2a5a2a = 0;
+var drink2a5a3x = 222;
+var drink2a5a3y = 222;
+var drink2a5a3a = 0;
+var drink2a6a1x = 444;
+var drink2a6a1y = 444;
+var drink2a6a1a = 0;
+var drink2a6a2x = 333;
+var drink2a6a2y = 333;
+var drink2a6a2a = 0;
+var drink2a6a3x = 222;
+var drink2a6a3y = 222;
+var drink2a6a3a = 0;
+var drink2a7a1x = 444;
+var drink2a7a1y = 444;
+var drink2a7a1a = 0;
+var drink2a7a2x = 333;
+var drink2a7a2y = 333;
+var drink2a7a2a = 0;
+var drink2a7a3x = 222;
+var drink2a7a3y = 222;
+var drink2a7a3a = 0;
+var drink2a8a1x = 195;
+var drink2a8a1y = (468 - 25);
+var drink2a8a1a = 1;
+var drink2a8a2x = 235;
+var drink2a8a2y = (468 - 25);
+var drink2a8a2a = 1;
+var drink2a8a3x = 215;
+var drink2a8a3y = (468 - 25);
+var drink2a8a3a = 1;
+var drink2a9a1x = 444;
+var drink2a9a1y = 444;
+var drink2a9a1a = 0;
+var drink2a9a2x = 333;
+var drink2a9a2y = 333;
+var drink2a9a2a = 0;
+var drink2a9a3x = 222;
+var drink2a9a3y = 222;
+var drink2a9a3a = 0;
+var drink2a10a1x = 600;
+var drink2a10a1y = (227 - 25);
+var drink2a10a1a = 1;
+var drink2a10a2x = 580;
+var drink2a10a2y = (227 - 25);
+var drink2a10a2a = 1;
+var drink2a10a3x = 560;
+var drink2a10a3y = (227 - 25);
+var drink2a10a3a = 1;
+
+
+
+
+var drink3a1a1x = 230;
+var drink3a1a1y = (382 - 25);
+var drink3a1a1a = 0;
+var drink3a1a2x = 333;
+var drink3a1a2y = 333;
+var drink3a1a2a = 0;
+var drink3a1a3x = 222;
+var drink3a1a3y = 222;
+var drink3a1a3a = 0;
+var drink3a2a1x = 444;
+var drink3a2a1y = 444;
+var drink3a2a1a = 0;
+var drink3a2a2x = 333;
+var drink3a2a2y = 333;
+var drink3a2a2a = 0;
+var drink3a2a3x = 222;
+var drink3a2a3y = 222;
+var drink3a2a3a = 0;
+var drink3a3a1x = 444;
+var drink3a3a1y = 444;
+var drink3a3a1a = 0;
+var drink3a3a2x = 333;
+var drink3a3a2y = 333;
+var drink3a3a2a = 0;
+var drink3a3a3x = 222;
+var drink3a3a3y = 222;
+var drink3a3a3a = 0;
+var drink3a4a1x = 444;
+var drink3a4a1y = 444;
+var drink3a4a1a = 0;
+var drink3a4a2x = 333;
+var drink3a4a2y = 333;
+var drink3a4a2a = 0;
+var drink3a4a3x = 222;
+var drink3a4a3y = 222;
+var drink3a4a3a = 0;
+var drink3a5a1x = 444;
+var drink3a5a1y = 444;
+var drink3a5a1a = 0;
+var drink3a5a2x = 333;
+var drink3a5a2y = 333;
+var drink3a5a2a = 0;
+var drink3a5a3x = 441;
+var drink3a5a3y = (222 - 25);
+var drink3a5a3a = 1;
+var drink3a6a1x = 290;
+var drink3a6a1y = (454 - 25);
+var drink3a6a1a = 1;
+var drink3a6a2x = 310;
+var drink3a6a2y = (454 - 25);
+var drink3a6a2a = 1;
+var drink3a6a3x = 330;
+var drink3a6a3y = (454 - 25);
+var drink3a6a3a = 1;
+var drink3a7a1x = 444;
+var drink3a7a1y = 444;
+var drink3a7a1a = 0;
+var drink3a7a2x = 333;
+var drink3a7a2y = 333;
+var drink3a7a2a = 0;
+var drink3a7a3x = 222;
+var drink3a7a3y = 222;
+var drink3a7a3a = 0;
+var drink3a8a1x = 444;
+var drink3a8a1y = 444;
+var drink3a8a1a = 0;
+var drink3a8a2x = 333;
+var drink3a8a2y = 333;
+var drink3a8a2a = 0;
+var drink3a8a3x = 222;
+var drink3a8a3y = 222;
+var drink3a8a3a = 0;
+var drink3a9a1x = 444;
+var drink3a9a1y = 444;
+var drink3a9a1a = 0;
+var drink3a9a2x = 333;
+var drink3a9a2y = 333;
+var drink3a9a2a = 0;
+var drink3a9a3x = 222;
+var drink3a9a3y = 222;
+var drink3a9a3a = 0;
+var drink3a10a1x = 600;
+var drink3a10a1y = (227 - 25);
+var drink3a10a1a = 1;
+var drink3a10a2x = 580;
+var drink3a10a2y = (227 - 25);
+var drink3a10a2a = 1;
+var drink3a10a3x = 560;
+var drink3a10a3y = (227 - 25);
+var drink3a10a3a = 1;
+
+
+
+
+var drink4a1a1x = 444;
+var drink4a1a1y = 444;
+var drink4a1a1a = 0;
+var drink4a1a2x = 333;
+var drink4a1a2y = 333;
+var drink4a1a2a = 0;
+var drink4a1a3x = 222;
+var drink4a1a3y = 222;
+var drink4a1a3a = 0;
+var drink4a2a1x = 444;
+var drink4a2a1y = 444;
+var drink4a2a1a = 0;
+var drink4a2a2x = 333;
+var drink4a2a2y = 333;
+var drink4a2a2a = 0;
+var drink4a2a3x = 222;
+var drink4a2a3y = 222;
+var drink4a2a3a = 0;
+var drink4a3a1x = 116;
+var drink4a3a1y = (304 - 25);
+var drink4a3a1a = 1;
+var drink4a3a2x = 333;
+var drink4a3a2y = 333;
+var drink4a3a2a = 0;
+var drink4a3a3x = 222;
+var drink4a3a3y = 222;
+var drink4a3a3a = 0;
+var drink4a4a1x = 593;
+var drink4a4a1y = (318 - 25);
+var drink4a4a1a = 1;
+var drink4a4a2x = 333;
+var drink4a4a2y = 333;
+var drink4a4a2a = 0;
+var drink4a4a3x = 222;
+var drink4a4a3y = 222;
+var drink4a4a3a = 0;
+var drink4a5a1x = 444;
+var drink4a5a1y = 444;
+var drink4a5a1a = 0;
+var drink4a5a2x = 333;
+var drink4a5a2y = 333;
+var drink4a5a2a = 0;
+var drink4a5a3x = 222;
+var drink4a5a3y = 222;
+var drink4a5a3a = 0;
+var drink4a6a1x = 70;
+var drink4a6a1y = (459 - 25);
+var drink4a6a1a = 1;
+var drink4a6a2x = 90;
+var drink4a6a2y = (459 - 25);
+var drink4a6a2a = 1;
+var drink4a6a3x = 110;
+var drink4a6a3y = (459 - 25);
+var drink4a6a3a = 1;
+var drink4a7a1x = 250;
+var drink4a7a1y = (293 - 25);
+var drink4a7a1a = 1;
+var drink4a7a2x = 270;
+var drink4a7a2y = (293 - 25);
+var drink4a7a2a = 1;
+var drink4a7a3x = 222;
+var drink4a7a3y = 222;
+var drink4a7a3a = 0;
+var drink4a8a1x = 195;
+var drink4a8a1y = (382 - 25);
+var drink4a8a1a = 1;
+var drink4a8a2x = 333;
+var drink4a8a2y = 333;
+var drink4a8a2a = 0;
+var drink4a8a3x = 222;
+var drink4a8a3y = 222;
+var drink4a8a3a = 0;
+var drink4a9a1x = 105;
+var drink4a9a1y = (210 - 25);
+var drink4a9a1a = 1;
+var drink4a9a2x = 125;
+var drink4a9a2y = (210 - 25);
+var drink4a9a2a = 1;
+var drink4a9a3x = 222;
+var drink4a9a3y = 222;
+var drink4a9a3a = 0;
+var drink4a10a1x = 600;
+var drink4a10a1y = (227 - 25);
+var drink4a10a1a = 1;
+var drink4a10a2x = 580;
+var drink4a10a2y = (227 - 25);
+var drink4a10a2a = 1;
+var drink4a10a3x = 560;
+var drink4a10a3y = (227 - 25);
+var drink4a10a3a = 1;
+
+
+var drink5a1a1x = 100;
+var drink5a1a1y = (235 - 25);
+var drink5a1a1a = 1
+var drink5a1a2x = 200;
+var drink5a1a2y = (235 - 25);
+var drink5a1a2a = 1;
+var drink5a1a3x = 300;
+var drink5a1a3y = (235 - 25);
+var drink5a1a3a = 1;
+var drink5a2a1x = 444;
+var drink5a2a1y = 444;
+var drink5a2a1a = 0;
+var drink5a2a2x = 333;
+var drink5a2a2y = 333;
+var drink5a2a2a = 0;
+var drink5a2a3x = 222;
+var drink5a2a3y = 222;
+var drink5a2a3a = 0;
+var drink5a3a1x = 444;
+var drink5a3a1y = 444;
+var drink5a3a1a = 0;
+var drink5a3a2x = 333;
+var drink5a3a2y = 333;
+var drink5a3a2a = 0;
+var drink5a3a3x = 222;
+var drink5a3a3y = 222;
+var drink5a3a3a = 0;
+var drink5a4a1x = 100;
+var drink5a4a1y = (462 - 25);
+var drink5a4a1a = 1;
+var drink5a4a2x = 120;
+var drink5a4a2y = (462 - 25);
+var drink5a4a2a = 1;
+var drink5a4a3x = 140;
+var drink5a4a3y = (462 - 25);
+var drink5a4a3a = 1;
+var drink5a5a1x = 52;
+var drink5a5a1y = (353 - 21);
+var drink5a5a1a = 1;
+var drink5a5a2x = 333;
+var drink5a5a2y = 333;
+var drink5a5a2a = 0;
+var drink5a5a3x = 222;
+var drink5a5a3y = 222;
+var drink5a5a3a = 0;
+var drink5a6a1x = 444;
+var drink5a6a1y = 444;
+var drink5a6a1a = 0;
+var drink5a6a2x = 333;
+var drink5a6a2y = 333;
+var drink5a6a2a = 0;
+var drink5a6a3x = 222;
+var drink5a6a3y = 222;
+var drink5a6a3a = 0;
+var drink5a7a1x = 444;
+var drink5a7a1y = 444;
+var drink5a7a1a = 0;
+var drink5a7a2x = 333;
+var drink5a7a2y = 333;
+var drink5a7a2a = 0;
+var drink5a7a3x = 222;
+var drink5a7a3y = 222;
+var drink5a7a3a = 0;
+var drink5a8a1x = 444;
+var drink5a8a1y = 444;
+var drink5a8a1a = 0;
+var drink5a8a2x = 333;
+var drink5a8a2y = 333;
+var drink5a8a2a = 0;
+var drink5a8a3x = 222;
+var drink5a8a3y = 222;
+var drink5a8a3a = 0;
+var drink5a9a1x = 444;
+var drink5a9a1y = 444;
+var drink5a9a1a = 0;
+var drink5a9a2x = 333;
+var drink5a9a2y = 333;
+var drink5a9a2a = 0;
+var drink5a9a3x = 222;
+var drink5a9a3y = 222;
+var drink5a9a3a = 0;
+var drink5a10a1x = 600;
+var drink5a10a1y = (227 - 25);
+var drink5a10a1a = 1;
+var drink5a10a2x = 580;
+var drink5a10a2y = (227 - 25);
+var drink5a10a2a = 1;
+var drink5a10a3x = 560;
+var drink5a10a3y = (227 - 25);
+var drink5a10a3a = 1;
+
+
+
+var drink6a1a1x = 444;
+var drink6a1a1y = 444;
+var drink6a1a1a = 0;
+var drink6a1a2x = 333;
+var drink6a1a2y = 333;
+var drink6a1a2a = 0;
+var drink6a1a3x = 222;
+var drink6a1a3y = 222;
+var drink6a1a3a = 0;
+var drink6a2a1x = 444;
+var drink6a2a1y = 444;
+var drink6a2a1a = 0;
+var drink6a2a2x = 333;
+var drink6a2a2y = 333;
+var drink6a2a2a = 0;
+var drink6a2a3x = 222;
+var drink6a2a3y = 222;
+var drink6a2a3a = 0;
+var drink6a3a1x = 444;
+var drink6a3a1y = 444;
+var drink6a3a1a = 0;
+var drink6a3a2x = 333;
+var drink6a3a2y = 333;
+var drink6a3a2a = 0;
+var drink6a3a3x = 222;
+var drink6a3a3y = 222;
+var drink6a3a3a = 0;
+var drink6a4a1x = 444;
+var drink6a4a1y = 444;
+var drink6a4a1a = 0;
+var drink6a4a2x = 333;
+var drink6a4a2y = 333;
+var drink6a4a2a = 0;
+var drink6a4a3x = 222;
+var drink6a4a3y = 222;
+var drink6a4a3a = 0;
+var drink6a5a1x = 444;
+var drink6a5a1y = 444;
+var drink6a5a1a = 0;
+var drink6a5a2x = 333;
+var drink6a5a2y = 333;
+var drink6a5a2a = 0;
+var drink6a5a3x = 222;
+var drink6a5a3y = 222;
+var drink6a5a3a = 0;
+var drink6a6a1x = 444;
+var drink6a6a1y = 444;
+var drink6a6a1a = 0;
+var drink6a6a2x = 333;
+var drink6a6a2y = 333;
+var drink6a6a2a = 0;
+var drink6a6a3x = 222;
+var drink6a6a3y = 222;
+var drink6a6a3a = 0;
+var drink6a7a1x = 444;
+var drink6a7a1y = 444;
+var drink6a7a1a = 0;
+var drink6a7a2x = 333;
+var drink6a7a2y = 333;
+var drink6a7a2a = 0;
+var drink6a7a3x = 222;
+var drink6a7a3y = 222;
+var drink6a7a3a = 0;
+var drink6a8a1x = 444;
+var drink6a8a1y = 444;
+var drink6a8a1a = 0;
+var drink6a8a2x = 333;
+var drink6a8a2y = 333;
+var drink6a8a2a = 0;
+var drink6a8a3x = 222;
+var drink6a8a3y = 222;
+var drink6a8a3a = 0;
+var drink6a9a1x = 444;
+var drink6a9a1y = 444;
+var drink6a9a1a = 0;
+var drink6a9a2x = 333;
+var drink6a9a2y = 333;
+var drink6a9a2a = 0;
+var drink6a9a3x = 222;
+var drink6a9a3y = 222;
+var drink6a9a3a = 0;
+var drink6a10a1x = 600;
+var drink6a10a1y = (227 - 25);
+var drink6a10a1a = 1;
+var drink6a10a2x = 580;
+var drink6a10a2y = (227 - 25);
+var drink6a10a2a = 1;
+var drink6a10a3x = 560;
+var drink6a10a3y = (227 - 25);
+var drink6a10a3a = 1;
+
+
+
+var drink7a1a1x = 444;
+var drink7a1a1y = 444;
+var drink7a1a1a = 0;
+var drink7a1a2x = 333;
+var drink7a1a2y = 333;
+var drink7a1a2a = 0;
+var drink7a1a3x = 222;
+var drink7a1a3y = 222;
+var drink7a1a3a = 0;
+var drink7a2a1x = 444;
+var drink7a2a1y = 444;
+var drink7a2a1a = 1;
+var drink7a2a2x = 333;
+var drink7a2a2y = 333;
+var drink7a2a2a = 1;
+var drink7a2a3x = 222;
+var drink7a2a3y = 222;
+var drink7a2a3a = 1;
+var drink7a3a1x = 444;
+var drink7a3a1y = 444;
+var drink7a3a1a = 1;
+var drink7a3a2x = 333;
+var drink7a3a2y = 333;
+var drink7a3a2a = 1;
+var drink7a3a3x = 222;
+var drink7a3a3y = 222;
+var drink7a3a3a = 1;
+var drink7a4a1x = 444;
+var drink7a4a1y = 444;
+var drink7a4a1a = 1;
+var drink7a4a2x = 333;
+var drink7a4a2y = 333;
+var drink7a4a2a = 1;
+var drink7a4a3x = 222;
+var drink7a4a3y = 222;
+var drink7a4a3a = 1;
+var drink7a5a1x = 444;
+var drink7a5a1y = 444;
+var drink7a5a1a = 1;
+var drink7a5a2x = 333;
+var drink7a5a2y = 333;
+var drink7a5a2a = 1;
+var drink7a5a3x = 222;
+var drink7a5a3y = 222;
+var drink7a5a3a = 1;
+var drink7a6a1x = 444;
+var drink7a6a1y = 444;
+var drink7a6a1a = 1;
+var drink7a6a2x = 333;
+var drink7a6a2y = 333;
+var drink7a6a2a = 1;
+var drink7a6a3x = 222;
+var drink7a6a3y = 222;
+var drink7a6a3a = 1;
+var drink7a7a1x = 444;
+var drink7a7a1y = 444;
+var drink7a7a1a = 1;
+var drink7a7a2x = 333;
+var drink7a7a2y = 333;
+var drink7a7a2a = 1;
+var drink7a7a3x = 222;
+var drink7a7a3y = 222;
+var drink7a7a3a = 1;
+var drink7a8a1x = 444;
+var drink7a8a1y = 444;
+var drink7a8a1a = 1;
+var drink7a8a2x = 333;
+var drink7a8a2y = 333;
+var drink7a8a2a = 1;
+var drink7a8a3x = 222;
+var drink7a8a3y = 222;
+var drink7a8a3a = 1;
+var drink7a9a1x = 444;
+var drink7a9a1y = 444;
+var drink7a9a1a = 1;
+var drink7a9a2x = 333;
+var drink7a9a2y = 333;
+var drink7a9a2a = 1;
+var drink7a9a3x = 222;
+var drink7a9a3y = 222;
+var drink7a9a3a = 1;
+var drink7a10a1x = 600;
+var drink7a10a1y = (227 - 25);
+var drink7a10a1a = 1;
+var drink7a10a2x = 580;
+var drink7a10a2y = (227 - 25);
+var drink7a10a2a = 1;
+var drink7a10a3x = 560;
+var drink7a10a3y = (227 - 25);
+var drink7a10a3a = 1;
+
+
+
+var drink8a1a1x = 444;
+var drink8a1a1y = 444;
+var drink8a1a1a = 0;
+var drink8a1a2x = 333;
+var drink8a1a2y = 333;
+var drink8a1a2a = 0;
+var drink8a1a3x = 222;
+var drink8a1a3y = 222;
+var drink8a1a3a = 0;
+var drink8a2a1x = 134;
+var drink8a2a1y = (330 - 25);
+var drink8a2a1a = 0;
+var drink8a2a2x = 333;
+var drink8a2a2y = 333;
+var drink8a2a2a = 0;
+var drink8a2a3x = 222;
+var drink8a2a3y = 222;
+var drink8a2a3a = 0;
+var drink8a4a1x = 115;
+var drink8a4a1y = (248 - 25);
+var drink8a4a1a = 1;
+var drink8a4a2x = 333;
+var drink8a4a2y = 333;
+var drink8a4a2a = 0;
+var drink8a4a3x = 222;
+var drink8a4a3y = 222;
+var drink8a4a3a = 0;
+var drink8a3a1x = 200;
+var drink8a3a1y = (459 - 25);
+var drink8a3a1a = 1;
+var drink8a3a2x = 220;
+var drink8a3a2y = (459 - 25);
+var drink8a3a2a = 1;
+var drink8a3a3x = 240;
+var drink8a3a3y = (459 - 25);
+var drink8a3a3a = 1;
+var drink8a5a1x = 480;
+var drink8a5a1y = (462 - 25);
+var drink8a5a1a = 1;
+var drink8a5a2x = 500;
+var drink8a5a2y = (462 - 25);
+var drink8a5a2a = 1;
+var drink8a5a3x = 520;
+var drink8a5a3y = (462 - 25);
+var drink8a5a3a = 1;
+var drink8a6a1x = 47;
+var drink8a6a1y = (304 - 25);
+var drink8a6a1a = 1;
+var drink8a6a2x = 333;
+var drink8a6a2y = 333;
+var drink8a6a2a = 0;
+var drink8a6a3x = 222;
+var drink8a6a3y = 222;
+var drink8a6a3a = 0;
+var drink8a7a1x = 20;
+var drink8a7a1y = (361 - 25);
+var drink8a7a1a = 1;
+var drink8a7a2x = 40;
+var drink8a7a2y = (361 - 25);
+var drink8a7a2a = 1;
+var drink8a7a3x = 60;
+var drink8a7a3y = (361 - 25);
+var drink8a7a3a = 1;
+var drink8a8a1x = 405;
+var drink8a8a1y = (374 - 25);
+var drink8a8a1a = 1;
+var drink8a8a2x = 333;
+var drink8a8a2y = 333;
+var drink8a8a2a = 0;
+var drink8a8a3x = 222;
+var drink8a8a3y = 222;
+var drink8a8a3a = 0;
+var drink8a9a1x = 444;
+var drink8a9a1y = 444;
+var drink8a9a1a = 0;
+var drink8a9a2x = 333;
+var drink8a9a2y = 333;
+var drink8a9a2a = 0;
+var drink8a9a3x = 222;
+var drink8a9a3y = 222;
+var drink8a9a3a = 0;
+var drink8a10a1x = 600;
+var drink8a10a1y = (227 - 25);
+var drink8a10a1a = 1;
+var drink8a10a2x = 580;
+var drink8a10a2y = (227 - 25);
+var drink8a10a2a = 1;
+var drink8a10a3x = 560;
+var drink8a10a3y = (227 - 25);
+var drink8a10a3a = 1;
+
+
+var drink9a1a1x = 70;
+var drink9a1a1y = (209 - 25);
+var drink9a1a1a = 1;
+var drink9a1a2x = 90;
+var drink9a1a2y = (209 - 25);
+var drink9a1a2a = 1;
+var drink9a1a3x = 110;
+var drink9a1a3y = (209 - 25);
+var drink9a1a3a = 1;
+var drink9a2a1x = 70;
+var drink9a2a1y = (209 - 25);
+var drink9a2a1a = 1;
+var drink9a2a2x = 90;
+var drink9a2a2y = (209 - 25);
+var drink9a2a2a = 0;
+var drink9a2a3x = 110;
+var drink9a2a3y = (209 - 25);
+var drink9a2a3a = 0;
+var drink9a3a1x = 70;
+var drink9a3a1y = (209 - 25);
+var drink9a3a1a = 1;
+var drink9a3a2x = 90;
+var drink9a3a2y = (209 - 25);
+var drink9a3a2a = 0;
+var drink9a3a3x = 110;
+var drink9a3a3y = (209 - 25);
+var drink9a3a3a = 0;
+var drink9a4a1x = 70;
+var drink9a4a1y = (209 - 25);
+var drink9a4a1a = 1;
+var drink9a4a2x = 90;
+var drink9a4a2y = (209 - 25);
+var drink9a4a2a = 0;
+var drink9a4a3x = 110;
+var drink9a4a3y = (209 - 25);
+var drink9a4a3a = 0;
+var drink9a5a1x = 70;
+var drink9a5a1y = (209 - 25);
+var drink9a5a1a = 1;
+var drink9a5a2x = 90;
+var drink9a5a2y = (209 - 25);
+var drink9a5a2a = 1;
+var drink9a5a3x = 110;
+var drink9a5a3y = (209 - 25);
+var drink9a5a3a = 0;
+var drink9a6a1x = 70;
+var drink9a6a1y = (209 - 25);
+var drink9a6a1a = 1;
+var drink9a6a2x = 90;
+var drink9a6a2y = (209 - 25);
+var drink9a6a2a = 0;
+var drink9a6a3x = 110;
+var drink9a6a3y = (209 - 25);
+var drink9a6a3a = 0;
+var drink9a7a1x = 70;
+var drink9a7a1y = (209 - 25);
+var drink9a7a1a = 1;
+var drink9a7a2x = 90;
+var drink9a7a2y = (209 - 25);
+var drink9a7a2a = 0;
+var drink9a7a3x = 110;
+var drink9a7a3y = (209 - 25);
+var drink9a7a3a = 0;
+var drink9a8a1x = 70;
+var drink9a8a1y = (209 - 25);
+var drink9a8a1a = 1;
+var drink9a8a2x = 90;
+var drink9a8a2y = (209 - 25);
+var drink9a8a2a = 1;
+var drink9a8a3x = 110;
+var drink9a8a3y = (209 - 25);
+var drink9a8a3a = 1;
+var drink9a9a1x = 70;
+var drink9a9a1y = (209 - 25);
+var drink9a9a1a = 1;
+var drink9a9a2x = 90;
+var drink9a9a2y = (209 - 25);
+var drink9a9a2a = 1;
+var drink9a9a3x = 110;
+var drink9a9a3y = (209 - 25);
+var drink9a9a3a = 1;
+var drink9a10a1x = 600;
+var drink9a10a1y = (227 - 25);
+var drink9a10a1a = 1;
+var drink9a10a2x = 580;
+var drink9a10a2y = (227 - 25);
+var drink9a10a2a = 1;
+var drink9a10a3x = 560;
+var drink9a10a3y = (227 - 25);
+var drink9a10a3a = 1;
+
+
+
+var drink10a1a1x = 70;
+var drink10a1a1y = (209 - 25);
+var drink10a1a1a = 1;
+var drink10a1a2x = 90;
+var drink10a1a2y = (209 - 25);
+var drink10a1a2a = 1;
+var drink10a1a3x = 110;
+var drink10a1a3y = (209 - 25);
+var drink10a1a3a = 1;
+var drink10a2a1x = 70;
+var drink10a2a1y = (209 - 25);
+var drink10a2a1a = 1;
+var drink10a2a2x = 90;
+var drink10a2a2y = (209 - 25);
+var drink10a2a2a = 0;
+var drink10a2a3x = 110;
+var drink10a2a3y = (209 - 25);
+var drink10a2a3a = 0;
+var drink10a3a1x = 70;
+var drink10a3a1y = (209 - 25);
+var drink10a3a1a = 1;
+var drink10a3a2x = 90;
+var drink10a3a2y = (209 - 25);
+var drink10a3a2a = 0;
+var drink10a3a3x = 110;
+var drink10a3a3y = (209 - 25);
+var drink10a3a3a = 0;
+var drink10a4a1x = 70;
+var drink10a4a1y = (209 - 25);
+var drink10a4a1a = 1;
+var drink10a4a2x = 90;
+var drink10a4a2y = (209 - 25);
+var drink10a4a2a = 0;
+var drink10a4a3x = 110;
+var drink10a4a3y = (209 - 25);
+var drink10a4a3a = 0;
+var drink10a5a1x = 70;
+var drink10a5a1y = (209 - 25);
+var drink10a5a1a = 1;
+var drink10a5a2x = 90;
+var drink10a5a2y = (209 - 25);
+var drink10a5a2a = 1;
+var drink10a5a3x = 110;
+var drink10a5a3y = (209 - 25);
+var drink10a5a3a = 0;
+var drink10a6a1x = 70;
+var drink10a6a1y = (209 - 25);
+var drink10a6a1a = 1;
+var drink10a6a2x = 90;
+var drink10a6a2y = (209 - 25);
+var drink10a6a2a = 0;
+var drink10a6a3x = 110;
+var drink10a6a3y = (209 - 25);
+var drink10a6a3a = 0;
+var drink10a7a1x = 70;
+var drink10a7a1y = (209 - 25);
+var drink10a7a1a = 1;
+var drink10a7a2x = 90;
+var drink10a7a2y = (209 - 25);
+var drink10a7a2a = 0;
+var drink10a7a3x = 110;
+var drink10a7a3y = (209 - 25);
+var drink10a7a3a = 0;
+var drink10a8a1x = 70;
+var drink10a8a1y = (209 - 25);
+var drink10a8a1a = 1;
+var drink10a8a2x = 90;
+var drink10a8a2y = (209 - 25);
+var drink10a8a2a = 1;
+var drink10a8a3x = 110;
+var drink10a8a3y = (209 - 25);
+var drink10a8a3a = 1;
+var drink10a9a1x = 70;
+var drink10a9a1y = (209 - 25);
+var drink10a9a1a = 1;
+var drink10a9a2x = 90;
+var drink10a9a2y = (209 - 25);
+var drink10a9a2a = 1;
+var drink10a9a3x = 110;
+var drink10a9a3y = (209 - 25);
+var drink10a9a3a = 1;
+var drink10a10a1x = 600;
+var drink10a10a1y = (227 - 25);
+var drink10a10a1a = 1;
+var drink10a10a2x = 580;
+var drink10a10a2y = (227 - 25);
+var drink10a10a2a = 1;
+var drink10a10a3x = 560;
+var drink10a10a3y = (227 - 25);
+var drink10a10a3a = 1;
+
+var drink8a5a1x = 420;
+var drink8a5a1y = (462 - 25);
+var drink8a5a1a = 1;
+var drink8a5a2x = 440;
+var drink8a5a2y = (462 - 25);
+var drink8a5a2a = 1;
+var drink8a5a3x = 460;
+var drink8a5a3y = (462 - 25);
+var drink8a5a3a = 1;
+
+var food1a1a1x = 370;
+var food1a1a1y = 447;
+var food1a1a1a = 1;
+var food1a1a2x = 530;
+var food1a1a2y = 327;
+var food1a1a2a = 1;
+var food1a1a3x = 131;
+var food1a1a3y = 336;
+var food1a1a3a = 1;
+var food1a2a1x = 454;
+var food1a2a1y = (409 - 21);
+var food1a2a1a = 1;
+var food1a2a2x = 132;
+var food1a2a2y = (468 - 21);
+var food1a2a2a = 1;
+var food1a2a3x = 534;
+var food1a2a3y = (468 - 21);
+var food1a2a3a = 1;
+var food1a3a1x = 112;
+var food1a3a1y = (356 - 21);
+var food1a3a1a = 1;
+var food1a3a2x = 333;
+var food1a3a2y = 333;
+var food1a3a2a = 0;
+var food1a3a3x = 222;
+var food1a3a3y = 222;
+var food1a3a3a = 0;
+var food1a4a1x = 80;
+var food1a4a1y = (356 - 21);
+var food1a4a1a = 0;
+var food1a4a2x = 133;
+var food1a4a2y = (356 - 21);
+var food1a4a2a = 0;
+var food1a4a3x = 488;
+var food1a4a3y = (468 - 21);
+var food1a4a3a = 1;
+var food1a5a1x = 444;
+var food1a5a1y = 444;
+var food1a5a1a = 0;
+var food1a5a2x = 333;
+var food1a5a2y = 333;
+var food1a5a2a = 0;
+var food1a5a3x = 222;
+var food1a5a3y = 222;
+var food1a5a3a = 0;
+var food1a6a1x = 444;
+var food1a6a1y = 444;
+var food1a6a1a = 0;
+var food1a6a2x = 333;
+var food1a6a2y = 333;
+var food1a6a2a = 0;
+var food1a6a3x = 222;
+var food1a6a3y = 222;
+var food1a6a3a = 0;
+var food1a7a1x = 320;
+var food1a7a1y = (399 - 21);
+var food1a7a1a = 1;
+var food1a7a2x = 333;
+var food1a7a2y = (295 - 21);
+var food1a7a2a = 1;
+var food1a7a3x = 300;
+var food1a7a3y = (227 - 21);
+var food1a7a3a = 1;
+var food1a8a1x = 499;
+var food1a8a1y = (399 - 21);
+var food1a8a1a = 1;
+var food1a8a2x = 333;
+var food1a8a2y = 333;
+var food1a8a2a = 0;
+var food1a8a3x = 222;
+var food1a8a3y = 222;
+var food1a8a3a = 0;
+var food1a9a1x = 150;
+var food1a9a1y = (399 - 21);
+var food1a9a1a = 1;
+var food1a9a2x = 165;
+var food1a9a2y = (399 - 21);
+var food1a9a2a = 1;
+var food1a9a3x = 180;
+var food1a9a3y = (399 - 21);
+var food1a9a3a = 1;
+var food1a10a1x = 444;
+var food1a10a1y = 444;
+var food1a10a1a = 0;
+var food1a10a2x = 333;
+var food1a10a2y = 333;
+var food1a10a2a = 0;
+var food1a10a3x = 222;
+var food1a10a3y = 222;
+var food1a10a3a = 0;
+
+
+
+var food2a1a1x = 444;
+var food2a1a1y = 444;
+var food2a1a1a = 0;
+var food2a1a2x = 333;
+var food2a1a2y = 333;
+var food2a1a2a = 0;
+var food2a1a3x = 222;
+var food2a1a3y = 222;
+var food2a1a3a = 0;
+var food2a2a1x = 444;
+var food2a2a1y = 444;
+var food2a2a1a = 0;
+var food2a2a2x = 333;
+var food2a2a2y = 333;
+var food2a2a2a = 0;
+var food2a2a3x = 222;
+var food2a2a3y = 222;
+var food2a2a3a = 0;
+var food2a3a1x = 444;
+var food2a3a1y = 444;
+var food2a3a1a = 0;
+var food2a3a2x = 333;
+var food2a3a2y = 333;
+var food2a3a2a = 0;
+var food2a3a3x = 222;
+var food2a3a3y = 222;
+var food2a3a3a = 0;
+var food2a4a1x = 444;
+var food2a4a1y = 444;
+var food2a4a1a = 0;
+var food2a4a2x = 333;
+var food2a4a2y = 333;
+var food2a4a2a = 0;
+var food2a4a3x = 222;
+var food2a4a3y = 222;
+var food2a4a3a = 0;
+var food2a5a1x = 444;
+var food2a5a1y = 444;
+var food2a5a1a = 0;
+var food2a5a2x = 333;
+var food2a5a2y = 333;
+var food2a5a2a = 0;
+var food2a5a3x = 222;
+var food2a5a3y = 222;
+var food2a5a3a = 0;
+var food2a6a1x = 300;
+var food2a6a1y = (244 - 21);
+var food2a6a1a = 1;
+var food2a6a2x = 320;
+var food2a6a2y = (244 - 21);
+var food2a6a2a = 1;
+var food2a6a3x = 340;
+var food2a6a3y = (244 - 21);
+var food2a6a3a = 1;
+var food2a7a1x = 444;
+var food2a7a1y = 444;
+var food2a7a1a = 0;
+var food2a7a2x = 333;
+var food2a7a2y = 333;
+var food2a7a2a = 0;
+var food2a7a3x = 222;
+var food2a7a3y = 222;
+var food2a7a3a = 0;
+var food2a8a1x = 444;
+var food2a8a1y = 444;
+var food2a8a1a = 0;
+var food2a8a2x = 333;
+var food2a8a2y = 333;
+var food2a8a2a = 0;
+var food2a8a3x = 222;
+var food2a8a3y = 222;
+var food2a8a3a = 0;
+var food2a9a1x = 444;
+var food2a9a1y = 444;
+var food2a9a1a = 0;
+var food2a9a2x = 333;
+var food2a9a2y = 333;
+var food2a9a2a = 0;
+var food2a9a3x = 222;
+var food2a9a3y = 222;
+var food2a9a3a = 0;
+var food2a10a1x = 444;
+var food2a10a1y = 444;
+var food2a10a1a = 0;
+var food2a10a2x = 333;
+var food2a10a2y = 333;
+var food2a10a2a = 0;
+var food2a10a3x = 222;
+var food2a10a3y = 222;
+var food2a10a3a = 0;
+
+
+
+
+var food3a1a1x = 444;
+var food3a1a1y = 444;
+var food3a1a1a = 0;
+var food3a1a2x = 333;
+var food3a1a2y = 333;
+var food3a1a2a = 0;
+var food3a1a3x = 222;
+var food3a1a3y = 222;
+var food3a1a3a = 0;
+var food3a2a1x = 444;
+var food3a2a1y = 444;
+var food3a2a1a = 0;
+var food3a2a2x = 333;
+var food3a2a2y = 333;
+var food3a2a2a = 0;
+var food3a2a3x = 222;
+var food3a2a3y = 222;
+var food3a2a3a = 0;
+var food3a3a1x = 444;
+var food3a3a1y = 444;
+var food3a3a1a = 0;
+var food3a3a2x = 333;
+var food3a3a2y = 333;
+var food3a3a2a = 0;
+var food3a3a3x = 222;
+var food3a3a3y = 222;
+var food3a3a3a = 0;
+var food3a4a1x = 444;
+var food3a4a1y = 444;
+var food3a4a1a = 1;
+var food3a4a2x = 333;
+var food3a4a2y = 333;
+var food3a4a2a = 0;
+var food3a4a3x = 222;
+var food3a4a3y = 222;
+var food3a4a3a = 0;
+var food3a5a1x = 444;
+var food3a5a1y = 444;
+var food3a5a1a = 0;
+var food3a5a2x = 333;
+var food3a5a2y = 333;
+var food3a5a2a = 0;
+var food3a5a3x = 222;
+var food3a5a3y = 222;
+var food3a5a3a = 0;
+var food3a6a1x = 444;
+var food3a6a1y = 444;
+var food3a6a1a = 0;
+var food3a6a2x = 333;
+var food3a6a2y = 333;
+var food3a6a2a = 0;
+var food3a6a3x = 222;
+var food3a6a3y = 222;
+var food3a6a3a = 0;
+var food3a7a1x = 444;
+var food3a7a1y = 444;
+var food3a7a1a = 0;
+var food3a7a2x = 333;
+var food3a7a2y = 333;
+var food3a7a2a = 0;
+var food3a7a3x = 222;
+var food3a7a3y = 222;
+var food3a7a3a = 0;
+var food3a8a1x = 444;
+var food3a8a1y = 444;
+var food3a8a1a = 0;
+var food3a8a2x = 333;
+var food3a8a2y = 333;
+var food3a8a2a = 0;
+var food3a8a3x = 222;
+var food3a8a3y = 222;
+var food3a8a3a = 0;
+var food3a9a1x = 444;
+var food3a9a1y = 444;
+var food3a9a1a = 0;
+var food3a9a2x = 333;
+var food3a9a2y = 333;
+var food3a9a2a = 0;
+var food3a9a3x = 222;
+var food3a9a3y = 222;
+var food3a9a3a = 0;
+var food3a10a1x = 444;
+var food3a10a1y = 444;
+var food3a10a1a = 0;
+var food3a10a2x = 333;
+var food3a10a2y = 333;
+var food3a10a2a = 0;
+var food3a10a3x = 222;
+var food3a10a3y = 222;
+var food3a10a3a = 0;
+
+
+
+
+var food4a1a1x = 444;
+var food4a1a1y = 444;
+var food4a1a1a = 0;
+var food4a1a2x = 333;
+var food4a1a2y = 333;
+var food4a1a2a = 0;
+var food4a1a3x = 222;
+var food4a1a3y = 222;
+var food4a1a3a = 0;
+var food4a2a1x = 444;
+var food4a2a1y = 444;
+var food4a2a1a = 0;
+var food4a2a2x = 333;
+var food4a2a2y = 333;
+var food4a2a2a = 0;
+var food4a2a3x = 222;
+var food4a2a3y = 222;
+var food4a2a3a = 0;
+var food4a3a1x = 444;
+var food4a3a1y = 444;
+var food4a3a1a = 0;
+var food4a3a2x = 333;
+var food4a3a2y = 333;
+var food4a3a2a = 0;
+var food4a3a3x = 222;
+var food4a3a3y = 222;
+var food4a3a3a = 0;
+var food4a4a1x = 444;
+var food4a4a1y = 444;
+var food4a4a1a = 0;
+var food4a4a2x = 333;
+var food4a4a2y = 333;
+var food4a4a2a = 0;
+var food4a4a3x = 222;
+var food4a4a3y = 222;
+var food4a4a3a = 0;
+var food4a5a1x = 500;
+var food4a5a1y = (248 - 21);
+var food4a5a1a = 1;
+var food4a5a2x = 520;
+var food4a5a2y = (248 - 21);
+var food4a5a2a = 1;
+var food4a5a3x = 540;
+var food4a5a3y = (248 - 21);
+var food4a5a3a = 1;
+var food4a6a1x = 444;
+var food4a6a1y = 444;
+var food4a6a1a = 0;
+var food4a6a2x = 333;
+var food4a6a2y = 333;
+var food4a6a2a = 0;
+var food4a6a3x = 222;
+var food4a6a3y = 222;
+var food4a6a3a = 0;
+var food4a7a1x = 444;
+var food4a7a1y = 444;
+var food4a7a1a = 0;
+var food4a7a2x = 333;
+var food4a7a2y = 333;
+var food4a7a2a = 0;
+var food4a7a3x = 222;
+var food4a7a3y = 222;
+var food4a7a3a = 0;
+var food4a8a1x = 444;
+var food4a8a1y = 444;
+var food4a8a1a = 0;
+var food4a8a2x = 333;
+var food4a8a2y = 333;
+var food4a8a2a = 0;
+var food4a8a3x = 222;
+var food4a8a3y = 222;
+var food4a8a3a = 0;
+var food4a9a1x = 444;
+var food4a9a1y = 444;
+var food4a9a1a = 0;
+var food4a9a2x = 333;
+var food4a9a2y = 333;
+var food4a9a2a = 0;
+var food4a9a3x = 222;
+var food4a9a3y = 222;
+var food4a9a3a = 0;
+var food4a10a1x = 444;
+var food4a10a1y = 444;
+var food4a10a1a = 0;
+var food4a10a2x = 333;
+var food4a10a2y = 333;
+var food4a10a2a = 0;
+var food4a10a3x = 222;
+var food4a10a3y = 222;
+var food4a10a3a = 0;
+
+
+
+var food5a1a1x = 150;
+var food5a1a1y = (235 - 21);
+var food5a1a1a = 1
+var food5a1a2x = 250;
+var food5a1a2y = (235 - 21);
+var food5a1a2a = 1;
+var food5a1a3x = 350;
+var food5a1a3y = (235 - 21);
+var food5a1a3a = 1;
+var food5a2a1x = 444;
+var food5a2a1y = 444;
+var food5a2a1a = 0;
+var food5a2a2x = 333;
+var food5a2a2y = 333;
+var food5a2a2a = 0;
+var food5a2a3x = 222;
+var food5a2a3y = 222;
+var food5a2a3a = 0;
+var food5a3a1x = 444;
+var food5a3a1y = 444;
+var food5a3a1a = 0;
+var food5a3a2x = 333;
+var food5a3a2y = 333;
+var food5a3a2a = 0;
+var food5a3a3x = 222;
+var food5a3a3y = 222;
+var food5a3a3a = 0;
+var food5a4a1x = 444;
+var food5a4a1y = 444;
+var food5a4a1a = 0;
+var food5a4a2x = 333;
+var food5a4a2y = 333;
+var food5a4a2a = 0;
+var food5a4a3x = 222;
+var food5a4a3y = 222;
+var food5a4a3a = 0;
+var food5a5a1x = 444;
+var food5a5a1y = 444;
+var food5a5a1a = 0;
+var food5a5a2x = 333;
+var food5a5a2y = 333;
+var food5a5a2a = 0;
+var food5a5a3x = 222;
+var food5a5a3y = 222;
+var food5a5a3a = 0;
+var food5a6a1x = 220;
+var food5a6a1y = (244 - 21);
+var food5a6a1a = 1;
+var food5a6a2x = 240;
+var food5a6a2y = (244 - 21);
+var food5a6a2a = 1;
+var food5a6a3x = 260;
+var food5a6a3y = (244 - 21);
+var food5a6a3a = 1;
+var food5a7a1x = 20;
+var food5a7a1y = (361 - 21);
+var food5a7a1a = 1;
+var food5a7a2x = 40;
+var food5a7a2y = (361 - 21);
+var food5a7a2a = 1;
+var food5a7a3x = 60;
+var food5a7a3y = (361 - 21);
+var food5a7a3a = 1;
+var food5a8a1x = 444;
+var food5a8a1y = 444;
+var food5a8a1a = 0;
+var food5a8a2x = 333;
+var food5a8a2y = 333;
+var food5a8a2a = 0;
+var food5a8a3x = 222;
+var food5a8a3y = 222;
+var food5a8a3a = 0;
+var food5a9a1x = 444;
+var food5a9a1y = 444;
+var food5a9a1a = 0;
+var food5a9a2x = 333;
+var food5a9a2y = 333;
+var food5a9a2a = 0;
+var food5a9a3x = 222;
+var food5a9a3y = 222;
+var food5a9a3a = 0;
+var food5a10a1x = 444;
+var food5a10a1y = 444;
+var food5a10a1a = 0;
+var food5a10a2x = 333;
+var food5a10a2y = 333;
+var food5a10a2a = 0;
+var food5a10a3x = 222;
+var food5a10a3y = 222;
+var food5a10a3a = 0;
+
+
+
+
+var food6a1a1x = 444;
+var food6a1a1y = 444;
+var food6a1a1a = 0;
+var food6a1a2x = 333;
+var food6a1a2y = 333;
+var food6a1a2a = 0;
+var food6a1a3x = 222;
+var food6a1a3y = 222;
+var food6a1a3a = 0;
+var food6a2a1x = 444;
+var food6a2a1y = 444;
+var food6a2a1a = 0;
+var food6a2a2x = 333;
+var food6a2a2y = 333;
+var food6a2a2a = 0;
+var food6a2a3x = 222;
+var food6a2a3y = 222;
+var food6a2a3a = 0;
+var food6a3a1x = 444;
+var food6a3a1y = 444;
+var food6a3a1a = 0;
+var food6a3a2x = 333;
+var food6a3a2y = 333;
+var food6a3a2a = 0;
+var food6a3a3x = 222;
+var food6a3a3y = 222;
+var food6a3a3a = 0;
+var food6a4a1x = 444;
+var food6a4a1y = 444;
+var food6a4a1a = 0;
+var food6a4a2x = 333;
+var food6a4a2y = 333;
+var food6a4a2a = 0;
+var food6a4a3x = 222;
+var food6a4a3y = 222;
+var food6a4a3a = 0;
+var food6a5a1x = 444;
+var food6a5a1y = 444;
+var food6a5a1a = 0;
+var food6a5a2x = 333;
+var food6a5a2y = 333;
+var food6a5a2a = 0;
+var food6a5a3x = 222;
+var food6a5a3y = 222;
+var food6a5a3a = 0;
+var food6a6a1x = 444;
+var food6a6a1y = 444;
+var food6a6a1a = 0;
+var food6a6a2x = 333;
+var food6a6a2y = 333;
+var food6a6a2a = 0;
+var food6a6a3x = 222;
+var food6a6a3y = 222;
+var food6a6a3a = 0;
+var food6a7a1x = 444;
+var food6a7a1y = 444;
+var food6a7a1a = 0;
+var food6a7a2x = 333;
+var food6a7a2y = 333;
+var food6a7a2a = 0;
+var food6a7a3x = 222;
+var food6a7a3y = 222;
+var food6a7a3a = 0;
+var food6a8a1x = 444;
+var food6a8a1y = 444;
+var food6a8a1a = 0;
+var food6a8a2x = 333;
+var food6a8a2y = 333;
+var food6a8a2a = 0;
+var food6a8a3x = 222;
+var food6a8a3y = 222;
+var food6a8a3a = 0;
+var food6a9a1x = 444;
+var food6a9a1y = 444;
+var food6a9a1a = 0;
+var food6a9a2x = 333;
+var food6a9a2y = 333;
+var food6a9a2a = 0;
+var food6a9a3x = 222;
+var food6a9a3y = 222;
+var food6a9a3a = 0;
+var food6a10a1x = 444;
+var food6a10a1y = 444;
+var food6a10a1a = 0;
+var food6a10a2x = 333;
+var food6a10a2y = 333;
+var food6a10a2a = 0;
+var food6a10a3x = 222;
+var food6a10a3y = 222;
+var food6a10a3a = 0;
+
+
+
+
+var food7a1a1x = 444;
+var food7a1a1y = 444;
+var food7a1a1a = 0;
+var food7a1a2x = 333;
+var food7a1a2y = 333;
+var food7a1a2a = 0;
+var food7a1a3x = 222;
+var food7a1a3y = 222;
+var food7a1a3a = 0;
+var food7a2a1x = 444;
+var food7a2a1y = 444;
+var food7a2a1a = 1;
+var food7a2a2x = 333;
+var food7a2a2y = 333;
+var food7a2a2a = 1;
+var food7a2a3x = 222;
+var food7a2a3y = 222;
+var food7a2a3a = 1;
+var food7a3a1x = 444;
+var food7a3a1y = 444;
+var food7a3a1a = 1;
+var food7a3a2x = 333;
+var food7a3a2y = 333;
+var food7a3a2a = 1;
+var food7a3a3x = 222;
+var food7a3a3y = 222;
+var food7a3a3a = 1;
+var food7a4a1x = 444;
+var food7a4a1y = 444;
+var food7a4a1a = 1;
+var food7a4a2x = 333;
+var food7a4a2y = 333;
+var food7a4a2a = 1;
+var food7a4a3x = 222;
+var food7a4a3y = 222;
+var food7a4a3a = 1;
+var food7a5a1x = 444;
+var food7a5a1y = 444;
+var food7a5a1a = 1;
+var food7a5a2x = 333;
+var food7a5a2y = 333;
+var food7a5a2a = 1;
+var food7a5a3x = 222;
+var food7a5a3y = 222;
+var food7a5a3a = 1;
+var food7a6a1x = 444;
+var food7a6a1y = 444;
+var food7a6a1a = 1;
+var food7a6a2x = 333;
+var food7a6a2y = 333;
+var food7a6a2a = 1;
+var food7a6a3x = 222;
+var food7a6a3y = 222;
+var food7a6a3a = 1;
+var food7a7a1x = 444;
+var food7a7a1y = 444;
+var food7a7a1a = 1;
+var food7a7a2x = 333;
+var food7a7a2y = 333;
+var food7a7a2a = 1;
+var food7a7a3x = 222;
+var food7a7a3y = 222;
+var food7a7a3a = 1;
+var food7a8a1x = 444;
+var food7a8a1y = 444;
+var food7a8a1a = 1;
+var food7a8a2x = 333;
+var food7a8a2y = 333;
+var food7a8a2a = 1;
+var food7a8a3x = 222;
+var food7a8a3y = 222;
+var food7a8a3a = 1;
+var food7a9a1x = 444;
+var food7a9a1y = 444;
+var food7a9a1a = 1;
+var food7a9a2x = 333;
+var food7a9a2y = 333;
+var food7a9a2a = 1;
+var food7a9a3x = 222;
+var food7a9a3y = 222;
+var food7a9a3a = 1;
+var food7a10a1x = 444;
+var food7a10a1y = 444;
+var food7a10a1a = 0;
+var food7a10a2x = 333;
+var food7a10a2y = 333;
+var food7a10a2a = 0;
+var food7a10a3x = 222;
+var food7a10a3y = 222;
+var food7a10a3a = 0;
+
+
+
+
+var food8a1a1x = 444;
+var food8a1a1y = 444;
+var food8a1a1a = 0;
+var food8a1a2x = 333;
+var food8a1a2y = 333;
+var food8a1a2a = 0;
+var food8a1a3x = 222;
+var food8a1a3y = 222;
+var food8a1a3a = 0;
+var food8a2a1x = 380;
+var food8a2a1y = (217 - 21);
+var food8a2a1a = 1;
+var food8a2a2x = 400;
+var food8a2a2y = (217 - 21);
+var food8a2a2a = 1;
+var food8a2a3x = 420;
+var food8a2a3y = (217 - 21);
+var food8a2a3a = 1;
+var food8a3a1x = 444;
+var food8a3a1y = 444;
+var food8a3a1a = 0;
+var food8a3a2x = 333;
+var food8a3a2y = 333;
+var food8a3a2a = 0;
+var food8a3a3x = 222;
+var food8a3a3y = 222;
+var food8a3a3a = 0;
+var food8a4a1x = 444;
+var food8a4a1y = 444;
+var food8a4a1a = 0;
+var food8a4a2x = 333;
+var food8a4a2y = 333;
+var food8a4a2a = 0;
+var food8a4a3x = 222;
+var food8a4a3y = 222;
+var food8a4a3a = 0;
+var food8a5a1x = 40;
+var food8a5a1y = (462 - 21);
+var food8a5a1a = 1;
+var food8a5a2x = 333;
+var food8a5a2y = 333;
+var food8a5a2a = 0;
+var food8a5a3x = 222;
+var food8a5a3y = 222;
+var food8a5a3a = 0;
+var food8a6a1x = 444;
+var food8a6a1y = 444;
+var food8a6a1a = 0;
+var food8a6a2x = 333;
+var food8a6a2y = 333;
+var food8a6a2a = 0;
+var food8a6a3x = 222;
+var food8a6a3y = 222;
+var food8a6a3a = 0;
+var food8a7a1x = 444;
+var food8a7a1y = 444;
+var food8a7a1a = 0;
+var food8a7a2x = 333;
+var food8a7a2y = 333;
+var food8a7a2a = 0;
+var food8a7a3x = 222;
+var food8a7a3y = 222;
+var food8a7a3a = 0;
+var food8a8a1x = 444;
+var food8a8a1y = 444;
+var food8a8a1a = 0;
+var food8a8a2x = 333;
+var food8a8a2y = 333;
+var food8a8a2a = 0;
+var food8a8a3x = 222;
+var food8a8a3y = 222;
+var food8a8a3a = 0;
+var food8a9a1x = 444;
+var food8a9a1y = 444;
+var food8a9a1a = 0;
+var food8a9a2x = 333;
+var food8a9a2y = 333;
+var food8a9a2a = 0;
+var food8a9a3x = 222;
+var food8a9a3y = 222;
+var food8a9a3a = 0;
+var food8a10a1x = 444;
+var food8a10a1y = 444;
+var food8a10a1a = 0;
+var food8a10a2x = 333;
+var food8a10a2y = 333;
+var food8a10a2a = 0;
+var food8a10a3x = 222;
+var food8a10a3y = 222;
+var food8a10a3a = 0;
+
+
+
+
+var food9a1a1x = 444;
+var food9a1a1y = 444;
+var food9a1a1a = 0;
+var food9a1a2x = 333;
+var food9a1a2y = 333;
+var food9a1a2a = 0;
+var food9a1a3x = 222;
+var food9a1a3y = 222;
+var food9a1a3a = 0;
+var food9a2a1x = 444;
+var food9a2a1y = 444;
+var food9a2a1a = 0;
+var food9a2a2x = 333;
+var food9a2a2y = 333;
+var food9a2a2a = 0;
+var food9a2a3x = 222;
+var food9a2a3y = 222;
+var food9a2a3a = 0;
+var food9a3a1x = 444;
+var food9a3a1y = 444;
+var food9a3a1a = 0;
+var food9a3a2x = 333;
+var food9a3a2y = 333;
+var food9a3a2a = 0;
+var food9a3a3x = 222;
+var food9a3a3y = 222;
+var food9a3a3a = 0;
+var food9a4a1x = 444;
+var food9a4a1y = 444;
+var food9a4a1a = 0;
+var food9a4a2x = 333;
+var food9a4a2y = 333;
+var food9a4a2a = 0;
+var food9a4a3x = 222;
+var food9a4a3y = 222;
+var food9a4a3a = 0;
+var food9a5a1x = 444;
+var food9a5a1y = 444;
+var food9a5a1a = 0;
+var food9a5a2x = 333;
+var food9a5a2y = 333;
+var food9a5a2a = 0;
+var food9a5a3x = 222;
+var food9a5a3y = 222;
+var food9a5a3a = 0;
+var food9a6a1x = 444;
+var food9a6a1y = 444;
+var food9a6a1a = 0;
+var food9a6a2x = 333;
+var food9a6a2y = 333;
+var food9a6a2a = 0;
+var food9a6a3x = 222;
+var food9a6a3y = 222;
+var food9a6a3a = 0;
+var food9a7a1x = 444;
+var food9a7a1y = 444;
+var food9a7a1a = 0;
+var food9a7a2x = 333;
+var food9a7a2y = 333;
+var food9a7a2a = 0;
+var food9a7a3x = 222;
+var food9a7a3y = 222;
+var food9a7a3a = 0;
+var food9a8a1x = 444;
+var food9a8a1y = 444;
+var food9a8a1a = 0;
+var food9a8a2x = 333;
+var food9a8a2y = 333;
+var food9a8a2a = 0;
+var food9a8a3x = 222;
+var food9a8a3y = 222;
+var food9a8a3a = 0;
+var food9a9a1x = 444;
+var food9a9a1y = 444;
+var food9a9a1a = 0;
+var food9a9a2x = 333;
+var food9a9a2y = 333;
+var food9a9a2a = 0;
+var food9a9a3x = 222;
+var food9a9a3y = 222;
+var food9a9a3a = 0;
+var food9a10a1x = 444;
+var food9a10a1y = 444;
+var food9a10a1a = 0;
+var food9a10a2x = 333;
+var food9a10a2y = 333;
+var food9a10a2a = 0;
+var food9a10a3x = 222;
+var food9a10a3y = 222;
+var food9a10a3a = 0;
+
+
+
+
+var food10a1a1x = 444;
+var food10a1a1y = 444;
+var food10a1a1a = 0;
+var food10a1a2x = 333;
+var food10a1a2y = 333;
+var food10a1a2a = 0;
+var food10a1a3x = 222;
+var food10a1a3y = 222;
+var food10a1a3a = 0;
+var food10a2a1x = 444;
+var food10a2a1y = 444;
+var food10a2a1a = 0;
+var food10a2a2x = 333;
+var food10a2a2y = 333;
+var food10a2a2a = 0;
+var food10a2a3x = 222;
+var food10a2a3y = 222;
+var food10a2a3a = 0;
+var food10a3a1x = 444;
+var food10a3a1y = 444;
+var food10a3a1a = 0;
+var food10a3a2x = 333;
+var food10a3a2y = 333;
+var food10a3a2a = 0;
+var food10a3a3x = 222;
+var food10a3a3y = 222;
+var food10a3a3a = 0;
+var food10a4a1x = 444;
+var food10a4a1y = 444;
+var food10a4a1a = 0;
+var food10a4a2x = 333;
+var food10a4a2y = 333;
+var food10a4a2a = 0;
+var food10a4a3x = 222;
+var food10a4a3y = 222;
+var food10a4a3a = 0;
+var food10a5a1x = 444;
+var food10a5a1y = 444;
+var food10a5a1a = 0;
+var food10a5a2x = 333;
+var food10a5a2y = 333;
+var food10a5a2a = 0;
+var food10a5a3x = 222;
+var food10a5a3y = 222;
+var food10a5a3a = 0;
+var food10a6a1x = 444;
+var food10a6a1y = 444;
+var food10a6a1a = 0;
+var food10a6a2x = 333;
+var food10a6a2y = 333;
+var food10a6a2a = 0;
+var food10a6a3x = 222;
+var food10a6a3y = 222;
+var food10a6a3a = 0;
+var food10a7a1x = 444;
+var food10a7a1y = 444;
+var food10a7a1a = 0;
+var food10a7a2x = 333;
+var food10a7a2y = 333;
+var food10a7a2a = 0;
+var food10a7a3x = 222;
+var food10a7a3y = 222;
+var food10a7a3a = 0;
+var food10a8a1x = 444;
+var food10a8a1y = 444;
+var food10a8a1a = 0;
+var food10a8a2x = 333;
+var food10a8a2y = 333;
+var food10a8a2a = 0;
+var food10a8a3x = 222;
+var food10a8a3y = 222;
+var food10a8a3a = 0;
+var food10a9a1x = 444;
+var food10a9a1y = 444;
+var food10a9a1a = 0;
+var food10a9a2x = 333;
+var food10a9a2y = 333;
+var food10a9a2a = 0;
+var food10a9a3x = 222;
+var food10a9a3y = 222;
+var food10a9a3a = 0;
+var food10a10a1x = 444;
+var food10a10a1y = 444;
+var food10a10a1a = 0;
+var food10a10a2x = 333;
+var food10a10a2y = 333;
+var food10a10a2a = 0;
+var food10a10a3x = 222;
+var food10a10a3y = 222;
+var food10a10a3a = 0;
+
+
+
+
+var food8a5a1x = 30;
+var food8a5a1y = (462 - 21);
+var food8a5a1a = 1;
+var food8a5a2x = 333;
+var food8a5a2y = 333;
+var food8a5a2a = 0;
+var food8a5a3x = 222;
+var food8a5a3y = 222;
+var food8a5a3a = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+var food1x = 0;
+var food1y = 0;
+var food1a = 0;
+var food2x = 0;
+var food2y = 0;
+var food2a = 0;
+var food3x = 0;
+var food3y = 0;
+var food3a = 0;
+var food1d = 0;
+var food2d = 0;
+var food3d = 0;
+
+
+var drink1x = 0;
+var drink1y = 0;
+var drink1a = 0;
+var drink2x = 0;
+var drink2y = 0;
+var drink2a = 0;
+var drink3x = 0;
+var drink3y = 0;
+var drink3a = 0;
+var drink1d = 0;
+var drink2d = 0;
+var drink3d = 0;
+
+var eat1 = 0;
+var eat2 = 0;
+var eat3 = 0;
+var eat4 = 0;
+var eat5 = 0;
+var eat6 = 0;
+var eat7 = 0;
+var eat8 = 0;
+var eat9 = 0;
+var eat10 = 0;
+var eat11 = 0;
+var eat12 = 0;
+var eat13 = 0;
+var eat14 = 0;
+var eat15 = 0;
+var eat16 = 0;
+
+
+var poo1a = 0;
+var poo2a = 0;
+var poo3a = 0;
+var poo1x = 0;
+var poo2x = 0;
+var poo3x = 0;
+var poo1y = 0;
+var poo2y = 0;
+var poo3y = 0;
+
+
+var farttick = 0;
+var eattick = 0;
+
+
+var em1x = 0;
+var em1y = 0;
+var em1a = 0;
+var em2x = 0;
+var em2y = 0;
+var em2a = 0;
+var em3x = 0;
+var em3y = 0;
+var em3a = 0;
+var em1d = 0;
+var em2d = 0;
+var em3d = 0;
+var emmer = 0;
+
+
+
+
+
+
+
+
+var img5a1a1 = new Image();
+var img5a1a2 = new Image();
+var img5a2a1 = new Image();
+var img5a2a2 = new Image();
+var img5a3a1 = new Image();
+var img5a3a2 = new Image();
+var img5a4a1 = new Image();
+var img5a4a2 = new Image();
+var img5a5a1 = new Image();
+var img5a5a2 = new Image();
+var img5a6a1 = new Image();
+var img5a6a2 = new Image();
+var img5a7a1 = new Image();
+var img5a7a2 = new Image();
+var img5a8a1 = new Image();
+var img5a8a2 = new Image();
+var img5a9a1 = new Image();
+var img5a9a2 = new Image();
+var img5a10a1 = new Image();
+var img5a10a2 = new Image();
+
+
+var img6a1a1 = new Image();
+var img6a1a2 = new Image();
+var img6a2a1 = new Image();
+var img6a2a2 = new Image();
+var img6a3a1 = new Image();
+var img6a3a2 = new Image();
+var img6a4a1 = new Image();
+var img6a4a2 = new Image();
+var img6a5a1 = new Image();
+var img6a5a2 = new Image();
+var img6a6a1 = new Image();
+var img6a6a2 = new Image();
+var img6a7a1 = new Image();
+var img6a7a2 = new Image();
+var img6a8a1 = new Image();
+var img6a8a2 = new Image();
+var img6a9a1 = new Image();
+var img6a9a2 = new Image();
+var img6a10a1 = new Image();
+var img6a10a2 = new Image();
+
+
+var img7a1a1 = new Image();
+var img7a1a2 = new Image();
+var img7a2a1 = new Image();
+var img7a2a2 = new Image();
+var img7a3a1 = new Image();
+var img7a3a2 = new Image();
+var img7a4a1 = new Image();
+var img7a4a2 = new Image();
+var img7a5a1 = new Image();
+var img7a5a2 = new Image();
+var img7a6a1 = new Image();
+var img7a6a2 = new Image();
+var img7a7a1 = new Image();
+var img7a7a2 = new Image();
+var img7a8a1 = new Image();
+var img7a8a2 = new Image();
+var img7a9a1 = new Image();
+var img7a9a2 = new Image();
+var img7a10a1 = new Image();
+var img7a10a2 = new Image();
+
+
+var img8a1a1 = new Image();
+var img8a1a2 = new Image();
+var img8a2a1 = new Image();
+var img8a2a2 = new Image();
+var img8a3a1 = new Image();
+var img8a3a2 = new Image();
+var img8a4a1 = new Image();
+var img8a4a2 = new Image();
+var img8a5a1 = new Image();
+var img8a5a2 = new Image();
+var img8a6a1 = new Image();
+var img8a6a2 = new Image();
+var img8a7a1 = new Image();
+var img8a7a2 = new Image();
+var img8a8a1 = new Image();
+var img8a8a2 = new Image();
+var img8a9a1 = new Image();
+var img8a9a2 = new Image();
+var img8a10a1 = new Image();
+var img8a10a2 = new Image();
+
+
+
+
+
+var em8a5a1x = 376;
+var em8a5a1y = (407 - 30);
+var em8a5a1a = 1;
+
+
+var l1 = 2
+var l2 = 2
+var l3 = 2
+var l4 = 2
+var l5 = 2
+var l6 = 2
+var l7 = 2
+var l8 = 2
+var l9 = 2
+var l10 = 2
+var poocount = 0
+var lives = 10
+var endmode = 0
+var cccc = 0
+var ccccc = 0
+var aacccc = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cowpat = 0;
+
+
+eatsound = new Audio('eat.mp3');
+eatsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+poosound = new Audio('poo.mp3');
+poosound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+fartsound = new Audio('fart.mp3');
+fartsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+nsound = new Audio('n.mp3');
+nsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+keysound = new Audio('key.mp3');
+keysound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+splatsound = new Audio('splat.mp3');
+splatsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+killsound = new Audio('kill.mp3');
+killsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+winsound = new Audio('win.mp3');
+winsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+ssplatsound = new Audio('splat.mp3');
+ssplatsound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+winnersound = new Audio('winner.mp3');
+winnersound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+oversound = new Audio('over.mp3');
+oversound.addEventListener('canplaythrough', function() {cowpat++;}, false);
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////set up images (when each one loads cowpat goes up by 1)
+//////////////////////////////////////////////////////
+
+
+
+
+imgm = new Image();
+imgm.onload = function(){  
+cowpat++;
+}  
+imgm.src = 'menue.png';
+
+imgst = new Image();
+imgst.onload = function(){  
+cowpat++;
+}  
+imgst.src = 'st.png';
+
+
+
+imgpig = new Image();
+imgpig.onload = function(){  
+cowpat++;
+}  
+imgpig.src = 'pig.png';
+
+imgpigg = new Image();
+imgpigg.onload = function(){  
+cowpat++;
+}  
+imgpigg.src = 'pig2.png';
+
+imgem = new Image();
+imgem.onload = function(){  
+cowpat++;
+}  
+imgem.src = 'em.png';
+
+imgem2 = new Image();
+imgem2.onload = function(){  
+cowpat++;
+}  
+imgem2.src = 'em2.png';
+
+imges = new Image();
+imges.onload = function(){  
+cowpat++;
+}  
+imges.src = 'es.png';
+
+imges2 = new Image();
+imges2.onload = function(){  
+cowpat++;
+}  
+imges2.src = 'es2.png';
+
+imgdrink = new Image();
+imgdrink.onload = function(){  
+cowpat++;
+}  
+imgdrink.src = 'drink.png';
+
+imgfood = new Image();
+imgfood.onload = function(){  
+cowpat++;
+}  
+imgfood.src = 'food.png';
+
+imgf = new Image();
+imgf.onload = function(){  
+cowpat++;
+}  
+imgf.src = 'f.png';
+imgy = new Image();
+imgy.onload = function(){  
+cowpat++;
+}  
+imgy.src = 'yes.png';
+imgn = new Image();
+imgn.onload = function(){  
+cowpat++;
+}  
+imgn.src = 'no.png';
+
+imgbox = new Image();
+imgbox.onload = function(){  
+cowpat++;
+}  
+imgbox.src = 'box.png';
+imgboss = new Image();
+imgboss.onload = function(){  
+cowpat++;
+}  
+imgboss.src = 'boss.png';
+
+imgff = new Image();
+imgff.onload = function(){  
+cowpat++;
+}  
+imgff.src = 'ff.png';
+
+imgpooo = new Image();
+imgpooo.onload = function(){  
+cowpat++;
+}  
+imgpooo.src = 'poo.png';
+
+imgfff = new Image();
+imgfff.onload = function(){  
+cowpat++;
+}  
+imgfff.src = 'fff.png';
+
+imgffff = new Image();
+imgffff.onload = function(){  
+cowpat++;
+}  
+imgffff.src = 'ffff.png';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function pigpoowowwowaa(){
+var thebigzip = new ZipLoader('files.zip');
+
+
+
+
+
+
+
+
+
+
+
+
+
+imga1 = new Image();
+imga1.onload = function(){  
+cowpat++;
+}  
+imga1.src = thebigzip.loadImage('files.zip://a1.png');
+
+imga2 = new Image();
+imga2.onload = function(){  
+cowpat++;
+}  
+imga2.src = thebigzip.loadImage('files.zip://a2.png');
+imga3 = new Image();
+imga3.onload = function(){  
+cowpat++;
+}  
+imga3.src = thebigzip.loadImage('files.zip://a3.png');
+
+
+
+
+imga4 = new Image();
+imga4.onload = function(){  
+cowpat++;
+}  
+imga4.src = thebigzip.loadImage('files.zip://a4.png');
+
+
+
+
+
+
+
+
+
+
+
+
+imga5 = new Image();
+imga5.onload = function(){  
+cowpat++;
+}  
+imga5.src = thebigzip.loadImage('files.zip://a5.png');
+imga6 = new Image();
+imga6.onload = function(){  
+cowpat++;
+}  
+imga6.src = thebigzip.loadImage('files.zip://a6.png');
+imga6aa = new Image();
+imga6aa.onload = function(){  
+cowpat++;
+}  
+imga6aa.src = thebigzip.loadImage('files.zip://a6aa.png');
+imga7 = new Image();
+imga7.onload = function(){  
+cowpat++;
+}  
+imga7.src = thebigzip.loadImage('files.zip://a7.png');
+imga8 = new Image();
+imga8.onload = function(){  
+cowpat++;
+}  
+imga8.src = thebigzip.loadImage('files.zip://a8.png');
+
+
+
+imgpoop1 = new Image();
+imgpoop1.onload = function(){  
+cowpat++;
+}  
+imgpoop1.src = thebigzip.loadImage('files.zip://poop1.png');
+
+imgpoop2 = new Image();
+imgpoop2.onload = function(){  
+cowpat++;
+}  
+imgpoop2.src = thebigzip.loadImage('files.zip://poop2.png');
+
+imgpoop3 = new Image();
+imgpoop3.onload = function(){  
+cowpat++;
+}  
+imgpoop3.src = thebigzip.loadImage('files.zip://poop3.png');
+
+imgpoop4 = new Image();
+imgpoop4.onload = function(){  
+cowpat++;
+}  
+imgpoop4.src = thebigzip.loadImage('files.zip://poop4.png');
+
+imgpoop5 = new Image();
+imgpoop5.onload = function(){  
+cowpat++;
+}  
+imgpoop5.src = thebigzip.loadImage('files.zip://poop5.png');
+
+imgpoop6 = new Image();
+imgpoop6.onload = function(){  
+cowpat++;
+}  
+imgpoop6.src = thebigzip.loadImage('files.zip://poop6.png');
+
+imgpoop7 = new Image();
+imgpoop7.onload = function(){  
+cowpat++;
+}  
+imgpoop7.src = thebigzip.loadImage('files.zip://poop7.png');
+
+imgpoop8 = new Image();
+imgpoop8.onload = function(){  
+cowpat++;
+}  
+imgpoop8.src = thebigzip.loadImage('files.zip://poop8.png');
+
+imgpoop9 = new Image();
+imgpoop9.onload = function(){  
+cowpat++;
+}  
+imgpoop9.src = thebigzip.loadImage('files.zip://poop9.png');
+
+imgpoop10 = new Image();
+imgpoop10.onload = function(){  
+cowpat++;
+}  
+imgpoop10.src = thebigzip.loadImage('files.zip://poop10.png');
+
+imgpoop11 = new Image();
+imgpoop11.onload = function(){  
+cowpat++;
+}  
+imgpoop11.src = thebigzip.loadImage('files.zip://poop11.png');
+
+imgpoop12 = new Image();
+imgpoop12.onload = function(){  
+cowpat++;
+}  
+imgpoop12.src = thebigzip.loadImage('files.zip://poop12.png');
+
+
+
+
+
+
+
+img1a1a1 = new Image();
+img1a1a1.onload = function(){  
+cowpat++;
+}  
+img1a1a1.src = thebigzip.loadImage('files.zip://level1a1a1.png');
+
+
+img1a1a2 = new Image();
+img1a1a2.onload = function(){  
+cowpat++;
+}  
+img1a1a2.src = thebigzip.loadImage('files.zip://level1a1a2.png');
+
+
+
+img1a2a1 = new Image();
+img1a2a1.onload = function(){  
+cowpat++;
+}  
+img1a2a1.src = thebigzip.loadImage('files.zip://level1a2a1.png');
+
+
+img1a2a2 = new Image();
+img1a2a2.onload = function(){  
+cowpat++;
+}  
+img1a2a2.src = thebigzip.loadImage('files.zip://level1a2a2.png');
+
+
+
+
+img1a3a1 = new Image();
+img1a3a1.onload = function(){  
+cowpat++;
+}  
+img1a3a1.src = thebigzip.loadImage('files.zip://level1a3a1.png');
+
+
+img1a3a2 = new Image();
+img1a3a2.onload = function(){  
+cowpat++;
+}  
+img1a3a2.src = thebigzip.loadImage('files.zip://level1a3a2.png');
+
+
+
+
+img1a4a1 = new Image();
+img1a4a1.onload = function(){  
+cowpat++;
+}  
+img1a4a1.src = thebigzip.loadImage('files.zip://level1a4a1.png');
+
+
+img1a4a2 = new Image();
+img1a4a2.onload = function(){  
+cowpat++;
+}  
+img1a4a2.src = thebigzip.loadImage('files.zip://level1a4a2.png');
+
+
+
+
+img1a5a1 = new Image();
+img1a5a1.onload = function(){  
+cowpat++;
+}  
+img1a5a1.src = thebigzip.loadImage('files.zip://level1a5a1.png');
+
+
+img1a5a2 = new Image();
+img1a5a2.onload = function(){  
+cowpat++;
+}  
+img1a5a2.src = thebigzip.loadImage('files.zip://level1a5a2.png');
+
+
+
+
+
+img1a6a1 = new Image();
+img1a6a1.onload = function(){  
+cowpat++;
+}  
+img1a6a1.src = thebigzip.loadImage('files.zip://level1a6a1.png');
+
+
+img1a6a2 = new Image();
+img1a6a2.onload = function(){  
+cowpat++;
+}  
+img1a6a2.src = thebigzip.loadImage('files.zip://level1a6a2.png');
+
+
+
+
+
+img1a7a1 = new Image();
+img1a7a1.onload = function(){  
+cowpat++;
+}  
+img1a7a1.src = thebigzip.loadImage('files.zip://level1a7a1.png');
+
+
+img1a7a2 = new Image();
+img1a7a2.onload = function(){  
+cowpat++;
+}  
+img1a7a2.src = thebigzip.loadImage('files.zip://level1a7a2.png');
+
+
+
+
+img1a8a1 = new Image();
+img1a8a1.onload = function(){  
+cowpat++;
+}  
+img1a8a1.src = thebigzip.loadImage('files.zip://level1a8a1.png');
+
+
+img1a8a2 = new Image();
+img1a8a2.onload = function(){  
+cowpat++;
+}  
+img1a8a2.src = thebigzip.loadImage('files.zip://level1a8a2.png');
+
+
+
+img1a9a1 = new Image();
+img1a9a1.onload = function(){  
+cowpat++;
+}  
+img1a9a1.src = thebigzip.loadImage('files.zip://level1a9a1.png');
+
+
+img1a9a2 = new Image();
+img1a9a2.onload = function(){  
+cowpat++;
+}  
+img1a9a2.src = thebigzip.loadImage('files.zip://level1a9a2.png');
+
+
+
+
+
+img1a10a1 = new Image();
+img1a10a1.onload = function(){  
+cowpat++;
+}  
+img1a10a1.src = thebigzip.loadImage('files.zip://level1a10a1.png');
+
+
+img1a10a2 = new Image();
+img1a10a2.onload = function(){  
+cowpat++;
+}  
+img1a10a2.src = thebigzip.loadImage('files.zip://level1a10a2.png');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img2a1a1 = new Image();
+img2a1a1.onload = function(){  
+cowpat++;
+}  
+img2a1a1.src = thebigzip.loadImage('files.zip://level2a1a1.png');
+
+
+img2a1a2 = new Image();
+img2a1a2.onload = function(){  
+cowpat++;
+}  
+img2a1a2.src = thebigzip.loadImage('files.zip://level2a1a2.png');
+
+
+
+img2a2a1 = new Image();
+img2a2a1.onload = function(){  
+cowpat++;
+}  
+img2a2a1.src = thebigzip.loadImage('files.zip://level2a2a1.png');
+
+
+img2a2a2 = new Image();
+img2a2a2.onload = function(){  
+cowpat++;
+}  
+img2a2a2.src = thebigzip.loadImage('files.zip://level2a2a2.png');
+
+
+
+
+img2a3a1 = new Image();
+img2a3a1.onload = function(){  
+cowpat++;
+}  
+img2a3a1.src = thebigzip.loadImage('files.zip://level2a3a1.png');
+
+
+img2a3a2 = new Image();
+img2a3a2.onload = function(){  
+cowpat++;
+}  
+img2a3a2.src = thebigzip.loadImage('files.zip://level2a3a2.png');
+
+
+
+
+img2a4a1 = new Image();
+img2a4a1.onload = function(){  
+cowpat++;
+}  
+img2a4a1.src = thebigzip.loadImage('files.zip://level2a4a1.png');
+
+
+img2a4a2 = new Image();
+img2a4a2.onload = function(){  
+cowpat++;
+}  
+img2a4a2.src = thebigzip.loadImage('files.zip://level2a4a2.png');
+
+
+
+
+img2a5a1 = new Image();
+img2a5a1.onload = function(){  
+cowpat++;
+}  
+img2a5a1.src = thebigzip.loadImage('files.zip://level2a5a1.png');
+
+
+img2a5a2 = new Image();
+img2a5a2.onload = function(){  
+cowpat++;
+}  
+img2a5a2.src = thebigzip.loadImage('files.zip://level2a5a2.png');
+
+
+
+
+
+img2a6a1 = new Image();
+img2a6a1.onload = function(){  
+cowpat++;
+}  
+img2a6a1.src = thebigzip.loadImage('files.zip://level2a6a1.png');
+
+
+img2a6a2 = new Image();
+img2a6a2.onload = function(){  
+cowpat++;
+}  
+img2a6a2.src = thebigzip.loadImage('files.zip://level2a6a2.png');
+
+
+
+
+
+img2a7a1 = new Image();
+img2a7a1.onload = function(){  
+cowpat++;
+}  
+img2a7a1.src = thebigzip.loadImage('files.zip://level2a7a1.png');
+
+
+img2a7a2 = new Image();
+img2a7a2.onload = function(){  
+cowpat++;
+}  
+img2a7a2.src = thebigzip.loadImage('files.zip://level2a7a2.png');
+
+
+
+
+img2a8a1 = new Image();
+img2a8a1.onload = function(){  
+cowpat++;
+}  
+img2a8a1.src = thebigzip.loadImage('files.zip://level2a8a1.png');
+
+
+img2a8a2 = new Image();
+img2a8a2.onload = function(){  
+cowpat++;
+}  
+img2a8a2.src = thebigzip.loadImage('files.zip://level2a8a2.png');
+
+
+
+img2a9a1 = new Image();
+img2a9a1.onload = function(){  
+cowpat++;
+}  
+img2a9a1.src = thebigzip.loadImage('files.zip://level2a9a1.png');
+
+
+img2a9a2 = new Image();
+img2a9a2.onload = function(){  
+cowpat++;
+}  
+img2a9a2.src = thebigzip.loadImage('files.zip://level2a9a2.png');
+
+
+
+
+
+img2a10a1 = new Image();
+img2a10a1.onload = function(){  
+cowpat++;
+}  
+img2a10a1.src = thebigzip.loadImage('files.zip://level2a10a1.png');
+
+
+img2a10a2 = new Image();
+img2a10a2.onload = function(){  
+cowpat++;
+}  
+img2a10a2.src = thebigzip.loadImage('files.zip://level2a10a2.png');
+
+
+
+
+
+
+
+
+
+
+img3a1a1 = new Image();
+img3a1a1.onload = function(){  
+cowpat++;
+}  
+img3a1a1.src = thebigzip.loadImage('files.zip://level3a1a1.png');
+
+
+img3a1a2 = new Image();
+img3a1a2.onload = function(){  
+cowpat++;
+}  
+img3a1a2.src = thebigzip.loadImage('files.zip://level3a1a2.png');
+
+
+
+img3a2a1 = new Image();
+img3a2a1.onload = function(){  
+cowpat++;
+}  
+img3a2a1.src = thebigzip.loadImage('files.zip://level3a2a1.png');
+
+
+img3a2a2 = new Image();
+img3a2a2.onload = function(){  
+cowpat++;
+}  
+img3a2a2.src = thebigzip.loadImage('files.zip://level3a2a2.png');
+
+
+
+
+img3a3a1 = new Image();
+img3a3a1.onload = function(){  
+cowpat++;
+}  
+img3a3a1.src = thebigzip.loadImage('files.zip://level3a3a1.png');
+
+
+img3a3a2 = new Image();
+img3a3a2.onload = function(){  
+cowpat++;
+}  
+img3a3a2.src = thebigzip.loadImage('files.zip://level3a3a2.png');
+
+
+
+
+img3a4a1 = new Image();
+img3a4a1.onload = function(){  
+cowpat++;
+}  
+img3a4a1.src = thebigzip.loadImage('files.zip://level3a4a1.png');
+
+
+img3a4a2 = new Image();
+img3a4a2.onload = function(){  
+cowpat++;
+}  
+img3a4a2.src = thebigzip.loadImage('files.zip://level3a4a2.png');
+
+
+
+
+img3a5a1 = new Image();
+img3a5a1.onload = function(){  
+cowpat++;
+}  
+img3a5a1.src = thebigzip.loadImage('files.zip://level3a5a1.png');
+
+
+img3a5a2 = new Image();
+img3a5a2.onload = function(){  
+cowpat++;
+}  
+img3a5a2.src = thebigzip.loadImage('files.zip://level3a5a2.png');
+
+
+
+
+
+img3a6a1 = new Image();
+img3a6a1.onload = function(){  
+cowpat++;
+}  
+img3a6a1.src = thebigzip.loadImage('files.zip://level3a6a1.png');
+
+
+img3a6a2 = new Image();
+img3a6a2.onload = function(){  
+cowpat++;
+}  
+img3a6a2.src = thebigzip.loadImage('files.zip://level3a6a2.png');
+
+
+
+
+
+img3a7a1 = new Image();
+img3a7a1.onload = function(){  
+cowpat++;
+}  
+img3a7a1.src = thebigzip.loadImage('files.zip://level3a7a1.png');
+
+
+img3a7a2 = new Image();
+img3a7a2.onload = function(){  
+cowpat++;
+}  
+img3a7a2.src = thebigzip.loadImage('files.zip://level3a7a2.png');
+
+
+
+
+img3a8a1 = new Image();
+img3a8a1.onload = function(){  
+cowpat++;
+}  
+img3a8a1.src = thebigzip.loadImage('files.zip://level3a8a1.png');
+
+
+img3a8a2 = new Image();
+img3a8a2.onload = function(){  
+cowpat++;
+}  
+img3a8a2.src = thebigzip.loadImage('files.zip://level3a8a2.png');
+
+
+
+img3a9a1 = new Image();
+img3a9a1.onload = function(){  
+cowpat++;
+}  
+img3a9a1.src = thebigzip.loadImage('files.zip://level3a9a1.png');
+
+
+img3a9a2 = new Image();
+img3a9a2.onload = function(){  
+cowpat++;
+}  
+img3a9a2.src = thebigzip.loadImage('files.zip://level3a9a2.png');
+
+
+
+
+
+img3a10a1 = new Image();
+img3a10a1.onload = function(){  
+cowpat++;
+}  
+img3a10a1.src = thebigzip.loadImage('files.zip://level3a10a1.png');
+
+
+img3a10a2 = new Image();
+img3a10a2.onload = function(){  
+cowpat++;
+}  
+img3a10a2.src = thebigzip.loadImage('files.zip://level3a10a2.png');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img4a1a1 = new Image();
+img4a1a1.onload = function(){  
+cowpat++;
+}  
+img4a1a1.src = thebigzip.loadImage('files.zip://level4a1a1.png');
+
+
+img4a1a2 = new Image();
+img4a1a2.onload = function(){  
+cowpat++;
+}  
+img4a1a2.src = thebigzip.loadImage('files.zip://level4a1a2.png');
+
+
+
+img4a2a1 = new Image();
+img4a2a1.onload = function(){  
+cowpat++;
+}  
+img4a2a1.src = thebigzip.loadImage('files.zip://level4a2a1.png');
+
+
+img4a2a2 = new Image();
+img4a2a2.onload = function(){  
+cowpat++;
+}  
+img4a2a2.src = thebigzip.loadImage('files.zip://level4a2a2.png');
+
+
+
+
+img4a3a1 = new Image();
+img4a3a1.onload = function(){  
+cowpat++;
+}  
+img4a3a1.src = thebigzip.loadImage('files.zip://level4a3a1.png');
+
+
+img4a3a2 = new Image();
+img4a3a2.onload = function(){  
+cowpat++;
+}  
+img4a3a2.src = thebigzip.loadImage('files.zip://level4a3a2.png');
+
+
+
+
+img4a4a1 = new Image();
+img4a4a1.onload = function(){  
+cowpat++;
+}  
+img4a4a1.src = thebigzip.loadImage('files.zip://level4a4a1.png');
+
+
+img4a4a2 = new Image();
+img4a4a2.onload = function(){  
+cowpat++;
+}  
+img4a4a2.src = thebigzip.loadImage('files.zip://level4a4a2.png');
+
+
+
+
+img4a5a1 = new Image();
+img4a5a1.onload = function(){  
+cowpat++;
+}  
+img4a5a1.src = thebigzip.loadImage('files.zip://level4a5a1.png');
+
+
+img4a5a2 = new Image();
+img4a5a2.onload = function(){  
+cowpat++;
+}  
+img4a5a2.src = thebigzip.loadImage('files.zip://level4a5a2.png');
+
+
+
+
+
+img4a6a1 = new Image();
+img4a6a1.onload = function(){  
+cowpat++;
+}  
+img4a6a1.src = thebigzip.loadImage('files.zip://level4a6a1.png');
+
+
+img4a6a2 = new Image();
+img4a6a2.onload = function(){  
+cowpat++;
+}  
+img4a6a2.src = thebigzip.loadImage('files.zip://level4a6a2.png');
+
+
+
+
+
+img4a7a1 = new Image();
+img4a7a1.onload = function(){  
+cowpat++;
+}  
+img4a7a1.src = thebigzip.loadImage('files.zip://level4a7a1.png');
+
+
+img4a7a2 = new Image();
+img4a7a2.onload = function(){  
+cowpat++;
+}  
+img4a7a2.src = thebigzip.loadImage('files.zip://level4a7a2.png');
+
+
+
+
+img4a8a1 = new Image();
+img4a8a1.onload = function(){  
+cowpat++;
+}  
+img4a8a1.src = thebigzip.loadImage('files.zip://level4a8a1.png');
+
+
+img4a8a2 = new Image();
+img4a8a2.onload = function(){  
+cowpat++;
+}  
+img4a8a2.src = thebigzip.loadImage('files.zip://level4a8a2.png');
+
+
+
+img4a9a1 = new Image();
+img4a9a1.onload = function(){  
+cowpat++;
+}  
+img4a9a1.src = thebigzip.loadImage('files.zip://level4a9a1.png');
+
+
+img4a9a2 = new Image();
+img4a9a2.onload = function(){  
+cowpat++;
+}  
+img4a9a2.src = thebigzip.loadImage('files.zip://level4a9a2.png');
+
+
+
+
+
+img4a10a1 = new Image();
+img4a10a1.onload = function(){  
+cowpat++;
+}  
+img4a10a1.src = thebigzip.loadImage('files.zip://level4a10a1.png');
+
+
+img4a10a2 = new Image();
+img4a10a2.onload = function(){  
+cowpat++;
+}  
+img4a10a2.src = thebigzip.loadImage('files.zip://level4a10a2.png');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img5a1a1 = new Image();
+img5a1a1.onload = function(){  
+cowpat++;
+}  
+img5a1a1.src = thebigzip.loadImage('files.zip://level5a1a1.png');
+
+
+img5a1a2 = new Image();
+img5a1a2.onload = function(){  
+cowpat++;
+}  
+img5a1a2.src = thebigzip.loadImage('files.zip://level5a1a2.png');
+
+
+
+img5a2a1 = new Image();
+img5a2a1.onload = function(){  
+cowpat++;
+}  
+img5a2a1.src = thebigzip.loadImage('files.zip://level5a2a1.png');
+
+
+img5a2a2 = new Image();
+img5a2a2.onload = function(){  
+cowpat++;
+}  
+img5a2a2.src = thebigzip.loadImage('files.zip://level5a2a2.png');
+
+
+
+
+img5a3a1 = new Image();
+img5a3a1.onload = function(){  
+cowpat++;
+}  
+img5a3a1.src = thebigzip.loadImage('files.zip://level5a3a1.png');
+
+
+img5a3a2 = new Image();
+img5a3a2.onload = function(){  
+cowpat++;
+}  
+img5a3a2.src = thebigzip.loadImage('files.zip://level5a3a2.png');
+
+
+
+
+img5a4a1 = new Image();
+img5a4a1.onload = function(){  
+cowpat++;
+}  
+img5a4a1.src = thebigzip.loadImage('files.zip://level5a4a1.png');
+
+
+img5a4a2 = new Image();
+img5a4a2.onload = function(){  
+cowpat++;
+}  
+img5a4a2.src = thebigzip.loadImage('files.zip://level5a4a2.png');
+
+
+
+
+img5a5a1 = new Image();
+img5a5a1.onload = function(){  
+cowpat++;
+}  
+img5a5a1.src = thebigzip.loadImage('files.zip://level5a5a1.png');
+
+
+img5a5a2 = new Image();
+img5a5a2.onload = function(){  
+cowpat++;
+}  
+img5a5a2.src = thebigzip.loadImage('files.zip://level5a5a2.png');
+
+
+
+
+
+img5a6a1 = new Image();
+img5a6a1.onload = function(){  
+cowpat++;
+}  
+img5a6a1.src = thebigzip.loadImage('files.zip://level5a6a1.png');
+
+
+img5a6a2 = new Image();
+img5a6a2.onload = function(){  
+cowpat++;
+}  
+img5a6a2.src = thebigzip.loadImage('files.zip://level5a6a2.png');
+
+
+
+
+
+img5a7a1 = new Image();
+img5a7a1.onload = function(){  
+cowpat++;
+}  
+img5a7a1.src = thebigzip.loadImage('files.zip://level5a7a1.png');
+
+
+img5a7a2 = new Image();
+img5a7a2.onload = function(){  
+cowpat++;
+}  
+img5a7a2.src = thebigzip.loadImage('files.zip://level5a7a2.png');
+
+
+
+
+img5a8a1 = new Image();
+img5a8a1.onload = function(){  
+cowpat++;
+}  
+img5a8a1.src = thebigzip.loadImage('files.zip://level5a8a1.png');
+
+
+img5a8a2 = new Image();
+img5a8a2.onload = function(){  
+cowpat++;
+}  
+img5a8a2.src = thebigzip.loadImage('files.zip://level5a8a2.png');
+
+
+
+img5a9a1 = new Image();
+img5a9a1.onload = function(){  
+cowpat++;
+}  
+img5a9a1.src = thebigzip.loadImage('files.zip://level5a9a1.png');
+
+
+img5a9a2 = new Image();
+img5a9a2.onload = function(){  
+cowpat++;
+}  
+img5a9a2.src = thebigzip.loadImage('files.zip://level5a9a2.png');
+
+
+
+
+
+img5a10a1 = new Image();
+img5a10a1.onload = function(){  
+cowpat++;
+}  
+img5a10a1.src = thebigzip.loadImage('files.zip://level5a10a1.png');
+
+
+img5a10a2 = new Image();
+img5a10a2.onload = function(){  
+cowpat++;
+}  
+img5a10a2.src = thebigzip.loadImage('files.zip://level5a10a2.png');
+
+
+
+
+
+
+img6a1a1 = new Image();
+img6a1a1.onload = function(){  
+cowpat++;
+}  
+img6a1a1.src = thebigzip.loadImage('files.zip://level6a1a1.png');
+
+
+
+img6a2a1 = new Image();
+img6a2a1.onload = function(){  
+cowpat++;
+}  
+img6a2a1.src = thebigzip.loadImage('files.zip://level6a2a1.png');
+
+
+
+
+img6a3a1 = new Image();
+img6a3a1.onload = function(){  
+cowpat++;
+}  
+img6a3a1.src = thebigzip.loadImage('files.zip://level6a3a1.png');
+
+
+
+
+
+img6a4a1 = new Image();
+img6a4a1.onload = function(){  
+cowpat++;
+}  
+img6a4a1.src = thebigzip.loadImage('files.zip://level6a4a1.png');
+
+
+
+
+img6a5a1 = new Image();
+img6a5a1.onload = function(){  
+cowpat++;
+}  
+img6a5a1.src = thebigzip.loadImage('files.zip://level6a5a1.png');
+
+
+
+
+
+
+img6a6a1 = new Image();
+img6a6a1.onload = function(){  
+cowpat++;
+}  
+img6a6a1.src = thebigzip.loadImage('files.zip://level6a6a1.png');
+
+
+
+
+
+img6a7a1 = new Image();
+img6a7a1.onload = function(){  
+cowpat++;
+}  
+img6a7a1.src = thebigzip.loadImage('files.zip://level6a7a1.png');
+
+
+
+
+img6a8a1 = new Image();
+img6a8a1.onload = function(){  
+cowpat++;
+}  
+img6a8a1.src = thebigzip.loadImage('files.zip://level6a8a1.png');
+
+
+
+
+img6a9a1 = new Image();
+img6a9a1.onload = function(){  
+cowpat++;
+}  
+img6a9a1.src = thebigzip.loadImage('files.zip://level6a9a1.png');
+
+
+
+
+
+img6a10a1 = new Image();
+img6a10a1.onload = function(){  
+cowpat++;
+}  
+img6a10a1.src = thebigzip.loadImage('files.zip://level6a10a1.png');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img7a1a1 = new Image();
+img7a1a1.onload = function(){  
+cowpat++;
+}  
+img7a1a1.src = thebigzip.loadImage('files.zip://level7a1a1.png');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img8a1a1 = new Image();
+img8a1a1.onload = function(){  
+cowpat++;
+}  
+img8a1a1.src = thebigzip.loadImage('files.zip://level8a1a1.png');
+
+
+img8a1a2 = new Image();
+img8a1a2.onload = function(){  
+cowpat++;
+}  
+img8a1a2.src = thebigzip.loadImage('files.zip://level8a1a2.png');
+
+
+
+img8a2a1 = new Image();
+img8a2a1.onload = function(){  
+cowpat++;
+}  
+img8a2a1.src = thebigzip.loadImage('files.zip://level8a2a1.png');
+
+
+img8a2a2 = new Image();
+img8a2a2.onload = function(){  
+cowpat++;
+}  
+img8a2a2.src = thebigzip.loadImage('files.zip://level8a2a2.png');
+
+
+
+
+img8a3a1 = new Image();
+img8a3a1.onload = function(){  
+cowpat++;
+}  
+img8a3a1.src = thebigzip.loadImage('files.zip://level8a3a1.png');
+
+
+img8a3a2 = new Image();
+img8a3a2.onload = function(){  
+cowpat++;
+}  
+img8a3a2.src = thebigzip.loadImage('files.zip://level8a3a2.png');
+
+
+
+
+img8a4a1 = new Image();
+img8a4a1.onload = function(){  
+cowpat++;
+}  
+img8a4a1.src = thebigzip.loadImage('files.zip://level8a4a1.png');
+
+
+img8a4a2 = new Image();
+img8a4a2.onload = function(){  
+cowpat++;
+}  
+img8a4a2.src = thebigzip.loadImage('files.zip://level8a4a2.png');
+
+
+
+
+img8a5a1 = new Image();
+img8a5a1.onload = function(){  
+cowpat++;
+}  
+img8a5a1.src = thebigzip.loadImage('files.zip://level8a5a1.png');
+
+
+img8a5a2 = new Image();
+img8a5a2.onload = function(){  
+cowpat++;
+}  
+img8a5a2.src = thebigzip.loadImage('files.zip://level8a5a2.png');
+
+
+
+
+
+img8a6a1 = new Image();
+img8a6a1.onload = function(){  
+cowpat++;
+}  
+img8a6a1.src = thebigzip.loadImage('files.zip://level8a6a1.png');
+
+
+img8a6a2 = new Image();
+img8a6a2.onload = function(){  
+cowpat++;
+}  
+img8a6a2.src = thebigzip.loadImage('files.zip://level8a6a2.png');
+
+
+
+
+
+img8a7a1 = new Image();
+img8a7a1.onload = function(){  
+cowpat++;
+}  
+img8a7a1.src = thebigzip.loadImage('files.zip://level8a7a1.png');
+
+
+img8a7a2 = new Image();
+img8a7a2.onload = function(){  
+cowpat++;
+}  
+img8a7a2.src = thebigzip.loadImage('files.zip://level8a7a2.png');
+
+
+
+
+img8a8a1 = new Image();
+img8a8a1.onload = function(){  
+cowpat++;
+}  
+img8a8a1.src = thebigzip.loadImage('files.zip://level8a8a1.png');
+
+
+img8a8a2 = new Image();
+img8a8a2.onload = function(){  
+cowpat++;
+}  
+img8a8a2.src = thebigzip.loadImage('files.zip://level8a8a2.png');
+
+
+img8a8a3 = new Image();
+img8a8a3.onload = function(){  
+cowpat++;
+}  
+img8a8a3.src = thebigzip.loadImage('files.zip://level8a8a3.png');
+
+
+
+img8a9a1 = new Image();
+img8a9a1.onload = function(){  
+cowpat++;
+}  
+img8a9a1.src = thebigzip.loadImage('files.zip://level8a9a1.png');
+
+
+img8a9a2 = new Image();
+img8a9a2.onload = function(){  
+cowpat++;
+}  
+img8a9a2.src = thebigzip.loadImage('files.zip://level8a9a2.png');
+
+img8a9a3 = new Image();
+img8a9a3.onload = function(){  
+cowpat++;
+}  
+img8a9a3.src = thebigzip.loadImage('files.zip://level8a9a3.png');
+
+
+img8a9a4 = new Image();
+img8a9a4.onload = function(){  
+cowpat++;
+}  
+img8a9a4.src = thebigzip.loadImage('files.zip://level8a9a4.png');
+
+
+img8a9a5 = new Image();
+img8a9a5.onload = function(){  
+cowpat++;
+}  
+img8a9a5.src = thebigzip.loadImage('files.zip://level8a9a5.png');
+
+
+
+
+
+
+img8a10a1 = new Image();
+img8a10a1.onload = function(){  
+cowpat++;
+}  
+img8a10a1.src = thebigzip.loadImage('files.zip://level8a10a1.png');
+
+
+img8a10a2 = new Image();
+img8a10a2.onload = function(){  
+cowpat++;
+}  
+img8a10a2.src = thebigzip.loadImage('files.zip://level8a10a2.png');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+img10a1a1 = new Image();
+img10a1a1.onload = function(){  
+cowpat++;
+}  
+img10a1a1.src = thebigzip.loadImage('files.zip://level10a1a1.png');
+
+
+
+img10a2a1 = new Image();
+img10a2a1.onload = function(){  
+cowpat++;
+}  
+img10a2a1.src = thebigzip.loadImage('files.zip://level10a2a1.png');
+
+
+
+
+img10a3a1 = new Image();
+img10a3a1.onload = function(){  
+cowpat++;
+}  
+img10a3a1.src = thebigzip.loadImage('files.zip://level10a3a1.png');
+
+
+
+
+
+img10a4a1 = new Image();
+img10a4a1.onload = function(){  
+cowpat++;
+}  
+img10a4a1.src = thebigzip.loadImage('files.zip://level10a4a1.png');
+
+
+
+
+img10a5a1 = new Image();
+img10a5a1.onload = function(){  
+cowpat++;
+}  
+img10a5a1.src = thebigzip.loadImage('files.zip://level10a5a1.png');
+
+
+
+
+
+
+img10a6a1 = new Image();
+img10a6a1.onload = function(){  
+cowpat++;
+}  
+img10a6a1.src = thebigzip.loadImage('files.zip://level10a6a1.png');
+
+
+
+
+
+img10a7a1 = new Image();
+img10a7a1.onload = function(){  
+cowpat++;
+}  
+img10a7a1.src = thebigzip.loadImage('files.zip://level10a7a1.png');
+
+
+
+
+img10a8a1 = new Image();
+img10a8a1.onload = function(){  
+cowpat++;
+}  
+img10a8a1.src = thebigzip.loadImage('files.zip://level10a8a1.png');
+
+
+
+
+img10a9a1 = new Image();
+img10a9a1.onload = function(){  
+cowpat++;
+}  
+img10a9a1.src = thebigzip.loadImage('files.zip://level10a9a1.png');
+
+
+
+
+
+img10a10a1 = new Image();
+img10a10a1.onload = function(){  
+cowpat++;
+}  
+img10a10a1.src = thebigzip.loadImage('files.zip://level10a10a1.png');
+
+
+
+img10a10a2 = new Image();
+img10a10a2.onload = function(){  
+cowpat++;
+}  
+img10a10a2.src = thebigzip.loadImage('files.zip://level10a10a2.png');
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////wait for everything to load (waits for cowpat to reach certain number)
+//////////////////////////////////////////////////////
+
+
+
+
+function moomoomoo(){
+setTimeout("moomoomoomoo()",100);
+}
+function moomoomoomoo(){
+var currentURL = window.location;
+if ((currentURL.hostname == 'beno.uk') || (currentURL.hostname == 'www.beno.uk')){
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+ctx.fillStyle = "rgb(255,255,255)"; 
+ctx.font = '30pt Arial'
+ctx.fillText('LOADING...', 200, 200)
+ctx.fillStyle = "rgb(0,0,0)"; 
+setTimeout("moomoo()",100);
+}else{
+alert('This game is from my website: beno.uk\nYou are not running it from this site.\n\nI have put a lot of time and effort to make this game for you.\nThe very least you can do in return is to run it from my website,\nso that my website gets lots of page views.\n\nOtherwise I will not feel like making any more games.')
+}}
+
+//this waits until everything is ready
+function moomoo(){
+	if (cowpat == 30){
+		pigpoowowwowaa()
+		wow()
+	}
+	else{
+		setTimeout("moomoo()",100);
+	}
+}
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////at last! it is now time for the game
+//////////////////////////////////////////////////////
+
+
+
+
+
+function woww(){
+
+
+emma = 0
+emmx = 320
+emmy = 240
+
+if ((world == 10) && ((level == 4) || (level == 5))){
+emmx = 350
+}
+
+if ((world == 4) || (world == 3)){
+emmx = 440
+}
+
+if ((world == 4) && (level == 6)){
+emmx = 600
+}
+if ((world == 5) && (level == 8)){
+emma = 1
+}
+
+
+
+if (world == 10){
+emma = 1
+}
+if ((world == 8) && (level == 10)){
+emma = 1
+}
+
+if ((world == 8) && (level == 7)){
+emma = 1
+emmx = 600
+}
+
+if ((world == 8) && (level == 6)){
+emma = 1
+emmx = 600
+}
+
+if ((world == 7) && (level == 10)){
+emma = 1
+}
+if ((world == 5) && (level == 3)){
+emma = 1
+emmx = 600
+}
+if ((world == 5) && (level == 4)){
+emma = 1
+}
+if ((world == 3) && (level == 1)){
+emma = 1
+}
+if ((world == 4) && ((level == 8) || (level == 6))){
+emma = 1
+}
+
+
+
+
+em1x = eval('em' + world + 'a' + level + 'a1x')
+em1y = eval('em' + world + 'a' + level + 'a1y')
+em1a = eval('em' + world + 'a' + level + 'a1a')
+em2x = eval('em' + world + 'a' + level + 'a2x')
+em2y = eval('em' + world + 'a' + level + 'a2y')
+em2a = eval('em' + world + 'a' + level + 'a2a')
+em3x = eval('em' + world + 'a' + level + 'a3x')
+em3y = eval('em' + world + 'a' + level + 'a3y')
+em3a = eval('em' + world + 'a' + level + 'a3a')
+
+
+drink1x = eval('drink' + world + 'a' + level + 'a1x')
+drink1y = eval('drink' + world + 'a' + level + 'a1y')
+drink1a = eval('drink' + world + 'a' + level + 'a1a')
+drink2x = eval('drink' + world + 'a' + level + 'a2x')
+drink2y = eval('drink' + world + 'a' + level + 'a2y')
+drink2a = eval('drink' + world + 'a' + level + 'a2a')
+drink3x = eval('drink' + world + 'a' + level + 'a3x')
+drink3y = eval('drink' + world + 'a' + level + 'a3y')
+drink3a = eval('drink' + world + 'a' + level + 'a3a')
+
+
+food1x = eval('food' + world + 'a' + level + 'a1x')
+food1y = eval('food' + world + 'a' + level + 'a1y')
+food1a = eval('food' + world + 'a' + level + 'a1a')
+food2x = eval('food' + world + 'a' + level + 'a2x')
+food2y = eval('food' + world + 'a' + level + 'a2y')
+food2a = eval('food' + world + 'a' + level + 'a2a')
+food3x = eval('food' + world + 'a' + level + 'a3x')
+food3y = eval('food' + world + 'a' + level + 'a3y')
+food3a = eval('food' + world + 'a' + level + 'a3a')
+
+
+
+emmd = 0;
+emmdd = 0;
+em1d = 0;
+em2d = 0;
+em3d = 0;
+
+poo1a = 0;
+poo2a = 0;
+poo3a = 0;
+poo1x = 0;
+poo2x = 0;
+poo3x = 0;
+poo1y = 0;
+poo2y = 0;
+poo3y = 0;
+poocount = 0;
+stage = 1;
+
+drink1x = eval('drink' + world + 'a' + level + 'a1x')
+drink1y = eval('drink' + world + 'a' + level + 'a1y')
+drink1a = eval('drink' + world + 'a' + level + 'a1a')
+drink2x = eval('drink' + world + 'a' + level + 'a2x')
+drink2y = eval('drink' + world + 'a' + level + 'a2y')
+drink2a = eval('drink' + world + 'a' + level + 'a2a')
+drink3x = eval('drink' + world + 'a' + level + 'a3x')
+drink3y = eval('drink' + world + 'a' + level + 'a3y')
+drink3a = eval('drink' + world + 'a' + level + 'a3a')
+
+
+
+
+food1x = eval('food' + world + 'a' + level + 'a1x')
+food1y = eval('food' + world + 'a' + level + 'a1y')
+food1a = eval('food' + world + 'a' + level + 'a1a')
+food2x = eval('food' + world + 'a' + level + 'a2x')
+food2y = eval('food' + world + 'a' + level + 'a2y')
+food2a = eval('food' + world + 'a' + level + 'a2a')
+food3x = eval('food' + world + 'a' + level + 'a3x')
+food3y = eval('food' + world + 'a' + level + 'a3y')
+food3a = eval('food' + world + 'a' + level + 'a3a')
+pigx = 20
+pigy = 155
+eat1 = 0;
+eat2 = 0;
+eat3 = 0;
+eat4 = 0;
+eat5 = 0;
+eat6 = 0;
+eat7 = 0;
+eat8 = 0;
+eat9 = 0;
+eat10 = 0;
+eat11 = 0;
+eat12 = 0;
+eat13 = 0;
+eat14 = 0;
+eat15 = 0;
+eat16 = 0;
+endmode = 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////menue
+//////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+function wwow(){
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+ctx.drawImage(imga4,65,62)
+cccc = 1
+canvas.addEventListener('click', evvv_mousemove, false);
+
+
+ctx.font = "14pt Arial";
+
+ctx.fillText(eval ("'WORLD ' + world"), 130, 402); 
+
+
+
+}
+
+
+
+
+
+function evvv_mousemove (ev) {
+if (cccc == 1){
+cccc = 0
+var canvas = document.getElementById("canvas");
+
+
+
+
+var x, y, zz;
+zz = 0
+
+  if (ev.layerX || ev.layerX == 0) { // Firefox
+    x = ev.layerX;
+    y = ev.layerY;
+  } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+    x = ev.offsetX;
+    y = ev.offsetY;
+  }
+
+
+
+
+if ((x > 347) && (x < 474) && (y > 337) && (y < 384) && (zz == 0)) {
+zz = 1
+canvas.removeEventListener('click', evvv_mousemove, false)
+level = 1
+world = 1
+stage = 1
+ssplatsound.play()
+map()
+}
+
+
+if ((x > 108) && (x < 253) && (y > 337) && (y < 384) && (zz == 0)) {
+zz = 1
+canvas.removeEventListener('click', evvv_mousemove, false)
+wwoww()
+}
+
+
+
+
+if (zz == 0){
+cccc = 1
+}}}
+
+
+
+
+
+
+
+
+
+function wow(){
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+ctx.drawImage(imgst,0,0)
+
+l1 = 1
+l2 = 0
+l3 = 0
+l4 = 0
+l5 = 0
+l6 = 0
+l7 = 0
+l8 = 0
+l9 = 0
+l10 = 0
+
+
+lives = 5
+aacccc = 1
+canvas.addEventListener('click', evv_mousemove, false);
+
+
+
+
+}
+
+
+
+
+
+function evv_mousemove (ev) {
+if (aacccc == 1){
+aacccc = 0
+var canvas = document.getElementById("canvas");
+
+
+
+var x, y, zzz;
+zzz = 0
+
+  if (ev.layerX || ev.layerX == 0) { // Firefox
+    x = ev.layerX;
+    y = ev.layerY;
+  } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+    x = ev.offsetX;
+    y = ev.offsetY;
+  }
+
+
+
+
+if ((x > 188) && (x < 482) && (y > 295) && (y < 349) && (zzz == 0)) {
+zzz = 1
+canvas.removeEventListener('click', evv_mousemove, false)
+level = 1
+world = 1
+stage = 1
+ssplatsound.play()
+map()
+}
+
+
+
+if ((x > 145) && (x < 534) && (y > 393) && (y < 426) && (zzz == 0)) {
+zzz = 1
+canvas.removeEventListener('click', evv_mousemove, false)
+window.location.href="https://beno.uk/";
+}
+
+
+
+
+
+
+if (zzz == 0){
+aacccc = 1
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function map(){
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+ctx.drawImage(imgm,0,0)
+
+
+
+
+if (l1 == 0){
+ctx.drawImage(imgn,45,224)
+}
+if (l1 == 2){
+ctx.drawImage(imgy,45,224)
+}
+
+
+if (l2 == 0){
+ctx.drawImage(imgn,118,224)
+}
+if (l2 == 2){
+ctx.drawImage(imgy,118,224)
+}
+
+if (l3 == 0){
+ctx.drawImage(imgn,211,271)
+}
+if (l3 == 2){
+ctx.drawImage(imgy,211,271)
+}
+
+if (l4 == 0){
+ctx.drawImage(imgn,253,155)
+}
+if (l4 == 2){
+ctx.drawImage(imgy,253,155)
+}
+
+if (l5 == 0){
+ctx.drawImage(imgn,311,272)
+}
+if (l5 == 2){
+ctx.drawImage(imgy,311,272)
+}
+if (l6 == 0){
+ctx.drawImage(imgn,408,293)
+}
+if (l6 == 2){
+ctx.drawImage(imgy,408,293)
+}
+if (l7 == 0){
+ctx.drawImage(imgn,406,103)
+}
+if (l7 == 2){
+ctx.drawImage(imgy,406,103)
+}
+if (l8 == 0){
+ctx.drawImage(imgn,442,186)
+}
+if (l8 == 2){
+ctx.drawImage(imgy,442,186)
+}
+if (l9 == 0){
+ctx.drawImage(imgn,586,342)
+}
+if (l9 == 2){
+ctx.drawImage(imgy,586,342)
+}
+if (l10 == 0){
+ctx.drawImage(imgn,582,419)
+}
+if (l10 == 2){
+ctx.drawImage(imgy,582,419)
+}
+
+//ctx.font = "16pt Arial";
+//ctx.fillText(eval ("'Lives: ' + lives"), 510, 85); 
+
+
+
+ccccc = 1
+canvas.addEventListener('click', ev_mousemove, false);
+
+
+
+}
+
+
+
+
+function ev_mousemove (ev) {
+if (ccccc == 1){
+ccccc = 0
+var canvas = document.getElementById("canvas");
+
+
+
+
+
+var x, y, z;
+z = 0
+
+  if (ev.layerX || ev.layerX == 0) { // Firefox
+    x = ev.layerX;
+    y = ev.layerY;
+  } else if (ev.offsetX || ev.offsetX == 0) { // Opera
+    x = ev.offsetX;
+    y = ev.offsetY;
+  }
+
+lives = 5
+
+
+if ((x > 45) && (x < (45 + 40)) && (y > 224) && (y < (224 + 40)) && (l1 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 1
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+if ((x > 118) && (x < (118 + 40)) && (y > 224) && (y < (224 + 40)) && (l2 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 2
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+if ((x > 211) && (x < (211 + 40)) && (y > 271) && (y < (271 + 40)) && (l3 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 3
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+if ((x > 253) && (x < (253 + 40)) && (y > 155) && (y < (155 + 40)) && (l4 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 4
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+
+if ((x > 311) && (x < (311 + 40)) && (y > 272) && (y < (272 + 40)) && (l5 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 5
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+
+
+if ((x > 408) && (x < (408 + 40)) && (y > 293) && (y < (293 + 40)) && (l6 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 6
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+if ((x > 406) && (x < (406 + 40)) && (y > 103) && (y < (103 + 40)) && (l7 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 7
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+
+if ((x > 442) && (x < (442 + 40)) && (y > 186) && (y < (186 + 40)) && (l8 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 8
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+if ((x > 586) && (x < (586 + 40)) && (y > 342) && (y < (342 + 40)) && (l9 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 9
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+
+
+if ((x > 582) && (x < (582 + 40)) && (y > 419) && (y < (419 + 40)) && (l10 > 0) && (z == 0)) {
+z = 1
+canvas.removeEventListener('click', ev_mousemove, false)
+level = 1
+world = 10
+stage = 1
+ssplatsound.play()
+wwow()
+}
+
+
+
+
+
+
+
+if (z == 0){
+ccccc = 1
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function wwoww(){
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+ctx.drawImage(imga3,0,0)
+winsound.play()
+setTimeout (wowww, 4900)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function wowww(){
+endmode = 2
+woww();
+allow = 1
+wooYayIntervalId = setInterval(function (){if (allow == 1){init()}}, 25);
+}
+
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////game loop
+//////////////////////////////////////////////////////
+
+
+function init(){
+
+
+
+if (done == 0){
+allow = 0
+
+
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+
+
+
+/////////////////////////////////////////////////////////////////key tracking
+if (key_left == true){
+	pigdir = -1;
+	pigdir3 = 0;
+}
+if (key_right == true){
+	pigdir = 1;
+	pigdir3 = 1;
+}
+if ((key_left == true) && (key_right == true)){
+	pigdir = 0;
+}
+if ((key_left == false) && (key_right == false)){
+	pigdir = 0;
+}
+
+if (key_up == true){
+	pigdir2 = -1;
+}
+if (key_down == true){
+	pigdir2 = 1;
+}
+if ((key_up == true) && (key_down == true)){
+	pigdir2 = 0;
+}
+if ((key_up == false) && (key_down == false)){
+	pigdir2 = 0;
+}
+
+
+if (world == 9){
+ctx.drawImage(eval('img10a' + level + 'a' + stage),0,0);
+}else{
+ctx.drawImage(eval('img' + world + 'a' + level + 'a' + stage),0,0);
+}
+
+
+
+/////////////////////////////////////////////////////////////////////poo
+
+
+if (poo1a == 1){
+tttt = ctx.getImageData((poo1x+12), (poo1y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo1y++
+}
+else{
+poo1a = 2
+}
+tttt = ctx.getImageData((poo1x+12), (poo1y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo1y++
+}
+else{
+poo1a = 2
+}
+tttt = ctx.getImageData((poo1x+12), (poo1y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo1y++
+}
+else{
+poo1a = 2
+}
+tttt = ctx.getImageData((poo1x+12), (poo1y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo1y++
+}
+else{
+poo1a = 2
+}}
+
+
+if (poo2a == 1){
+tttt = ctx.getImageData((poo2x+12), (poo2y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo2y++
+}
+else{
+poo2a = 2
+}
+tttt = ctx.getImageData((poo2x+12), (poo2y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo2y++
+}
+else{
+poo2a = 2
+}
+tttt = ctx.getImageData((poo2x+12), (poo2y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo2y++
+}
+else{
+poo2a = 2
+}
+tttt = ctx.getImageData((poo2x+12), (poo2y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo2y++
+}
+else{
+poo2a = 2
+}}
+
+
+
+if (poo3a == 1){
+tttt = ctx.getImageData((poo3x+12), (poo3y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo3y++
+}
+else{
+poo3a = 2
+}
+tttt = ctx.getImageData((poo3x+12), (poo3y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo3y++
+}
+else{
+poo3a = 2
+}
+tttt = ctx.getImageData((poo3x+12), (poo3y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo3y++
+}
+else{
+poo3a = 2
+}
+tttt = ctx.getImageData((poo3x+12), (poo3y + 12), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer != '0a0a0') && (emmer != '255a0a0')){
+poo3y++
+}
+else{
+poo3a = 2
+}}
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////emeny
+if (emma == 1){
+if (emmd == 0){
+tttt = ctx.getImageData((emmx-6), (emmy + 7), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer == '0a0a0') || (emmer == '255a0a0')){
+emmd = 1
+}
+else{
+emmx -= 6
+}}
+else{
+tttt = ctx.getImageData((emmx+21), (emmy + 7), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer == '0a0a0') || (emmer == '255a0a0')){
+emmd = 0
+}
+else{
+emmx += 6
+}}
+
+
+if (emmdd == 0){
+tttt = ctx.getImageData((emmx + 7), (emmy - 6), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer == '0a0a0') || (emmer == '255a0a0')){
+emmdd = 1
+}
+else{
+emmy -= 6
+}}
+else{
+tttt = ctx.getImageData((emmx + 7), (emmy + 21), 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if ((emmer == '0a0a0') || (emmer == '255a0a0')){
+emmdd = 0
+}
+else{
+emmy += 6
+}}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (em1a == 1){
+if (em1d == 0){
+tttt = ctx.getImageData((em1x-6), em1y, 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if (emmer == '0a0a0'){
+em1d = 1
+}
+else{
+em1x -= 6
+}}
+else{
+tttt = ctx.getImageData((em1x+50), em1y, 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if (emmer == '0a0a0'){
+em1d = 0
+}
+else{
+em1x += 6
+}
+}}
+if (em2a == 1){
+if (em2d == 0){
+tttt = ctx.getImageData((em2x-6), em2y, 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if (emmer == '0a0a0'){
+em2d = 1
+}
+else{
+em2x -= 6
+}
+}
+else{
+tttt = ctx.getImageData((em2x+50), em2y, 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if (emmer == '0a0a0'){
+em2d = 0
+}
+else{
+em2x += 6
+}
+}}
+if (em3a == 1){
+if (em3d == 0){
+tttt = ctx.getImageData((em3x-6), em3y, 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if (emmer == '0a0a0'){
+em3d = 1
+}
+else{
+em3x -= 6
+}}
+else{
+tttt = ctx.getImageData((em3x+50), em3y, 1, 1).data;
+emmer = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+if (emmer == '0a0a0'){
+em3d = 0
+}
+else{
+em3x += 6
+}}}
+
+
+
+
+
+
+
+
+
+
+if (emma == 1){
+ctx.drawImage(imgbox,(emmx - 2),(emmy - 2));
+}
+
+if (em1a == 1){
+if (em1d == 1){
+ctx.drawImage(imgem2,em1x,em1y);
+}
+else{
+ctx.drawImage(imgem,em1x,em1y);
+}}
+
+if (em1a == 2){
+if (em1d == 1){
+ctx.drawImage(imges2,em1x,em1y);
+}
+else{
+ctx.drawImage(imges,em1x,em1y);
+}}
+
+if (em2a == 1){
+if (em2d == 1){
+ctx.drawImage(imgem2,em2x,em2y);
+}
+else{
+ctx.drawImage(imgem,em2x,em2y);
+}}
+
+if (em2a == 2){
+if (em2d == 1){
+ctx.drawImage(imges2,em2x,em2y);
+}
+else{
+ctx.drawImage(imges,em2x,em2y);
+}}
+
+if (em3a == 1){
+if (em3d == 1){
+ctx.drawImage(imgem2,em3x,em3y);
+}
+else{
+ctx.drawImage(imgem,em3x,em3y);
+}}
+
+if (em3a == 2){
+if (em3d == 1){
+ctx.drawImage(imges2,em3x,em3y);
+}
+else{
+ctx.drawImage(imges,em3x,em3y);
+}}
+
+
+
+if ((pigx - 10) > boss){
+boss += 3
+}else{
+boss -= 3
+}
+if (level == 10){
+ctx.drawImage(imgboss,boss,380);
+}
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////poo em
+
+
+if (poo1a == 1){
+if (em1a == 1){
+if (((poo1x - 40) < em1x) && ((poo1x + 19) > em1x) && ((poo1y + 2) < em1y) && ((poo1y + 20) > em1y)){
+poo1a = 0
+em1a = 2
+splatsound.play()
+}}
+if (em2a == 1){
+if (((poo1x - 40) < em2x) && ((poo1x + 19) > em2x) && ((poo1y + 2) < em2y) && ((poo1y + 20) > em2y)){
+poo1a = 0
+em2a = 2
+splatsound.play()
+}}
+if (em3a == 1){
+if (((poo1x - 40) < em3x) && ((poo1x + 19) > em3x) && ((poo1y + 2) < em3y) && ((poo1y + 20) > em3y)){
+poo1a = 0
+em3a = 2
+splatsound.play()
+}}}
+
+
+if (poo2a == 1){
+if (em1a == 1){
+if (((poo2x - 40) < em1x) && ((poo2x + 19) > em1x) && ((poo2y + 2) < em1y) && ((poo2y + 20) > em1y)){
+poo2a = 0
+em1a = 2
+splatsound.play()
+}}
+if (em2a == 1){
+if (((poo2x - 40) < em2x) && ((poo2x + 19) > em2x) && ((poo2y + 2) < em2y) && ((poo2y + 20) > em2y)){
+poo2a = 0
+em2a = 2
+splatsound.play()
+}}
+if (em3a == 1){
+if (((poo2x - 40) < em3x) && ((poo2x + 19) > em3x) && ((poo2y + 2) < em3y) && ((poo2y + 20) > em3y)){
+poo2a = 0
+em3a = 2
+splatsound.play()
+}}}
+
+
+if (poo3a == 1){
+if (em1a == 1){
+if (((poo3x - 40) < em1x) && ((poo3x + 19) > em1x) && ((poo3y + 2) < em1y) && ((poo3y + 20) > em1y)){
+poo3a = 0
+em1a = 2
+splatsound.play()
+}}
+if (em2a == 1){
+if (((poo3x - 40) < em2x) && ((poo3x + 19) > em2x) && ((poo3y + 2) < em2y) && ((poo3y + 20) > em2y)){
+poo3a = 0
+em2a = 2
+splatsound.play()
+}}
+if (em3a == 1){
+if (((poo3x - 40) < em3x) && ((poo3x + 19) > em3x) && ((poo3y + 2) < em3y) && ((poo3y + 20) > em3y)){
+poo3a = 0
+em3a = 2
+splatsound.play()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////pig collishion
+
+
+for (i=0;i<4;i++){
+
+tttt = ctx.getImageData(pigx, pigy, 1, 1).data;
+pig1 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx+44), pigy, 1, 1).data;
+pig2 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData(pigx, (pigy+29), 1, 1).data;
+pig3 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx+44), (pigy+29), 1, 1).data;
+pig4 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData(pigx, (pigy+30), 1, 1).data;
+pig5 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx+44), (pigy+30), 1, 1).data;
+pig6 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx-1), pigy, 1, 1).data;
+piga1 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx+45), pigy, 1, 1).data;
+piga2 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx-1), (pigy+29), 1, 1).data;
+piga3 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx+45), (pigy+29), 1, 1).data;
+piga4 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+
+
+if (pigdir == 1){
+if ((piga2 != "0a0a0") && (piga4 != "0a0a0")){
+pigx++
+}}
+if (pigdir == -1){
+if ((piga1 != "0a0a0") && (piga3 != "0a0a0")){
+pigx--
+}}
+
+
+if ((pig1 == "255a0a0") || (pig2 == "255a0a0") || (pig3 == "255a0a0") || (pig4 == "255a0a0")){
+endmode = 1
+}
+if ((pig1 == "10a10a10") || (pig2 == "10a10a10") || (pig3 == "10a10a10") || (pig4 == "10a10a10")){
+endmode = 2
+}
+
+
+if (farttick > 0){
+tttt = ctx.getImageData(pigx, (pigy - 1), 1, 1).data;
+pig7 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+tttt = ctx.getImageData((pigx + 44), (pigy - 1), 1, 1).data;
+pig8 = ([tttt[0] + "a" + tttt[1] + "a" + tttt[2]]);
+
+if ((pig7 != "0a0a0") && (pig8 != "0a0a0")){
+pigy--
+}}
+else{
+if (pigdir2 == -1){
+if ((pig3 == "128a64a0") || (pig4 == "128a64a0") || (pig3 == "254a255a254") || (pig4 == "254a255a254")){
+pigy--
+}}
+ladder = 0
+if ((pig5 == "128a64a0") || (pig6 == "128a64a0") || (pig5 == "254a255a254") || (pig6 == "254a255a254")){
+ladder = 1
+}
+if (ladder == 0){
+if ((pig5 != "0a0a0") && (pig6 != "0a0a0")){
+pigy++
+}}
+if (ladder == 1){
+if (pigdir2 == 1){
+if ((pig5 != "0a0a0") || (pig6 != "0a0a0")){
+pigy++
+}}}}
+
+
+
+if ((pig1 == "200a200a0") || (pig2 == "200a200a0") || (pig3 == "200a200a0") || (pig4 == "200a200a0")){
+keyer = 1
+}
+if ((pig1 == "0a255a0") || (pig2 == "0a255a0") || (pig3 == "0a255a0") || (pig4 == "0a255a0")){
+keyer = -1
+}}
+stage += keyer
+
+if (keyer != 0){
+keysound.play()
+}
+
+keyer = 0
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////food
+
+if (food1a == 1){
+ctx.drawImage(imgfood,food1x,food1y);
+if (eat1 == 0){
+if ((pigx > (food1x - 42)) && (pigx < (food1x + 18)) && (pigy > (food1y - 27)) && (pigy < (food1y + 18))){
+eatsound.play()
+food1a = 0
+eat1 = 1
+}}}
+if (food2a == 1){
+ctx.drawImage(imgfood,food2x,food2y);
+if (eat1 == 0){
+if ((pigx > (food2x - 42)) && (pigx < (food2x + 18)) && (pigy > (food2y - 27)) && (pigy < (food2y + 18))){
+eatsound.play()
+food2a = 0
+eat1 = 1
+}}}
+if (food3a == 1){
+ctx.drawImage(imgfood,food3x,food3y);
+if (eat1 == 0){
+if ((pigx > (food3x - 42)) && (pigx < (food3x + 18)) && (pigy > (food3y - 27)) && (pigy < (food3y + 18))){
+eatsound.play()
+food3a = 0
+eat1 = 1
+}}}
+if (drink1a == 1){
+ctx.drawImage(imgdrink,drink1x,drink1y);
+if (eat1 == 0){
+if ((pigx > (drink1x - 42)) && (pigx < (drink1x + 18)) && (pigy > (drink1y - 27)) && (pigy < (drink1y + 18))){
+eatsound.play()
+drink1a = 0
+eat1 = 2
+}}}
+if (drink2a == 1){
+ctx.drawImage(imgdrink,drink2x,drink2y);
+if (eat1 == 0){
+if ((pigx > (drink2x - 42)) && (pigx < (drink2x + 18)) && (pigy > (drink2y - 27)) && (pigy < (drink2y + 18))){
+eatsound.play()
+drink2a = 0
+eat1 = 2
+}}}
+if (drink3a == 1){
+ctx.drawImage(imgdrink,drink3x,drink3y);
+if (eat1 == 0){
+if ((pigx > (drink3x - 42)) && (pigx < (drink3x + 18)) && (pigy > (drink3y - 27)) && (pigy < (drink3y + 18))){
+eatsound.play()
+drink3a = 0
+eat1 = 2
+}}}
+
+
+////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (poo1a > 0){
+ctx.drawImage(imgpooo,poo1x,poo1y);
+}
+if (poo2a > 0){
+ctx.drawImage(imgpooo,poo2x,poo2y);
+}
+if (poo3a > 0){
+ctx.drawImage(imgpooo,poo3x,poo3y);
+}
+
+
+
+
+
+if (pigdir3 == 1){
+ctx.drawImage(imgpig,pigx,pigy);
+}
+else{
+ctx.drawImage(imgpigg,pigx,pigy);
+}
+
+
+farttick--
+if (farttick < 0){
+farttick = 0
+}
+eattick--
+if (eattick < 0){
+eattick = 14
+
+if (eat16 == 0){
+eat16 = eat15
+eat15 = 0
+}
+
+if (eat15 == 0){
+eat15 = eat14
+eat14 = 0
+}
+
+if (eat14 == 0){
+eat14 = eat13
+eat13 = 0
+}
+
+if (eat13 == 0){
+eat13 = eat12
+eat12= 0
+}
+
+if (eat12 == 0){
+eat12 = eat11
+eat11 = 0
+}
+
+if (eat11 == 0){
+eat11 = eat10
+eat10 = 0
+}
+
+if (eat10 == 0){
+eat10 = eat9
+eat9 = 0
+}
+
+if (eat9 == 0){
+eat9 = eat8
+eat8 = 0
+}
+
+if (eat8 == 0){
+eat8 = eat7
+eat7 = 0
+}
+
+if (eat7 == 0){
+eat7 = eat6
+eat6 = 0
+}
+
+if (eat6 == 0){
+eat6 = eat5
+eat5 = 0
+}
+
+if (eat5 == 0){
+eat5 = eat4
+eat4 = 0
+}
+
+if (eat4 == 0){
+eat4 = eat3
+eat3 = 0
+}
+
+if (eat3 == 0){
+eat3 = eat2
+eat2 = 0
+}
+
+if (eat2 == 0){
+eat2 = eat1
+eat1 = 0
+}}
+
+
+
+
+
+
+
+if (eat2 == 1){
+ctx.drawImage(imgf,402,80);
+}
+if (eat2 == 2){
+ctx.drawImage(imgff,402,80);
+}
+if (eat3 == 1){
+ctx.drawImage(imgf,414,80);
+}
+if (eat3 == 2){
+ctx.drawImage(imgff,414,80);
+}
+if (eat4 == 1){
+ctx.drawImage(imgf,426,80);
+}
+if (eat4 == 2){
+ctx.drawImage(imgff,426,80);
+}
+if (eat5 == 1){
+ctx.drawImage(imgf,438,80);
+}
+if (eat5 == 2){
+ctx.drawImage(imgff,438,80);
+}
+if (eat6 == 1){
+ctx.drawImage(imgf,450,80);
+}
+if (eat6 == 2){
+ctx.drawImage(imgff,450,80);
+}
+if (eat7 == 1){
+ctx.drawImage(imgf,462,80);
+}
+if (eat7 == 2){
+ctx.drawImage(imgff,462,80);
+}
+if (eat8 == 1){
+ctx.drawImage(imgf,474,80);
+}
+if (eat8 == 2){
+ctx.drawImage(imgff,474,80);
+}
+if (eat9 == 1){
+ctx.drawImage(imgf,486,80);
+}
+if (eat9 == 2){
+ctx.drawImage(imgff,486,80);
+}
+if (eat10 == 1){
+ctx.drawImage(imgf,498,80);
+}
+if (eat10 == 2){
+ctx.drawImage(imgff,498,80);
+}
+if (eat11 == 1){
+ctx.drawImage(imgf,510,80);
+}
+if (eat11 == 2){
+ctx.drawImage(imgff,510,80);
+}
+if (eat12 == 1){
+ctx.drawImage(imgf,522,80);
+}
+if (eat12 == 2){
+ctx.drawImage(imgff,522,80);
+}
+if (eat13 == 1){
+ctx.drawImage(imgf,534,80);
+}
+if (eat13 == 2){
+ctx.drawImage(imgff,534,80);
+}
+if (eat14 == 1){
+ctx.drawImage(imgf,546,80);
+}
+if (eat14 == 2){
+ctx.drawImage(imgff,546,80);
+}
+if (eat15 == 1){
+ctx.drawImage(imgf,558,80);
+}
+if (eat15 == 2){
+ctx.drawImage(imgff,558,80);
+}
+if (eat16 == 1){
+ctx.drawImage(imgf,578,80);
+ctx.drawImage(imgfff,68,24);
+}
+if (eat16 == 2){
+ctx.drawImage(imgff,578,80);
+ctx.drawImage(imgffff,68,24);
+}
+
+
+
+
+
+if (key_poo == true){
+key_poo = false
+
+switch (eat16){
+
+
+case 2 :
+farttick += 44
+fartsound.play()
+eat16 = 0
+break
+
+
+case 1 :
+if (poocount == 0){
+if (pigdir3 == 1){
+poo1x = (pigx - 14)
+}
+else{
+poo1x = (pigx + 35)
+}
+poo1a = 1
+poo1y = (pigy + 18)
+}
+if (poocount == 1){
+if (pigdir3 == 1){
+poo2x = (pigx - 14)
+}
+else{
+poo2x = (pigx + 35)
+}
+poo2a = 1
+poo2y = (pigy + 18)
+}
+if (poocount == 2){
+if (pigdir3 == 1){
+poo3x = (pigx - 14)
+}
+else{
+poo3x = (pigx + 35)
+}
+poo3a = 1
+poo3y = (pigy + 18)
+}
+poocount++
+poosound.play()
+eat16 = 0
+break
+
+case 0 :
+
+nsound.play()
+
+}}
+
+
+
+
+
+
+
+
+
+
+//ctx.fillText(pig1, 10, 200);
+//ctx.fillText(pig2, 10, 220); 
+//ctx.fillText(pig3, 10, 240);
+//ctx.fillText(pig4, 10, 260); 
+//ctx.fillText(pig5, 10, 280);
+//ctx.fillText(pig6, 10, 300); 
+
+
+ctx.font = "16pt Arial";
+
+ctx.fillText(eval ("'Level: ' + world + '-' + level + '   Lives: ' + lives"), 370, 20); 
+
+
+if (endmode == 0){
+allow = 1
+}
+
+
+
+
+
+
+
+if (endmode == 1){
+farttick = 0
+
+killsound.play()
+
+
+
+woww();
+setTimeout(function(){ctx.drawImage(imga2,0,0)},2000);
+
+if ((level == 10) && (lives > 0)){
+setTimeout(function(){ctx.drawImage(imga5,0,0)},3000);
+}
+
+if (lives > 0){
+lives--
+setTimeout('allow = 1',4000);
+}else{
+setTimeout(nooo,3000);
+}
+
+
+}
+
+
+
+
+
+
+
+if (endmode == 2){
+farttick = 0
+if (level < 10){
+boss = 20
+winsound.play()
+level++
+woww();
+setTimeout(function(){ctx.drawImage(imga1,0,0)},1600);
+if (level == 10){
+setTimeout(function(){ctx.drawImage(imga5,0,0)},3100);
+}
+setTimeout('allow = 1',4900);
+}else{
+clearInterval ( wooYayIntervalId );
+winnersound.play()
+if (world==1){
+l1 = 2
+if (l2==0){
+l2 = 1
+}}
+if (world==2){
+l2 = 2
+if (l3==0){
+l3 = 1
+}
+if (l4==0){
+l4 = 1
+}}
+if (world==3){
+l3 = 2
+if (l5==0){
+l5 = 1
+}}
+if (world==4){
+l4 = 2
+if (l7==0){
+l7 = 1
+}
+if (l8==0){
+l8 = 1
+}}
+if (world==5){
+l5 = 2
+if (l6==0){
+l6 = 1
+}
+if (l8==0){
+l8 = 1
+}}
+if (world==6){
+l6 = 2
+}
+if (world==7){
+l7 = 2
+if (l9==0){
+l9 = 1
+}}
+if (world==8){
+l8 = 2
+if (l9==0){
+l9 = 1
+}}
+if (world==9){
+l9 = 2
+if (l10==0){
+l10 = 1
+}}
+if (world==10){
+l10 = 2
+}
+
+
+
+
+
+if (world == 10){
+setTimeout(function(){wooYayIntervalId = setInterval(larr, 40)},1000);
+setTimeout(function(){clearInterval ( wooYayIntervalId );winnersound.pause();winnersound.currentTime = 0;},9000);
+setTimeout(function(){winnersound.play();ctx.drawImage(imgpoop1,0,0);},9100);
+setTimeout(function(){ctx.drawImage(imgpoop2,0,0);},12000);
+setTimeout(function(){ctx.drawImage(imgpoop1,0,0);},16800);
+setTimeout(function(){ctx.drawImage(imgpoop3,0,0);},18800);
+setTimeout(function(){ctx.drawImage(imgpoop4,0,0);},19800);
+setTimeout(function(){ctx.drawImage(imgpoop5,0,0);},21500);
+setTimeout(function(){ctx.drawImage(imgpoop6,0,0);},23300);
+setTimeout(function(){ctx.drawImage(imgpoop5,0,0);},28400);
+setTimeout(function(){ctx.drawImage(imgpoop7,0,0);},29000);
+setTimeout(function(){ctx.drawImage(imgpoop8,0,0);},30000);
+setTimeout(function(){ctx.drawImage(imgpoop9,0,0);},31000);
+setTimeout(function(){ctx.drawImage(imgpoop10,0,0);},32000);
+setTimeout(function(){ctx.drawImage(imgpoop11,0,0);},33000);
+setTimeout(function(){ctx.drawImage(imgpoop12,0,0);},34000);
+setTimeout(map,37600);
+}else{
+setTimeout(function(){ctx.drawImage(imga6,150,200)},2000);
+setTimeout(function(){wooYayIntervalId = setInterval(larr, 40)},4960);
+setTimeout(function(){clearInterval ( wooYayIntervalId )},18600);
+setTimeout(function(){ctx.drawImage(imga7,0,0)},19100);
+setTimeout(map,25200);
+}}}}}
+
+
+
+function larr(){
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgf,(Math.random()*630),(Math.random()*470))
+ctx.drawImage(imgff,(Math.random()*630),(Math.random()*470))
+
+if (world == 10){
+ctx.drawImage(imga6aa,150,200)
+}else{
+ctx.drawImage(imga6,150,200)
+}}
+
+
+
+
+function nooo(){
+clearInterval ( wooYayIntervalId );
+oversound.play()
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+ctx.drawImage(imga8,0,0)
+setTimeout(map,4500);
+}
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////set up keyboard
+//////////////////////////////////////////////////////
+
+
+
+if (!document.addEventListener && document.attachEvent)
+{
+	// IE
+	document.attachEvent('onkeydown', handleKeyDown)
+	document.attachEvent('onkeyup', handleKeyUp)
+} else {
+	window.addEventListener('keydown', handleKeyDown, true)
+	window.addEventListener('keyup', handleKeyUp, true)
+}
+function handleKeyDown(event)
+{
+	if (event.keyCode == 32) // space
+		key_poo = 1;
+	else if (event.keyCode == 37) // left
+		key_left = true;
+	else if (event.keyCode == 38) // up
+		key_up = true;
+	else if (event.keyCode == 40) // down
+		key_down = true;
+
+
+	else if (event.keyCode == 39) // right
+		key_right = true;
+}
+
+function handleKeyUp(event)
+{
+
+
+	if (event.keyCode == 32) // space
+		key_poo = false;
+	else if (event.keyCode == 37) // left
+		key_left = false;
+	else if (event.keyCode == 38) // up
+		key_up = false;
+	else if (event.keyCode == 40) // down
+		key_down = false;
+	else if (event.keyCode == 39) // right
+		key_right = false;
+}
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////and now for the html!
+//////////////////////////////////////////////////////
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+}
+</style>
+<script type="text/javascript">
+
+  ;
+
+  ;
+
+</script>
+</head>
+
+
+
+<body style="margin: 0pt;" onload="moomoomoo();" onkeypress="return (event.keyCode >= 37 &amp;&amp; event.keyCode <= 40) ? false : true;">
+
+
+
+
+
+
+
+<div style="position:absolute;top:30px;left:140px;">
+<canvas id="canvas" width="640" height="480">
+
+</canvas></div>
+
+
+
+</body></html>

@@ -1,0 +1,2953 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="content-type" content="text/html;">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui," /> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>BENO CUBES</title><script src="../beno_game_system.js"></script><script type="text/javascript">
+//////////////////////////////////////////// And before we do anything else, lets set up some stuff
+mobilemode = "nokeyboard";fullScreenViewMode = false;inmobileview = false;compatibilitymode = "mp3";gameframe = true;gamego = false;var loaderimagesfile=new Array();var loaderimagesname=new Array();var loadersoundsfile=new Array();var loadersoundsname=new Array();var loadersoundsloop=new Array();
+
+//////////////////////////////////////////// LOAD IMAGES
+loaderimagesfile[0]="1.png"
+loaderimagesname[0]="img1";
+loaderimagesfile[1]="../multigame/1.png"
+loaderimagesname[1]="img2";
+loaderimagesfile[2]="0.png"
+loaderimagesname[2]="img3";
+loaderimagesfile[3]="2.png"
+loaderimagesname[3]="img4";
+
+
+
+//////////////////////////////////////////// LOAD SOUNDS
+loadersoundsfile[0]="1.mp3"
+loadersoundsname[0]="sound1";
+loadersoundsloop[0]=0;
+loadersoundsfile[1]="2.mp3"
+loadersoundsname[1]="sound2";
+loadersoundsloop[1]=0;
+loadersoundsfile[2]="3.mp3"
+loadersoundsname[2]="sound3";
+loadersoundsloop[2]=0;
+loadersoundsfile[3]="4.mp3"
+loadersoundsname[3]="sound4";
+loadersoundsloop[3]=0;
+loadersoundsfile[4]="5.mp3"
+loadersoundsname[4]="sound5";
+loadersoundsloop[4]=0;
+
+
+//////////////////////////////////////////// FIRST FUNCTION
+function startup_function(){
+pooopc()
+newbear = false
+mousego = 0
+mousegogo = 0
+mousecolor = 2
+mouseslope = false
+mode = 1
+loadin = 0
+level = 1
+timer = 0
+gravity = false
+movement = 0
+block1x = 0
+block1y = 0
+block1z = 0
+block2x = 0
+block2y = 0
+block2z = 0
+mrwindow1 = false;mrwindow1x = 100;mrwindow1y = 300;
+mrwindow2 = false;mrwindow2x = 200;mrwindow2y = 200;
+window1priority = true;windowmover = 0;windowmoverx = 0;windowmovery = 0;
+intro1 = 45;
+////
+//setgame(1)
+}
+
+function setgame(q){
+pooopc()
+newbear = false
+mousego = 0
+mousegogo = 0
+mousecolor = 2
+mouseslope = false
+level = q
+gravity = false
+movement = 0
+block1x = 0
+block1y = 0
+block2x = 0
+block2y = 0
+world = new Array()
+var q1 = 0
+while (q1 < 1000){
+world[q1] = new Array()
+var q2 = 0
+while (q2 < 7){
+world[q1][q2] = new Array()
+var q3 = 0
+while (q3 < 7){
+world[q1][q2][q3] = 0
+q3++
+}
+q2++
+}
+q1++
+}
+
+
+if (level == 1){
+loadin = 0;timer = 1;world[0] = [
+[3,2,2,3,2,2,3],
+[2,0,0,0,0,0,2],
+[2,0,2,3,2,0,2],
+[3,0,3,2,3,0,0],
+[2,0,2,3,2,0,0],
+[2,0,0,0,0,0,2],
+[3,2,2,0,0,2,3],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[3,0,2,3,2,0,3],\
+[0,0,0,0,0,0,0],\
+[2,0,3,2,3,0,0],\
+[3,0,2,3,2,0,0],\
+[2,0,3,2,3,0,0],\
+[0,0,0,0,0,0,0],\
+[3,0,0,0,0,0,3],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+[0,0,2,3,2,0,0],\
+[0,0,3,2,3,0,0],\
+[0,0,2,3,2,0,0],\
+[0,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",1000)
+setTimeout("mode = 10;timer = 0;mrwindow2 = true;mrwindow2x = -2;mrwindow2y = 280",1500)
+
+}
+
+
+
+
+if (level == 2){
+loadin = 0;timer = 1;world[0] = [
+[3,3,3,0,2,2,2],
+[3,3,3,0,2,2,2],
+[3,3,3,0,2,2,2],
+[4,4,4,0,5,5,5],
+[4,4,4,0,5,5,5],
+[4,4,4,0,5,5,5],
+[0,0,0,0,0,0,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[3,3,3,0,2,2,2],\
+[3,3,3,0,2,2,2],\
+[3,3,3,0,2,2,2],\
+[4,4,4,0,5,5,5],\
+[4,4,4,0,5,5,5],\
+[4,4,4,0,5,5,5],\
+[0,0,0,0,0,0,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[3,3,3,0,2,2,2],\
+[3,3,3,0,2,2,2],\
+[3,3,3,0,2,2,2],\
+[4,4,4,0,5,5,5],\
+[4,4,4,0,5,5,5],\
+[4,4,4,0,5,5,5],\
+[0,0,0,0,0,0,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[3,3,3,0,2,2,2],\
+[3,3,3,0,2,2,2],\
+[3,3,3,0,2,2,2],\
+[4,4,4,0,5,5,5],\
+[4,4,4,0,5,5,5],\
+[4,4,4,0,5,5,5],\
+[0,0,0,0,0,0,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[2,4,5,0,0,0,0],\
+[4,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[2,4,5,0,0,0,0],\
+[4,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[5,2,3,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[5,2,3,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",3500)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[2,4,5,0,0,0,0],\
+[4,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",4000)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[2,4,5,0,0,0,0],\
+[4,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[2,0,0,0,0,0,0],\
+[3,0,0,0,0,0,0],\
+[5,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",4500)
+
+
+setTimeout("mode = 10;timer = 0",5000)
+
+}
+
+
+
+
+
+
+
+
+
+if (level == 3){
+loadin = 0;timer = 1;world[0] = [
+[2,0,0,0,0,0,3],
+[0,0,3,4,2,3,0],
+[0,0,4,2,4,2,0],
+[0,0,2,3,2,4,0],
+[0,0,4,2,4,3,0],
+[0,0,0,0,0,0,0],
+[4,0,0,0,0,0,4],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[4,0,0,0,0,0,2],\
+[0,0,2,3,4,2,0],\
+[0,0,4,4,3,4,0],\
+[0,0,3,2,4,3,0],\
+[0,0,3,4,3,2,0],\
+[0,0,0,0,0,0,0],\
+[4,0,0,0,0,0,3],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[2,0,0,0,0,0,4],\
+[0,0,4,2,4,3,0],\
+[0,0,3,3,4,2,0],\
+[0,0,2,4,3,2,0],\
+[0,0,2,3,2,4,0],\
+[0,0,0,0,0,0,0],\
+[2,0,0,0,0,0,4],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[3,0,0,0,0,0,3],\
+[0,0,3,4,2,3,0],\
+[0,0,4,2,4,2,0],\
+[0,0,2,3,2,4,0],\
+[0,0,4,2,4,3,0],\
+[0,0,0,0,0,0,0],\
+[3,0,0,0,0,0,3],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+[0,0,0,3,2,0,0],\
+[0,0,0,2,3,0,0],\
+[0,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+[0,0,0,0,0,0,0],\
+]",2000)
+setTimeout("mode = 10;timer = 0",2500)
+}
+
+
+
+
+if (level == 4){
+loadin = 0;timer = 1;world[0] = [
+[0,0,0,0,0,0,3],
+[0,3,4,5,3,0,3],
+[0,4,5,3,2,0,3],
+[0,2,3,2,4,0,3],
+[0,3,2,5,3,0,3],
+[0,0,0,0,0,0,3],
+[2,2,2,2,2,2,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,0,0,0,0,0,3],\
+[0,2,5,4,2,0,3],\
+[0,4,4,5,4,0,3],\
+[0,5,2,3,5,0,3],\
+[0,5,4,5,2,0,3],\
+[0,0,0,0,0,0,3],\
+[2,2,2,2,2,2,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,0,0,0,0,0,3],\
+[0,4,2,4,3,0,3],\
+[0,5,5,4,5,0,3],\
+[0,3,4,3,2,0,3],\
+[0,2,5,2,4,0,3],\
+[0,0,0,0,0,0,3],\
+[2,2,2,2,2,2,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,0,0,0,0,0,3],\
+[0,5,3,2,5,0,3],\
+[0,3,5,4,2,0,3],\
+[0,2,5,2,4,0,3],\
+[0,4,2,4,5,0,3],\
+[0,0,0,0,0,0,3],\
+[2,2,2,2,2,2,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,0,0,0,0,0,3],\
+[0,2,2,2,3,0,3],\
+[0,5,4,3,2,0,3],\
+[0,4,5,3,5,0,3],\
+[0,5,2,5,2,0,3],\
+[0,0,0,0,0,0,3],\
+[2,2,2,2,2,2,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[0,0,0,0,0,0,3],\
+[0,2,5,4,5,0,3],\
+[0,4,4,5,4,0,3],\
+[0,5,2,3,5,0,3],\
+[0,2,4,2,3,0,3],\
+[0,0,0,0,0,0,3],\
+[2,2,2,2,2,2,0],\
+]",2500)
+setTimeout("mode = 10;timer = 0",3000)
+}
+
+
+
+
+
+if (level == 5){
+loadin = 0;timer = 1;world[0] = [
+[0,2,0,6,0,3,0],
+[2,3,0,3,0,4,0],
+[0,0,0,5,0,2,0],
+[3,5,6,4,0,4,0],
+[0,0,0,0,0,5,0],
+[6,2,6,2,4,5,0],
+[0,0,0,0,0,0,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,2,0,6,0,2,0],\
+[4,5,0,3,0,5,0],\
+[0,0,0,6,0,6,0],\
+[5,6,5,4,0,4,0],\
+[0,0,0,0,0,6,0],\
+[2,3,4,6,3,3,0],\
+[0,0,0,0,0,0,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,2,0,5,0,5,0],\
+[4,6,0,6,0,4,0],\
+[0,0,0,5,0,5,0],\
+[4,2,3,4,0,3,0],\
+[0,0,0,0,0,3,0],\
+[6,5,3,2,5,4,0],\
+[0,0,0,0,0,0,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,5,0,3,0,2,0],\
+[6,4,0,2,0,3,0],\
+[0,0,0,4,0,4,0],\
+[5,3,6,2,0,6,0],\
+[0,0,0,0,0,5,0],\
+[6,2,3,2,3,4,0],\
+[0,0,0,0,0,0,0],\
+]",1500)
+setTimeout("mode = 10;timer = 0",2000)
+}
+
+
+
+
+if (level == 6){
+loadin = 0;timer = 1;world[0] = [
+[6,2,0,0,0,3,6],
+[2,3,0,0,0,4,5],
+[0,0,2,5,4,0,0],
+[0,0,6,4,6,0,0],
+[0,0,2,5,4,0,0],
+[6,2,0,0,0,5,3],
+[4,5,0,0,0,6,4],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[2,6,0,0,0,2,3],\
+[4,5,0,0,0,5,4],\
+[0,0,2,6,3,0,0],\
+[0,0,5,4,5,0,0],\
+[0,0,4,2,6,0,0],\
+[4,3,0,0,0,3,5],\
+[2,6,0,0,0,5,3],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[3,4,0,0,0,6,5],\
+[5,6,0,0,0,2,3],\
+[0,0,6,5,2,0,0],\
+[0,0,3,6,5,0,0],\
+[0,0,3,4,2,0,0],\
+[3,4,0,0,0,5,4],\
+[4,2,0,0,0,4,2],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[2,6,0,0,0,2,4],\
+[4,5,0,0,0,5,2],\
+[0,0,2,6,r(),0,0],\
+[0,0,5,4,3,0,0],\
+[0,0,4,5,6,0,0],\
+[2,r(),0,0,0,5,3],\
+[5,6,0,0,0,3,5],\
+]",1500)
+setTimeout("mode = 10;timer = 0",2000)
+}
+
+
+
+
+
+
+
+if (level == 7){
+loadin = 0;timer = 1;world[0] = [
+[0,0,0,0,0,0,3],
+[0,3,7,5,6,0,3],
+[0,2,6,3,2,0,3],
+[0,r(),3,2,4,0,3],
+[0,7,2,7,3,0,3],
+[0,0,0,0,0,0,3],
+[7,7,7,7,7,7,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,0,0,0,0,0,3],\
+[0,2,5,4,2,0,3],\
+[0,6,7,5,7,0,3],\
+[0,5,7,3,5,0,3],\
+[0,5,4,5,2,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,0,0,0,0,0,3],\
+[0,4,2,4,3,0,3],\
+[0,5,7,4,5,0,3],\
+[0,3,4,3,7,0,3],\
+[0,6,5,7,4,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,0,0,0,0,0,3],\
+[0,5,3,2,5,0,3],\
+[0,r(),r(),6,2,0,3],\
+[0,2,7,2,6,0,3],\
+[0,4,2,4,5,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,0,0,0,0,0,3],\
+[0,6,6,2,3,0,3],\
+[0,7,4,3,7,0,3],\
+[0,4,5,3,6,0,3],\
+[0,5,2,5,2,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[0,0,0,0,0,0,3],\
+[0,2,5,4,5,0,3],\
+[0,7,4,r(),4,0,3],\
+[0,5,2,r(),5,0,3],\
+[0,2,7,6,6,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[0,0,0,0,0,0,3],\
+[0,2,5,4,2,0,3],\
+[0,r(),4,5,4,0,3],\
+[0,5,2,3,5,0,3],\
+[0,5,6,r(),2,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[0,0,0,0,0,0,3],\
+[0,4,2,4,3,0,3],\
+[0,5,5,4,5,0,3],\
+[0,3,4,3,7,0,3],\
+[0,6,5,2,4,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",3500)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[0,0,0,0,0,0,3],\
+[0,2,3,4,5,0,3],\
+[0,5,6,7,6,0,3],\
+[0,4,3,2,3,0,3],\
+[0,7,6,5,4,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",4000)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[0,0,0,0,0,0,3],\
+[0,4,2,4,3,0,3],\
+[0,5,7,r(),5,0,3],\
+[0,3,4,3,7,0,3],\
+[0,6,5,7,4,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",4500)
+setTimeout("loadin = 10;timer = 1;world[10] = [\
+[0,0,0,0,0,0,3],\
+[0,7,6,5,4,0,3],\
+[0,4,3,2,3,0,3],\
+[0,5,6,7,6,0,3],\
+[0,2,3,4,5,0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",5000)
+setTimeout("loadin = 11;timer = 1;world[11] = [\
+[0,0,0,0,0,0,3],\
+[0,2,5,4,r(),0,3],\
+[0,6,7,5,7,0,3],\
+[0,r(),7,3,5,0,3],\
+[0,5,4,5,r(),0,3],\
+[0,0,0,0,0,0,3],\
+[7,7,7,7,7,7,0],\
+]",5500)
+setTimeout("mode = 10;timer = 0",6000)
+}
+
+
+
+
+
+
+if (level == 8){
+loadin = 0;timer = 1;world[0] = [
+[0,7,0,6,0,7,0],
+[7,3,0,3,0,r(),0],
+[0,0,0,5,0,7,0],
+[7,5,6,r(),0,4,0],
+[0,0,0,0,0,5,0],
+[7,r(),6,2,4,5,0],
+[0,0,0,0,0,0,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,2,0,6,0,2,0],\
+[4,5,0,3,0,5,0],\
+[0,0,0,6,0,r(),0],\
+[5,6,5,4,0,4,0],\
+[0,0,0,0,0,6,0],\
+[2,3,4,6,r(),3,0],\
+[0,0,0,0,0,0,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,2,0,5,0,7,0],\
+[4,7,0,6,0,4,0],\
+[0,0,0,5,0,5,0],\
+[7,2,3,4,0,7,0],\
+[0,0,0,0,0,3,0],\
+[7,5,3,2,5,4,0],\
+[0,0,0,0,0,0,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,5,0,3,0,2,0],\
+[6,4,0,2,0,3,0],\
+[0,0,0,4,0,r(),0],\
+[5,3,7,2,0,6,0],\
+[0,0,0,0,0,5,0],\
+[6,2,r(),7,r(),3,0],\
+[0,0,0,0,0,0,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,2,0,5,0,5,0],\
+[4,6,0,6,0,4,0],\
+[0,0,0,5,0,7,0],\
+[4,2,3,4,0,3,0],\
+[0,0,0,0,0,3,0],\
+[7,5,3,r(),5,4,0],\
+[0,0,0,0,0,0,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[0,5,0,3,0,2,0],\
+[6,4,0,2,0,3,0],\
+[0,0,0,4,0,4,0],\
+[5,3,6,2,0,7,0],\
+[0,0,0,0,0,5,0],\
+[6,7,3,2,7,r(),0],\
+[0,0,0,0,0,0,0],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[0,2,0,6,0,2,0],\
+[4,5,0,3,0,5,0],\
+[0,0,0,6,0,6,0],\
+[5,6,5,4,0,4,0],\
+[0,0,0,0,0,6,0],\
+[2,3,4,6,r(),3,0],\
+[0,0,0,0,0,0,0],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[0,2,0,5,0,r(),0],\
+[4,7,0,6,0,r(),0],\
+[0,0,0,5,0,5,0],\
+[7,2,3,4,0,7,0],\
+[0,0,0,0,0,r(),0],\
+[7,r(),3,2,5,4,0],\
+[0,0,0,0,0,0,0],\
+]",3500)
+setTimeout("mode = 10;timer = 0",4000)
+}
+
+
+
+
+
+
+if (level == 9){
+loadin = 0;timer = 1;world[0] = [
+[0,2,2,2,0,0,2],
+[3,0,0,0,0,0,3],
+[3,0,r(),r(),0,0,4],
+[3,0,r(),r(),0,0,5],
+[0,0,0,0,0,0,6],
+[0,0,0,0,0,0,7],
+[2,3,4,5,6,7,2],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,2,2,2,0,0,3],\
+[3,0,0,0,0,0,2],\
+[3,0,0,0,0,0,7],\
+[3,0,0,0,0,0,6],\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,4],\
+[3,2,7,6,5,4,3],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,2,2,2,0,0,6],\
+[3,0,0,0,0,0,7],\
+[3,0,0,0,0,0,3],\
+[3,0,0,0,0,0,4],\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,7],\
+[2,3,6,3,4,5,2],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,2],\
+[0,0,0,0,0,0,7],\
+[6,7,6,2,4,5,6],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,0,0,0,0,0,6],\
+[0,0,0,0,0,0,7],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,2],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,4],\
+[5,3,7,3,4,5,2],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,2],\
+[0,0,0,0,0,0,7],\
+[6,7,3,2,4,5,6],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,2],\
+[0,0,0,0,0,0,7],\
+[0,0,0,0,0,0,6],\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,4],\
+[3,2,7,6,5,4,3],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[0,0,0,0,0,0,6],\
+[0,0,0,0,0,0,7],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,7],\
+[2,3,6,3,4,5,2],\
+]",3500)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[0,0,0,0,0,0,6],\
+[0,0,0,0,0,0,7],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,5],\
+[0,0,0,0,0,0,7],\
+[2,3,6,3,4,5,2],\
+]",4000)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,4],\
+[0,0,0,0,0,0,3],\
+[0,0,0,0,0,0,2],\
+[0,0,0,0,0,0,7],\
+[6,7,6,2,4,5,6],\
+]",4500)
+setTimeout("mode = 10;timer = 0",5000)
+}
+
+
+
+
+
+
+
+
+if (level == 10){
+loadin = 0;timer = 1;world[0] = [
+[6,2,0,0,0,3,6],
+[2,7,0,0,0,4,5],
+[0,0,2,5,4,0,0],
+[0,0,6,r(),6,0,0],
+[0,0,7,5,4,0,0],
+[6,2,0,0,0,7,3],
+[r(),5,0,0,0,6,4],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[2,6,0,0,0,2,3],\
+[4,5,0,0,0,5,4],\
+[0,0,2,6,3,0,0],\
+[0,0,5,4,5,0,0],\
+[0,0,4,2,7,0,0],\
+[4,3,0,0,0,3,5],\
+[r(),6,0,0,0,5,3],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[7,4,0,0,0,6,5],\
+[5,6,0,0,0,2,7],\
+[0,0,6,7,2,0,0],\
+[0,0,3,6,5,0,0],\
+[0,0,5,4,2,0,0],\
+[3,4,0,0,0,5,4],\
+[r(),2,0,0,0,4,2],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[2,6,0,0,0,2,7],\
+[4,5,0,0,0,5,3],\
+[0,0,2,6,7,0,0],\
+[0,0,5,4,3,0,0],\
+[0,0,3,5,6,0,0],\
+[2,7,0,0,0,5,5],\
+[r(),3,0,0,0,6,7],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[7,4,0,0,0,6,5],\
+[5,6,0,0,0,2,7],\
+[0,0,6,7,2,0,0],\
+[0,0,3,6,5,0,0],\
+[0,0,7,4,2,0,0],\
+[3,4,0,0,0,5,4],\
+[r(),2,0,0,0,4,2],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[2,6,0,0,0,2,7],\
+[4,5,0,0,0,5,2],\
+[0,0,2,6,7,0,0],\
+[0,0,5,4,3,0,0],\
+[0,0,4,5,6,0,0],\
+[2,7,0,0,0,5,3],\
+[r(),6,0,0,0,7,5],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[2,6,0,0,0,2,3],\
+[4,5,0,0,0,5,4],\
+[0,0,2,6,3,0,0],\
+[0,0,5,4,5,0,0],\
+[0,0,4,2,7,0,0],\
+[4,3,0,0,0,3,5],\
+[r(),6,0,0,0,5,3],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[7,4,0,0,0,6,5],\
+[5,6,0,0,0,2,7],\
+[0,0,6,7,2,0,0],\
+[0,0,3,6,5,0,0],\
+[0,0,5,4,2,0,0],\
+[3,4,0,0,0,5,4],\
+[r(),2,0,0,0,4,2],\
+]",3500)
+setTimeout("mode = 10;timer = 0",4000)
+}
+
+
+
+
+
+
+if (level == 11){
+loadin = 0;timer = 1;world[0] = [
+[0,2,0,2,0,2,0],
+[2,0,2,0,2,0,2],
+[0,2,0,2,0,2,0],
+[2,0,2,0,2,0,2],
+[0,2,0,2,0,2,0],
+[2,0,2,0,2,0,2],
+[0,2,0,2,0,2,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,3,0,3,0,3,0],\
+[3,0,3,0,3,0,3],\
+[0,3,0,3,0,3,0],\
+[3,0,3,0,3,0,3],\
+[0,3,0,3,0,3,0],\
+[3,0,3,0,3,0,3],\
+[0,3,0,3,0,3,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,4,0,4,0,4,0],\
+[4,0,4,0,4,0,4],\
+[0,4,0,4,0,4,0],\
+[4,0,4,0,4,0,4],\
+[0,4,0,4,0,4,0],\
+[4,0,4,0,4,0,4],\
+[0,4,0,4,0,4,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,5,0,5,0,5,0],\
+[5,0,5,0,5,0,5],\
+[0,5,0,5,0,5,0],\
+[5,0,5,0,5,0,5],\
+[0,5,0,5,0,5,0],\
+[5,0,5,0,5,0,5],\
+[0,5,0,5,0,5,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,6,0,6,0,6,0],\
+[6,0,6,0,6,0,6],\
+[0,6,0,6,0,6,0],\
+[6,0,6,0,6,0,6],\
+[0,6,0,6,0,6,0],\
+[6,0,6,0,6,0,6],\
+[0,6,0,6,0,6,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[0,7,0,7,0,7,0],\
+[7,0,7,0,7,0,7],\
+[0,7,0,7,0,7,0],\
+[7,0,7,0,7,0,7],\
+[0,7,0,7,0,7,0],\
+[7,0,7,0,7,0,7],\
+[0,7,0,7,0,7,0],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[0,2,0,2,0,2,0],\
+[2,0,2,0,2,0,2],\
+[0,2,0,2,0,2,0],\
+[2,0,2,0,2,0,2],\
+[0,2,0,2,0,2,0],\
+[2,0,2,0,2,0,2],\
+[0,2,0,2,0,2,0],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[0,3,0,3,0,3,0],\
+[3,0,3,0,3,0,3],\
+[0,3,0,3,0,3,0],\
+[3,0,3,0,3,0,3],\
+[0,3,0,3,0,3,0],\
+[3,0,3,0,3,0,3],\
+[0,3,0,3,0,3,0],\
+]",3500)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[0,4,0,4,0,4,0],\
+[4,0,4,0,4,0,4],\
+[0,4,0,4,0,4,0],\
+[4,0,4,0,4,0,4],\
+[0,4,0,4,0,4,0],\
+[4,0,4,0,4,0,4],\
+[0,4,0,4,0,4,0],\
+]",4000)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[0,5,0,5,0,5,0],\
+[5,0,5,0,5,0,5],\
+[0,5,0,5,0,5,0],\
+[5,0,5,0,5,0,5],\
+[0,5,0,5,0,5,0],\
+[5,0,5,0,5,0,5],\
+[0,5,0,5,0,5,0],\
+]",4500)
+setTimeout("loadin = 10;timer = 1;world[10] = [\
+[0,6,0,6,0,6,0],\
+[6,0,6,0,6,0,6],\
+[0,6,0,6,0,6,0],\
+[6,0,6,0,6,0,6],\
+[0,6,0,6,0,6,0],\
+[6,0,6,0,6,0,6],\
+[0,6,0,6,0,6,0],\
+]",5000)
+setTimeout("loadin = 11;timer = 1;world[11] = [\
+[0,7,0,7,0,7,0],\
+[7,0,7,0,7,0,7],\
+[0,7,0,7,0,7,0],\
+[7,0,7,0,7,0,7],\
+[0,7,0,7,0,7,0],\
+[7,0,7,0,7,0,7],\
+[0,7,0,7,0,7,0],\
+]",5500)
+setTimeout("mode = 10;timer = 0",6000)
+}
+
+
+
+
+
+if (level == 12){
+loadin = 0;timer = 1;world[0] = [
+[0,0,0,0,0,0,0],
+[0,3,7,5,6,3,0],
+[0,2,6,3,2,2,0],
+[0,2,r(),2,4,7,0],
+[0,7,2,r(),3,5,0],
+[0,3,7,2,4,6,0],
+[0,0,0,0,0,0,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[0,0,0,0,0,0,0],\
+[0,2,5,4,2,6,0],\
+[0,6,7,5,7,5,0],\
+[0,5,r(),3,5,2,0],\
+[0,5,4,5,2,3,0],\
+[0,3,6,4,5,6,0],\
+[0,0,0,0,0,0,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[0,0,0,0,0,0,0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[0,0,0,0,0,0,0],\
+[0,5,3,2,5,2,0],\
+[0,6,5,r(),2,5,0],\
+[0,2,7,2,6,2,0],\
+[0,4,2,4,5,7,0],\
+[0,6,4,3,6,4,0],\
+[0,0,0,0,0,0,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[0,0,0,0,0,0,0],\
+[0,6,6,2,3,3,0],\
+[0,7,4,3,7,4,0],\
+[0,r(),5,r(),6,4,0],\
+[0,5,2,5,2,7,0],\
+[0,4,5,6,6,2,0],\
+[0,0,0,0,0,0,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[0,0,0,0,0,0,0],\
+[0,2,5,4,5,2,0],\
+[0,7,4,5,4,7,0],\
+[0,5,2,3,5,6,0],\
+[0,2,7,2,6,3,0],\
+[0,2,7,2,3,6,0],\
+[0,0,0,0,0,0,0],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[0,0,0,0,0,0,0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[0,0,0,0,0,0,0],\
+[0,4,2,4,3,3,0],\
+[0,5,5,4,5,4,0],\
+[0,3,4,3,7,3,0],\
+[0,6,5,2,4,4,0],\
+[0,3,4,3,4,7,0],\
+[0,0,0,0,0,0,0],\
+]",3500)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[0,0,0,0,0,0,0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",4000)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[0,0,0,0,0,0,0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",4500)
+setTimeout("loadin = 10;timer = 1;world[10] = [\
+[0,0,0,0,0,0,0],\
+[0,2,5,4,5,2,0],\
+[0,7,4,5,4,7,0],\
+[0,5,2,3,5,6,0],\
+[0,2,7,2,6,3,0],\
+[0,2,7,2,3,6,0],\
+[0,0,0,0,0,0,0],\
+]",5000)
+setTimeout("loadin = 11;timer = 1;world[11] = [\
+[0,0,0,0,0,0,0],\
+[0,2,5,4,2,3,0],\
+[0,4,4,5,4,4,0],\
+[0,5,2,3,5,5,0],\
+[0,5,6,5,2,4,0],\
+[0,3,4,5,4,7,0],\
+[0,0,0,0,0,0,0],\
+]",5500)
+setTimeout("mode = 10;timer = 0",6000)
+}
+
+
+
+
+
+
+
+
+if (level == 13){
+loadin = 0;timer = 1;world[0] = [
+[7,3,7,3,7,2,0],
+[3,3,7,5,6,7,2],
+[7,2,6,3,2,3,0],
+[3,2,3,2,4,6,3],
+[7,7,2,7,3,4,0],
+[7,2,6,3,5,5,4],
+[0,7,0,6,0,5,0],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[7,2,7,2,7,2,0],\
+[2,2,5,4,2,6,7],\
+[7,6,7,5,7,3,0],\
+[2,5,7,3,5,2,6],\
+[7,5,4,5,2,4,0],\
+[7,3,6,4,5,6,5],\
+[0,2,0,3,0,4,0],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[6,4,6,4,6,4,0],\
+[4,4,2,7,3,7,0],\
+[6,5,7,4,5,3,0],\
+[4,3,4,3,7,6,0],\
+[6,6,5,7,4,3,0],\
+[4,3,7,5,7,2,0],\
+[0,0,0,0,0,0,0],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",3500)
+setTimeout("mode = 10;timer = 0",4000)
+}
+
+
+
+
+
+
+
+
+if (level == 14){
+loadin = 0;timer = 1;world[0] = [
+[r(),r(),r(),r(),r(),r(),7],
+[r(),r(),r(),r(),r(),7,0],
+[r(),r(),r(),r(),r(),r(),6],
+[r(),r(),r(),r(),r(),6,0],
+[r(),r(),r(),r(),r(),r(),5],
+[r(),2,r(),3,r(),4,0],
+[2,0,3,0,4,0,4],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[r(),r(),r(),r(),r(),r(),3],\
+[r(),r(),r(),r(),r(),2,0],\
+[r(),r(),r(),r(),r(),r(),2],\
+[r(),r(),r(),r(),r(),7,0],\
+[r(),r(),r(),r(),r(),r(),7],\
+[r(),4,r(),5,r(),6,0],\
+[4,0,5,0,6,0,7],\
+]",500)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[r(),r(),r(),r(),r(),r(),5],\
+[r(),r(),r(),r(),r(),4,0],\
+[r(),r(),r(),r(),r(),r(),4],\
+[r(),r(),r(),r(),r(),3,0],\
+[r(),r(),r(),r(),r(),r(),3],\
+[r(),6,r(),7,r(),2,0],\
+[6,0,7,0,2,0,2],\
+]",1000)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[r(),r(),r(),r(),r(),r(),7],\
+[r(),r(),r(),r(),r(),7,0],\
+[r(),r(),r(),r(),r(),r(),6],\
+[r(),r(),r(),r(),r(),6,0],\
+[r(),r(),r(),r(),r(),r(),5],\
+[r(),2,r(),3,r(),4,0],\
+[2,0,3,0,4,0,4],\
+]",1500)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[r(),r(),r(),r(),r(),r(),3],\
+[r(),r(),r(),r(),r(),2,0],\
+[r(),r(),r(),r(),r(),r(),2],\
+[r(),r(),r(),r(),r(),7,0],\
+[r(),r(),r(),r(),r(),r(),7],\
+[r(),4,r(),5,r(),6,0],\
+[4,0,5,0,6,0,7],\
+]",2000)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[r(),r(),r(),r(),r(),r(),5],\
+[r(),r(),r(),r(),r(),4,0],\
+[r(),r(),2,r(),r(),r(),4],\
+[r(),r(),r(),r(),r(),3,0],\
+[r(),r(),r(),r(),r(),r(),3],\
+[r(),6,r(),7,r(),2,0],\
+[6,0,7,0,2,0,2],\
+]",2500)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[r(),r(),r(),r(),r(),r(),7],\
+[r(),r(),r(),r(),r(),7,0],\
+[r(),r(),r(),r(),r(),r(),6],\
+[r(),r(),r(),r(),r(),6,0],\
+[r(),r(),r(),r(),r(),r(),5],\
+[r(),2,r(),3,r(),4,0],\
+[2,0,3,0,4,0,4],\
+]",3000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[r(),r(),r(),r(),r(),r(),3],\
+[r(),r(),r(),r(),r(),2,0],\
+[r(),r(),r(),r(),r(),r(),2],\
+[r(),r(),r(),r(),r(),7,0],\
+[r(),r(),r(),r(),r(),r(),7],\
+[r(),4,r(),5,r(),6,0],\
+[4,0,5,0,6,0,7],\
+]",3500)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[r(),r(),r(),r(),r(),r(),5],\
+[r(),r(),r(),r(),r(),4,0],\
+[r(),r(),r(),r(),r(),r(),4],\
+[r(),r(),r(),r(),r(),3,0],\
+[r(),r(),r(),r(),r(),r(),3],\
+[r(),6,r(),7,r(),2,0],\
+[6,0,7,0,2,0,2],\
+]",4000)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",4500)
+setTimeout("loadin = 10;timer = 1;world[10] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",5000)
+setTimeout("loadin = 11;timer = 1;world[11] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),0],\
+[0,0,0,0,0,0,0],\
+]",5500)
+
+setTimeout("mode = 10;timer = 0",6000)
+
+
+}
+
+
+
+
+
+
+
+if (level == 15){
+loadin = 0;timer = 1;world[0] = [
+[r(),r(),r(),r(),r(),r(),0],
+[r(),r(),r(),r(),r(),r(),r()],
+[r(),r(),r(),r(),r(),r(),0],
+[r(),r(),r(),r(),r(),r(),r()],
+[r(),r(),r(),r(),r(),r(),0],
+[r(),r(),r(),r(),r(),r(),r()],
+[r(),0  ,r(),0  ,r(),0  ,r()],
+]
+setTimeout("loadin = 1;timer = 1;world[1] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",333)
+setTimeout("loadin = 2;timer = 1;world[2] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",666)
+setTimeout("loadin = 3;timer = 1;world[3] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",1000)
+setTimeout("loadin = 4;timer = 1;world[4] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",1333)
+setTimeout("loadin = 5;timer = 1;world[5] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",1666)
+setTimeout("loadin = 6;timer = 1;world[6] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",2000)
+setTimeout("loadin = 7;timer = 1;world[7] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",2333)
+setTimeout("loadin = 8;timer = 1;world[8] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",2666)
+setTimeout("loadin = 9;timer = 1;world[9] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",3000)
+setTimeout("loadin = 10;timer = 1;world[10] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",3333)
+setTimeout("loadin = 11;timer = 1;world[11] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",3666)
+setTimeout("loadin = 12;timer = 1;world[12] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",4000)
+setTimeout("loadin = 13;timer = 1;world[13] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",4333)
+
+setTimeout("loadin = 14;timer = 1;world[14] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",4500)
+setTimeout("loadin = 15;timer = 1;world[15] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",4700)
+setTimeout("loadin = 16;timer = 1;world[16] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",4800)
+setTimeout("loadin = 17;timer = 1;world[17] = [\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),r(),r(),r(),r(),r(),0],\
+[r(),r(),r(),r(),r(),r(),r()],\
+[r(),0  ,r(),0  ,r(),0  ,r()],\
+]",4900)
+
+
+
+
+
+
+
+setTimeout("mode = 10;timer = 0",5000)
+
+
+}
+
+
+
+
+
+
+
+mrwindow1 = false
+mrwindow2 = false
+
+mode = 19
+}
+
+
+//////////////////////////////////////////// MOUSE FOR WINDOWS
+function m_down(){
+if (windowmover == 0){
+needtofind = true
+if ((x > mrwindow1x) && (x < (mrwindow1x + 300)) && (y > mrwindow1y) && (y < (mrwindow1y + 200)) && (mrwindow1) && (window1priority) && (needtofind)){
+needtofind = false;m_down_1()
+}
+if ((x > mrwindow2x) && (x < (mrwindow2x + 300)) && (y > mrwindow2y) && (y < (mrwindow2y + 200)) && (mrwindow2) && (needtofind)){
+needtofind = false;m_down_2()
+}
+if ((x > mrwindow1x) && (x < (mrwindow1x + 300)) && (y > mrwindow1y) && (y < (mrwindow1y + 200)) && (mrwindow1) && (needtofind)){
+needtofind = false;m_down_1()
+}
+if (needtofind){
+m_down_go()
+}}}
+function m_down_1(){
+window1priority = true
+if ((x > (mrwindow1x + 6)) && (x < (mrwindow1x + 294)) && (y > (mrwindow1y + 20)) && (y < (mrwindow1y + 194))){
+
+if (mode > 9){
+mrclick(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 75,mrwindow1y + 105,     "sound1.play();mrwindow1=false;window1priority = false;setgame(level)") //RESTART LEVEL
+mrclick(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 115,mrwindow1y + 145,     "sound1.play();mode = 1") //RESTART LEVEL
+mrclick(mrwindow1x + 60,mrwindow1x + 145,mrwindow1y + 155,mrwindow1y + 185,     "sound1.play();mrwindow2x = 4;mrwindow2y = 276;mrwindow2=true;window1priority = false;") //SHOW HELP WINDOW
+mrclick(mrwindow1x + 155,mrwindow1x + 240,mrwindow1y + 155,mrwindow1y + 185,     "sound1.play();mrwindow1 = false;window1priority = false;mode = 1;") //HOME
+
+}else{
+mrclick(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(1)")
+mrclick(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(2)")
+mrclick(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(3)")
+mrclick(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(4)")
+mrclick(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(5)")
+mrclick(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(6)")
+mrclick(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(7)")
+mrclick(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(8)")
+mrclick(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(9)")
+mrclick(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(10)")
+mrclick(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 150,mrwindow1y + 190,     "sound1.play();mrwindow1=false;window1priority = false;setgame(11)")
+mrclick(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 150,mrwindow1y + 190,     "sound1.play();mrwindow1=false;window1priority = false;setgame(12)")
+mrclick(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 150,mrwindow1y + 190,     "sound1.play();mrwindow1=false;window1priority = false;setgame(13)")
+mrclick(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 150,mrwindow1y + 190,     "sound1.play();mrwindow1=false;window1priority = false;setgame(14)")
+mrclick(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 150,mrwindow1y + 190,     "sound1.play();mrwindow1=false;window1priority = false;setgame(15)")
+}
+
+
+
+
+
+
+
+}else{
+if ((x > (mrwindow1x + 265)) && (x < (mrwindow1x + 294)) && (y > (mrwindow1y + 3)) && (y < (mrwindow1y + 16))){
+mrwindow1 = false;window1priority = false;
+}else if(!inmobileview){
+windowmoverx = (x - mrwindow1x)
+windowmovery = (y - mrwindow1y)
+windowmover = 1
+}}}
+
+
+function m_down_2(){
+window1priority = false
+if ((x > (mrwindow2x + 6)) && (x < (mrwindow2x + 294)) && (y > (mrwindow2y + 20)) && (y < (mrwindow2y + 194))){
+
+
+mrclick(mrwindow2x + 110,mrwindow2x + 190,mrwindow2y + 158,mrwindow2y + 183,     "sound1.play();mrwindow2 = false;window1priority = true;")
+
+
+}else{
+if ((x > (mrwindow2x + 265)) && (x < (mrwindow2x + 294)) && (y > (mrwindow2y + 3)) && (y < (mrwindow2y + 16))){
+mrwindow2 = false;window1priority = true;
+}else if(!inmobileview){
+windowmoverx = (x - mrwindow2x)
+windowmovery = (y - mrwindow2y)
+windowmover = 2
+}}}
+
+//////////////////////////////////////////// MOUSEDOWN
+function m_down_go(){
+if (mode == 1){ //MOUSE FOR SCREEN 1
+
+
+if (!mrwindow1){
+
+mrclick(4,180,340,370,     "intro1 = 0;sound1.play();mode = 2;setTimeout('sound2.play()',200)") //PLAY SOUND, OPEN WINDOW 1
+mrclick(4,180,375,405,     "sound1.play();mrwindow1=true;mrwindow1x = 170;mrwindow1y = 140;window1priority = true;") //SET VARS, PLAY SOUND, CHANGE TO SCREEN 2
+
+if (fullScreenViewMode){
+mrclick(4,180,410,440,     "sound1.play();mrwindow2x = 4;mrwindow2y = 100;mrwindow2=true;window1priority = false;") //SHOW HELP WINDOW
+}else{
+mrclick(4,180,410,440,     "sound1.play();desktopFullScreenMode()") //FULLSCREEN
+}
+
+mrclick(4,180,445,475,     "sound1.play();setTimeout(window.location.href = 'https://beno.uk/games/', 200)") //GO TO WEBSITE
+}
+
+
+
+}else if (mode == 2){ //MOUSE FOR SCREEN 2 (else if is used so 2 scrrens don't get processed when changing screen)
+mrclick(280,360,445,470,     "sound2.pause();sound2.currentTime = 0;sound1.play();mode = 1") //PLAY SOUND, CHANGE TO SCREEN 1
+}else if (mode > 9){ //MOUSE FOR SCREEN 2 (else if is used so 2 scrrens don't get processed when changing screen)
+if ((!mrwindow1) && (mode < 19)){
+mrclick(10,90,10,35,     "sound1.play();mrwindow1=true;mrwindow1x = 170;mrwindow1y = 140;window1priority = true;") //PLAY SOUND, OPEN WINDOW 1
+}
+if ((mode == 10) && (movement == 0)){
+
+if ((mode == 10) && (movement == 0) && (y > 234)){//////////// mouse allowed
+mousego = 0
+if (x > 364){
+if ((x + 15) < y){
+mousego = 7
+}else if ((x - 35) < y){
+mousego = 6
+}else if ((x - 85) < y){
+mousego = 5
+}else if ((x - 135) < y){
+mousego = 4
+}else if ((x - 185) < y){
+mousego = 3
+}else if ((x - 235) < y){
+mousego = 2
+}else{
+mousego = 1
+}
+}else{
+if ((x + 105) < (600 - y)){
+mousego = 8
+}else if ((x + 55) < (600 - y)){
+mousego = 9
+}else if ((x + 5) < (600 - y)){
+mousego = 10
+}else if ((x - 45) < (600 - y)){
+mousego = 11
+}else if ((x -95) < (600 - y)){
+mousego = 12
+}else if ((x + -145) < (600 - y)){
+mousego = 13
+}else {
+mousego = 14
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+if (mousego == 1){
+moveit(0,6,true)
+}
+if (mousego == 2){
+moveit(1,6,true)
+}
+if (mousego == 3){
+moveit(2,6,true)
+}
+if (mousego == 4){
+moveit(3,6,true)
+}
+if (mousego == 5){
+moveit(4,6,true)
+}
+if (mousego == 6){
+moveit(5,6,true)
+}
+if (mousego == 7){
+moveit(6,6,true)
+}
+if (mousego == 8){
+moveit(6,0,false)
+}
+if (mousego == 9){
+moveit(6,1,false)
+}
+if (mousego == 10){
+moveit(6,2,false)
+}
+if (mousego == 11){
+moveit(6,3,false)
+}
+if (mousego == 12){
+moveit(6,4,false)
+}
+if (mousego == 13){
+moveit(6,5,false)
+}
+if (mousego == 14){
+moveit(6,6,false)
+}}}}
+
+//////////////////////////////////////////// MOUSEMOVE
+function m_move(){
+if (windowmover == 1){
+mrwindow1x = (x - windowmoverx)
+mrwindow1y = (y - windowmovery)
+if (mrwindow1x > 540){
+mrwindow1x = 540
+}
+if (mrwindow1x < -200){
+mrwindow1x = -200
+}
+if (mrwindow1y > 380){
+mrwindow1y = 380
+}
+if (mrwindow1y < -100){
+mrwindow1y = -100
+}
+}
+if (windowmover == 2){
+mrwindow2x = (x - windowmoverx)
+mrwindow2y = (y - windowmovery)
+if (mrwindow2x > 540){
+mrwindow2x = 540
+}
+if (mrwindow2x < -200){
+mrwindow2x = -200
+}
+if (mrwindow2y > 380){
+mrwindow2y = 380
+}
+if (mrwindow2y < -100){
+mrwindow2y = -100
+}
+}
+
+}
+//////////////////////////////////////////// MOUSEUP
+function m_up(){
+if (windowmover > 0){
+windowmover = 0
+}
+
+
+}
+
+
+
+//////////////////////////////////////////// LOOP FUNCTION
+function loop_function(){
+newbear = false
+if (mode != 18){
+ploptime = 1
+}
+
+
+if (mode == 1){ //SCREEN 1
+
+
+ctx.drawImage(img3, 0, 0)
+ctx.drawImage(img4, 172, 4)
+
+draw()
+if (!mrwindow1){
+ctx.fillStyle = "rgb(170,30,255)"
+ctx.font = '16pt Arial'
+ctx.fillText("BENO CUBES", 92, 325)
+mrbutton(4,180,340,370,"PLAY",'13pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+mrbutton(4,180,375,405,"SELECT LEVEL",'13pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+if (fullScreenViewMode){
+mrbutton(4,180,410,440,"HELP",'13pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}else{
+mrbutton(4,180,410,440,"FULL SCREEN",'13pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+mrbutton(4,180,445,475,"PLAY MORE GAMES AT BENO.UK",'8pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+
+}
+
+
+
+
+
+if (mode == 2){ //SCREEN 2
+ctx.drawImage(img3, 0, 0)
+if (intro1 > 220){
+ctx.drawImage(img4, 172, 4 - ((intro1 - 220) / 3.6))
+}else{
+ctx.drawImage(img4, 172, 4)
+}
+
+intro1 += (1000/fps)
+if (intro1 > 2000){
+setgame(1)
+}
+draw()
+mrbutton(280,360,445,470,"BACK",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+
+if (mode > 9){
+ctx.drawImage(img3, 0, 0)
+//ctx.drawImage(img4, 172, 4)
+
+if ((!mrwindow1) && (mode < 19)){
+mrbutton(10,90,10,35,"MENU",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+
+
+
+
+
+if (mode == 19){
+
+
+
+timer -= (2.2 / fps)
+if (timer < 0){
+timer = 0
+}}
+
+
+if (mode == 10){
+timer -= (200 / fps)
+if (movement == 13){
+timer -= (100 / fps)
+}
+
+if (timer < 0){
+timer = 0
+
+if ((movement == 2) || (movement == 4) || (movement == 6) || (movement == 8)){// these modes finish
+
+poop()
+
+movement = 9
+}
+
+
+if (movement == 1){// does it knock a block
+movement = 9//default if no continuation found
+if (block1x > 0){// is there room on screen
+if (world[block1z][block1y][block1x-1] == 0){//empty so can move
+movement = 1
+timer = 25
+world[block1z][block1y][block1x-1] = world[block1z][block1y][block1x]
+world[block1z][block1y][block1x] = 0
+block1x--
+}else{//else not empty
+if (block1x > 1){// is there room on screen
+if (world[block1z][block1y][block1x-2] == 0){//is space beyond empty
+movement = 2
+timer = 25
+block2z = block1z
+block2y = block1y
+block2x = (block1x - 2)
+
+world[block1z][block1y][block1x-2] = world[block1z][block1y][block1x-1];
+
+
+if (block1z == 0){
+pooopp(block1z,block1y,block1x-2)
+}else{
+if (world[block1z-1][block1y][block1x-2] != 0){
+pooopp(block1z,block1y,block1x-2)
+
+}}
+
+
+world[block1z][block1y][block1x-1] = world[block1z][block1y][block1x];pooopp(block1z,block1y,block1x-1)
+world[block1z][block1y][block1x] = 0
+block1x--
+}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}
+
+if (movement == 3){// does it knock a block
+movement = 9//default if no continuation found
+if (block1x > 0){// is there room on screen
+if (world[block1z][block1y][block1x-1] == 0){//empty so can move
+movement = 3
+timer = 25
+world[block1z][block1y][block1x-1] = world[block1z][block1y][block1x]
+world[block1z][block1y][block1x] = 0
+block1x--
+}else{//else not empty so push up
+
+movement = 4
+timer = 25
+
+var temper = 999
+while (temper > block1z){
+world[temper][block1y][block1x-1] = world[temper-1][block1y][block1x-1]
+if (temper < 16){
+pooopp(temper,block1y,block1x-1)
+}
+temper--
+}
+world[block1z][block1y][block1x-1] = world[block1z][block1y][block1x]
+world[block1z][block1y][block1x] = 0
+pooopp(block1z,block1y,block1x-1)
+block1x--
+
+}}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}
+
+
+
+
+
+if (movement == 5){// does it knock a block
+movement = 9//default if no continuation found
+if (block1y > 0){// is there room on screen
+if (world[block1z][block1y-1][block1x] == 0){//empty so can move
+movement = 5
+timer = 25
+world[block1z][block1y-1][block1x] = world[block1z][block1y][block1x]
+world[block1z][block1y][block1x] = 0
+block1y--
+}else{//else not empty
+if (block1y > 1){// is there room on screen
+if (world[block1z][block1y-2][block1x] == 0){//is space beyond empty
+movement = 6
+timer = 25
+block2z = block1z
+block2y = (block1y - 2)
+block2x = block1x
+world[block1z][block1y-2][block1x] = world[block1z][block1y-1][block1x];
+
+if (block1z == 0){
+pooopp(block1z,block1y-2,block1x)
+}else{
+if (world[block1z-1][block1y-2][block1x] != 0){
+pooopp(block1z,block1y-2,block1x)
+
+}}
+
+
+
+
+world[block1z][block1y-1][block1x] = world[block1z][block1y][block1x];pooopp(block1z,block1y-1,block1x)
+world[block1z][block1y][block1x] = 0
+block1y--
+}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+}}
+
+if (movement == 7){// does it knock a block
+movement = 9//default if no continuation found
+if (block1y > 0){// is there room on screen
+if (world[block1z][block1y-1][block1x] == 0){//empty so can move
+movement = 7
+timer = 25
+world[block1z][block1y-1][block1x] = world[block1z][block1y][block1x]
+world[block1z][block1y][block1x] = 0
+block1y--
+}else{//else not empty so push up
+
+movement = 8
+timer = 25
+
+var temper = 999
+while (temper > block1z){
+world[temper][block1y-1][block1x] = world[temper-1][block1y-1][block1x]
+
+if (temper < 16){
+pooopp(temper,block1y-1,block1x)
+
+}
+
+
+
+temper--
+}
+world[block1z][block1y-1][block1x] = world[block1z][block1y][block1x]
+pooopp(block1z,block1y-1,block1x)
+world[block1z][block1y][block1x] = 0
+block1y--
+}}else{
+if ((block1z) != 0){
+if (world[block1z-1][block1y][block1x] != 0){
+pooopp(block1z,block1y,block1x);poop()
+}}else{
+pooopp(block1z,block1y,block1x);poop()
+}
+
+
+}}
+
+
+
+if (movement == 9){
+movement = 10
+
+
+
+}
+
+
+
+
+if (movement == 10){// buffer zone
+movement = 12
+timer = 25
+}
+
+if (movement == 12){// set up if gravity is needed
+gravity = false
+var q1 = 1
+while (q1 < world.length){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if ((world[q1][q2][q3] != 0) && (world[q1-1][q2][q3] == 0)){
+gravity = true;q1 = 10000;q2 = 10000;q3 = 10000;
+timer = 25
+
+
+}
+q3++
+}
+q2++
+}
+q1++
+}
+if (gravity){
+movement = 13
+}else{
+randomiserrr()
+movement = 0
+}}else if (movement == 13){////////////// GRAVITY TIME
+
+
+var q1 = 1
+while (q1 < world.length){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if ((world[q1][q2][q3] != 0) && (world[q1-1][q2][q3] == 0)){
+world[q1-1][q2][q3] = (world[q1][q2][q3] + 1000)
+world[q1][q2][q3] = 1000
+}
+q3++
+}
+q2++
+}
+q1++
+}
+
+var q1 = 0
+while (q1 < world.length){///////////////CLEAN UP
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if (world[q1][q2][q3] > 999){
+world[q1][q2][q3] -= 1000
+
+if (q1 == 0){
+pooopp(q1,q2,q3);
+}else{
+if (world[q1-1][q2][q3] != 0){
+if (world[q1][q2][q3] != 0){
+pooopp(q1,q2,q3);
+
+}}}
+
+
+}
+q3++
+}
+q2++
+}
+q1++
+}
+poop()
+
+
+
+
+
+movement = 10
+}
+
+
+
+
+
+}}
+
+
+if ((mode == 10) && (movement == 0) && (y > 234)){//////////// mouse allowed
+mousego = 0
+if (x > 364){
+if ((x + 15) < y){
+mousego = 7
+}else if ((x - 35) < y){
+mousego = 6
+}else if ((x - 85) < y){
+mousego = 5
+}else if ((x - 135) < y){
+mousego = 4
+}else if ((x - 185) < y){
+mousego = 3
+}else if ((x - 235) < y){
+mousego = 2
+}else{
+mousego = 1
+}
+}else{
+if ((x + 105) < (600 - y)){
+mousego = 8
+}else if ((x + 55) < (600 - y)){
+mousego = 9
+}else if ((x + 5) < (600 - y)){
+mousego = 10
+}else if ((x - 45) < (600 - y)){
+mousego = 11
+}else if ((x -95) < (600 - y)){
+mousego = 12
+}else if ((x + -145) < (600 - y)){
+mousego = 13
+}else {
+mousego = 14
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+}else{
+mousego = 0
+}
+
+
+////////////////////////////// REDO GRAFFIC GLITCH
+if ((movement == 5) || (movement == 6) || (movement == 7) || (movement == 8)){
+
+
+
+
+
+
+
+
+var q1 = 0
+while ((q1 < world.length) && (q1 < 18)){
+var q3 = 0
+while (q3 < 7){
+var q2 = 0
+while (q2 < 7){
+if ((mode == 19) && (q1 == loadin)){
+ctx.globalAlpha = (1 - timer);
+}
+if ((mode == 18) && (world[q1][q2][q3] == 1)){
+if (ploptime > 1){
+ctx.globalAlpha = 1;
+}else{
+ctx.globalAlpha = ploptime;
+}}
+
+
+if (((movement == 1) || (movement == 2)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////BLOCK MOVES LEFT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) + timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if (((movement == 3) || (movement == 4)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////SLOPED BLOCK MOVES LEFT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 80, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) + timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if ((movement == 2) && (block2x == q3) && (block2y == q2) && (block2z == q1)){////SECOND BLOCK MOVES LEFT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) + timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if (((movement == 5) || (movement == 6)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////BLOCK MOVES RIGHT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) - timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if (((movement == 7) || (movement == 8)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////SLOPED BLOCK MOVES RIGHT
+
+
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 160, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) - timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75)
+}else if (((movement == 4) || (movement == 8)) && (block1x == q3) && (block1y == q2) && (q1 != 0) && ((mousegogo < 2) || (q1 != 1))){////block moves up
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+
+ 
+}else if ((movement == 6) && (block2x == q3) && (block2y == q2) && (block2z == q1)){////SECOND BLOCK MOVES RIGHT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) - timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+
+
+//ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + 25 - timer,         50, 75) 
+}else if ((movement == 13) && (world[q1+1][q2][q3] != 0) && (world[q1][q2][q3] == 0)){////GRAVITY
+
+ctx.drawImage(img1, 50 * world[q1+1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) - timer,         50, 75) 
+
+}else if ((movement == 13) && (q1 > 0) && (world[q1-1][q2][q3] == 0)){////GRAVITY
+//do nothing
+
+
+
+}else{
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25),         50, 75) 
+}
+ctx.globalAlpha = 1;
+q2++
+}
+q3++
+}
+q1++
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}else{
+
+
+var q1 = 0
+while ((q1 < world.length) && (q1 < 18)){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if ((mode == 19) && (q1 == loadin)){
+ctx.globalAlpha = (1 - timer);
+}
+if ((mode == 18) && (world[q1][q2][q3] == 1)){
+if (ploptime > 1){
+ctx.globalAlpha = 1;
+}else{
+ctx.globalAlpha = ploptime;
+}}
+
+
+if (((movement == 1) || (movement == 2)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////BLOCK MOVES LEFT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) + timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if (((movement == 3) || (movement == 4)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////SLOPED BLOCK MOVES LEFT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 80, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) + timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if ((movement == 2) && (block2x == q3) && (block2y == q2) && (block2z == q1)){////SECOND BLOCK MOVES LEFT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) + timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if (((movement == 5) || (movement == 6)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////BLOCK MOVES RIGHT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) - timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+}else if (((movement == 7) || (movement == 8)) && (block1x == q3) && (block1y == q2) && (block1z == q1)){////SLOPED BLOCK MOVES RIGHT
+
+
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 160, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) - timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75)
+}else if (((movement == 4) || (movement == 8)) && (block1x == q3) && (block1y == q2) && (q1 != 0) && ((mousegogo < 2) || (q1 != 1))){////block moves up
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+
+ 
+}else if ((movement == 6) && (block2x == q3) && (block2y == q2) && (block2z == q1)){////SECOND BLOCK MOVES RIGHT
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25) - timer,        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + timer,         50, 75) 
+
+
+//ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) + 25 - timer,         50, 75) 
+}else if ((movement == 13) && (world[q1+1][q2][q3] != 0) && (world[q1][q2][q3] == 0)){////GRAVITY
+
+ctx.drawImage(img1, 50 * world[q1+1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25) - timer,         50, 75) 
+
+}else if ((movement == 13) && (q1 > 0) && (world[q1-1][q2][q3] == 0)){////GRAVITY
+//do nothing
+
+
+
+}else{
+ctx.drawImage(img1, 50 * world[q1][q2][q3], 0, 50, 75,       (340 + (q3 * 25)) - (q2 * 25),        (60 + (q3 * 25)) + (q2 * 25) - (q1 * 25),         50, 75) 
+}
+ctx.globalAlpha = 1;
+q3++
+}
+q2++
+}
+q1++
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if (mode == 19){
+ctx.fillStyle = "rgb(0,140,60)"
+ctx.font = '64pt Arial'
+ctx.fillText(('level ' + level), 320, 240)
+ctx.fillStyle = "rgb(0,255,100)"
+ctx.fillText(('level ' + level), 323, 243)
+}
+
+
+
+
+
+
+
+
+if ((mode == 10) && (movement == 0)){
+
+
+if (mousego > 0){
+ctx.globalAlpha = 1;
+if (mousego < 8){
+ctx.drawImage(img1, 50 * mousecolor, (mouseslope * 80), 50, 75,       (340 + (7 * 25)) - ((mousego - 1) * 25),        (60 + (7 * 25)) + ((mousego - 1) * 25) - (mousegogo * 25),         50, 75) 
+if (mousegogo > 0){
+ctx.drawImage(img1, 0, 80, 50, 75,       (340 + (7 * 25)) - ((mousego - 1) * 25),        (60 + (7 * 25)) + ((mousego - 1) * 25),         50, 75) 
+}
+if (mousegogo > 1){
+ctx.drawImage(img1, 0, 80, 50, 75,       (340 + (7 * 25)) - ((mousego - 1) * 25),        (60 + (7 * 25)) + ((mousego - 1) * 25) - 25,         50, 75) 
+}
+}else{
+ctx.drawImage(img1, 50 * mousecolor, (mouseslope * 160), 50, 75,       (340 + ((mousego - 8) * 25)) - (7 * 25),        (60 + ((mousego - 8) * 25)) + (7 * 25) - (mousegogo * 25),         50, 75) 
+if (mousegogo > 0){
+ctx.drawImage(img1, 0, 80, 50, 75,       (340 + ((mousego - 8) * 25)) - (7 * 25),        (60 + ((mousego - 8) * 25)) + (7 * 25),         50, 75) 
+}
+if (mousegogo > 1){
+ctx.drawImage(img1, 0, 80, 50, 75,       (340 + ((mousego - 8) * 25)) - (7 * 25),        (60 + ((mousego - 8) * 25)) + (7 * 25) - 25,         50, 75) 
+}
+}
+ctx.globalAlpha = 1;
+
+
+
+}
+
+}
+
+
+
+
+
+
+
+if (mode == 17){
+if (nowtime > (fdssda + 2000)){
+if (level < 15){
+setgame(level + 1)
+}else{
+alert("Congratulations!\n\nYou have completed the game!");mode = 1
+}}}
+if (mode == 18){
+
+ploptime -= (4 / fps)
+if (ploptime < 0){
+removalpoo()
+
+//todo
+if (haswon()){
+mode = 17
+fdssda = nowtime
+sound5.play()
+
+}else{
+movement = 12;
+mode = 10
+}
+
+}}
+
+if (newbear){
+sound3.play()
+newbear = false
+mode = 18
+ploptime = 1.4
+}}
+
+function removalpoo(){
+
+var q1 = 0
+while (q1 < 998){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if (world[q1][q2][q3] == 1){
+world[q1][q2][q3] = 0
+}
+q3++
+}
+q2++
+}
+q1++
+}
+}
+
+
+
+
+if (mrwindow1 && !window1priority){
+drawwindow1()
+}
+if (mrwindow2){
+drawwindow2()
+}
+if (mrwindow1 && window1priority){
+drawwindow1()
+}
+lasttime = nowtime;nowtime = ((new Date()).getTime());if((nowtime - lasttime) > 100){lasttime = (nowtime - 100)}fps = (1000 / (nowtime - lasttime));setTimeout("loop_function()",2) // LOOP CONTROLL
+}
+function drawwindow1(){
+ctx.drawImage(img2, mrwindow1x, mrwindow1y)
+
+if (mode > 9){
+ctx.fillStyle = "rgb(0,0,0)";ctx.font = '19pt Arial';ctx.fillText("GAME MENU", mrwindow1x + 149, mrwindow1y + 46);
+mrbutton(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 75,mrwindow1y + 105,"RESTART LEVEL",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 115,mrwindow1y + 145,"CHANGE LEVEL",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 60,mrwindow1x + 145,mrwindow1y + 155,mrwindow1y + 185,"HELP",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 155,mrwindow1x + 240,mrwindow1y + 155,mrwindow1y + 185,"MAIN MENU",'10pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+}else{
+ctx.fillStyle = "rgb(0,0,0)";ctx.font = '16pt Arial';ctx.fillText("SELECT A LEVEL", mrwindow1x + 149, mrwindow1y + 36);
+mrbutton(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 50,mrwindow1y + 90,"1",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 50,mrwindow1y + 90,"2",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 50,mrwindow1y + 90,"3",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 50,mrwindow1y + 90,"4",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 50,mrwindow1y + 90,"5",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+
+mrbutton(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 100,mrwindow1y + 140,"6",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 100,mrwindow1y + 140,"7",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 100,mrwindow1y + 140,"8",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 100,mrwindow1y + 140,"9",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 100,mrwindow1y + 140,"10",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+
+mrbutton(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 150,mrwindow1y + 190,"11",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 150,mrwindow1y + 190,"12",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 150,mrwindow1y + 190,"13",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 150,mrwindow1y + 190,"14",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 150,mrwindow1y + 190,"15",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+
+
+
+}
+
+
+}
+function drawwindow2(){
+ctx.drawImage(img2, mrwindow2x, mrwindow2y)
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '14pt Arial'
+ctx.fillText("WELCOME TO BENO CUBES", (mrwindow2x + 150), (mrwindow2y + 35))
+ctx.font = '11pt Arial'
+ctx.fillText("The aim of the game is to remove", (mrwindow2x + 150), (mrwindow2y + 65))
+ctx.fillText("all of the blocks from the screen.", (mrwindow2x + 150), (mrwindow2y + 85))
+ctx.fillText("Match 3 or more blocks of the", (mrwindow2x + 150), (mrwindow2y + 115))
+ctx.fillText("same colour to remove them.", (mrwindow2x + 150), (mrwindow2y + 135))
+mrbutton(mrwindow2x + 110,mrwindow2x + 190,mrwindow2y + 158,mrwindow2y + 183,"CLOSE",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+}
+
+function moveit(wx,wy,wgo){
+//movement = -1
+
+block1y = wx;block1x = wy;block1z = mousegogo;
+if (wgo){
+
+if (mouseslope){
+if (world[mousegogo][wx][wy] == 0){
+sound4.play()
+world[mousegogo][wx][wy] = mousecolor
+movement = 3;timer = 25;
+}else{
+sound4.play()
+pooopp(mousegogo,wx,wy)
+var wwh = 999
+while (wwh > mousegogo){
+world[wwh][wx][wy] = world[wwh-1][wx][wy]
+
+
+
+
+if (wwh < 16){
+pooopp(wwh,wx,wy)
+}
+
+
+
+
+
+wwh--
+}
+world[mousegogo][wx][wy] = mousecolor
+movement = 4;timer = 25;
+
+}}else{
+if (world[mousegogo][wx][wy] == 0){
+sound4.play()
+world[mousegogo][wx][wy] = mousecolor
+movement = 1;timer = 25;
+}else{
+if (world[mousegogo][wx][wy-1] == 0){
+sound4.play()
+world[mousegogo][wx][wy-1] = world[mousegogo][wx][wy];pooopp(mousegogo,wx,wy-1)
+world[mousegogo][wx][wy] = mousecolor;pooopp(mousegogo,wx,wy)
+block2y = wx;block2x = wy-1;block2z = mousegogo;
+movement = 2;timer = 25;
+}}}
+
+
+}else{
+
+
+
+
+if (mouseslope){
+if (world[mousegogo][wx][wy] == 0){
+sound4.play()
+world[mousegogo][wx][wy] = mousecolor
+movement = 7;timer = 25;
+}else{
+sound4.play()
+pooopp(mousegogo,wx,wy)
+var wwh = 999
+while (wwh > mousegogo){
+world[wwh][wx][wy] = world[wwh-1][wx][wy]
+
+
+
+
+
+if (wwh < 16){
+pooopp(wwh,wx,wy)
+}
+
+
+
+
+
+
+
+wwh--
+}
+world[mousegogo][wx][wy] = mousecolor
+movement = 8;timer = 25;
+
+}}else{
+if (world[mousegogo][wx][wy] == 0){
+sound4.play()
+world[mousegogo][wx][wy] = mousecolor
+movement = 5;timer = 25;
+}else{
+if (world[mousegogo][wx-1][wy] == 0){
+sound4.play()
+world[mousegogo][wx-1][wy] = world[mousegogo][wx][wy];pooopp(mousegogo,wx-1,wy)
+world[mousegogo][wx][wy] = mousecolor;pooopp(mousegogo,wx,wy)
+block2y = wx-1;block2x = wy;block2z = mousegogo;
+movement = 6;timer = 25;
+}}}
+
+
+
+
+
+
+
+
+
+}
+
+
+
+}
+
+//////////////////////////////////////////// reset array
+function pooopc(){
+pooopx = new Array()
+pooopy = new Array()
+pooopz = new Array()
+}
+//////////////////////////////////////////// add to array
+function pooopp(cccz,cccy,cccx){
+pooopx[pooopx.length] = cccx
+pooopy[pooopy.length] = cccy
+pooopz[pooopz.length] = cccz
+}
+//////////////////////////////////////////// process array
+oldcolor = 1
+function poop(){
+var gdsgdfdg = 0
+while (gdsgdfdg < pooopx.length){
+if ((world[pooopz[gdsgdfdg]][pooopy[gdsgdfdg]][pooopx[gdsgdfdg]] != 0) && (world[pooopz[gdsgdfdg]][pooopy[gdsgdfdg]][pooopx[gdsgdfdg]] != 1)){
+
+oldcolor = world[pooopz[gdsgdfdg]][pooopy[gdsgdfdg]][pooopx[gdsgdfdg]]
+
+mrtestmatcher = 0
+gotest(pooopz[gdsgdfdg],pooopy[gdsgdfdg],pooopx[gdsgdfdg])
+if (mrtestmatcher < 3){
+didnotwork()
+}else{
+didwork()
+newbear = true
+}
+}
+gdsgdfdg++
+}
+pooopc()
+}
+//////////////////////////////////////////// the test is on
+
+function gotest(w1,w2,w3){
+if ((w3 < 7) && (w3 > -1) && (w2 < 7) && (w2 > -1) && (w1 < 998) && (w1 > -1)){
+
+if (world[w1][w2][w3] == oldcolor){
+
+if (w1 != 0){
+if (world[w1-1][w2][w3] == 0){
+return
+}}
+
+
+
+mrtestmatcher++
+world[w1][w2][w3] = 100
+
+
+gotest(w1-1,w2,w3)
+gotest(w1+1,w2,w3)
+gotest(w1,w2-1,w3)
+gotest(w1,w2+1,w3)
+gotest(w1,w2,w3-1)
+gotest(w1,w2,w3+1)
+
+
+
+
+}}}
+
+//////////////////////////////////// THIS RESTORES IF TEST DID NOT WORK
+function didnotwork(){
+var q1 = 0
+while (q1 < 998){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if (world[q1][q2][q3] == 100){
+world[q1][q2][q3] = oldcolor
+}
+q3++
+}
+q2++
+}
+q1++
+}
+}
+
+
+
+
+//////////////////////////////////// THIS RESTORES IF TEST DID WORK
+function didwork(){
+var q1 = 0
+while (q1 < 998){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if (world[q1][q2][q3] == 100){
+world[q1][q2][q3] = 1
+}
+q3++
+}
+q2++
+}
+q1++
+}
+}
+
+//////////////////////////////////// HAS WON
+function haswon(){
+
+var q1 = 0
+while (q1 < 998){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+if (world[q1][q2][q3] != 0){
+return (false)
+}
+q3++
+}
+q2++
+}
+q1++
+}
+return (true)
+}
+
+//////////////////////////////////// RANDOM
+function randomiserrr(){
+gfhgfdjkhgfcvjy = (Math.floor(Math.random()*4))
+if (gfhgfdjkhgfcvjy == 0){
+mouseslope = true
+}else{
+mouseslope = false
+}
+gfhgfdjkhgfcvjy = (Math.floor(Math.random()*8))
+if (gfhgfdjkhgfcvjy == 0){
+mousegogo = 2
+}else if ((gfhgfdjkhgfcvjy == 1) || (gfhgfdjkhgfcvjy == 2)){
+mousegogo = 1
+}else{
+mousegogo = 0
+}
+
+
+
+
+var lowestpoo2 = false
+var lowestpoo3 = false
+var lowestpoo4 = false
+var lowestpoo5 = false
+var lowestpoo6 = false
+var lowestpoo7 = false
+
+var q1 = 0
+while (q1 < 1000){
+var q2 = 0
+while (q2 < 7){
+var q3 = 0
+while (q3 < 7){
+
+
+if (world[q1][q2][q3] == 2){
+lowestpoo2 = true
+}
+if (world[q1][q2][q3] == 3){
+lowestpoo3 = true
+}
+if (world[q1][q2][q3] == 4){
+lowestpoo4 = true
+}
+if (world[q1][q2][q3] == 5){
+lowestpoo5 = true
+}
+if (world[q1][q2][q3] == 6){
+lowestpoo6 = true
+}
+if (world[q1][q2][q3] == 7){
+lowestpoo7 = true
+}
+
+q3++
+}
+q2++
+}
+q1++
+}
+mousecolor = 2
+if ((lowestpoo2) || (lowestpoo3) || (lowestpoo4) || (lowestpoo5) || (lowestpoo6) || (lowestpoo7)){
+
+
+var sdfoghsd = true
+while (sdfoghsd){
+mousecolor = (Math.floor(Math.random()*7))
+mousecolor += 2
+
+
+if (((mousecolor == 2) && (lowestpoo2)) || ((mousecolor == 3) && (lowestpoo3)) || ((mousecolor == 4) && (lowestpoo4)) || ((mousecolor == 5) && (lowestpoo5)) || ((mousecolor == 6) && (lowestpoo6)) || ((mousecolor == 7) && (lowestpoo7))){
+sdfoghsd = false
+}
+
+
+}
+
+}
+
+
+
+
+}
+
+
+
+
+
+    w = 640;
+    h = 480;
+
+
+    var init = [];
+    var maxParts = 3000;
+    for(var a = 0; a < maxParts; a++) {
+      init.push({
+        x: Math.random() * w,
+        y: (Math.random() * h * 1.5) - (h / 1.5),
+        l: Math.random() * 1,
+        xs: -4 + Math.random() * 4 + 2,
+        ys: Math.random() * 10 + 10
+      })
+    }
+    
+    var particles = [];
+    for(var b = 0; b < maxParts; b++) {
+      particles[b] = init[b];
+    }
+    
+    function draw() {
+	
+	ctx.globalAlpha = 0.6
+	if (mode == 2){
+	ctx.globalAlpha = 0.6 - ((intro1 / 2000) * 0.6)
+	
+	}
+	
+	
+	ctx.lineWidth = 2
+	ctx.strokeStyle = "#777777";
+      for(var c = 0; c < particles.length; c++) {
+        var p = particles[c];
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.l * p.xs, p.y + p.l * p.ys);
+        ctx.stroke();
+      }
+      move();
+	  
+	ctx.globalAlpha = 1
+	  
+	  
+    }
+    
+    function move() {
+      for(var b = 0; b < particles.length; b++) {
+        var p = particles[b];
+        p.x += (p.xs * 30 / fps);
+        p.y += (p.ys * 22 / fps);
+        if(p.x > w || p.y > h) {
+          p.x = Math.random() * w;
+          p.y = -20;
+        }
+      }
+    }
+
+
+
+function r(){
+var fdsafadsf = (Math.floor(Math.random()*6)+2)
+
+return fdsafadsf
+
+}
+
+
+
+
+
+
+
+
+//////////////////////////////////////////// HELP FILE
+/*
+------ Draw an image ------
+ctx.drawImage(img1, 0, 0)
+
+------ Draw an image (long) ------
+ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+
+------ Draw a box ------
+ctx.fillStyle = "rgb(255,255,255)"
+ctx.fillRect(0,0,640,480)
+
+------ Draw text ------
+ctx.fillStyle = "rgb(255,255,255)"
+ctx.font = '18pt Arial'
+ctx.fillText("eat poo", 490, 200)
+
+------ Sound functions ------
+sound1.play()
+sound1.pause();sound1.currentTime = 0
+sound1.playbackRate = 0.5
+sound1.volume = 0.5
+
+------ Keyboard ------
+key_left == false
+key_right == false
+key_up == false
+key_down == false
+key_space == false
+
+------ Mouse click ------
+//add this to mouse down
+mrclick(Xstart,Xfinish,Ystart,Yfinish,"alert('click')")
+//add this to loop
+mrbutton(Xstart,Xfinish,Ystart,Yfinish,text,textfontsize,coltext,col1,col2,coldown1,coldown2,border)
+*/
+
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+margin: 0pt;
+padding: 0pt;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+a.thelinkyayay:link {color:#000000 ; text-decoration: none; }
+a.thelinkyayay:active {color: #000000; text-decoration: none; }
+a.thelinkyayay:visited {color: #000000; text-decoration: none; }
+a.thelinkyayay:hover {color: #000000; text-decoration: none; }
+</style></head><body onresize="setFullScreen()" onload="beno_game_system_start();" onkeydown="k_down(event)" onkeyup="k_up(event)" onmousedown="mm_down(event)" onmouseup="mm_up(event)" onmousemove="mm_move(event)">
+<div id="thePositioner" style="position:absolute;top:30px;left:140px;margin:0px;padding:0px;"><canvas id="canvas" width="640" height="480" style="margin:0px;padding:0px;display:block;" ></canvas></div>
+<div id="theAdvert" style="position:absolute;top:159px;left:849px;"><a class="thelinkyayay" href="https://beno.uk/games/"><img border=1 src="../games/a.jpg"/></a></div>
+
+</body></html>

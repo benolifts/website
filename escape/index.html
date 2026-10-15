@@ -1,0 +1,3002 @@
+<html><head><title>Escape the shopping center</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui," /> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<script type="application/javascript" src="../canvas3dapi/c3dapi.js" ></script>
+<script type="text/javascript">
+mobilemode = "basickeyboard";fullScreenViewMode = false;inmobileview = false;key_space = false
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////                                                                                      ////////////
+////////////                     THIS CODE IS COPYRIGHT (C) Beno                                  ////////////
+////////////                                                                                      ////////////
+////////////    THIS CODE MUST NOT BE DISTRIBUTED OR PUT ON ANY WEBSITE OTHER THAN beno.uk    ////////////
+////////////                                                                                      ////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function poosoundplay(sdafhbasjfhsod){
+eval (sdafhbasjfhsod + ".currentTime = 0")
+eval (sdafhbasjfhsod + ".play()")
+}
+function poosoundstop(sdafhbasjfhsod){
+eval (sdafhbasjfhsod + ".pause()")
+}
+function poosoundsetPosition(sdafhbasjfhsod,fhgdfdfhfdh){
+eval (sdafhbasjfhsod + ".currentTime = " + (fhgdfdfhfdh / 1000))
+}
+function poosoundsetVolume(sdafhbasjfhsod,fhgdfdfhfdh){
+eval (sdafhbasjfhsod + ".volume = " + (fhgdfdfhfdh / 100))
+}
+
+
+
+window.oncontextmenu = function (){return false}
+cowpat = 0
+numloadaa = 14
+
+
+soundkey = new Audio()
+soundkey.addEventListener('canplaythrough', function(){cowpat++})
+soundkey.src = "key.mp3"
+
+soundotisdoor = new Audio()
+soundotisdoor.addEventListener('canplaythrough', function(){cowpat++})
+soundotisdoor.src = "otisdoor.mp3"
+
+soundotisstart = new Audio()
+soundotisstart.addEventListener('canplaythrough', function(){cowpat++})
+soundotisstart.src = "otisstart.mp3"
+
+soundotisstop = new Audio()
+soundotisstop.addEventListener('canplaythrough', function(){cowpat++})
+soundotisstop.src = "otisstop.mp3"
+
+soundalsdoor = new Audio()
+soundalsdoor.addEventListener('canplaythrough', function(){cowpat++})
+soundalsdoor.src = "alsdoor.mp3"
+
+soundcrash = new Audio()
+soundcrash.addEventListener('canplaythrough', function(){cowpat++})
+soundcrash.addEventListener('ended', function(){mrcrashsound = 0})
+soundcrash.src = "crash.mp3"
+
+soundgo = new Audio()
+soundgo.addEventListener('canplaythrough', function(){cowpat++})
+soundgo.src = "envirostart.mp3"
+
+soundstop = new Audio()
+soundstop.addEventListener('canplaythrough', function(){cowpat++})
+soundstop.src = "envirostop.mp3"
+
+soundidle = new Audio()
+soundidle.addEventListener('canplaythrough', function(){cowpat++})
+soundidle.addEventListener('ended', function(){soundidle.play()})
+soundidle.src = "enviroidle.mp3"
+
+soundwin = new Audio()
+soundwin.addEventListener('canplaythrough', function(){cowpat++})
+soundwin.addEventListener('ended', function(){soundwin.play()})
+soundwin.src = "win.mp3"
+
+sound1 = new Audio()
+sound1.addEventListener('canplaythrough', function(){cowpat++})
+sound1.addEventListener('ended', function(){sound1.play()})
+sound1.src = "ghost1.mp3"
+
+sound2 = new Audio()
+sound2.addEventListener('canplaythrough', function(){cowpat++})
+sound2.addEventListener('ended', function(){sound2.play()})
+sound2.src = "ghost2.mp3"
+
+sound3 = new Audio()
+sound3.addEventListener('canplaythrough', function(){cowpat++})
+sound3.src = "ghost3.mp3"
+
+sound4 = new Audio()
+sound4.addEventListener('canplaythrough', function(){cowpat++})
+sound4.src = "ghost4.mp3"
+
+
+
+
+
+
+/*
+
+
+
+	var mySound = soundManager.createSound({id: 'soundcrash',url: 'crash.mp3', autoLoad:true, onload:function() {cowpat++;}, onfinish:function() {mrcrashsound = 0;}});
+
+    var mySound = soundManager.createSound({id: 'soundidle',url: 'enviroidle.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'sound1',url: 'ghost1.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'sound2',url: 'ghost2.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+    var mySound = soundManager.createSound({id: 'soundwin',url: 'win.mp3', onload:function() {cowpat++;}, autoLoad:true, loops:1000,});
+*/
+
+
+
+///////////////////////////////////////////////////////////// SET UP
+key37 = false;key39 = false;key40 = false;key38 = false
+c3dl.addMainCallBack(canvasMain, "poocanvas");
+c3dl.addModel("duck.dae");
+c3dl.addModel("alslift.dae");
+c3dl.addModel("alsdoor.dae");
+c3dl.addModel("alsbutton.dae");
+c3dl.addModel("greenkeylock.dae");
+c3dl.addModel("yellowkeylock.dae");
+c3dl.addModel("otislift.dae");
+c3dl.addModel("otisdoor.dae");
+c3dl.addModel("otisbutton.dae");
+c3dl.addModel("outside.dae");
+c3dl.addModel("justoutside.dae");
+c3dl.addModel("ghost.dae");
+c3dl.addModel("fire.dae");
+c3dl.addModel("red.dae");
+c3dl.addModel("yellow.dae");
+c3dl.addModel("green.dae");
+c3dl.addModel("firedoor.dae");
+c3dl.addModel("door2.dae");
+c3dl.addModel("ghoo.dae");
+c3dl.addModel("ghoo2.dae");
+c3dl.addModel("thebus.dae");
+c3dl.addModel("thefense.dae");
+
+///////////////////////////////////////////////////////////// VARS
+function varattack(){
+key37 = false;key39 = false;key40 = false;key38 = false
+timetoload = 3000
+fensepos = 0
+gamekeymode = 0
+allowghost = 1
+ghostx = 1100
+ghosty = 0
+ghostz = 0
+ghostsx = 0
+ghostsy = 0
+ghostsz = 0
+ghostout = 160 // outward partical speed
+ghostupl = -200 // min upward partical speed
+ghostuph = 200 // max upward partical speed
+ghostlooking = 0
+ttttyyyy = 0
+mrghost = 0;mrpoo1 = 0;mrpoo2 = 0;mrpoo3 = 0;mrpoo4 = 0;mrpoo5 = 0;mrpoo6 = 0;mrpoo7 = 0;mrpoo8 = 0;mrpoo9 = 0;mrpoo10 = 0;mrpoo11 = 0;mrpoo12 = 0;mrpoo13 = 0;mrpoo14 = 0;mrpoo15 = 0;mrpoo16 = 0;mrpoo17 = 0;
+thebiglimitor = 2.98 //inportant. This is the limit for movement on low FPS.
+posheight = 43 //height above ground
+alslevel = 84 //distance before floor slowdown
+alsacc = 0.000026 //later accelation
+alsaccc = 0.000016 //first accelation
+alsacccc = 0.000028 //slowdown accelation
+alsspeed = 0.068 //top speed
+alslevelspeed = 0.002 //leveling speed
+openspeed = 0.018 //door speed
+posupdatealow = 0
+floor = 0
+allowmove = 0 // set to 0 to lock camera
+movespeed = 0.25 // the camera speed
+turnspeed = 0.0018 // speed when turning
+lift1mode = 0
+lift1open = 0
+lift1timer = 0
+lift1pos = 0
+lift1speed = 0
+lift1floor = 0
+lift1sel0 = 0
+lift1sel1 = 0
+lift1sel2 = 0
+lift1sel3 = 0
+lift1dir = 1
+lift2mode = 0
+lift2open = 0
+lift2timer = 0
+lift2pos = 0
+lift2speed = 0
+lift2floor = 0
+lift2sel0 = 0
+lift2sel1 = 0
+lift2sel2 = 0
+lift2sel3 = 0
+lift2dir = 1
+otislevel = 22.5 //distance before floor slowdown
+otisacc = 0.00003 //later accelation
+otisaccc = 0.00001 //first accelation
+otisacccc = 0.00004 //slowdown accelation
+otisspeed = 0.035 //top speed
+otislevelspeed = 0.004 //leveling speed
+haveyoubeengood = 1
+busmode = 0
+busspeed = 0
+busmax = 3
+busacc = (0.2 / 1000)
+busaccc = (0.4 / 1000)
+nowtime = (new Date()).getTime()
+lasttime = (nowtime - 1000)
+starttime = (nowtime - 1000)
+mrsoundman = 0
+mrcrashsound = 0
+mrfensepos = 0
+}
+
+
+
+///////////////////////////////////////////////////////////// KEYBOARD
+function up(event){//a key is released
+switch(event.keyCode) {//deterime the key pressed
+			case 37://left arrow
+				key37 = false
+            break;
+			case 39://right arrow
+                key39 = false
+            break;
+            case 40://down arrow
+                key40 = false
+            break;
+            case 38://up arrow
+                key38 = false
+            break;
+}}
+function down(event){//a key is released
+switch(event.keyCode) {//deterime the key pressed
+			case 37://left arrow
+				key37 = true
+            break;
+			case 39://right arrow
+                key39 = true
+            break;
+            case 40://down arrow
+                key40 = true
+            break;
+            case 38://up arrow
+                key38 = true
+            break;
+}}
+///////////////////////////////////////////////////////////// FUNCTION FOR EACH FRAME
+
+
+
+
+function spinduck(pootime){
+lasttime = nowtime
+nowtime = (new Date()).getTime()
+time = ((nowtime - lasttime) / 2)
+realtime = (nowtime - lasttime)
+
+timeaa = time
+pootimeaa = pootime
+
+if (allowmove == 1){
+if (time > 0){
+mov = [0,0,0]
+
+
+if (busmode == 0){
+moverrfdgfdghfghfg = (movespeed * time)
+if (moverrfdgfdghfghfg > thebiglimitor){
+moverrfdgfdghfghfg = thebiglimitor
+haveyoubeengood = 0
+}else{
+haveyoubeengood = 1
+}
+if (key37){// LEFT
+cam.yaw(time*turnspeed)
+}
+if (key39){// RIGHT
+cam.yaw(time*-turnspeed)
+}
+if (key38){// UP
+mov = c3dl.multiplyVector(cam.getDir(),moverrfdgfdghfghfg,mov)
+}
+if (key40){// DOWN
+mov = c3dl.multiplyVector(cam.getDir(),(0 - moverrfdgfdghfghfg),mov)
+}}
+
+/////////////////////////////////// bus riding time
+if (busmode > 1){
+if (busmode == 3){
+if (key37){// LEFT
+if (busspeed > 0.16){
+cam.yaw((time*((turnspeed * ((3.84 - busspeed) / 3.84)) / 2)) / 2)
+}else{
+cam.yaw((time*((turnspeed * (busspeed / 0.16)) / 2)) / 2)
+}}
+if (key39){// RIGHT
+if (busspeed > 0.16){
+cam.yaw((time*(((0 - turnspeed) * ((3.84 - busspeed) / 3.84)) / 2)) / 2)
+}else{
+cam.yaw((time*(((0 - turnspeed) * (busspeed / 0.16)) / 2)) / 2)
+}}}
+
+
+gofastersound = 0
+if ((busmode == 2) || ((key38) && (busspeed < busmax) && (busspeed > -0.001))){// UP
+gofastersound = 1
+busspeed += ((busacc * time) + (busaccc * time))
+}
+if ((busmode == 2) || ((key38) && (busspeed > -0.001))){// UP
+gofastersound = 1
+}
+if ((key40) && (busmode == 3) && (busspeed > (0 - busmax)) && (busspeed < 0.001)){// down
+gofastersound = 1
+busspeed -= ((busacc * time) + (busaccc * time))
+}
+
+
+if ((busmode == 2) && (pos[0] < -2080)){
+busmode = 2.1
+mrcrashsound = 1
+poosoundplay('soundcrash')
+}
+
+if ((busmode == 2.1) && (pos[0] < -2096)){
+busmode = 3
+}
+
+
+
+
+if (mrsoundman == 0){
+if (gofastersound == 1){
+mrsoundman = 1
+poosoundplay('soundgo')
+poosoundstop('soundstop')
+poosoundstop('soundidle')
+
+
+}}
+if (mrsoundman == 1){
+if (gofastersound == 0){
+if (busspeed == 0){
+mrsoundman = 0
+poosoundstop('soundgo')
+poosoundplay('soundidle')
+
+
+}else{
+mrsoundman = 2
+poosoundstop('soundgo')
+poosoundstop('soundidle')
+
+if (busspeed > 0){
+thespeed = busspeed
+}else{
+thespeed = (0 - busspeed)
+}
+poosoundsetPosition('soundstop',(15000 - (thespeed * 5000)))
+poosoundplay('soundstop')
+
+
+
+}}}
+if (mrsoundman == 2){
+if (gofastersound == 1){
+mrsoundman = 1
+
+poosoundstop('soundstop')
+poosoundstop('soundidle')
+
+if (busspeed > 0){
+thespeed = busspeed
+}else{
+thespeed = (0 - busspeed)
+}
+poosoundsetPosition('soundgo',(thespeed*10000))
+poosoundplay('soundgo')
+
+
+}
+if (busspeed == 0){
+if (gofastersound == 0){
+mrsoundman = 0
+poosoundstop('soundgo')
+poosoundplay('soundidle')
+
+
+}}}
+
+if ((busmode == 3) && (fensepos < 250)){
+fensepos += (time / 3.6)
+thefense.setPosition([(0 - fensepos),0,0])
+if (fensepos > 250){
+fensepos = 250
+thefense.setPosition([(0 - fensepos),0,0])
+}}
+
+if (busspeed > 0){
+busspeed -=  (busaccc * time)
+if (busspeed < 0){
+busspeed = 0
+}}
+if (busspeed < 0){
+busspeed += (busaccc * time)
+if (busspeed > 0){
+busspeed = 0
+}}
+
+
+
+
+moverrfdgfdghfghfg = (busspeed * time)
+if (moverrfdgfdghfghfg > 21.98){
+moverrfdgfdghfghfg = 21.98
+haveyoubeengood = 0
+}else{
+haveyoubeengood = 1
+}
+ghjhjkhjgkhj = (moverrfdgfdghfghfg / 2)
+
+
+
+
+mov = c3dl.multiplyVector(cam.getDir(),ghjhjkhjgkhj,mov)
+
+
+
+
+}
+
+
+pos = ([pos[0]+mov[0],pos[1]+mov[1],pos[2]+mov[2]])
+
+
+poosfunction()
+
+if (busmode > 1){
+zall(-44000,-3551,-11836,-11836)
+zall(-3551,-3551,-11836,-2515)
+zall(-3551,-2395,-2515,-2515)
+zall(-2395,-2395,-2515,-1685)
+zall(-2395,-1614,-1685,-1685)
+zall(-1614,-1614,-2008,-1685)
+zall(-2152,-1614,-2008,-2008)
+zall(-2152,-2152,-2880,-2008)
+zall(-3291,-2152,-2880,-2880)
+zall(-3291,-3291,-12094,-2880)
+zall(-44000,-3291,-12094,-12094)
+}
+
+
+if (busmode == 1){
+fensepos -= (time / 50)
+if (fensepos < 15){
+cam.setFieldOfView(55);
+pos = [-1993.5488722669108, 60, -1917.0640360707275]
+cam.setPosition(new Array(-1993.5488722669108, 60, -1917.0640360707275));
+cam.setLookAtPoint(new Array(-2993.5488722669108, 60, -1917.0640360707275));
+thebus.setVisible(false)
+fensepos = 0
+mrsoundman = 1
+poosoundplay('soundgo')
+poosoundstop('soundstop')
+poosoundstop('soundidle')
+
+
+busmode = 2
+}else{
+cam.setFieldOfView(fensepos);
+}}
+
+
+if (busmode == 0){
+
+
+if (pos[2] > -2200){
+
+if (allowghost == 1){
+if ((ghostx < 500) && (ghostx > -2000) && (ghostz < 500) && (ghostz > -2500)){
+ghostx += ((ghostsx / 1000) * time)
+ghostz += ((ghostsz / 1000) * time)
+if (gamekeymode > 13){
+ghostx = pos[0]
+}
+
+bubbles.setPosition([ghostx,ghosty,ghostz]);
+
+if (mrghost == 0){
+mrghost =  1
+ghostobject.setVisible(true)
+}
+ghostobject.setPosition([ghostx,(ghosty - 8),ghostz])
+}else{
+if (mrghost == 1){
+mrghost =  0
+ghostobject.setVisible(false)
+}
+}}
+
+
+
+
+/*
+if ((mrghost == 0) && (pos[2] < -500) && (pos[2] > -1300)){
+if (Math.floor((Math.random()*2)+1) == 1){
+ghostgo(-500,40,-600,0,0,100)
+}}
+*/
+///////////////////////////////// key modes
+
+if ((floor == 2) && (gamekeymode == 1) && (pos[2] > -180) && (pos[0] < -650)){
+gamekeymode = 1.5
+yellow.setVisible(true)
+}
+
+if (gamekeymode == 1.5){
+ttttyyyy += (time / 20)
+doorodoor.setPosition([-700,(414 + ttttyyyy),-70])
+if (ttttyyyy > 80){
+gamekeymode = 2
+doorodoor.setVisible(false)
+}}
+
+
+
+if (gamekeymode == 3){
+if (pos[1] < 450){
+gamekeymode++
+ghostgo(-1140,240,-1450,300,0,0)
+}}
+if (gamekeymode == 4){
+if (pos[1] < -160){
+poosoundplay('sound1')
+gamekeymode++
+green.setVisible(true)
+scn.addObjectToScene(b1ubbles);
+scn.addObjectToScene(b2ubbles);
+scn.addObjectToScene(b3ubbles);
+scn.addObjectToScene(b4ubbles);
+}}
+if (gamekeymode == 6){
+if (pos[0] < 0){
+gamekeymode++
+ghostgo(-505,-226,-1600,0,0,160)
+poosoundsetVolume('sound4', 48)
+poosoundplay('sound4')
+setTimeout("poosoundstop('sound4')",2800);
+}}
+if (gamekeymode == 7){
+if (pos[1] > -160){
+poosoundstop('sound1')
+gamekeymode++
+scn.removeObjectFromScene(b1ubbles)
+scn.removeObjectFromScene(b2ubbles)
+scn.removeObjectFromScene(b3ubbles)
+scn.removeObjectFromScene(b4ubbles)
+}}
+if (gamekeymode == 8){
+if (pos[1] > 600){
+poosoundplay('sound1')
+gamekeymode++
+ghoo.setVisible(true)
+ghoo2.setVisible(true)
+}}
+if (gamekeymode == 10){
+if (pos[0] < 20){
+poosoundsetVolume('sound4', 100)
+poosoundplay('sound4')
+gamekeymode++
+ghostgo(-950,946,-280,400,0,0)
+}}
+if (gamekeymode == 11){
+if (pos[1] < 900){
+gamekeymode++
+fireob.setVisible(true)
+scn.addObjectToScene(b7ubbles);
+scn.addObjectToScene(b6ubbles);
+scn.addObjectToScene(b5ubbles);
+}}
+if (gamekeymode == 12){
+if (pos[1] < 450){
+gamekeymode++
+ghostgo(0,420,-800,-400,0,0)
+}}
+if (gamekeymode == 13){
+if (pos[2] < -1000){
+gamekeymode++
+ghostgo(pos[0],45,-2200,0,0,400)
+}}
+if (gamekeymode == 14){
+if (pos[2] < -1400){
+gamekeymode++
+thebus.setVisible(true)
+thefense.setVisible(true)
+}}
+
+if (gamekeymode == 15){
+if (pos[0] < -1612){
+gamekeymode++
+poosoundstop('sound2')
+}}
+
+if (gamekeymode == 16){
+fydfggfhfghuidg = cam.getDir()
+if ((pos[0] < -1920) && (pos[0] > -1970) && (pos[2] > -1890) && (pos[2] < -1850) && (fydfggfhfghuidg[0] > -0.3) && (fydfggfhfghuidg[0] < 0.3) && (fydfggfhfghuidg[2] < -0.3)){
+gamekeymode++
+busmode = 1
+fensepos = 55
+ghostobject.setVisible(false)
+fireob.setVisible(false)
+scn.removeObjectFromScene(b5ubbles)
+scn.removeObjectFromScene(b6ubbles)
+scn.removeObjectFromScene(b7ubbles)
+}}
+
+
+
+
+
+
+if (busmode == 0){
+
+/*
+
+fireob.setVisible(false)
+//delete fire
+//delete bus
+//create cab
+
+*/
+
+////////////////////////////////////////////////////////////////////////////////////
+
+
+// x1 x2 z1 z2
+
+
+
+
+
+//lift 1
+wall(-477,-477,-430,-297)
+wall(-530,-530,-430,-297)
+wall(-530,-477,-430,-430)
+
+
+//lift 2
+wall(-548,-548,-1618,-1558)
+wall(-462,-462,-1618,-1558)
+wall(-548,-462,-1618,-1618)
+
+
+if (floor == -1){
+wall(-551,-530,-1526,-1526)
+wall(-477,143,-1526,-1526)
+wall(143,143,-1526,-1374)
+wall(77,143,-1374,-1374)
+wall(77,77,-1461,-1374)
+wall(-551,77,-1461,-1461)
+wall(-551,-551,-1526,-1461)
+}
+
+if (floor == 3){
+wall(-477,64,-297,-297)
+wall(64,64,-358,-297)
+wall(64,121,-358,-358)
+wall(121,121,-358,-259)
+wall(-530,121,-259,-259)
+wall(-530,-530,-310,-259)
+}
+
+if (floor == 0){
+wall(-566,-566,-450,-297)
+wall(-441,-441,-450,-297)
+wall(-477,-441,-297,-297)
+wall(-566,-530,-297,-297)
+wall(-566,-441,-450,-450)
+wall(-639,-530,-1526,-1526)
+wall(-639,-639,-2006,-1526)
+wall(-2129,-639,-2006,-2006)
+wall(-2127,-2127,-2006,-1688)
+wall(-2129,-1042,-1688,-1688)
+wall(-1042,-1042,-1688,-108)
+wall(-1042,-1,-108,-108)
+wall(-1,-1,-1526,-108)
+wall(-477,-1,-1526,-1526)
+wall(-1990,-1705,-1881,-1881)
+wall(-1990,-1705,-1955,-1955)
+wall(-1990,-1990,-1955,-1881)
+wall(-1705,-1705,-1955,-1881)
+wall(-1633,-1613,-1729,-1729)
+wall(-1633,-1633,-2050,-1729)
+if (gamekeymode < 10){
+wall(-1614,-1614,-2050,-1600)
+}else{
+wall(-1614,-1614,-2050,-1729)
+}
+}
+
+if (floor == 1){
+wall(-566,-566,-450,-297)
+wall(-441,-441,-450,-297)
+wall(-477,-441,-297,-297)
+wall(-566,-530,-297,-297)
+wall(-441,-146,-323,-323)
+wall(-146,-146,-1392,-323)
+wall(-891,-146,-1392,-1392)
+wall(-891,-891,-1392,-323)
+wall(-891,-566,-323,-323)
+
+
+wall(-1042,-530,-1526,-1526)
+wall(-477,317,-1526,-1526)
+wall(317,317,-1526,-1402)
+wall(275,317,-1402,-1402)
+wall(275,275,-1483,-1402)
+wall(-1,275,-1483,-1483)
+wall(-1,-1,-1483,-111)
+wall(-1042,-1,-111,-111)
+wall(-1042,-1042,-1526,-111)
+
+
+
+
+
+}
+
+
+
+if (floor == 2){
+wall(-722,-530,-297,-297)
+wall(-722,-722,-297,166)
+wall(-722,-265,166,166)
+wall(-265,-265,-34,166)
+wall(-676,-265,-34,-34)
+wall(-676,-676,-79,-34)
+wall(-265,-265,-297,-79)
+wall(-477,-265,-297,-297)
+if (gamekeymode < 2){
+wall(-800,0,-79,-79)
+}else{
+wall(-676,0,-79,-79)
+}
+}
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+
+
+//lift function 1
+mrwowlift()
+
+if ((pos[2] < -309) && (pos[2] > -316.1) && (pos[0] > -547) && (pos[0] < ((-503.5 + 4) - lift1opena()))){
+pos[2] = -309
+}
+if ((pos[2] < -316) && (pos[2] > -325) && (pos[0] > -547) && (pos[0] < ((-503.5 + 4) - lift1opena()))){
+pos[2] = -325
+}
+if ((pos[2] < -309) && (pos[2] > -316.1) && (pos[0] < -450) && (pos[0] > ((-503.5 - 4) + lift1opena()))){
+pos[2] = -309
+}
+if ((pos[2] < -316) && (pos[2] > -325) && (pos[0] < -450) && (pos[0] > ((-503.5 - 4) + lift1opena()))){
+pos[2] = -325
+}
+if ((pos[2] < -316.1) && (pos[2] > -428) && (pos[0] > -528) && (pos[0] < -479)){
+pos[1] = (lift1pos + posheight)
+}
+
+//lift function 2
+mrwowlifta()
+
+if ((pos[2] < -1533) && (pos[2] > -1545.1) && (pos[0] > -559) && (pos[0] < ((-503.5 + 4) - lift2opena())) ){
+pos[2] = -1533
+}
+if ((pos[2] < -1545) && (pos[2] > -1558) && (pos[0] > -559) && (pos[0] < ((-503.5 + 4) - lift2opena())) ){
+pos[2] = -1558
+}
+if ((pos[2] < -1533) && (pos[2] > -1545.1) && (pos[0] < -451) && (pos[0] > ((-503.5 - 4) + lift2opena())) ){
+pos[2] = -1533
+}
+if ((pos[2] < -1545) && (pos[2] > -1558) && (pos[0] < -451) && (pos[0] > ((-503.5 - 4) + lift2opena())) ){
+pos[2] = -1558
+}
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+pos[1] = ((lift2pos - 264.5) + posheight)
+}
+
+if ((pos[2] < -1523) && (pos[2] > -1558) && (pos[0] < -527) && (pos[0] > -534)){
+pos[0] = -527
+}
+if ((pos[2] < -1523) && (pos[2] > -1558) && (pos[0] < -472) && (pos[0] > -480)){
+pos[0] = -480
+}
+
+}}}
+
+
+
+
+cam.setPosition(pos)
+
+}
+
+
+if ((busmode == 3) && (pos[0] < -18400)){
+allowmove = 0
+thefense.setPosition([0,0,0])
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundstop('soundidle')
+poosoundplay('soundwin')
+alert("You have escaped the city!\n\nYOU WIN\n\nYou did it in " + ((nowtime - starttime) / 1000) + " seconds")
+if (confirm("Do you want to try again?")){
+poosoundstop('soundwin')
+letseatsomepoo()
+}}}}
+
+
+
+
+///////////////////////////////////////////////////////////// COLLISON DETECTION
+function wall(mrrx,mrrx2,mrry,mrry2){
+if (mrrx == mrrx2){
+if (mov[0] > 0){
+if ((pos[0] > (mrrx - 3)) && (pos[0] < (mrrx + 3))){
+if ((pos[2] > (mrry - 3)) && (pos[2] < (mrry2 + 3))){
+pos[0] = (mrrx - 3)
+}}}
+if (mov[0] < 0){
+if ((pos[0] < (mrrx + 3)) && (pos[0] > (mrrx - 3))){
+if ((pos[2] > (mrry - 3)) && (pos[2] < (mrry2 + 3))){
+pos[0] = (mrrx + 3)
+}}}}else{
+if (mov[2] > 0){
+if ((pos[2] > (mrry - 3)) && (pos[2] < (mrry + 3))){
+if ((pos[0] > (mrrx - 3)) && (pos[0] < (mrrx2 + 3))){
+pos[2] = (mrry - 3)
+}}}
+if (mov[2] < 0){
+if ((pos[2] < (mrry + 3)) && (pos[2] > (mrry - 3))){
+if ((pos[0] > (mrrx - 3)) && (pos[0] < (mrrx2 + 3))){
+pos[2] = (mrry + 3)
+}}}
+}}
+
+
+///////////////////////////////////////////////////////////// COLLISON BUS DETECTION
+function zall(mrrx,mrrx2,mrry,mrry2){
+if (mrrx == mrrx2){
+if (mov[0] > 0){
+if ((pos[0] > (mrrx - 22)) && (pos[0] < (mrrx + 22))){
+if ((pos[2] > (mrry - 22)) && (pos[2] < (mrry2 + 22))){
+pos[0] = (mrrx - 22)
+if (busspeed > 0.03){
+busspeed = 0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}
+if (busspeed < -0.03){
+busspeed = -0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}}}}
+if (mov[0] < 0){
+if ((pos[0] < (mrrx + 22)) && (pos[0] > (mrrx - 22))){
+if ((pos[2] > (mrry - 22)) && (pos[2] < (mrry2 + 22))){
+pos[0] = (mrrx + 22)
+if (busspeed > 0.03){
+busspeed = 0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}
+if (busspeed < -0.03){
+busspeed = -0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}}}}}else{
+if (mov[2] > 0){
+if ((pos[2] > (mrry - 22)) && (pos[2] < (mrry + 22))){
+if ((pos[0] > (mrrx - 22)) && (pos[0] < (mrrx2 + 22))){
+pos[2] = (mrry - 22)
+if (busspeed > 0.03){
+busspeed = 0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}
+if (busspeed < -0.03){
+busspeed = -0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}}}}
+if (mov[2] < 0){
+if ((pos[2] < (mrry + 22)) && (pos[2] > (mrry - 22))){
+if ((pos[0] > (mrrx - 22)) && (pos[0] < (mrrx2 + 22))){
+pos[2] = (mrry + 22)
+if (busspeed > 0.03){
+busspeed = 0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}
+if (busspeed < -0.03){
+busspeed = -0.03
+if (mrcrashsound == 0){
+mrcrashsound = 1
+poosoundplay('soundcrash')
+poosoundstop('soundgo')
+poosoundstop('soundstop')
+poosoundplay('soundidle')
+}}}}}}}
+///////////////////////////////////////////////////////////// PICKER
+
+function handler(result){
+var buttonUsed = result.getButtonUsed();
+var objectsPicked = result.getObjects();
+if(objectsPicked != undefined){
+if (buttonUsed == 1){
+for(var i = 0 ; i < objectsPicked.length; i++){
+obj = objectsPicked[i]
+esdfihifhid = obj.poo
+if (esdfihifhid == "red"){
+if ((floor == 1) && (gamekeymode == 0) && (pos[0] > 50)){
+gamekeymode++
+red.setVisible(false)
+poosoundplay('soundkey')
+}}
+
+
+if (esdfihifhid == "yellow"){
+if ((floor == 2) && (gamekeymode == 2) && (pos[2] > -40)){
+gamekeymode++
+yellow.setVisible(false)
+poosoundplay('soundkey')
+}}
+
+if (esdfihifhid == "green"){
+if ((floor == -1) && (gamekeymode == 5) && (pos[0] > 0)){
+gamekeymode++
+green.setVisible(false)
+poosoundplay('soundkey')
+}}
+
+if (esdfihifhid == "ghoo"){
+if ((floor == 3) && (gamekeymode == 9) && (pos[0] > 40)){
+gamekeymode++
+ghoo.setVisible(false)
+ghoo2.setVisible(false)
+firedoor.setVisible(false)
+poosoundplay('sound3')
+poosoundstop('sound1')
+poosoundplay('sound2')
+
+
+}}
+
+if (esdfihifhid == "als0"){
+lift1sel0 = 1
+}
+if (esdfihifhid == "als1"){
+lift1sel1 = 1
+}
+if (esdfihifhid == "als2"){
+lift1sel2 = 1
+}
+if (esdfihifhid == "als3"){
+if (gamekeymode > 5){
+lift1sel3 = 1
+}}
+if (esdfihifhid == "also"){
+if ((lift1mode == 0) || (lift1mode == 2)){
+lift1mode = 1
+
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+
+
+}
+if ((lift1mode == 3) || (lift1timer < 2000)){
+lift1timer = 2000
+}}
+if (esdfihifhid == "alsc"){
+lift1timer = 0
+}
+
+
+if (esdfihifhid == "otis0"){
+if (gamekeymode > 2){
+lift2sel0 = 1
+}}
+if (esdfihifhid == "otis1"){
+if (gamekeymode > 2){
+lift2sel1 = 1
+}}
+if (esdfihifhid == "otis2"){
+if (gamekeymode > 2){
+lift2sel2 = 1
+}}
+if (esdfihifhid == "otiso"){
+if ((lift2mode == 0) || (lift2mode == 2)){
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+}
+if ((lift2mode == 3) || (lift2timer < 2000)){
+lift2timer = 2000
+}}
+
+
+}}}}
+
+///////////////////////////////////////////////////////////// START HERE
+function canvasMain(canvasName){
+var currentURL = window.location
+if ((currentURL.hostname == 'beno.uk') || (currentURL.hostname == 'www.beno.uk') || (currentURL.hostname == 'aaa')){  // THIS GAME IS COPYRIGHT (C) Beno (beno.uk). uploading this game to anouther website (with or without modifications) is Copyright infringement.
+varattack()
+scn = new c3dl.Scene();
+scn.setCanvasTag(canvasName);
+scn.setBackgroundColor(new Array(0, 0, 0))
+renderer = new c3dl.WebGL();
+renderer.createRenderer(this);
+renderer.setLighting(false)
+scn.setRenderer(renderer);
+scn.init(canvasName);
+nowtime = (new Date()).getTime()
+lasttime = (nowtime - 1000)
+starttime = (nowtime - 1000)
+moomoo()
+}else{
+alert("This game is copyright (C) Beno, All right reserved.\n\nDO NOT STEAL MY GAME\n\nyou are seeing this message because you are not running this game from my website beno.uk")
+}
+
+}
+
+function moomoo(){
+if (cowpat == numloadaa){
+
+setTimeout("moomoomoo()",100);
+
+
+
+}else{
+setTimeout("moomoo()",400);
+}}
+
+
+function moomoomoo(){
+
+if(renderer.isReady()){
+duck = new c3dl.Collada();
+duck.init("duck.dae");
+duck.poo = "thepoo"
+duck.setPickable(false)
+scn.addObjectToScene(duck);
+
+alslift = new c3dl.Collada();
+alslift.init("alslift.dae");
+alslift.poo = "thepoo"
+alslift.setPickable(false)
+alslift.setPosition([0, 0, 1])
+scn.addObjectToScene(alslift);
+
+aalslift = new c3dl.Collada();
+aalslift.init("otislift.dae");
+aalslift.poo = "thepoo"
+aalslift.setPickable(false)
+aalslift.setPosition([0, 0, 0])
+scn.addObjectToScene(aalslift);
+
+
+alsdoor0r = new c3dl.Collada();
+alsdoor0r.init("alsdoor.dae");
+alsdoor0r.poo = "thepoo"
+alsdoor0r.setPickable(false)
+alsdoor0r.setPosition([0,0,3])
+scn.addObjectToScene(alsdoor0r);
+
+alsdoor0l = new c3dl.Collada();
+alsdoor0l.init("alsdoor.dae");
+alsdoor0l.poo = "thepoo"
+alsdoor0l.setPickable(false)
+alsdoor0l.setPosition([-29.9,0,3])
+scn.addObjectToScene(alsdoor0l);
+
+
+aalsdoor0r = new c3dl.Collada();
+aalsdoor0r.init("otisdoor.dae");
+aalsdoor0r.poo = "thepoo"
+aalsdoor0r.setPickable(false)
+aalsdoor0r.setPosition([0,0,2.1])
+scn.addObjectToScene(aalsdoor0r);
+
+aalsdoor0l = new c3dl.Collada();
+aalsdoor0l.init("otisdoor.dae");
+aalsdoor0l.poo = "thepoo"
+aalsdoor0l.setPickable(false)
+aalsdoor0l.setPosition([-28.3,0,0])
+scn.addObjectToScene(aalsdoor0l);
+
+aalsdoorr = new c3dl.Collada();
+aalsdoorr.init("otisdoor.dae");
+aalsdoorr.poo = "thepoo"
+aalsdoorr.setPickable(false)
+aalsdoorr.setPosition([0,0,0])
+scn.addObjectToScene(aalsdoorr);
+
+aalsdoorl = new c3dl.Collada();
+aalsdoorl.init("otisdoor.dae");
+aalsdoorl.poo = "thepoo"
+aalsdoorl.setPickable(false)
+aalsdoorl.setPosition([-28.3,0,2.1])
+scn.addObjectToScene(aalsdoorl);
+
+
+aalsdoor1r = new c3dl.Collada();
+aalsdoor1r.init("otisdoor.dae");
+aalsdoor1r.poo = "thepoo"
+aalsdoor1r.setPickable(false)
+aalsdoor1r.setPosition([0,264.5,2.1])
+scn.addObjectToScene(aalsdoor1r);
+
+aalsdoor1l = new c3dl.Collada();
+aalsdoor1l.init("otisdoor.dae");
+aalsdoor1l.poo = "thepoo"
+aalsdoor1l.setPickable(false)
+aalsdoor1l.setPosition([-28.3,264.5,2.1])
+scn.addObjectToScene(aalsdoor1l);
+
+
+aalsdoor2r = new c3dl.Collada();
+aalsdoor2r.init("otisdoor.dae");
+aalsdoor2r.poo = "thepoo"
+aalsdoor2r.setPickable(false)
+aalsdoor2r.setPosition([0,452.8,2.1])
+scn.addObjectToScene(aalsdoor2r);
+
+aalsdoor2l = new c3dl.Collada();
+aalsdoor2l.init("otisdoor.dae");
+aalsdoor2l.poo = "thepoo"
+aalsdoor2l.setPickable(false)
+aalsdoor2l.setPosition([-28.3,452.8,2.1])
+scn.addObjectToScene(aalsdoor2l);
+
+
+
+alsdoorr = new c3dl.Collada();
+alsdoorr.init("alsdoor.dae");
+alsdoorr.poo = "thepoo"
+alsdoorr.setPickable(false)
+alsdoorr.setPosition([0,0,1.5])
+scn.addObjectToScene(alsdoorr);
+
+alsdoorl = new c3dl.Collada();
+alsdoorl.init("alsdoor.dae");
+alsdoorl.poo = "thepoo"
+alsdoorl.setPickable(false)
+alsdoorl.setPosition([-29.9,0,1.5])
+scn.addObjectToScene(alsdoorl);
+
+
+alsdoor1r = new c3dl.Collada();
+alsdoor1r.init("alsdoor.dae");
+alsdoor1r.poo = "thepoo"
+alsdoor1r.setPickable(false)
+alsdoor1r.setPosition([0,189,3])
+scn.addObjectToScene(alsdoor1r);
+
+alsdoor1l = new c3dl.Collada();
+alsdoor1l.init("alsdoor.dae");
+alsdoor1l.poo = "thepoo"
+alsdoor1l.setPickable(false)
+alsdoor1l.setPosition([-29.9,189,3])
+scn.addObjectToScene(alsdoor1l);
+
+alsdoor2r = new c3dl.Collada();
+alsdoor2r.init("alsdoor.dae");
+alsdoor2r.poo = "thepoo"
+alsdoor2r.setPickable(false)
+alsdoor2r.setPosition([0,416,3])
+scn.addObjectToScene(alsdoor2r);
+
+alsdoor2l = new c3dl.Collada();
+alsdoor2l.init("alsdoor.dae");
+alsdoor2l.poo = "thepoo"
+alsdoor2l.setPickable(false)
+alsdoor2l.setPosition([-29.9,416,3])
+scn.addObjectToScene(alsdoor2l);
+
+alsdoor3r = new c3dl.Collada();
+alsdoor3r.init("alsdoor.dae");
+alsdoor3r.poo = "thepoo"
+alsdoor3r.setPickable(false)
+alsdoor3r.setPosition([0,910,3])
+scn.addObjectToScene(alsdoor3r);
+
+alsdoor3l = new c3dl.Collada();
+alsdoor3l.init("alsdoor.dae");
+alsdoor3l.poo = "thepoo"
+alsdoor3l.setPickable(false)
+alsdoor3l.setPosition([-29.9,910,3])
+scn.addObjectToScene(alsdoor3l);
+
+alsb3 = new c3dl.Collada();
+alsb3.init("greenkeylock.dae");
+alsb3.poo = "als3"
+alsb3.setPickable(true)
+alsb3.setPosition([-532.5,45,-336])
+scn.addObjectToScene(alsb3);
+
+alsb2 = new c3dl.Collada();
+alsb2.init("alsbutton.dae");
+alsb2.poo = "als2"
+alsb2.setPickable(true)
+alsb2.setPosition([-532.5,43.5,-336])
+scn.addObjectToScene(alsb2);
+
+alsb1 = new c3dl.Collada();
+alsb1.init("alsbutton.dae");
+alsb1.poo = "als1"
+alsb1.setPickable(true)
+alsb1.setPosition([-532.5,42,-336])
+scn.addObjectToScene(alsb1);
+
+alsb0 = new c3dl.Collada();
+alsb0.init("alsbutton.dae");
+alsb0.poo = "als0"
+alsb0.setPickable(true)
+alsb0.setPosition([-532.5,40.5,-336])
+scn.addObjectToScene(alsb0);
+
+alsbo = new c3dl.Collada();
+alsbo.init("alsbutton.dae");
+alsbo.poo = "also"
+alsbo.setPickable(true)
+alsbo.setPosition([-532.5,39,-335])
+scn.addObjectToScene(alsbo);
+
+alsbc = new c3dl.Collada();
+alsbc.init("alsbutton.dae");
+alsbc.poo = "alsc"
+alsbc.setPickable(true)
+alsbc.setPosition([-532.5,39,-337])
+scn.addObjectToScene(alsbc);
+
+alsbb0 = new c3dl.Collada();
+alsbb0.init("alsbutton.dae");
+alsbb0.poo = "als0"
+alsbb0.setPickable(true)
+alsbb0.setPosition([-532.5,(0 + 42),-307])
+scn.addObjectToScene(alsbb0);
+
+alsbb1 = new c3dl.Collada();
+alsbb1.init("alsbutton.dae");
+alsbb1.poo = "als1"
+alsbb1.setPickable(true)
+alsbb1.setPosition([-532.5,(189 + 42),-307])
+scn.addObjectToScene(alsbb1);
+
+alsbb2 = new c3dl.Collada();
+alsbb2.init("alsbutton.dae");
+alsbb2.poo = "als2"
+alsbb2.setPickable(true)
+alsbb2.setPosition([-532.5,(416 + 42),-307])
+scn.addObjectToScene(alsbb2);
+
+alsbb3 = new c3dl.Collada();
+alsbb3.init("alsbutton.dae");
+alsbb3.poo = "als3"
+alsbb3.setPickable(true)
+alsbb3.setPosition([-532.5,(910 + 42),-307])
+scn.addObjectToScene(alsbb3);
+
+
+
+otisbb0 = new c3dl.Collada();
+otisbb0.init("yellowkeylock.dae");
+otisbb0.poo = "otis0"
+otisbb0.setPickable(true)
+otisbb0.setPosition([-470,(-265 + 42),-1525.93])
+scn.addObjectToScene(otisbb0);
+
+otisbb1 = new c3dl.Collada();
+otisbb1.init("yellowkeylock.dae");
+otisbb1.poo = "otis1"
+otisbb1.setPickable(true)
+otisbb1.setPosition([-470,(0 + 42),-1525.93])
+scn.addObjectToScene(otisbb1);
+
+otisbb2 = new c3dl.Collada();
+otisbb2.init("yellowkeylock.dae");
+otisbb2.poo = "otis2"
+otisbb2.setPickable(true)
+otisbb2.setPosition([-470,(189 + 42),-1525.93])
+scn.addObjectToScene(otisbb2);
+
+
+otisb2 = new c3dl.Collada();
+otisb2.init("otisbutton.dae");
+otisb2.poo = "otis2"
+otisb2.setPickable(true)
+otisb2.setPosition([-544,(43.7 - 264.5),-1548])
+scn.addObjectToScene(otisb2);
+
+otisb1 = new c3dl.Collada();
+otisb1.init("otisbutton.dae");
+otisb1.poo = "otis1"
+otisb1.setPickable(true)
+otisb1.setPosition([-544,(42 - 264.5),-1548])
+scn.addObjectToScene(otisb1);
+
+otisb0 = new c3dl.Collada();
+otisb0.init("otisbutton.dae");
+otisb0.poo = "otis0"
+otisb0.setPickable(true)
+otisb0.setPosition([-544,(40.3 - 264.5),-1548])
+scn.addObjectToScene(otisb0);
+
+otisbo = new c3dl.Collada();
+otisbo.init("otisbutton.dae");
+otisbo.poo = "otiso"
+otisbo.setPickable(true)
+otisbo.setPosition([-544,(38.6 - 264.5),-1548])
+scn.addObjectToScene(otisbo);
+
+outside = new c3dl.Collada();
+outside.init("outside.dae");
+outside.poo = "thepoo"
+outside.setPickable(false)
+outside.setPosition([0,0,0])
+scn.addObjectToScene(outside);
+
+justoutside = new c3dl.Collada();
+justoutside.init("justoutside.dae");
+justoutside.poo = "thepoo"
+justoutside.setPickable(false)
+justoutside.setPosition([0,0,0])
+scn.addObjectToScene(justoutside);
+
+ghostobject = new c3dl.Collada();
+ghostobject.init("ghost.dae");
+ghostobject.poo = "thepoo"
+ghostobject.setPickable(false)
+ghostobject.setPosition([500,0,0])
+scn.addObjectToScene(ghostobject);
+
+fireob = new c3dl.Collada();
+fireob.init("fire.dae");
+fireob.poo = "thepoo"
+fireob.setPickable(false)
+fireob.setPosition([0,0,0])
+scn.addObjectToScene(fireob);
+
+firedoor = new c3dl.Collada();
+firedoor.init("firedoor.dae");
+firedoor.poo = "thepoo"
+firedoor.setPickable(false)
+firedoor.setPosition([0,0,0])
+scn.addObjectToScene(firedoor);
+
+
+doorodoor = new c3dl.Collada();
+doorodoor.init("door2.dae");
+doorodoor.poo = "thepoo"
+doorodoor.setPickable(false)
+doorodoor.setPosition([-700,414,-70])
+scn.addObjectToScene(doorodoor);
+
+thebus = new c3dl.Collada();
+thebus.init("thebus.dae");
+thebus.poo = "thepoo"
+thebus.setPickable(false)
+thebus.setPosition([0,0,0])
+scn.addObjectToScene(thebus);
+
+thefense = new c3dl.Collada();
+thefense.init("thefense.dae");
+thefense.poo = "thepoo"
+thefense.setPickable(false)
+thefense.setPosition([0,0,0])
+scn.addObjectToScene(thefense);
+
+
+
+
+
+red = new c3dl.Collada();
+red.init("red.dae");
+red.poo = "red"
+red.setPickable(true)
+red.setPosition([280,225,-1403])
+scn.addObjectToScene(red);
+
+yellow = new c3dl.Collada();
+yellow.init("yellow.dae");
+yellow.poo = "yellow"
+yellow.setPickable(true)
+yellow.setPosition([-308,445,166])
+scn.addObjectToScene(yellow);
+
+green = new c3dl.Collada();
+green.init("green.dae");
+green.poo = "green"
+green.setPickable(true)
+green.setPosition([88,-230,-1374])
+scn.addObjectToScene(green);
+
+
+ghoo2 = new c3dl.Collada();
+ghoo2.init("ghoo2.dae");
+ghoo2.poo = "ghoo"
+ghoo2.setPickable(true)
+ghoo2.setPosition([90,900,-357])
+scn.addObjectToScene(ghoo2);
+
+ghoo = new c3dl.Collada();
+ghoo.init("ghoo.dae");
+ghoo.poo = "thepoo"
+ghoo.setPickable(false)
+ghoo.setPosition([0,0,-1])
+scn.addObjectToScene(ghoo);
+
+
+
+
+
+cam = new c3dl.FreeCamera();
+cam.setPosition(new Array(1000,posheight,-1000));
+cam.setLookAtPoint(new Array(2000,posheight,-1000));
+cam.setFarClippingPlane(10000);			
+cam.setNearClippingPlane(0);
+cam.setFieldOfView(55);
+scn.setCamera(cam);
+scn.setKeyboardCallback(up,down);
+scn.startScene();
+scn.setPickingCallback(handler);
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//////// fire
+
+b5ubbles = new c3dl.ParticleSystem();
+b5ubbles.setPosition([-280,20,-1000]);
+b5ubbles.setMinColor([0.4,0,0,0]);
+b5ubbles.setMaxColor([0.8,0.2,0.1,0]);
+b5ubbles.setMinSize(32);
+b5ubbles.setMaxSize(160);
+b5ubbles.setSrcBlend(c3dl.ONE);
+b5ubbles.setDstBlend(c3dl.DST_ALPHA);
+b5ubbles.setTexture("fire.png");
+b5ubbles.setAcceleration([0,250,0]);
+b5ubbles.setMinVelocity([-25,250,-25]);
+b5ubbles.setMaxVelocity([25,450,25]);
+b5ubbles.setMinLifetime(0.1);
+b5ubbles.setMaxLifetime(0.5);
+b5ubbles.setEmitRate(50);
+b5ubbles.init(10);
+
+b6ubbles = new c3dl.ParticleSystem();
+b6ubbles.setPosition([-500,40,-1300]);
+b6ubbles.setMinColor([0.4,0,0,0]);
+b6ubbles.setMaxColor([1,0.2,0.1,0]);
+b6ubbles.setMinSize(100);
+b6ubbles.setMaxSize(200);
+b6ubbles.setSrcBlend(c3dl.ONE);
+b6ubbles.setDstBlend(c3dl.DST_ALPHA);
+b6ubbles.setTexture("fire.png");
+b6ubbles.setAcceleration([0,350,0]);
+b6ubbles.setMinVelocity([-25,250,-25]);
+b6ubbles.setMaxVelocity([25,450,25]);
+b6ubbles.setMinLifetime(0.1);
+b6ubbles.setMaxLifetime(0.5);
+b6ubbles.setEmitRate(50);
+b6ubbles.init(10);
+
+b7ubbles = new c3dl.ParticleSystem();
+b7ubbles.setPosition([-800,20,-1000]);
+b7ubbles.setMinColor([0.4,0,0,0]);
+b7ubbles.setMaxColor([0.8,0.2,0.1,0]);
+b7ubbles.setMinSize(32);
+b7ubbles.setMaxSize(160);
+b7ubbles.setSrcBlend(c3dl.ONE);
+b7ubbles.setDstBlend(c3dl.DST_ALPHA);
+b7ubbles.setTexture("fire.png");
+b7ubbles.setAcceleration([0,250,0]);
+b7ubbles.setMinVelocity([-25,250,-25]);
+b7ubbles.setMaxVelocity([25,450,25]);
+b7ubbles.setMinLifetime(0.1);
+b7ubbles.setMaxLifetime(0.5);
+b7ubbles.setEmitRate(50);
+b7ubbles.init(10);
+
+
+//////// bassment
+
+b1ubbles = new c3dl.ParticleSystem();
+b1ubbles.setPosition([-300,-260,-1470]);
+b1ubbles.setMinColor([0,0.3,0,0]);
+b1ubbles.setMaxColor([0.3,1,0.3,0]);
+b1ubbles.setMinSize(4);
+b1ubbles.setMaxSize(8);
+b1ubbles.setSrcBlend(c3dl.ONE);
+b1ubbles.setDstBlend(c3dl.DST_ALPHA);
+b1ubbles.setTexture("flare.png");
+b1ubbles.setAcceleration([0,0,0]);
+b1ubbles.setMinVelocity([0,80,0]);
+b1ubbles.setMaxVelocity([0,160,0]);
+b1ubbles.setMinLifetime(0.4);
+b1ubbles.setMaxLifetime(0.6);
+b1ubbles.setEmitRate(50);
+b1ubbles.init(10);
+
+
+
+
+
+
+b2ubbles = new c3dl.ParticleSystem();
+b2ubbles.setPosition([-200,-260,-1516]);
+b2ubbles.setMinColor([0,0.3,0,0]);
+b2ubbles.setMaxColor([0.3,1,0.3,0]);
+b2ubbles.setMinSize(4);
+b2ubbles.setMaxSize(8);
+b2ubbles.setSrcBlend(c3dl.ONE);
+b2ubbles.setDstBlend(c3dl.DST_ALPHA);
+b2ubbles.setTexture("flare.png");
+b2ubbles.setAcceleration([0,0,0]);
+b2ubbles.setMinVelocity([0,80,0]);
+b2ubbles.setMaxVelocity([0,160,0]);
+b2ubbles.setMinLifetime(0.4);
+b2ubbles.setMaxLifetime(0.6);
+b2ubbles.setEmitRate(50);
+b2ubbles.init(10);
+
+
+
+
+
+
+b3ubbles = new c3dl.ParticleSystem();
+b3ubbles.setPosition([-100,-260,-1470]);
+b3ubbles.setMinColor([0,0.3,0,0]);
+b3ubbles.setMaxColor([0.3,1,0.3,0]);
+b3ubbles.setMinSize(4);
+b3ubbles.setMaxSize(8);
+b3ubbles.setSrcBlend(c3dl.ONE);
+b3ubbles.setDstBlend(c3dl.DST_ALPHA);
+b3ubbles.setTexture("flare.png");
+b3ubbles.setAcceleration([0,0,0]);
+b3ubbles.setMinVelocity([0,80,0]);
+b3ubbles.setMaxVelocity([0,160,0]);
+b3ubbles.setMinLifetime(0.4);
+b3ubbles.setMaxLifetime(0.6);
+b3ubbles.setEmitRate(50);
+b3ubbles.init(10);
+
+
+
+
+
+
+b4ubbles = new c3dl.ParticleSystem();
+b4ubbles.setPosition([0,-260,-1516]);
+b4ubbles.setMinColor([0,0.3,0,0]);
+b4ubbles.setMaxColor([0.3,1,0.3,0]);
+b4ubbles.setMinSize(4);
+b4ubbles.setMaxSize(8);
+b4ubbles.setSrcBlend(c3dl.ONE);
+b4ubbles.setDstBlend(c3dl.DST_ALPHA);
+b4ubbles.setTexture("flare.png");
+b4ubbles.setAcceleration([0,0,0]);
+b4ubbles.setMinVelocity([0,80,0]);
+b4ubbles.setMaxVelocity([0,160,0]);
+b4ubbles.setMinLifetime(0.4);
+b4ubbles.setMaxLifetime(0.6);
+b4ubbles.setEmitRate(50);
+b4ubbles.init(10);
+
+
+
+
+
+
+
+
+
+/////////////////// ghost
+
+
+
+  bubbles = new c3dl.ParticleSystem();
+  bubbles.setPosition([1100,0,0]);
+
+  
+
+bubbles.setMinColor([0,0,1,0]);
+bubbles.setMaxColor([0.4,0.4,1,1]);
+
+
+bubbles.setMaxSize(44);
+bubbles.setMaxSize(64);
+
+  bubbles.setSrcBlend(c3dl.ONE);
+  bubbles.setDstBlend(c3dl.DST_ALPHA);
+  bubbles.setTexture("flare.png");
+  //accelerate the particles upwards
+  bubbles.setAcceleration([0,0,0]);
+  bubbles.setMinVelocity([-8,20,-8]);
+  bubbles.setMaxVelocity([8,80,8]);
+  //keep the lifespan of the particles short without too much variety
+  bubbles.setMinLifetime(0.3);
+  bubbles.setMaxLifetime(0.4);
+  
+  
+  //less particles per second
+  bubbles.setEmitRate(50);
+  bubbles.init(16);
+  scn.addObjectToScene(bubbles);
+
+  
+scn.setUpdateCallback(spinduck);
+
+setTimeout("letseatsomepoo()",timetoload);
+
+
+}}
+
+
+function letseatsomepoo(){
+varattack()
+pos = (new Array(-1000,posheight,-1900))
+cam.setPosition(new Array(-1000,posheight,-1900))
+cam.setLookAtPoint(new Array(-2000,posheight,-1900))
+cam.setFieldOfView(55);
+
+firedoor.setVisible(true)
+doorodoor.setVisible(true)
+red.setVisible(true)
+thebus.setVisible(false)
+thefense.setVisible(false)
+fireob.setVisible(false)
+yellow.setVisible(false)
+green.setVisible(false)
+ghoo.setVisible(false)
+ghoo2.setVisible(false)
+aalsdoor1l.setVisible(false)
+aalsdoor1r.setVisible(false)
+aalsdoor2l.setVisible(false)
+aalsdoor2r.setVisible(false)
+otisbb0.setVisible(false)
+otisbb1.setVisible(false)
+otisbb2.setVisible(false)
+otisb0.setVisible(false)
+otisb1.setVisible(false)
+otisb2.setVisible(false)
+otisbo.setVisible(false)
+aalsdoorl.setVisible(false)
+aalsdoorr.setVisible(false)
+aalsdoor0l.setVisible(false)
+aalsdoor0r.setVisible(false)
+aalslift.setVisible(false)
+alsdoorl.setVisible(false)
+alsdoorr.setVisible(false)
+alsdoor0l.setVisible(false)
+alsdoor0r.setVisible(false)
+alsdoor1l.setVisible(false)
+alsdoor1r.setVisible(false)
+alsdoor2l.setVisible(false)
+alsdoor2r.setVisible(false)
+alslift.setVisible(false)
+alsbb0.setVisible(false)
+alsbb1.setVisible(false)
+alsbb2.setVisible(false)
+alsbb3.setVisible(false)
+alsb0.setVisible(false)
+alsb1.setVisible(false)
+alsb2.setVisible(false)
+alsb3.setVisible(false)
+alsbo.setVisible(false)
+alsbc.setVisible(false)
+alsdoor3l.setVisible(false)
+alsdoor3r.setVisible(false)
+duck.setVisible(false)
+outside.setVisible(false)
+justoutside.setVisible(false)
+ghostobject.setVisible(false)
+
+  
+
+allowmove = 1
+posupdatealow = 1
+setTimeout("alert('The shopping has closed and you are trapped inside. You need to find a way to unlock the door so you can escape. Use the arrow keys to move, and use the mouse to click stuff.')",100);
+
+
+
+
+
+
+dsadsa()
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+function poosfunction(){
+if (((pos[2] < -1640) || (pos[1] > 600)) && (mrpoo1 == 1)){
+mrpoo1 = 0
+aalsdoor1l.setVisible(false)
+aalsdoor1r.setVisible(false)
+aalsdoor2l.setVisible(false)
+aalsdoor2r.setVisible(false)
+}
+if (((pos[2] > -1640) && (pos[1] < 600)) && (mrpoo1 == 0)){
+mrpoo1 = 1
+aalsdoor1l.setVisible(true)
+aalsdoor1r.setVisible(true)
+aalsdoor2l.setVisible(true)
+aalsdoor2r.setVisible(true)
+}
+
+
+if (((pos[2] > -1640) && (pos[2] < -1100)) && (mrpoo2 == 0)){
+mrpoo2 = 1
+otisbb0.setVisible(true)
+otisbb1.setVisible(true)
+otisbb2.setVisible(true)
+otisb0.setVisible(true)
+otisb1.setVisible(true)
+otisb2.setVisible(true)
+otisbo.setVisible(true)
+}
+if (((pos[2] < -1640) || (pos[2] > -1100)) && (mrpoo2 == 1)){
+mrpoo2 = 0
+otisbb0.setVisible(false)
+otisbb1.setVisible(false)
+otisbb2.setVisible(false)
+otisb0.setVisible(false)
+otisb1.setVisible(false)
+otisb2.setVisible(false)
+otisbo.setVisible(false)
+}
+
+
+if ((((pos[2] > -1640) && (pos[2] < -650)) || ((pos[2] > -1640) && (lift2open > 0))) && (mrpoo3 == 0)){
+mrpoo3 = 1
+aalsdoorl.setVisible(true)
+aalsdoorr.setVisible(true)
+aalsdoor0l.setVisible(true)
+aalsdoor0r.setVisible(true)
+aalslift.setVisible(true)
+}
+if (((pos[2] < -1640) || ((pos[2] > -650) && (lift2open == 0))) && (mrpoo3 == 1)){
+mrpoo3 = 0
+aalsdoorl.setVisible(false)
+aalsdoorr.setVisible(false)
+aalsdoor0l.setVisible(false)
+aalsdoor0r.setVisible(false)
+aalslift.setVisible(false)
+}
+
+if (((pos[0] < -1200) || (pos[1] < 0) || (pos[2] < -2200)) && (mrpoo4 == 1)){
+mrpoo4 = 0
+alsdoorl.setVisible(false)
+alsdoorr.setVisible(false)
+alsdoor0l.setVisible(false)
+alsdoor0r.setVisible(false)
+alsdoor1l.setVisible(false)
+alsdoor1r.setVisible(false)
+alsdoor2l.setVisible(false)
+alsdoor2r.setVisible(false)
+alslift.setVisible(false)
+}
+if (((pos[0] > -1200) && (pos[1] > 0) && (pos[2] > -2200)) && (mrpoo4 == 0)){
+mrpoo4 = 1
+alsdoorl.setVisible(true)
+alsdoorr.setVisible(true)
+alsdoor0l.setVisible(true)
+alsdoor0r.setVisible(true)
+alsdoor1l.setVisible(true)
+alsdoor1r.setVisible(true)
+alsdoor2l.setVisible(true)
+alsdoor2r.setVisible(true)
+alslift.setVisible(true)
+}
+
+if ((pos[2] > -640) && (mrpoo5 == 0)){
+mrpoo5 = 1
+alsbb0.setVisible(true)
+alsbb1.setVisible(true)
+alsbb2.setVisible(true)
+alsbb3.setVisible(true)
+alsb0.setVisible(true)
+alsb1.setVisible(true)
+alsb2.setVisible(true)
+alsb3.setVisible(true)
+alsbo.setVisible(true)
+alsbc.setVisible(true)
+alsdoor3l.setVisible(true)
+alsdoor3r.setVisible(true)
+}
+if ((pos[2] < -640) && (mrpoo5 == 1)){
+mrpoo5 = 0
+alsbb0.setVisible(false)
+alsbb1.setVisible(false)
+alsbb2.setVisible(false)
+alsbb3.setVisible(false)
+alsb0.setVisible(false)
+alsb1.setVisible(false)
+alsb2.setVisible(false)
+alsb3.setVisible(false)
+alsbo.setVisible(false)
+alsbc.setVisible(false)
+alsdoor3l.setVisible(false)
+alsdoor3r.setVisible(false)
+}
+
+if ((pos[2] < -1650) && (pos[2] > -3400) && (mrpoo6 == 0)){
+mrpoo6 = 1
+justoutside.setVisible(true)
+}
+if (((pos[2] > -1650) || (pos[2] < -3400)) && (mrpoo6 == 1)){
+mrpoo6 = 0
+justoutside.setVisible(false)
+}
+
+
+if ((pos[2] < -2250) && (mrpoo7 == 0)){
+mrpoo7 = 1
+outside.setVisible(true)
+}
+if ((pos[2] > -2250) && (mrpoo7 == 1)){
+mrpoo7 = 0
+outside.setVisible(false)
+}
+
+if ((pos[2] > -2200) && (mrpoo8 == 0)){
+mrpoo8 = 1
+duck.setVisible(true)
+}
+if ((pos[2] < -2200) && (mrpoo8 == 1)){
+mrpoo8 = 0
+duck.setVisible(false)
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+function mrwowlift(){
+
+if (lift1mode == 0){
+
+
+moocowwowyay = 0
+
+if ((lift1sel0 == 1) && (lift1floor == 0)){
+moocowwowyay = 1
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel0 = 0
+}
+if ((lift1sel1 == 1) && (lift1floor == 1)){
+moocowwowyay = 1
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel1 = 0
+}
+if ((lift1sel2 == 1) && (lift1floor == 2)){
+moocowwowyay = 1
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel2 = 0
+}if ((lift1sel3 == 1) && (lift1floor == 3)){
+moocowwowyay = 1
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel3 = 0
+}
+
+if (moocowwowyay == 0){
+
+if ((lift1dir == 1) && (lift1floor == 0)){
+if ((lift1sel1 == 1) || (lift1sel2 == 1) || (lift1sel3 == 1)){
+lift1mode = 4
+moocowwowyay = 1
+}
+}
+if ((lift1dir == 1) && (lift1floor == 1)){
+if ((lift1sel2 == 1) || (lift1sel3 == 1)){
+lift1mode = 4
+moocowwowyay = 1
+}
+}
+if ((lift1dir == 1) && (lift1floor == 2)){
+if ((lift1sel3 == 1)){
+lift1mode = 4
+moocowwowyay = 1
+}
+}
+if ((lift1dir == 0) && (lift1floor == 3)){
+if ((lift1sel2 == 1) || (lift1sel1 == 1) || (lift1sel0 == 1)){
+lift1mode = 6
+moocowwowyay = 1
+}
+}
+if ((lift1dir == 0) && (lift1floor == 2)){
+if ((lift1sel1 == 1) || (lift1sel0 == 1)){
+lift1mode = 6
+moocowwowyay = 1
+}
+}
+if ((lift1dir == 0) && (lift1floor == 1)){
+if ((lift1sel0 == 1)){
+lift1mode = 6
+moocowwowyay = 1
+}
+}
+if (moocowwowyay == 0){
+if (lift1dir == 1){
+lift1dir = 0
+}else{
+lift1dir = 1
+}}
+
+
+
+
+}}
+
+if (lift1mode == 1){
+lift1open+=(timeaa*openspeed)
+if (lift1open > 28){
+lift1open = 28
+lift1timer = 5000
+lift1mode = 3
+poosoundstop('soundalsdoor')
+}}
+
+if (lift1mode == 2){
+lift1open-=(timeaa*openspeed)
+if (lift1open < 0){
+lift1open = 0
+lift1mode = 0
+}
+if ((lift1sel0 == 1) && (lift1floor == 0)){
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel0 = 0
+}
+if ((lift1sel1 == 1) && (lift1floor == 1)){
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel1 = 0
+}
+if ((lift1sel2 == 1) && (lift1floor == 2)){
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel2 = 0
+}if ((lift1sel3 == 1) && (lift1floor == 3)){
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+lift1sel3 = 0
+}
+if ((pos[2] < -309) && (pos[2] > -325) && (pos[0] > -547) && (pos[0] < -450) && (lift1floor == floor)){
+lift1mode = 1
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+}
+}
+
+if (lift1mode == 3){
+if ((pos[2] < -309) && (pos[2] > -325) && (pos[0] > -547) && (pos[0] < -450) && (lift1floor == floor)){
+if (lift1timer < 2000){
+lift1timer = 2000
+}
+}
+if ((lift1sel0 == 1) && (lift1floor == 0)){
+lift1sel0 = 0
+}
+if ((lift1sel1 == 1) && (lift1floor == 1)){
+lift1sel1 = 0
+}
+if ((lift1sel2 == 1) && (lift1floor == 2)){
+lift1sel2 = 0
+}if ((lift1sel3 == 1) && (lift1floor == 3)){
+lift1sel3 = 0
+}
+lift1timer-=timeaa
+if (lift1timer < 0){
+lift1mode = 2
+if ((pos[0] < -200) && (pos[0] > -800) && (pos[2] < -100) && (pos[2] > -600) && (floor == lift1floor)){
+poosoundplay('soundalsdoor')
+}
+}}
+
+if (lift1mode == 4){
+if (lift1speed < alsspeed){
+if (lift1speed < (alsspeed / 10)){
+lift1speed+=(alsaccc*timeaa)
+}else{
+lift1speed+=(alsacc*timeaa)
+}
+}else{
+lift1speed = alsspeed
+}
+lift1pos+=(lift1speed*timeaa)
+
+
+if ((lift1pos > (189 - alslevel)) && (lift1floor == 0)){
+lift1floor = 1
+if (lift1sel1 == 1){
+lift1mode = 5
+}}
+if ((lift1pos > (416 - alslevel)) && (lift1floor == 1)){
+lift1floor = 2
+if (lift1sel2 == 1){
+lift1mode = 5
+}}
+if ((lift1pos > (910 - alslevel)) && (lift1floor == 2)){
+lift1floor = 3
+lift1mode = 5
+}
+
+}
+
+
+if (lift1mode == 5){
+if ((pos[2] < -316.1) && (pos[2] > -428) && (pos[0] > -528) && (pos[0] < -479)){
+floor = lift1floor
+}
+if (lift1speed > alslevelspeed){
+lift1speed-=(alsacccc*timeaa)
+}else{
+lift1speed = alslevelspeed
+}
+lift1pos+=(lift1speed*timeaa)
+if ((lift1floor == 1) && (lift1pos > 189)){
+lift1pos = 189
+lift1speed = 0
+lift1mode = 0
+}
+if ((lift1floor == 2) && (lift1pos > 416)){
+lift1pos = 416
+lift1speed = 0
+lift1mode = 0
+}
+if ((lift1floor == 3) && (lift1pos > 910)){
+lift1pos = 910
+lift1speed = 0
+lift1mode = 0
+}}
+
+
+
+if (lift1mode == 6){
+if (lift1speed > (0 - alsspeed)){
+if (lift1speed > (0 - (alsspeed / 10))){
+lift1speed-=(alsaccc*timeaa)
+}else{
+lift1speed-=(alsacc*timeaa)
+}
+}else{
+lift1speed = (0 - alsspeed)
+}
+lift1pos+=(lift1speed*timeaa)
+if ((lift1pos < (189 + alslevel)) && (lift1floor == 2)){
+lift1floor = 1
+if (lift1sel1 == 1){
+lift1mode = 7
+}}
+if ((lift1pos < (416 + alslevel)) && (lift1floor == 3)){
+lift1floor = 2
+if (lift1sel2 == 1){
+lift1mode = 7
+}}
+if ((lift1pos < (0 + alslevel)) && (lift1floor == 1)){
+lift1floor = 0
+lift1mode = 7
+}
+
+}
+
+if (lift1mode == 7){
+if ((pos[2] < -316.1) && (pos[2] > -428) && (pos[0] > -528) && (pos[0] < -479)){
+floor = lift1floor
+}
+if (lift1speed < (0 - alslevelspeed)){
+lift1speed+=(alsacccc*timeaa)
+}else{
+lift1speed = (0 - alslevelspeed)
+}
+lift1pos+=(lift1speed*timeaa)
+if ((lift1floor == 1) && (lift1pos < 189)){
+lift1pos = 189
+lift1speed = 0
+lift1mode = 0
+}
+if ((lift1floor == 2) && (lift1pos < 416)){
+lift1pos = 416
+lift1speed = 0
+lift1mode = 0
+}
+if ((lift1floor == 0) && (lift1pos < 0)){
+lift1pos = 0
+lift1speed = 0
+lift1mode = 0
+}}
+
+
+
+
+
+alslift.setPosition([0,lift1pos,1])
+alsdoorl.setPosition([(-29.9 - lift1open),lift1pos,1.5])
+alsdoorr.setPosition([lift1open,lift1pos,1.5])
+alsb3.setPosition([-532.5,(45 + lift1pos),-336])
+alsb2.setPosition([-532.5,(43.5 + lift1pos),-336])
+alsb1.setPosition([-532.5,(42 + lift1pos),-336])
+alsb0.setPosition([-532.5,(40.5 + lift1pos),-336])
+alsbo.setPosition([-532.5,(39 + lift1pos),-335])
+alsbc.setPosition([-532.5,(39 + lift1pos),-337])
+
+
+
+
+
+if (lift1floor == 0){
+alsdoor0l.setPosition([(-29.9 - lift1open),0,3])
+alsdoor0r.setPosition([lift1open,0,3])
+}
+if (lift1floor == 1){
+alsdoor1l.setPosition([(-29.9 - lift1open),189,3])
+alsdoor1r.setPosition([lift1open,189,3])
+}
+if (lift1floor == 2){
+alsdoor2l.setPosition([(-29.9 - lift1open),416,3])
+alsdoor2r.setPosition([lift1open,416,3])
+}
+if (lift1floor == 3){
+alsdoor3l.setPosition([(-29.9 - lift1open),910,3])
+alsdoor3r.setPosition([lift1open,910,3])
+}
+
+
+
+
+
+
+}
+
+
+
+
+function lift1opena(){
+if (floor == lift1floor){
+return (lift1open)
+}else{
+return (0)
+}}
+function lift2opena(){
+if ((floor + 1) == lift2floor){
+return (lift2open)
+}else{
+return (0)
+}}
+
+
+
+
+
+//   kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+
+function mrwowlifta(){
+
+if (lift2mode == 0){
+
+
+moocowwowyay = 0
+
+if ((lift2sel0 == 1) && (lift2floor == 0)){
+moocowwowyay = 1
+lift2mode = 1
+
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+
+lift2sel0 = 0
+}
+if ((lift2sel1 == 1) && (lift2floor == 1)){
+moocowwowyay = 1
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel1 = 0
+}
+if ((lift2sel2 == 1) && (lift2floor == 2)){
+moocowwowyay = 1
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel2 = 0
+}if ((lift2sel3 == 1) && (lift2floor == 3)){
+moocowwowyay = 1
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel3 = 0
+}
+
+if (moocowwowyay == 0){
+
+if ((lift2dir == 1) && (lift2floor == 0)){
+if ((lift2sel1 == 1) || (lift2sel2 == 1) || (lift2sel3 == 1)){
+lift2mode = 4
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundplay('soundotisstart')
+}
+moocowwowyay = 1
+}
+}
+if ((lift2dir == 1) && (lift2floor == 1)){
+if ((lift2sel2 == 1) || (lift2sel3 == 1)){
+lift2mode = 4
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundplay('soundotisstart')
+}
+
+moocowwowyay = 1
+}
+}
+if ((lift2dir == 1) && (lift2floor == 2)){
+if ((lift2sel3 == 1)){
+lift2mode = 4
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundplay('soundotisstart')
+}
+
+moocowwowyay = 1
+}
+}
+if ((lift2dir == 0) && (lift2floor == 3)){
+if ((lift2sel2 == 1) || (lift2sel1 == 1) || (lift2sel0 == 1)){
+lift2mode = 6
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundplay('soundotisstart')
+}
+
+moocowwowyay = 1
+}
+}
+if ((lift2dir == 0) && (lift2floor == 2)){
+if ((lift2sel1 == 1) || (lift2sel0 == 1)){
+lift2mode = 6
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundplay('soundotisstart')
+}
+
+moocowwowyay = 1
+}
+}
+if ((lift2dir == 0) && (lift2floor == 1)){
+if ((lift2sel0 == 1)){
+lift2mode = 6
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundplay('soundotisstart')
+}
+
+moocowwowyay = 1
+}
+}
+if (moocowwowyay == 0){
+if (lift2dir == 1){
+lift2dir = 0
+}else{
+lift2dir = 1
+}}
+
+
+
+
+}}
+
+if (lift2mode == 1){
+lift2open+=(timeaa*openspeed)
+if (lift2open > 28){
+lift2open = 28
+lift2timer = 5000
+lift2mode = 3
+poosoundstop('soundotisdoor')
+}}
+
+if (lift2mode == 2){
+lift2open-=(timeaa*openspeed)
+if (lift2open < 0){
+lift2open = 0
+lift2mode = 0
+}
+if ((lift2sel0 == 1) && (lift2floor == 0)){
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel0 = 0
+}
+if ((lift2sel1 == 1) && (lift2floor == 1)){
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel1 = 0
+}
+if ((lift2sel2 == 1) && (lift2floor == 2)){
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel2 = 0
+}if ((lift2sel3 == 1) && (lift2floor == 3)){
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+lift2sel3 = 0
+}
+if ((pos[2] < -1532) && (pos[2] > -1559) && (pos[0] > -549) && (pos[0] < -461) && (floor == (lift2floor - 1))){
+lift2mode = 1
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+}
+}
+
+if (lift2mode == 3){
+if ((pos[2] < -1532) && (pos[2] > -1559) && (pos[0] < -549) && (pos[0] > -461) && (lift2floor == floor)){
+if (lift2timer < 2000){
+lift2timer = 2000
+}
+}
+if ((lift2sel0 == 1) && (lift2floor == 0)){
+lift2sel0 = 0
+}
+if ((lift2sel1 == 1) && (lift2floor == 1)){
+lift2sel1 = 0
+}
+if ((lift2sel2 == 1) && (lift2floor == 2)){
+lift2sel2 = 0
+}if ((lift2sel3 == 1) && (lift2floor == 3)){
+lift2sel3 = 0
+}
+lift2timer-=timeaa
+if (lift2timer < 0){
+lift2mode = 2
+
+if ((pos[2] < -1100) && (pos[2] > -1619) && (pos[0] > -600) && (pos[0] < -300) && (floor == (lift2floor - 1))){
+poosoundplay('soundotisdoor')
+}
+
+}}
+
+if (lift2mode == 4){
+if (lift2speed < otisspeed){
+if (lift2speed < (otisspeed / 10)){
+lift2speed+=(otisaccc*timeaa)
+}else{
+lift2speed+=(otisacc*timeaa)
+}
+}else{
+lift2speed = otisspeed
+}
+lift2pos+=(lift2speed*timeaa)
+
+
+if ((lift2pos > (264.5 - otislevel)) && (lift2floor == 0)){
+lift2floor = 1
+if (lift2sel1 == 1){
+lift2mode = 5
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundstop('soundotisstart')
+poosoundplay('soundotisstop')
+}
+
+}}
+if ((lift2pos > (453.5 - otislevel)) && (lift2floor == 1)){
+lift2floor = 2
+if (lift2sel2 == 1){
+lift2mode = 5
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundstop('soundotisstart')
+poosoundplay('soundotisstop')
+}
+
+}}
+if ((lift2pos > (910 - otislevel)) && (lift2floor == 2)){
+lift2floor = 3
+lift2mode = 5
+
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundstop('soundotisstart')
+poosoundplay('soundotisstop')
+}
+
+}
+
+}
+
+
+if (lift2mode == 5){
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+floor = (lift2floor - 1)
+}
+if (lift2speed > otislevelspeed){
+lift2speed-=(otisacccc*timeaa)
+}else{
+lift2speed = otislevelspeed
+}
+lift2pos+=(lift2speed*timeaa)
+if ((lift2floor == 1) && (lift2pos > 264.5)){
+lift2pos = 264.5
+lift2speed = 0
+lift2mode = 0
+}
+if ((lift2floor == 2) && (lift2pos > 453.5)){
+lift2pos = 453.5
+lift2speed = 0
+lift2mode = 0
+}
+if ((lift2floor == 3) && (lift2pos > 910)){
+lift2pos = 910
+lift2speed = 0
+lift2mode = 0
+}}
+
+
+
+if (lift2mode == 6){
+if (lift2speed > (0 - otisspeed)){
+if (lift2speed > (0 - (otisspeed / 10))){
+lift2speed-=(otisaccc*timeaa)
+}else{
+lift2speed-=(otisacc*timeaa)
+}
+}else{
+lift2speed = (0 - otisspeed)
+}
+lift2pos+=(lift2speed*timeaa)
+if ((lift2pos < (264.5 + otislevel)) && (lift2floor == 2)){
+lift2floor = 1
+if (lift2sel1 == 1){
+lift2mode = 7
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundstop('soundotisstart')
+poosoundplay('soundotisstop')
+}
+}}
+if ((lift2pos < (453.5 + otislevel)) && (lift2floor == 3)){
+lift2floor = 2
+if (lift2sel2 == 1){
+lift2mode = 7
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundstop('soundotisstart')
+poosoundplay('soundotisstop')
+}
+}}
+if ((lift2pos < (0 + otislevel)) && (lift2floor == 1)){
+lift2floor = 0
+lift2mode = 7
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+poosoundstop('soundotisstart')
+poosoundplay('soundotisstop')
+}
+}
+
+}
+
+if (lift2mode == 7){
+if ((pos[2] < -1557) && (pos[2] > -1619) && (pos[0] > -549) && (pos[0] < -461)){
+floor = (lift2floor - 1)
+}
+if (lift2speed < (0 - otislevelspeed)){
+lift2speed+=(otisacccc*timeaa)
+}else{
+lift2speed = (0 - otislevelspeed)
+}
+lift2pos+=(lift2speed*timeaa)
+if ((lift2floor == 1) && (lift2pos < 264.5)){
+lift2pos = 264.5
+lift2speed = 0
+lift2mode = 0
+}
+if ((lift2floor == 2) && (lift2pos < 453.5)){
+lift2pos = 453.5
+lift2speed = 0
+lift2mode = 0
+}
+if ((lift2floor == 0) && (lift2pos < 0)){
+lift2pos = 0
+lift2speed = 0
+lift2mode = 0
+}}
+
+
+
+
+
+aalslift.setPosition([0,lift2pos,1])
+aalsdoorl.setPosition([(-28 - lift2open),lift2pos,0])
+aalsdoorr.setPosition([lift2open,lift2pos,0])
+
+
+
+otisb2.setPosition([-544,(43.7 + lift2pos - 264.5),-1548])
+otisb1.setPosition([-544,(42 + lift2pos - 264.5),-1548])
+otisb0.setPosition([-544,(40.3 + lift2pos - 264.5),-1548])
+otisbo.setPosition([-544,(38.6 + lift2pos - 264.5),-1548])
+
+
+
+
+
+
+if (lift2floor == 0){
+aalsdoor0l.setPosition([(-28.3 - lift2open),0,2.1])
+aalsdoor0r.setPosition([lift2open,0,2.1])
+}
+if (lift2floor == 1){
+aalsdoor1l.setPosition([(-28.3 - lift2open),264.5,2.1])
+aalsdoor1r.setPosition([lift2open,264.5,2.1])
+}
+if (lift2floor == 2){
+aalsdoor2l.setPosition([(-28.3 - lift2open),452.8,2.1])
+aalsdoor2r.setPosition([lift2open,452.8,2.1])
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+function ghostgo(wowpoo1,wowpoo2,wowpoo3,wowpoo4,wowpoo5,wowpoo6){
+if (mrghost == 0){
+mrghost =  1
+ghostobject.setVisible(true)
+}
+
+
+if (allowghost == 1){
+wantghostlook = 0
+if (wowpoo4 > 0){
+wantghostlook = 1
+}
+if (wowpoo4 < 0){
+wantghostlook = 3
+}
+if (wowpoo6 > 0){
+wantghostlook = 0
+}
+if (wowpoo6 < 0){
+wantghostlook = 2
+}
+
+if (wantghostlook != ghostlooking){
+ghostobject.yaw(1.57079633)
+ghostlooking++
+if (ghostlooking == 4){
+ghostlooking = 0
+}}
+if (wantghostlook != ghostlooking){
+ghostobject.yaw(1.57079633)
+ghostlooking++
+if (ghostlooking == 4){
+ghostlooking = 0
+}}
+if (wantghostlook != ghostlooking){
+ghostobject.yaw(1.57079633)
+ghostlooking++
+if (ghostlooking == 4){
+ghostlooking = 0
+}}
+if (wantghostlook != ghostlooking){
+ghostobject.yaw(1.57079633)
+ghostlooking++
+if (ghostlooking == 4){
+ghostlooking = 0
+}}
+
+
+
+ghostobject.setPosition([ghostx,(ghosty - 8),ghostz])
+  bubbles.setPosition([wowpoo1,wowpoo2,wowpoo3]);
+  bubbles.setAcceleration([0,0,0]);
+  bubbles.setMinVelocity([(wowpoo4 - ghostout),ghostupl,(wowpoo6 - ghostout)]);
+  bubbles.setMaxVelocity([(wowpoo4 + ghostout),ghostuph,(wowpoo6 + ghostout)]);
+  ghostx = wowpoo1
+  ghosty = wowpoo2
+  ghostz = wowpoo3
+  ghostsx = wowpoo4
+  ghostsy = wowpoo5
+  ghostsz = wowpoo6
+
+}}
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////
+
+
+
+
+function multimanager(fgfgfg){//todo
+
+key37 = false
+key40 = false
+key38 = false
+key39 = false
+var t_dfjgoedijf = 0
+while(t_dfjgoedijf < fgfgfg.length){
+
+if (fgfgfg[t_dfjgoedijf].pageX > (window.innerWidth * 0.75)){
+var xxxxxxqweaa = fgfgfg[t_dfjgoedijf].pageX
+var yyyyyyqweaa = fgfgfg[t_dfjgoedijf].pageY
+
+xxxxxxqweaa = ((((xxxxxxqweaa / window.innerWidth) * 4) - 3) * 200)
+yyyyyyqweaa = ((yyyyyyqweaa / window.innerHeight) * 480)
+
+
+if ((xxxxxxqweaa > 50)  && (xxxxxxqweaa < 150) && (yyyyyyqweaa > 180) && (yyyyyyqweaa < 280)){key38=true}
+if ((xxxxxxqweaa > 0)   && (xxxxxxqweaa < 100) && (yyyyyyqweaa > 280) && (yyyyyyqweaa < 380)){key37=true}
+if ((xxxxxxqweaa > 100) && (xxxxxxqweaa < 200) && (yyyyyyqweaa > 280) && (yyyyyyqweaa < 380)){key39=true}
+if ((xxxxxxqweaa > 50)  && (xxxxxxqweaa < 150) && (yyyyyyqweaa > 380) && (yyyyyyqweaa < 480)){key40=true}
+
+
+}
+
+
+t_dfjgoedijf++
+}
+
+multimanagerdraw()
+}
+
+
+function multimanagerdraw(){
+ctx2.fillStyle = "#000000";
+ctx2.fillRect(0, 0, 200, 480);
+ctx2.fillStyle = "#FFFFFF";
+if ((mobilemode != "basickeyboard") && (mobilemode != "verybasickeyboard")){
+ctx2.fillRect(50, 4, 96, 96);
+}
+if (mobilemode != "verybasickeyboard"){
+ctx2.fillRect(50, 182, 96, 96);
+}
+ctx2.fillRect(4, 282, 96, 96);
+ctx2.fillRect(102, 282, 96, 96);
+if (mobilemode != "verybasickeyboard"){
+ctx2.fillRect(50, 382, 96, 96);
+}
+if ((mobilemode != "basickeyboard") && (mobilemode != "verybasickeyboard")){
+if (key_space){ctx2.fillStyle = "#BBBB99"}else{ctx2.fillStyle = "#111111"}
+ctx2.fillRect(52, 6, 92, 92);
+}
+if (mobilemode != "verybasickeyboard"){
+if (key38){ctx2.fillStyle = "#BBBB99"}else{ctx2.fillStyle = "#111111"}
+ctx2.fillRect(52, 184, 92, 92);
+}
+if (key37){ctx2.fillStyle = "#BBBB99"}else{ctx2.fillStyle = "#111111"}
+ctx2.fillRect(6, 284, 92, 92);
+if (key39){ctx2.fillStyle = "#BBBB99"}else{ctx2.fillStyle = "#111111"}
+ctx2.fillRect(104, 284, 92, 92);
+if (mobilemode != "verybasickeyboard"){
+if (key40){ctx2.fillStyle = "#BBBB99"}else{ctx2.fillStyle = "#111111"}
+ctx2.fillRect(52, 384, 92, 92);
+}
+ctx2.fillStyle = "#FFFFFF";
+ctx2.textAlign = "center";
+if ((mobilemode != "basickeyboard") && (mobilemode != "verybasickeyboard")){
+ctx2.font = '16pt Calibri';
+ctx2.fillText(mobilemode, 100, 62);
+}
+if (mobilemode != "verybasickeyboard"){
+ctx2.font = '30pt Calibri';
+ctx2.fillText('^', 100, 250);
+}
+ctx2.font = '20pt Calibri';
+ctx2.fillText('<', 50, 338);
+ctx2.fillText('>', 150, 338);
+if (mobilemode != "verybasickeyboard"){
+ctx2.fillText('v', 100, 430);
+}
+
+
+
+}
+
+
+
+
+
+function dsadsa(){
+
+poocanvas.addEventListener('touchstart', function(e){e.preventDefault();if (inmobileview){
+
+xxxsss = (event.touches[0].pageX / (window.innerWidth / 640));
+yyysss = (event.touches[0].pageY / (window.innerHeight / 480));
+simulateMouseEvent(xxxsss + 100, yyysss + 0)
+
+
+
+}else{if(mobilemode != "none"){inmobileview = true;
+
+dfsdafdwsafsda()
+
+}}})}
+
+
+
+function dfsdafdwsafsda(){
+try{
+var elem = document.getElementById("theAdvert"); elem.parentNode.removeChild(elem);
+}catch(e){}
+
+document.body.style.background = 'none';
+document.body.style.backgroundColor = '#000000';
+fullScreenViewMode = true
+if (mobilemode != "nokeyboard"){
+
+
+//poocanvas.width=800
+//poocanvas.height=600
+var canvas2 = document.createElement('canvas');
+
+canvas2.id = "canvas2";
+canvas2.width = 200;
+canvas2.height = 480;
+canvas2.style.position = "absolute";
+canvas2.style.padding = "0px";
+canvas2.style.margin = "0px";
+canvas2.style.top = "0px";
+canvas2.style.left = "0px";
+document.body.appendChild(canvas2);
+canvas2 = document.getElementById("canvas2");
+ctx2 = canvas2.getContext("2d");
+canvas2.addEventListener('touchstart', function(e){e.preventDefault();multimanager(event.targetTouches)})
+canvas2.addEventListener('touchend', function(e){e.preventDefault();multimanager(event.targetTouches)})
+canvas2.addEventListener('touchleave', function(e){e.preventDefault();multimanager(event.targetTouches)})
+canvas2.addEventListener('touchmove', function(e){e.preventDefault();multimanager(event.targetTouches)})
+canvas2.addEventListener('touchcancel', function(e){e.preventDefault();multimanager(event.targetTouches)})
+
+multimanagerdraw()
+
+
+}
+setFullScreen()}
+
+
+
+function setFullScreen(){
+if (fullScreenViewMode){
+document.getElementById("thePositioner").style.top = "0px";
+document.getElementById("thePositioner").style.left = "0px";
+
+
+if (inmobileview){
+if (mobilemode == "nokeyboard"){
+canvas.style.width=  ("" + window.innerWidth + "px")
+canvas.style.height=  ("" + window.innerHeight + "px")
+
+}else{
+	
+
+	
+poocanvas.style.width=  ("" + Math.floor(window.innerWidth * 0.75) + "px")
+poocanvas.style.height=  ("" + window.innerHeight + "px")
+canvas2.style.width=  ("" + (window.innerWidth * 0.25) + "px")
+canvas2.style.height=  ("" + window.innerHeight + "px")
+canvas2.style.left=  ("" + (window.innerWidth * 0.75) + "px")
+	
+}
+}else{
+	
+	if ((window.innerWidth * 0.75) > window.innerHeight){
+
+		poocanvas.style.width=  ("" + (window.innerHeight * 1.33334) + "px")
+		poocanvas.style.height=  ("" + window.innerHeight + "px")
+
+	}else{
+		poocanvas.style.width=  ("" + window.innerWidth + "px")
+		poocanvas.style.height=  ("" + (window.innerWidth * 0.75) + "px")
+
+	}
+	
+	
+}
+
+
+
+
+}}
+
+
+
+
+function simulateMouseEvent(coordX, coordY) {
+  poocanvas.dispatchEvent(new MouseEvent("mousedown", {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+    clientX: coordX,
+    clientY: coordY,
+	pageX: coordX,
+    pageY: coordY,
+	screenX: coordX,
+    screenY: coordY,
+    button: 0
+  }));
+};
+
+
+
+
+
+
+
+
+
+
+
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+margin: 0pt;
+padding: 0pt;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+a.thelinkyayay:link {color:#000000 ; text-decoration: none; }
+a.thelinkyayay:active {color: #000000; text-decoration: none; }
+a.thelinkyayay:visited {color: #000000; text-decoration: none; }
+a.thelinkyayay:hover {color: #000000; text-decoration: none; }
+</style></head><body onresize="setFullScreen()" TOPMARGIN=0 LEFTMARGIN=0 MARGINHEIGHT=0 MARGINWIDTH=0>
+
+<div id="thePositioner" style="position:absolute;top:30px;left:140px;"><canvas id="poocanvas" width="640" height="480"></canvas></div>
+<div id="theAdvert" style="position:absolute;top:159px;left:849px;"><a class="thelinkyayay" href="https://beno.uk/games/"><img border=1 src="../games/a.jpg"/></a></div>
+
+</body></html>

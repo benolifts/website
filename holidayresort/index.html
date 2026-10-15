@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="content-type" content="text/html;">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui," /> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>Holiday Resort</title>
+<script type="text/javascript" src="../beno_game_system.js"></script>
+<script type="text/javascript">
+mobilemode = "nokeyboard";fullScreenViewMode = false;inmobileview = false;
+
+
+
+compatibilitymode = "mp3";gameframe = true;gamego = false;var loaderimagesfile=new Array();var loaderimagesname=new Array();var loadersoundsfile=new Array();var loadersoundsname=new Array();var loadersoundsloop=new Array();
+
+delay_after_click = 64
+delay_for_effect = 150
+delay_until_next_reaction = 300
+
+// random start normal
+aa101 = 90
+aa102 = 16
+aa103 = 3
+aa301 = 4
+aa1 = 20
+aa2 = 5
+aa3 = 3
+
+// random start hard
+aaa101 = 16
+aaa102 = 2
+aaa103 = 1
+aaa301 = 16
+aaa1 = 40
+aaa2 = 2
+aaa3 = 1
+
+// scores
+score0 = 0
+score1 = 0
+score2 = 0
+score3 = 0
+score4 = 0
+score5 = 0
+score6 = 0
+score7 = 0
+score8 = 0
+score9 = 0
+score10 = 0
+score11 = 0
+score101 = 1
+score102 = 5
+score103 = 25
+score104 = 125
+score105 = 625
+score106 = 3125
+score107 = 15625
+score108 = 78125
+score109 = 390625
+score110 = 1953125
+score111 = 9765625
+score112 = 48828125
+score113 = 244140625
+score114 = 1220703125
+score115 = 6103515625
+score116 = 30517578125
+score117 = 30517578125
+score118 = 30517578125
+score119 = 30517578125
+score120 = 30517578125
+score121 = 30517578125
+score122 = 30517578125
+score123 = 30517578125
+score124 = 30517578125
+score201 = (1 * 6)
+score202 = (5 * 6)
+score203 = (25 * 6)
+score204 = (125 * 6)
+score205 = (625 * 6)
+score206 = (3125 * 6)
+score207 = (15625 * 6)
+score208 = (78125 * 6)
+score209 = (390625 * 6)
+score210 = (1953125 * 6)
+score211 = (9765625 * 6)
+score212 = (48828125 * 6)
+score213 = (244140625 * 6)
+score214 = (1220703125 * 6)
+score215 = (6103515625 * 6)
+score216 = (30517578125 * 6)
+score217 = (30517578125 * 6)
+score218 = (30517578125 * 6)
+score301 = (1 * 3)
+score302 = (5 * 3)
+score303 = (25 * 3)
+score304 = (125 * 3)
+score305 = (625 * 3)
+score306 = (3125 * 3)
+score307 = (15625 * 3)
+score308 = (78125 * 3)
+score309 = (390625 * 3)
+score310 = (1953125 * 3)
+score311 = (9765625 * 3)
+score312 = (48828125 * 3)
+score313 = (244140625 * 3)
+score314 = (1220703125 * 3)
+score315 = (6103515625 * 3)
+score316 = (30517578125 * 3)
+score317 = (30517578125 * 3)
+score318 = (30517578125 * 3)
+
+
+
+
+
+
+
+
+loaderimagesfile[0]="4.jpg"
+loaderimagesname[0]="imgst";
+loaderimagesfile[1]="0.png"
+loaderimagesname[1]="img0";
+loaderimagesfile[2]="1.png"
+loaderimagesname[2]="img1";
+loaderimagesfile[3]="2.png"
+loaderimagesname[3]="img2";
+loaderimagesfile[4]="3.png"
+loaderimagesname[4]="img3";
+loaderimagesfile[5]="5.png"
+loaderimagesname[5]="img5";
+loaderimagesfile[6]="6.png"
+loaderimagesname[6]="imga";
+loadersoundsfile[0]="grr.mp3"
+loadersoundsname[0]="soundgrr";
+loadersoundsloop[0]=0;
+loadersoundsfile[1]="put.mp3"
+loadersoundsname[1]="soundput";
+loadersoundsloop[1]=0;
+loadersoundsfile[2]="swap.mp3"
+loadersoundsname[2]="soundswap";
+loadersoundsloop[2]=0;
+loadersoundsfile[3]="delete.mp3"
+loadersoundsname[3]="sounddelete";
+loadersoundsloop[3]=0;
+loadersoundsfile[4]="click.mp3"
+loadersoundsname[4]="soundclick";
+loadersoundsloop[4]=0;
+loadersoundsfile[5]="grave.mp3"
+loadersoundsname[5]="soundgrave";
+loadersoundsloop[5]=0;
+loadersoundsfile[6]="s2.mp3"
+loadersoundsname[6]="sounds2";
+loadersoundsloop[6]=0;
+loadersoundsfile[7]="s3.mp3"
+loadersoundsname[7]="sounds3";
+loadersoundsloop[7]=0;
+loadersoundsfile[8]="s4.mp3"
+loadersoundsname[8]="sounds4";
+loadersoundsloop[8]=0;
+loadersoundsfile[9]="s5.mp3"
+loadersoundsname[9]="sounds5";
+loadersoundsloop[9]=0;
+loadersoundsfile[10]="s6.mp3"
+loadersoundsname[10]="sounds6";
+loadersoundsloop[10]=0;
+loadersoundsfile[11]="s7.mp3"
+loadersoundsname[11]="sounds7";
+loadersoundsloop[11]=0;
+loadersoundsfile[12]="s8.mp3"
+loadersoundsname[12]="sounds8";
+loadersoundsloop[12]=0;
+loadersoundsfile[13]="s9.mp3"
+loadersoundsname[13]="sounds9";
+loadersoundsloop[13]=0;
+loadersoundsfile[14]="g2.mp3"
+loadersoundsname[14]="soundg2";
+loadersoundsloop[14]=0;
+loadersoundsfile[15]="g3.mp3"
+loadersoundsname[15]="soundg3";
+loadersoundsloop[15]=0;
+loadersoundsfile[16]="g4.mp3"
+loadersoundsname[16]="soundg4";
+loadersoundsloop[16]=0;
+loadersoundsfile[17]="g5.mp3"
+loadersoundsname[17]="soundg5";
+loadersoundsloop[17]=0;
+
+
+
+
+
+function wow(){
+mrmouse = 0; mousewow = 0; ax = 0; ay = 0;thebigmode = 0
+canvas.addEventListener('mousedown', m_down);
+canvas.addEventListener('mousemove', m_move);
+setTimeout("woww()",100)
+}
+function m_move(ev){
+if (thebigmode < 2){
+if (mousewow == 1){
+mousewow = 0
+
+if (!inmobileview){
+if(fullScreenViewMode){
+x=  ev.clientX / (eval(canvas.style.width.substring(0, canvas.style.width.length-2)) / 640)
+y=  ev.clientY / (eval(canvas.style.height.substring(0, canvas.style.height.length-2)) / 480)
+}else{
+x = (ev.clientX - 140)
+y = (ev.clientY - 30)
+}}
+
+
+
+
+ax = Math.floor((x + 40) / 70)
+ay = Math.floor((y + 40) / 70)
+if (mrmouse == 1){
+draw(0)
+}
+mousewow = 1
+}else{
+if (mrmouse == 1){
+if (!inmobileview){
+if(fullScreenViewMode){
+x=  ev.clientX / (eval(canvas.style.width.substring(0, canvas.style.width.length-2)) / 640)
+y=  ev.clientY / (eval(canvas.style.height.substring(0, canvas.style.height.length-2)) / 480)
+}else{
+x = (ev.clientX - 140)
+y = (ev.clientY - 30)
+}
+}
+
+
+}}}else{
+
+if (!inmobileview){
+if(fullScreenViewMode){
+x=  ev.clientX / (eval(canvas.style.width.substring(0, canvas.style.width.length-2)) / 640)
+y=  ev.clientY / (eval(canvas.style.height.substring(0, canvas.style.height.length-2)) / 480)
+}else{
+x = (ev.clientX - 140)
+y = (ev.clientY - 30)
+}
+}
+
+
+ax = Math.floor((x + 40) / 70)
+ay = Math.floor((y + 40) / 70)
+}}
+
+
+function m_down(ev){
+if (thebigmode < 2){
+
+
+if ((mousewow == 1) && (mrmouse == 1)){
+mrmouse = 0
+mousewow = 0
+
+
+if (!inmobileview){
+if(fullScreenViewMode){
+x=  ev.clientX / (eval(canvas.style.width.substring(0, canvas.style.width.length-2)) / 640)
+y=  ev.clientY / (eval(canvas.style.height.substring(0, canvas.style.height.length-2)) / 480)
+}else{
+x = (ev.clientX - 140)
+y = (ev.clientY - 30)
+}}
+
+
+
+ax = Math.floor((x + 40) / 70)
+ay = Math.floor((y + 40) / 70)
+if (x < 495){
+if (((ax > 0) && (ax < 7) && (ay > 0) && (ay < 7) && (((eval("a" + ax + "a" + ay)) == 0) || ((eval("a" + ax + "a" + ay)) > 1000))) && (next != 3)){
+
+
+
+
+if ((eval("a" + ax + "a" + ay)) == 0){
+if (next == 1){
+soundgrr.play()
+}else{
+soundput.play()
+}
+window["a" + ax + "a" + ay] = next
+draw(100)
+wx = ax
+wy = ay
+if (next == 2){
+crystal = 1
+}else{
+crystal = 0
+}
+nextzz = next
+mrnext()
+
+
+if (nextzz != 1){
+mrup()
+}else{
+jj = 0
+}
+
+if (crystal == 0){
+if (jj == 0){
+moovee()
+}else{
+setTimeout("acowaa()",delay_after_click)
+}
+}else{
+window["a" + wx + "a" + wy] = 117
+setTimeout("acowa()",delay_after_click)
+}
+}else{
+soundswap.play()
+nnext = eval("a" + ax + "a" + ay)
+window["a" + ax + "a" + ay] = (next + 1000)
+next = (nnext - 1000)
+draw(0)
+mousewow = 1
+mrmouse = 1
+}}else{
+if ((ax > 0) && (ax < 7) && (ay > 0) && (ay < 7) && ((eval("a" + ax + "a" + ay)) != 0) && (next == 3)){
+mrnext()
+if ((eval("a" + ax + "a" + ay)) > 1000){
+soundswap.play()
+nnext = eval("a" + ax + "a" + ay)
+window["a" + ax + "a" + ay] = (1003)
+next = (nnext - 1000)
+draw(0)
+mousewow = 1
+mrmouse = 1
+}else{
+sounddelete.play()
+window["a" + ax + "a" + ay] = 3
+draw(100)
+setTimeout("aacowqq()",delay_for_effect)
+}}else{
+mousewow = 1
+mrmouse = 1
+}}}else{
+mrmouse = 1
+mousewow = 1
+if ((x > 498) && (x < 598) && (y > 365) && (y < 422)){
+soundclick.play()
+mrmouse = 0
+mousewow = 0
+thebigmode = 3
+draw(100)
+}
+
+if ((x > 550) && (y < 40) && (!inmobileview) && (!fullScreenViewMode)){
+soundclick.play()
+desktopFullScreenMode()
+}
+
+
+if ((x > 507) && (x < 589) && (y > 438) && (y < 465)){
+soundclick.play()
+window.open('help.html', 'HELP', 'width=300,height=600,left=760,scrollbars=no,resizable=no,menubar=no,location=no')
+}}}}else{
+mrmouse = 0
+mousewow = 0
+
+if ((!inmobileview)){
+if(fullScreenViewMode){
+x=  ev.clientX / (eval(canvas.style.width.substring(0, canvas.style.width.length-2)) / 640)
+y=  ev.clientY / (eval(canvas.style.height.substring(0, canvas.style.height.length-2)) / 480)
+}else{
+x = (ev.clientX - 140)
+y = (ev.clientY - 30)
+}}
+
+
+
+ax = Math.floor((x + 40) / 70)
+ay = Math.floor((y + 40) / 70)
+
+if ((x > 498) && (x < 598) && (y > 365) && (y < 422)){
+soundclick.play()
+thebigmode = 3
+draw(100)
+}
+if ((x > 507) && (x < 589) && (y > 438) && (y < 465)){
+soundclick.play()
+window.open('help.html', 'HELP', 'width=300,height=600,left=760,scrollbars=no,resizable=no,menubar=no,location=no')
+}
+if ((x > (23 + 120)) && (x < (218 + 120)) && (y > (79 + 140)) && (y < (122 + 140)) && (thebigmode == 3)){
+soundclick.play()
+woww()
+}
+if ((x > (9 + 120)) && (x < (119 + 120)) && (y > (134 + 140)) && (y < (189 + 140)) && (thebigmode == 3)){
+soundclick.play()
+wowww()
+}
+if ((x > (135 + 120)) && (x < (223 + 120)) && (y > (140 + 140)) && (y < (178 + 140)) && (thebigmode == 3)){
+soundclick.play()
+thebigmode = 0
+draw(0)
+mrmouse = 1
+mousewow = 1
+}
+
+
+
+
+}}
+
+function aacowqq(){
+window["a" + ax + "a" + ay] = 0
+moovee()
+}
+
+
+function acowa(){
+if (crystal == 0){
+draw(100)
+}
+mrup()
+if (jj == 0){
+if (crystal == 0){
+moovee()
+}else{
+mrcrystal()
+}
+}else{
+if (crystal == 0){
+mrmouse = 1
+setTimeout("acowaa()",delay_until_next_reaction)
+}else{
+crystal = 0
+acowaa()
+}
+}
+}
+
+
+
+function bcowa(){
+mrup()
+if (jj == 0){
+
+retretretretre()
+
+}else{
+draw(100)
+setTimeout("bcowaa()",delay_until_next_reaction)
+
+}
+}
+
+
+
+
+function mrcrystal(){
+wwee = eval("a" + wx + "a" + wy)
+
+if (wwee == 301){
+crystal = 0
+}
+if (wwee == 201){
+window["a" + wx + "a" + wy] = 301
+}
+if (wwee == 101){
+window["a" + wx + "a" + wy] = 201
+}
+if (wwee == 302){
+window["a" + wx + "a" + wy] = 101
+}
+if (wwee == 202){
+window["a" + wx + "a" + wy] = 302
+}
+if (wwee == 102){
+window["a" + wx + "a" + wy] = 202
+}
+if (wwee == 303){
+window["a" + wx + "a" + wy] = 102
+}
+if (wwee == 203){
+window["a" + wx + "a" + wy] = 303
+}
+if (wwee == 103){
+window["a" + wx + "a" + wy] = 203
+}
+if (wwee == 304){
+window["a" + wx + "a" + wy] = 103
+}
+if (wwee == 204){
+window["a" + wx + "a" + wy] = 304
+}
+if (wwee == 104){
+window["a" + wx + "a" + wy] = 204
+}
+if (wwee == 305){
+window["a" + wx + "a" + wy] = 104
+}
+if (wwee == 205){
+window["a" + wx + "a" + wy] = 305
+}
+if (wwee == 105){
+window["a" + wx + "a" + wy] = 205
+}
+if (wwee == 306){
+window["a" + wx + "a" + wy] = 105
+}
+if (wwee == 206){
+window["a" + wx + "a" + wy] = 306
+}
+if (wwee == 106){
+window["a" + wx + "a" + wy] = 206
+}
+
+if (wwee == 307){
+window["a" + wx + "a" + wy] = 106
+}
+if (wwee == 207){
+window["a" + wx + "a" + wy] = 307
+}
+if (wwee == 107){
+window["a" + wx + "a" + wy] = 207
+}
+if (wwee == 308){
+window["a" + wx + "a" + wy] = 107
+}
+if (wwee == 208){
+window["a" + wx + "a" + wy] = 308
+}
+if (wwee == 108){
+window["a" + wx + "a" + wy] = 208
+}
+if (wwee == 309){
+window["a" + wx + "a" + wy] = 108
+}
+if (wwee == 209){
+window["a" + wx + "a" + wy] = 309
+}
+if (wwee == 109){
+window["a" + wx + "a" + wy] = 209
+}
+if (wwee == 310){
+window["a" + wx + "a" + wy] = 109
+}
+if (wwee == 210){
+window["a" + wx + "a" + wy] = 310
+}
+if (wwee == 110){
+window["a" + wx + "a" + wy] = 210
+}
+if (wwee == 111){
+window["a" + wx + "a" + wy] = 110
+}
+if (wwee == 112){
+window["a" + wx + "a" + wy] = 111
+}
+if (wwee == 113){
+window["a" + wx + "a" + wy] = 112
+}
+if (wwee == 114){
+window["a" + wx + "a" + wy] = 113
+}
+if (wwee == 115){
+window["a" + wx + "a" + wy] = 114
+}
+if (wwee == 116){
+window["a" + wx + "a" + wy] = 115
+}
+if (wwee == 117){
+window["a" + wx + "a" + wy] = 116
+}
+
+
+
+
+
+
+
+
+
+
+acowa()
+}
+
+
+function acowaa(){
+mrdown()
+mrmouse = 1
+setTimeout("acowa()",delay_for_effect)
+}
+
+function bcowaa(){
+mrdown()
+setTimeout("bcowa()",delay_for_effect)
+}
+
+function woww(){
+a101 = aa101
+a102 = aa102
+a103 = aa103
+a301 = aa301
+a1 = aa1
+a2 = aa2
+a3 = aa3
+next = 101; mrmouse = 0
+a0a1 = 8;a0a2 = 8;a0a3 = 8;a0a4 = 8;a0a5 = 8;a0a6 = 8;a1a1 = 0;a1a2 = 0
+a1a3 = 0;a1a4 = 0;a1a5 = 0;a1a6 = 0;a2a1 = 0;a2a2 = 0;a2a3 = 0;a2a4 = 0
+a2a5 = 0;a2a6 = 0;a3a1 = 0;a3a2 = 0;a3a3 = 0;a3a4 = 0;a3a5 = 0;a3a6 = 0
+a4a1 = 0;a4a2 = 0;a4a3 = 0;a4a4 = 0;a4a5 = 0;a4a6 = 0;a5a1 = 0;a5a2 = 0
+a5a3 = 0;a5a4 = 0;a5a5 = 0;a5a6 = 0;a6a1 = 0;a6a2 = 0;a6a3 = 0;a6a4 = 0
+a6a5 = 0;a6a6 = 0;a7a1 = 8;a7a2 = 8;a7a3 = 8;a7a4 = 8;a7a5 = 8;a7a6 = 8
+a0a0 = 8;a1a0 = 8;a2a0 = 8;a3a0 = 8;a4a0 = 8;a5a0 = 8;a6a0 = 8;a7a0 = 8
+a0a7 = 8;a1a7 = 8;a2a7 = 8;a3a7 = 8;a4a7 = 8;a5a7 = 8;a6a7 = 8;a7a7 = 8
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 301
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 301
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 102
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 102
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 102
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 103
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1101
+thebigmode = 0
+moovee()
+}
+
+function wowww(){
+a101 = aaa101
+a102 = aaa102
+a103 = aaa103
+a301 = aaa301
+a1 = aaa1
+a2 = aaa2
+a3 = aaa3
+next = 101; mrmouse = 0
+a0a1 = 8;a0a2 = 8;a0a3 = 8;a0a4 = 8;a0a5 = 8;a0a6 = 8;a1a1 = 0;a1a2 = 0
+a1a3 = 0;a1a4 = 0;a1a5 = 0;a1a6 = 0;a2a1 = 0;a2a2 = 0;a2a3 = 0;a2a4 = 0
+a2a5 = 0;a2a6 = 0;a3a1 = 0;a3a2 = 0;a3a3 = 0;a3a4 = 0;a3a5 = 0;a3a6 = 0
+a4a1 = 0;a4a2 = 0;a4a3 = 0;a4a4 = 0;a4a5 = 0;a4a6 = 0;a5a1 = 0;a5a2 = 0
+a5a3 = 0;a5a4 = 0;a5a5 = 0;a5a6 = 0;a6a1 = 0;a6a2 = 0;a6a3 = 0;a6a4 = 0
+a6a5 = 0;a6a6 = 0;a7a1 = 8;a7a2 = 8;a7a3 = 8;a7a4 = 8;a7a5 = 8;a7a6 = 8
+a0a0 = 8;a1a0 = 8;a2a0 = 8;a3a0 = 8;a4a0 = 8;a5a0 = 8;a6a0 = 8;a7a0 = 8
+a0a7 = 8;a1a7 = 8;a2a7 = 8;a3a7 = 8;a4a7 = 8;a5a7 = 8;a6a7 = 8;a7a7 = 8
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 301
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 102
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 102
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 103
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1101
+window["a" + ((Math.floor(Math.random() * 6)) + 1)  + "a"  + ((Math.floor(Math.random() * 6)) + 1)] = 1101
+thebigmode = 0
+moovee()
+}
+
+function moovee(){
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+c = (eval("a" + a + "a" + b))
+if (c == 1){
+cup = (eval("a" + a + "a" + (b - 1)))
+cdown = (eval("a" + a + "a" + (b + 1)))
+cleft = (eval("a" + (a - 1) + "a" + b))
+cright = (eval("a" + (a + 1) + "a" + b))
+d = 0
+if (cup == 0){
+d++
+}
+if (cdown == 0){
+d++
+}
+if (cleft == 0){
+d++
+}
+if (cright == 0){
+d++
+}
+if (d > 0){
+
+e = ((Math.floor(Math.random() * d)) + 1)
+if (cleft == 0){
+e--
+if (e == 0){
+window["a" + a + "a" + b] = 0
+window["a" + (a - 1) + "a" + b] = 4
+}
+}
+if (cright == 0){
+e--
+if (e == 0){
+window["a" + a + "a" + b] = 0
+window["a" + (a + 1) + "a" + b] = 7
+}
+}
+if (cup == 0){
+e--
+if (e == 0){
+window["a" + a + "a" + b] = 0
+window["a" + a + "a" + (b - 1)] = 5
+}
+}
+if (cdown == 0){
+e--
+if (e == 0){
+window["a" + a + "a" + b] = 0
+window["a" + a + "a" + (b + 1)] = 6
+}
+}
+
+
+
+}else{
+window["a" + a + "a" + b] = 9
+}
+
+}
+
+b++
+}
+a++
+}
+bearrr()
+mrmouse = 1
+if (bearaa == 1){
+draw(60)
+setTimeout("aasfdgfdsgdgdf()",32)
+}else{
+sfdgfdsgdgdf()
+}}
+
+
+function aasfdgfdsgdgdf(){
+draw(50)
+setTimeout("sssfdgfdsgdgdf()",32)
+}
+
+function sssfdgfdsgdgdf(){
+draw(40)
+setTimeout("ddsfdgfdsgdgdf()",32)
+}
+
+function ddsfdgfdsgdgdf(){
+draw(30)
+setTimeout("eesfdgfdsgdgdf()",32)
+}
+
+function eesfdgfdsgdgdf(){
+draw(20)
+setTimeout("assfdgfdsgdgdf()",32)
+}
+
+function assfdgfdsgdgdf(){
+draw(10)
+setTimeout("sfdgfdsgdgdf()",32)
+}
+
+
+
+function napoonapoo(){
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+qwweer = eval("a" + a + "a" + b)
+
+
+if ((qwweer == 0) || (qwweer == 1) || (qwweer == 4) || (qwweer == 5) || (qwweer == 6) || (qwweer == 7) || (qwweer == 10)){
+if ((eval("a" + (a - 1) + "a" + b)) == 9){
+window["a" + (a - 1) + "a" + b] = 10
+}
+if ((eval("a" + (a + 1) + "a" + b)) == 9){
+window["a" + (a + 1) + "a" + b] = 10
+}
+if ((eval("a" + a + "a" + (b - 1))) == 9){
+window["a" + a + "a" + (b - 1)] = 10
+}
+if ((eval("a" + a + "a" + (b + 1))) == 9){
+window["a" + a + "a" + (b + 1)] = 10
+}
+
+}
+
+
+b++
+}
+a++
+}
+}
+
+function sfdgfdsgdgdf(){
+napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo()
+napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo()
+napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo();napoonapoo()
+
+
+
+
+mrgrave = 0
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+if ((eval("a" + a + "a" + b)) == 4){
+window["a" + a + "a" + b] = 1
+}
+if ((eval("a" + a + "a" + b)) == 5){
+window["a" + a + "a" + b] = 1
+}
+if ((eval("a" + a + "a" + b)) == 6){
+window["a" + a + "a" + b] = 1
+}
+if ((eval("a" + a + "a" + b)) == 7){
+window["a" + a + "a" + b] = 1
+}
+if ((eval("a" + a + "a" + b)) == 10){
+window["a" + a + "a" + b] = 1
+}
+if ((eval("a" + a + "a" + b)) == 9){
+
+if (((eval("a" + a + "a" + (b - 1))) > 7) && ((eval("a" + a + "a" + (b + 1))) > 7) && ((eval("a" + (a - 1) + "a" + b)) > 7) && ((eval("a" + (a + 1) + "a" + b)) > 7)){
+mrgrave = 1
+
+
+window["a" + a + "a" + b] = 11
+
+
+
+ctx.drawImage(img5, 630, 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+
+}else{
+window["a" + a + "a" + b] = 1
+}}
+b++
+}
+a++
+}
+
+if (mrgrave == 1){
+gagapoo = 0
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+qwweer = eval("a" + a + "a" + b)
+if (qwweer == 11){
+gagapoo++
+window["zoo" + gagapoo] = ("a" + a + "a" + b)
+window["zooa" + gagapoo] = a
+window["zoob" + gagapoo] = b
+
+}
+b++
+}
+a++
+}
+wwhh = ((Math.floor(Math.random(gagapoo))) + 1)
+window[eval("zoo" + wwhh)] = 201
+wx = eval("zooa" + wwhh)
+wy = eval("zoob" + wwhh)
+soundgrave.play()
+}
+
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+qwweer = eval("a" + a + "a" + b)
+if (qwweer == 11){
+window["a" + a + "a" + b] = 0
+}
+b++
+}
+a++
+}
+
+
+if (mrgrave == 0){
+retretretretre()
+}else{
+setTimeout("bcowa()",delay_for_effect)
+}
+}
+function retretretretre(){
+
+c = 0
+d = 0
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+qwweer = eval("a" + a + "a" + b)
+if (qwweer == 0){
+c = 1
+}
+if (qwweer == 1003){
+d = 1
+}
+b++
+}
+a++
+}
+
+
+
+thebigmode = 0
+if (c == 0){
+if (d == 1){
+thebigmode = 1
+}else{
+thebigmode = 2
+}}
+
+
+
+draw(0)
+
+
+
+
+
+
+
+
+
+mrmouse = 1
+mousewow = 1
+}
+
+function bearrr(){
+bearaa = 0
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+if ((eval("a" + a + "a" + b)) == 1){
+bearaa = 1
+}
+if ((eval("a" + a + "a" + b)) == 4){
+bearaa = 1
+}
+if ((eval("a" + a + "a" + b)) == 5){
+bearaa = 1
+}
+if ((eval("a" + a + "a" + b)) == 6){
+bearaa = 1
+}
+if ((eval("a" + a + "a" + b)) == 7){
+bearaa = 1
+}
+if ((eval("a" + a + "a" + b)) == 9){
+bearaa = 1
+}
+b++
+}
+a++
+}
+}
+
+function draw(zzss){
+ctx.drawImage(imgst,0,0)
+
+if((!inmobileview) && (!fullScreenViewMode)){
+
+ctx.fillStyle = "#000000";
+ctx.fillRect(550, 3, 86, 24);
+ctx.fillStyle = "#BBBBBB";
+ctx.fillRect(552, 5, 82, 20);
+ctx.font = '10pt Calibri';
+ctx.fillStyle = "#000000";
+ctx.fillText('FULL SCREEN', 558, 18);
+
+
+}
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+c = (eval("a" + a + "a" + b))
+if (c < 4){
+ctx.drawImage(img0, ((c - 0) * 70), 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+}
+if (c == 9){
+ctx.drawImage(img0, (4 * 70), 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+}
+if (c == 4){
+ctx.drawImage(img0, 70, 0, 70, 70, (((a*70)-40) + zzss),((b*70)-40), 70, 70)
+}
+if (c == 7){
+ctx.drawImage(img0, 70, 0, 70, 70, (((a*70)-40) - zzss),((b*70)-40), 70, 70)
+}
+if (c == 5){
+ctx.drawImage(img0, 70, 0, 70, 70, ((a*70)-40),(((b*70)-40)) + zzss, 70, 70)
+}
+if (c == 6){
+ctx.drawImage(img0, 70, 0, 70, 70, ((a*70)-40),(((b*70)-40)) - zzss, 70, 70)
+}
+if ((c > 100) && (c < 200)){
+ctx.drawImage(img1, ((c - 101) * 70), 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+}
+if ((c > 200) && (c < 300)){
+ctx.drawImage(img2, ((c - 201) * 70), 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+}
+if ((c > 300) && (c < 400)){
+ctx.drawImage(img3, ((c - 301) * 70), 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+}
+if (c > 1000){
+ctx.drawImage(img5, 560, 0, 70, 70, ((a*70)-40),((b*70)-40), 70, 70)
+}
+if ((c > 1000) && (c < 1004)){
+ctx.drawImage(img0, ((c - 1000) * 70), 0, 70, 70, ((a*70)-25),((b*70)-25), 40, 40)
+}
+if ((c > 1100) && (c < 1200)){
+ctx.drawImage(img1, ((c - 1101) * 70), 0, 70, 70, ((a*70)-25),((b*70)-25), 40, 40)
+}
+if ((c > 1200) && (c < 1300)){
+ctx.drawImage(img2, ((c - 1201) * 70), 0, 70, 70, ((a*70)-25),((b*70)-25), 40, 40)
+}
+if (c > 1300){
+ctx.drawImage(img3, ((c - 1301) * 70), 0, 70, 70, ((a*70)-25),((b*70)-25), 40, 40)
+}
+b++
+}
+a++
+}
+
+
+if ((ax > 0) && (ax < 7) && (ay > 0) && (ay < 7) && (zzss == 0) && (thebigmode < 2)){
+if (((((eval("a" + ax + "a" + ay)) == 0) || ((eval("a" + ax + "a" + ay)) > 1000)) && (next != 3)) || ((next == 3) && ((eval("a" + ax + "a" + ay)) != 0))){
+if ((eval("a" + ax + "a" + ay)) > 1000){
+ctx.drawImage(img5, 490, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+if (next == 1){
+ctx.drawImage(img5, 0, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+if (next == 2){
+ctx.drawImage(img5, 70, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+if (next == 3){
+ctx.drawImage(img5, 140, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+if (next == 101){
+ctx.drawImage(img5, 210, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+
+}
+if (next == 102){
+ctx.drawImage(img5, 280, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+if (next == 103){
+ctx.drawImage(img5, 350, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+if (next == 301){
+ctx.drawImage(img5, 420, 0, 70, 70, ((ax*70)-40),((ay*70)-40), 70, 70)
+}
+
+}else{
+if (next == 1){
+ctx.drawImage(img5, (0 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+}
+if (next == 2){
+ctx.drawImage(img5, (70 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+}
+if (next == 3){
+ctx.drawImage(img5, (140 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+}
+if (next == 101){
+ctx.drawImage(img5, (210 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+
+}
+if (next == 102){
+ctx.drawImage(img5, (280 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+}
+if (next == 103){
+ctx.drawImage(img5, (350 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+}
+if (next == 301){
+ctx.drawImage(img5, (420 + 700), 0, 70, 70, (x-35),(y-35), 70, 70)
+}
+}}
+
+
+yourscoreaa = 0
+a = 1
+while (a<7){
+b = 1
+while (b<7){
+d = (eval("a" + a + "a" + b))
+if (d < 1000){
+yourscoreaa += eval("score" + d)
+}
+b++
+}
+a++
+}
+
+ctx.fillStyle = "rgb(0,0,0)"; 
+ctx.font = '18pt Arial'
+ctx.fillText(yourscoreaa, 490, 200)
+if (thebigmode == 1){
+ctx.fillStyle = "rgb(0,0,0)"; 
+ctx.font = '14pt Arial'
+ctx.fillText('You are lucky,', 480, 250)
+ctx.fillText('Game is not over!', 480, 275)
+ctx.fillText('There is a delete', 480, 300)
+ctx.fillText('in the swap zone', 480, 325)
+}
+if (thebigmode == 2){
+ctx.fillStyle = "rgb(255,10,10)"; 
+ctx.font = '64pt Arial'
+ctx.fillText('GAME OVER', 60, 160)
+ctx.font = '28pt Arial'
+ctx.fillText(('YOURE SCORE IS ' + yourscoreaa), 30, 300)
+}
+if (thebigmode == 3){
+ctx.drawImage(imga, 120, 140)
+}
+}
+
+
+function mrup(){
+jj = 0; yyup = 0; yydown = 0; yyleft = 0; yyright = 0; yy1 = 0; yy2 = 0; yy3 = 0; yy4 = 0; yy5 = 0; yy6 = 0; yy7 = 0; yy8 = 0; yy9 = 0; yy10 = 0; yy11 = 0; yy12 = 0;
+yy = eval("a" + wx + "a" + wy)
+yyup = eval("a" + wx + "a" + (wy - 1))
+yydown = eval("a" + wx + "a" + (wy + 1))
+yyleft = eval("a" + (wx - 1) + "a" + wy)
+yyright = eval("a" + (wx + 1) + "a" + wy)
+if (yy == yyup){
+yy1 = eval("a" + (wx - 1) + "a" + (wy - 1))
+yy2 = eval("a" + (wx + 1) + "a" + (wy - 1))
+yy3 = eval("a" + wx + "a" + (wy - 2))
+}
+if (yy == yydown){
+yy4 = eval("a" + (wx - 1) + "a" + (wy + 1))
+yy5 = eval("a" + (wx + 1) + "a" + (wy + 1))
+yy6 = eval("a" + wx + "a" + (wy + 2))
+}
+if (yy == yyleft){
+yy7 = eval("a" + (wx - 1) + "a" + (wy - 1))
+yy8 = eval("a" + (wx - 1) + "a" + (wy + 1))
+yy9 = eval("a" + (wx - 2) + "a" + wy)
+}
+if (yy == yyright){
+yy10 = eval("a" + (wx + 1) + "a" + (wy - 1))
+yy11 = eval("a" + (wx + 1) + "a" + (wy + 1))
+yy12 = eval("a" + (wx + 2) + "a" + wy)
+}
+
+
+if (yy == yyup){
+jj++
+}
+if (yy == yydown){
+jj++
+}
+if (yy == yyleft){
+jj++
+}
+if (yy == yyright){
+jj++
+}
+if (yy == yy1){
+jj++
+}
+if (yy == yy2){
+jj++
+}
+if (yy == yy3){
+jj++
+}
+if (yy == yy4){
+jj++
+}
+if (yy == yy5){
+jj++
+}
+if (yy == yy6){
+jj++
+}
+if (yy == yy7){
+jj++
+}
+if (yy == yy8){
+jj++
+}
+if (yy == yy9){
+jj++
+}
+if (yy == yy10){
+jj++
+}
+if (yy == yy11){
+jj++
+}
+if (yy == yy12){
+jj++
+}
+if (jj == 1){
+jj = 0
+}
+}
+function mrdown(){
+if (jj > 1){
+
+weeonit((wx),(wy))
+sondy = eval("a" + wx + "a" + wy)
+
+if (sondy == 102){
+sounds2.play()
+}
+if (sondy == 103){
+sounds3.play()
+}
+if (sondy == 104){
+sounds4.play()
+}
+if (sondy == 105){
+sounds5.play()
+}
+if (sondy == 106){
+sounds6.play()
+}
+if (sondy == 107){
+sounds7.play()
+}
+if (sondy == 108){
+sounds8.play()
+}
+if (sondy == 109){
+sounds9.play()
+}
+if (sondy == 110){
+sounds9.play()
+}
+if (sondy == 111){
+sounds9.play()
+}
+if (sondy == 112){
+sounds9.play()
+}
+if (sondy == 113){
+sounds9.play()
+}
+if (sondy == 114){
+sounds9.play()
+}
+if (sondy == 115){
+sounds9.play()
+}
+if (sondy == 116){
+sounds9.play()
+}
+if (sondy == 117){
+sounds9.play()
+}
+if (sondy == 202){
+soundg2.play()
+}
+if (sondy == 203){
+soundg3.play()
+}
+if (sondy == 204){
+soundg4.play()
+}
+if (sondy == 205){
+soundg5.play()
+}
+if (sondy == 206){
+soundg5.play()
+}
+if (sondy == 207){
+soundg5.play()
+}
+if (sondy == 208){
+soundg5.play()
+}
+if (sondy == 209){
+soundg5.play()
+}
+if (sondy == 210){
+soundg5.play()
+}
+if (sondy == 302){
+soundg2.play()
+}
+if (sondy == 303){
+soundg3.play()
+}
+if (sondy == 304){
+soundg4.play()
+}
+if (sondy == 305){
+soundg5.play()
+}
+if (sondy == 306){
+soundg5.play()
+}
+if (sondy == 307){
+soundg5.play()
+}
+if (sondy == 308){
+soundg5.play()
+}
+if (sondy == 309){
+soundg5.play()
+}
+if (sondy == 310){
+soundg5.play()
+}
+
+
+
+
+if (yy == yyup){
+pooonit((wx),(wy - 1))
+}
+if (yy == yydown){
+pooonit((wx),(wy + 1))
+}
+if (yy == yyleft){
+pooonit((wx - 1),(wy))
+}
+if (yy == yyright){
+pooonit((wx + 1),(wy))
+}
+if (yy == yy1){
+pooonit((wx - 1),(wy - 1))
+}
+if (yy == yy2){
+pooonit((wx + 1),(wy - 1))
+}
+if (yy == yy3){
+pooonit((wx),(wy - 2))
+}
+if (yy == yy4){
+pooonit((wx - 1),(wy + 1))
+}
+if (yy == yy5){
+pooonit((wx + 1),(wy + 1))
+}
+if (yy == yy6){
+pooonit((wx),(wy + 2))
+}
+if (yy == yy7){
+pooonit((wx - 1),(wy - 1))
+}
+if (yy == yy8){
+pooonit((wx - 1),(wy + 1))
+}
+if (yy == yy9){
+pooonit((wx - 2),(wy))
+}
+if (yy == yy10){
+pooonit((wx + 1),(wy - 1))
+}
+if (yy == yy11){
+pooonit((wx + 1),(wy + 1))
+}
+if (yy == yy12){
+pooonit((wx + 2),(wy))
+}
+
+
+
+
+
+}}
+
+function pooonit(nn1,nn2){
+window["a" + nn1 + "a" + nn2] = 0
+ctx.drawImage(img5, 630, 0, 70, 70, ((nn1*70)-40),((nn2*70)-40), 70, 70)
+}
+function weeonit(nn1,nn2){
+window["a" + nn1 + "a" + nn2]++
+ctx.drawImage(img5, 630, 0, 70, 70, ((nn1*70)-40),((nn2*70)-40), 70, 70)
+}
+
+
+
+function mrnext(){
+w4 = ((Math.floor(Math.random() * (a101 + a102 + a103 + a301 + a1 + a2 + a3))) + 1)
+if (w4 < (a101 + 1)){
+next = 101
+}
+if ((w4 > (a101)) && (w4 < (a101 + a102 + 1))){
+next = 102
+}
+if ((w4 > (a101 + a102)) && (w4 < (a101 + a102 + a103 + 1))){
+next = 103
+}
+if ((w4 > (a101 + a102 + a103)) && (w4 < (a101 + a102 + a103 + a301 + 1))){
+next = 301
+}
+if ((w4 > (a101 + a102 + a103 + a301)) && (w4 < (a101 + a102 + a103 + a301 + a1 + 1))){
+next = 1
+}
+if ((w4 > (a101 + a102 + a103 + a301 + a1)) && (w4 < (a101 + a102 + a103 + a301 + a1 + a2 + 1))){
+next = 2
+}
+if ((w4 > (a101 + a102 + a103 + a301 + a1 + a2)) && (w4 < (a101 + a102 + a103 + a301 + a1 + a2 + a3 + 1))){
+next = 3
+}
+}
+
+
+
+
+
+function startup_function(){
+ctx.textAlign = "start"
+ctx.textBaseline = "alphabetic"
+}
+function loop_function(){
+wow()
+}
+
+
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+margin: 0pt;
+padding: 0pt;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+a.thelinkyayay:link {color:#000000 ; text-decoration: none; }
+a.thelinkyayay:active {color: #000000; text-decoration: none; }
+a.thelinkyayay:visited {color: #000000; text-decoration: none; }
+a.thelinkyayay:hover {color: #000000; text-decoration: none; }
+</style></head><body onresize="setFullScreen()" onload="beno_game_system_start();" >
+<div id="thePositioner" style="position:absolute;top:30px;left:140px;margin:0px;padding:0px;"><canvas id="canvas" width="640" height="480" style="margin:0px;padding:0px;display:block;" ></canvas></div>
+<div id="theAdvert" style="position:absolute;top:159px;left:849px;"><a class="thelinkyayay" href="https://beno.uk/games/"><img border=1 src="../games/a.jpg"/></a></div>
+
+</body></html>
+

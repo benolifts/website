@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="content-type" content="text/html;">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui," /> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>Mr Fat</title><script src="../beno_game_system.js"></script><script type="text/javascript">
+//////////////////////////////////////////// And before we do anything else, lets set up some stuff
+mobilemode = "verybasickeyboard";fullScreenViewMode = false;inmobileview = false;compatibilitymode = "wav";gameframe = true;gamego = false;var loaderimagesfile=new Array();var loaderimagesname=new Array();var loadersoundsfile=new Array();var loadersoundsname=new Array();var loadersoundsloop=new Array();
+
+//////////////////////////////////////////// LOAD IMAGES
+loaderimagesfile[0]="1.png"
+loaderimagesname[0]="img1";
+
+//////////////////////////////////////////// LOAD SOUNDS
+loadersoundsfile[0]="1.wav"
+loadersoundsname[0]="sound1";
+loadersoundsloop[0]=0;
+loadersoundsfile[1]="2.wav"
+loadersoundsname[1]="sound2";
+loadersoundsloop[1]=0;
+loadersoundsfile[2]="3.wav"
+loadersoundsname[2]="sound3";
+loadersoundsloop[2]=0;
+loadersoundsfile[3]="4.wav"
+loadersoundsname[3]="sound4";
+loadersoundsloop[3]=0;
+loadersoundsfile[4]="5.wav"
+loadersoundsname[4]="sound5";
+loadersoundsloop[4]=0;
+loadersoundsfile[5]="2.wav"
+loadersoundsname[5]="sound6";
+loadersoundsloop[5]=0;
+loadersoundsfile[6]="3.wav"
+loadersoundsname[6]="sound7";
+loadersoundsloop[6]=0;
+loadersoundsfile[7]="4.wav"
+loadersoundsname[7]="sound8";
+loadersoundsloop[7]=0;
+loadersoundsfile[8]="5.wav"
+loadersoundsname[8]="sound9";
+loadersoundsloop[8]=0;
+loadersoundsfile[9]="2.wav"
+loadersoundsname[9]="sound10";
+loadersoundsloop[9]=0;
+loadersoundsfile[10]="3.wav"
+loadersoundsname[10]="sound11";
+loadersoundsloop[10]=0;
+loadersoundsfile[11]="4.wav"
+loadersoundsname[11]="sound12";
+loadersoundsloop[11]=0;
+loadersoundsfile[12]="5.wav"
+loadersoundsname[12]="sound13";
+loadersoundsloop[12]=0;
+loadersoundsfile[13]="6.wav"
+loadersoundsname[13]="sound14";
+loadersoundsloop[13]=0;
+loadersoundsfile[14]="7.wav"
+loadersoundsname[14]="sound15";
+loadersoundsloop[14]=0;
+loadersoundsfile[15]="8.wav"
+loadersoundsname[15]="sound16";
+loadersoundsloop[15]=0;
+loadersoundsfile[16]="9.wav"
+loadersoundsname[16]="sound17";
+loadersoundsloop[16]=0;
+loadersoundsfile[17]="10.wav"
+loadersoundsname[17]="sound18";
+loadersoundsloop[17]=0;
+
+//////////////////////////////////////////// FIRST FUNCTION
+function startup_function(){
+starspreadnumberrandom = 32
+starspreadnumber = 44
+speednumber = 0.04
+xx = 260
+yy = 390
+yyy = 0
+speed = 0
+xspeed = 0
+maxdistance = 0;distance = 0;aappscore = 0;aapooaa1a = 4;aapooaa1x = 580;aapooaa1y = 390;aapooaa2a = 4;aapooaa2x = 520;aapooaa2y = 390;aapooaa3a = 4;aapooaa3x = (Math.floor(Math.random()* 570));aapooaa3y = 240;aapooaa4a = 4;aapooaa4x = 60;aapooaa4y = 390;aapooaa5a = 4;aapooaa5x = (Math.floor(Math.random()* 570));aapooaa5y = 240;aapooaa6a = 4;aapooaa6x = (Math.floor(Math.random()* 570));aapooaa6y = 240;aapooaa7a = 4;aapooaa7x = (Math.floor(Math.random()* 570));aapooaa7y = ((Math.floor(Math.random() * 400)) - 150);aapooaa8a = 4;aapooaa8x = (Math.floor(Math.random()* 570));aapooaa8y = ((Math.floor(Math.random() * 400)) - 150);aapooaa9a = 4;aapooaa9x = (Math.floor(Math.random()* 570));aapooaa9y = ((Math.floor(Math.random() * 400)) - 150);aapooaa10a = 4;aapooaa10x = (Math.floor(Math.random()* 570));aapooaa10y = ((Math.floor(Math.random() * 400)) - 150);aapooaa11a = 4;aapooaa11x = (Math.floor(Math.random()* 570));aapooaa11y = ((Math.floor(Math.random() * 400)) - 150);aapooaa12a = 4;aapooaa12x = (Math.floor(Math.random()* 570));aapooaa12y = ((Math.floor(Math.random() * 400)) - 150);aapooaa13a = 4;aapooaa13x = (Math.floor(Math.random()* 570));aapooaa13y = ((Math.floor(Math.random() * 400)) - 150);aapooaa14a = 4;aapooaa14x = (Math.floor(Math.random()* 570));aapooaa14y = 0;aapooaa15a = 4;aapooaa15x = (Math.floor(Math.random()* 570));aapooaa15y = -120;aapooaa16a = 4;aapooaa16x = (Math.floor(Math.random()* 570));aapooaa16y = -240;aapooaa17a = 4;aapooaa17x = (Math.floor(Math.random()* 570));aapooaa17y = -360;aapooaa18a = 4;aapooaa18x = (Math.floor(Math.random()* 570));aapooaa18y = -480;aapooaa19a = 4;aapooaa19x = 0;aapooaa19y = 390;aapooaa20a = 4;aapooaa20x = (Math.floor(Math.random()* 570));aapooaa20y = -10000;
+soundgrass = false
+soundleft = false
+soundright = false
+soundgame = false
+soundcoin = 2
+mousemode = 1;loopmode = 1;
+}
+
+//////////////////////////////////////////// MOUSEDOWN
+function m_down(){
+mrclick(540,637,462,477,     "sound1.play();sound18.pause();sound18.currentTime = 0;startup_function()")
+if (!fullScreenViewMode){
+mrclick(2,92,462,477,     "sound1.play();desktopFullScreenMode()")
+}
+if (loopmode == 4){
+mrclick(240,400,330,370,     "sound1.play();sound18.pause();sound18.currentTime = 0;startup_function()")
+mrclick(195,445,430,450,     "sound1.play();window.location='https://beno.uk/games/'")
+}}
+
+//////////////////////////////////////////// MOUSEMOVE
+function m_move(){
+
+}
+//////////////////////////////////////////// MOUSEUP
+function m_up(){
+
+}
+
+//////////////////////////////////////////// LOOP FUNCTION
+function loop_function(){
+nowtime = ((new Date()).getTime());fps = (1000 / (nowtime - lasttime));lasttime = nowtime;
+if (yyy < 64000){
+ctx.fillStyle = ("rgb(" + (80 - (Math.floor((yyy / 64000) * 80))) + "," + (169 - (Math.floor((yyy / 64000) * 169))) + "," + (220 - (Math.floor((yyy / 64000) * 220))) + ")")
+}else{
+ctx.fillStyle = "rgb(0,0,0)"
+}
+ctx.fillRect(0,0,640,480)
+if (yyy < 100){
+ctx.drawImage(img1, 0,280,    640,70,     0,((480 - 70) + yyy),     640,70)
+}
+speed -= (2.5 / (speednumber * fps))
+if (loopmode == 1){
+if (speed > 120){
+speed = 120
+}
+yy -= (speed / (speednumber * fps))
+qwerty = 0
+if (yy < 260){
+qwerty = (260 - yy)
+yyy += qwerty
+yy = 260
+}
+if (yy > (390 + yyy)){
+yy = (390 + yyy);speed = 0
+}
+distance = ((390 - yy) + yyy)
+}
+
+q = 1
+while (q < 19){
+qa = (eval("aapooaa" + q + "a"))
+qx = (eval("aapooaa" + q + "x"))
+qy = (eval("aapooaa" + q + "y"))
+qy += qwerty
+window["aapooaa" + q + "y"] = qy
+if (qa >= 4){
+dsjfsiofjsd = (0.5 / (speednumber * fps))
+if (dsjfsiofjsd > 0.99){
+dsjfsiofjsd = 0.99
+}
+qa -= dsjfsiofjsd
+if (qa < 4){
+qa += 4
+}
+window["aapooaa" + q + "a"] = qa
+if ((xx > (qx - 70)) && (xx < (qx + 44)) && (yy > (qy - 50)) && (yy < (qy + 50)) && (loopmode == 1)){
+soundcoin++
+if (soundcoin > 13){
+soundcoin = 2
+}
+window["sound" + soundcoin].play()
+aappscore++
+window["aapooaa" + q + "a"] = 3.6
+if (distance == 0){
+speed = 26
+}else if (speed < 9){
+speed = 32
+}else if (speed < 55){
+speed += ((55 - speed) / 2)
+}}}
+if ((qa > 0) && (qa < 4)){
+window["aapooaa" + q + "a"] -= (1 / (speednumber * fps))
+qa -= (1 / (speednumber * fps))
+}if (qa < 0){
+window["aapooaa" + q + "a"] = 0
+qa = 0
+}
+if (qy > 525){
+if (q < 14){
+window["aapooaa" + q + "y"] = (-80 - (yyy / starspreadnumber) - (Math.random() * starspreadnumberrandom))
+}else{
+window["aapooaa" + q + "y"] -= 600
+}
+window["aapooaa" + q + "x"] = (Math.floor(Math.random() * 570))
+window["aapooaa" + q + "a"] = 4
+}
+ctx.drawImage(img1, (Math.floor(qa)*70),0,    70,70,     qx,qy,     70,70)
+q++
+}
+
+qa = (eval("aapooaa" + q + "a"))
+qx = (eval("aapooaa" + q + "x"))
+qy = (eval("aapooaa" + q + "y"))
+qy += qwerty
+window["aapooaa" + q + "y"] = qy
+if (qa >= 4){
+dsjfsiofjsd = (0.5 / (speednumber * fps))
+if (dsjfsiofjsd > 0.99){
+dsjfsiofjsd = 0.99
+}
+qa -= dsjfsiofjsd
+if (qa < 4){
+qa += 4
+}
+window["aapooaa" + q + "a"] = qa
+if ((xx > (qx - 70)) && (xx < (qx + 44)) && (yy > (qy - 50)) && (yy < (qy + 50)) && (loopmode == 1)){
+sound15.play()
+aappscore += 10
+window["aapooaa" + q + "a"] = 3.6
+speed = 120
+}}
+if ((qa > 0) && (qa < 4)){
+window["aapooaa" + q + "a"] -= (1 / (speednumber * fps))
+qa -= (1 / (speednumber * fps))
+}if (qa < 0){
+window["aapooaa" + q + "a"] = 0
+qa = 0
+}
+if (qy > 530){
+if (qa >= 4){
+window["aapooaa" + q + "y"] = -3400
+}else{
+window["aapooaa" + q + "y"] = -8000
+}
+window["aapooaa" + q + "x"] = (Math.floor(Math.random() * 570))
+window["aapooaa" + q + "a"] = 4
+}
+ctx.drawImage(img1, (Math.floor(qa)*70),70,    70,70,     qx,qy,     70,70)
+q++
+
+qa = (eval("aapooaa" + q + "a"))
+qx = (eval("aapooaa" + q + "x"))
+qy = (eval("aapooaa" + q + "y"))
+qy += qwerty
+window["aapooaa" + q + "y"] = qy
+if (qa >= 4){
+dsjfsiofjsd = (0.5 / (speednumber * fps))
+if (dsjfsiofjsd > 0.99){
+dsjfsiofjsd = 0.99
+}
+qa -= dsjfsiofjsd
+if (qa < 4){
+qa += 4
+}
+window["aapooaa" + q + "a"] = qa
+if ((xx > (qx - 70)) && (xx < (qx + 44)) && (yy > (qy - 50)) && (yy < (qy + 50)) && (loopmode == 1)){
+sound14.play()
+window["aapooaa" + q + "a"] = 3.6
+if (speed > -4){
+speed = 0
+}else{
+speed -= 10
+}}}
+if ((qa > 0) && (qa < 4)){
+window["aapooaa" + q + "a"] -= (1 / (speednumber * fps))
+qa -= (1 / (speednumber * fps))
+}if (qa < 0){
+window["aapooaa" + q + "a"] = 0
+qa = 0
+}
+if (qy > 530){
+hjgjhjghk = (-3200 + (yyy * 0.04))
+if (hjgjhjghk > -1800){
+hjgjhjghk = -1800
+}
+window["aapooaa" + q + "y"] = hjgjhjghk
+window["aapooaa" + q + "x"] = (Math.floor(Math.random() * 570))
+window["aapooaa" + q + "a"] = 4
+}
+ctx.drawImage(img1, (Math.floor(qa)*70),140,    70,70,     qx,qy,     70,70)
+q++
+if (distance < 10){xspeed = 0;if (soundleft){soundleft = false;sound16.pause();sound16.currentTime = 0;}
+if (soundright){soundright = false;sound17.pause();sound17.currentTime = 0;}
+if (key_left && !key_right){xx -= (6 / (speednumber * fps));}if (!key_left && key_right){xx += (6 / (speednumber * fps));}
+if (xx < -12){xx = -12;xspeed = 0;}if (xx > 550){xx = 550;xspeed = 0;}
+ctx.drawImage(img1, 0,210,    100,70,     xx,yy,     100,70);
+}else{
+if ((key_left) && (!key_right) && (loopmode == 1)){
+xspeed -= (4 / (speednumber * fps))
+if (soundleft == false){
+soundleft = true
+sound16.play()
+}}else{
+if (soundleft){
+soundleft = false
+sound16.pause()
+sound16.currentTime = 0
+}}
+if ((!key_left) && (key_right) && (loopmode == 1)){
+xspeed += (4 / (speednumber * fps))
+if (soundright == false){
+soundright = true
+sound17.play()
+}}else{
+if (soundright){
+soundright = false
+sound17.pause()
+sound17.currentTime = 0
+}}xx += (xspeed / (speednumber * fps))
+if (xx < -12){
+xx = -12
+xspeed = 0
+}if (xx > 550){
+xx = 550
+xspeed = 0
+}if (key_left && !key_right){
+ctx.drawImage(img1, 200,210,    100,70,     xx,yy,     100,70)
+}else if (!key_left && key_right){
+ctx.drawImage(img1, 100,210,    100,70,     xx,yy,     100,70)
+}else{
+ctx.drawImage(img1, 0,210,    100,70,     xx,yy,     100,70)
+}}
+if (distance > maxdistance){
+maxdistance = distance
+}
+if (loopmode > 2){
+ctx.fillStyle = "rgb(200,0,0)"
+ctx.font = '32pt Arial'
+ctx.fillText(("Distance: " + (Math.floor(maxdistance / 32)) + "m"), 320, 150)
+ctx.fillText(("Score: " + aappscore), 320, 250)
+}else{
+ctx.fillStyle = "rgb(200,0,0)"
+ctx.font = '12pt Arial'
+if (distance == maxdistance){
+ctx.fillText(("Distance: " + (Math.floor(maxdistance / 32)) + "m"), 140, 470)
+}else{
+ctx.fillText(("Distance: " + (Math.floor(distance / 32)) + "m (" + (Math.floor(maxdistance / 32)) + ")"), 140, 470)
+}
+ctx.fillText(("Speed: " + (Math.floor(speed / 6))), 320, 470)
+ctx.fillText(("Score: " + aappscore), 440, 470)
+}
+if ((yy > 580) && (loopmode == 1)){
+sound18.play()
+asdfg = 1
+loopmode = 2
+}
+mrbutton(540,637,462,477,"START AGAIN",'8.2pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+if (!fullScreenViewMode){
+mrbutton(2,92,462,477,"FULL SCREEN",'8.2pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+}
+
+if (loopmode == 4){
+mrbutton(240,400,330,370,"START AGAIN",'14pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(195,445,430,450,"Play more games at beno.uk",'12pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+}
+if (loopmode == 2){
+asdfg -= ((1 / fps) / 2.2)
+if (asdfg < 0){
+loopmode = 3
+asdfg = 0.55
+}}
+if (loopmode == 3){
+asdfg -= ((1 / fps) / 2.2)
+if (asdfg < 0){
+loopmode = 4
+}}
+
+if (loaderdebugggy){
+ctx.fillText(("FPS: " + Math.floor(fps)), 40, 470)
+}
+
+setTimeout("loop_function()",3)
+}
+
+
+
+
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+margin: 0pt;
+padding: 0pt;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+a.thelinkyayay:link {color:#000000 ; text-decoration: none; }
+a.thelinkyayay:active {color: #000000; text-decoration: none; }
+a.thelinkyayay:visited {color: #000000; text-decoration: none; }
+a.thelinkyayay:hover {color: #000000; text-decoration: none; }
+</style></head><body onresize="setFullScreen()" onload="beno_game_system_start();" onkeydown="k_down(event)" onkeyup="k_up(event)" onmousedown="mm_down(event)" onmouseup="mm_up(event)" onmousemove="mm_move(event)">
+<div id="thePositioner" style="position:absolute;top:30px;left:140px;margin:0px;padding:0px;"><canvas id="canvas" width="640" height="480" style="margin:0px;padding:0px;display:block;" ></canvas></div>
+<div id="theAdvert" style="position:absolute;top:159px;left:849px;"><a class="thelinkyayay" href="https://beno.uk/games/"><img border=1 src="../games/a.jpg"/></a></div>
+</body></html>

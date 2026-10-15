@@ -1,0 +1,8 @@
+User-agent: *
+allow: /
+disallow: /h.html
+disallow: /news.html
+disallow: /skyscrapersim/skydownload.html
+disallow: /skyscrapersim/creator/
+disallow: /skyscrapersim/simplecreator/
+disallow: /skyscrapersim/random/

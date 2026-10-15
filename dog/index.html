@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="content-type" content="text/html;">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui," /> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<title>PISSY DOG GAME</title><script src="../beno_game_system.js"></script><script type="text/javascript">
+//////////////////////////////////////////// And before we do anything else, lets set up some stuff
+mobilemode = "PISS";fullScreenViewMode = false;inmobileview = false;compatibilitymode = "mp3";gameframe = true;gamego = false;var loaderimagesfile=new Array();var loaderimagesname=new Array();var loadersoundsfile=new Array();var loadersoundsname=new Array();var loadersoundsloop=new Array();
+
+//////////////////////////////////////////// LOAD IMAGES
+loaderimagesfile[0]="1.png"
+loaderimagesname[0]="img1";
+loaderimagesfile[1]="../multigame/1.png"
+loaderimagesname[1]="img2";
+
+
+
+//////////////////////////////////////////// LOAD SOUNDS
+loadersoundsfile[0]="1.mp3"
+loadersoundsname[0]="sound1";
+loadersoundsloop[0]=0;
+loadersoundsfile[1]="2.mp3"
+loadersoundsname[1]="sound2";
+loadersoundsloop[1]=0;
+loadersoundsfile[2]="3.mp3"
+loadersoundsname[2]="sound3";
+loadersoundsloop[2]=0;
+
+loadersoundsfile[3]="arobot.mp3"
+loadersoundsname[3]="soundarobot";
+loadersoundsloop[3]=0;
+
+loadersoundsfile[4]="robot.mp3"
+loadersoundsname[4]="soundrobot";
+loadersoundsloop[4]=0;
+
+loadersoundsfile[5]="carpet.mp3"
+loadersoundsname[5]="soundcarpet";
+loadersoundsloop[5]=0;
+
+loadersoundsfile[6]="sit.mp3"
+loadersoundsname[6]="soundsit";
+loadersoundsloop[6]=0;
+
+loadersoundsfile[7]="water.mp3"
+loadersoundsname[7]="soundwater";
+loadersoundsloop[7]=0;
+
+
+
+
+//////////////////////////////////////////// FIRST FUNCTION
+function startup_function(){
+framedistance = 40
+xxx = 0
+yyy = 0
+mouse = 1
+car = 1
+level = 1
+score = 0
+neededscore = 6
+mode = 1
+mrwindow1 = false;mrwindow1x = 100;mrwindow1y = 300;
+mrwindow2 = false;mrwindow2x = 200;mrwindow2y = 200;
+window1priority = true;windowmover = 0;windowmoverx = 0;windowmovery = 0;
+intro1 = 45;
+////
+//setgame(7)
+}
+
+
+//  carpets  [color,pissedOn,x,y]
+function setgame(q){
+xxx = 0
+yyy = 0
+level = q
+larkytimer = 2000
+stairs = false
+walker = 0
+sitting = false
+pissing = 0
+walkdir = true
+puddles= new Array()
+dogpiss = 0
+neededscore = 0
+freezer = 400
+
+if (level == 1){
+carpets=[[0,false,0,0],[0,false,400,0]]
+bladder = 4000
+roboty = 2000
+robotx = 0
+robotdirection = true
+aroboty = 2000
+arobotx = 0
+arobotdirection = true
+startx = -400
+endx = 500
+secondfloor = false
+stairsa = 4000
+stairsb = 4000
+boxx = 4000
+boxy = 0
+angryx = 0
+angryy = 2000
+angrydirection = true
+mcwater = 2
+}
+
+if (level == 2){
+carpets=[[1,false,900,0],[1,false,500,0]]
+bladder = 4000
+roboty = 2000
+robotx = 0
+robotdirection = true
+aroboty = 2000
+arobotx = 0
+arobotdirection = true
+startx = -100
+endx = 1000
+secondfloor = false
+stairsa = 4000
+stairsb = 4000
+boxx = 4000
+boxy = 0
+angryx = 0
+angryy = 2000
+angrydirection = true
+mcwater = 0
+}
+
+
+
+
+
+
+if (level == 3){
+carpets=[[2,false,-100,0],[2,false,400,0],[2,false,300,391],[2,false,500,391]]
+bladder = 4000
+roboty = 2000
+robotx = 0
+robotdirection = true
+aroboty = 2000
+arobotx = 0
+arobotdirection = true
+startx = -400
+endx = 500
+secondfloor = true
+stairsa = 0
+stairsb = 4000
+boxx = 100
+boxy = 391
+angryx = 0
+angryy = 0
+angrydirection = true
+mcwater = 4
+}
+
+
+
+
+if (level == 4){
+carpets=[[3,false,-400,0],[3,false,-200,0],[3,false,200,0],[3,false,400,0]]
+bladder = 4000
+roboty = 0
+robotx = -140
+robotdirection = true
+aroboty = 2000
+arobotx = 0
+arobotdirection = true
+startx = -600
+endx = 1000
+secondfloor = false
+stairsa = 4000
+stairsb = 4000
+boxx = 160
+boxy = 0
+angryx = 0
+angryy = 2000
+angrydirection = true
+mcwater = 2
+puddles= [[-235,0,2],[-130,0,2],[-25,0,2]]
+xxx = 116
+}
+
+
+
+
+
+
+
+
+
+
+if (level == 5){
+carpets=[[1,false,-160,0],[1,false,40,0],[1,false,-240,391],[1,false,200,391]]
+bladder = 4000
+roboty = 2000
+robotx = 0
+robotdirection = true
+aroboty = 391
+arobotx = -190
+arobotdirection = true
+startx = -400
+endx = 100
+secondfloor = true
+stairsa = 0
+stairsb = 4000
+boxx = 2000
+boxy = 0
+angryx = 0
+angryy = 0
+angrydirection = true
+mcwater = 2
+}
+
+
+
+
+
+
+
+
+
+
+
+if (level == 6){
+carpets=[[0,false,170,0],[0,false,350,0],[0,false,440,391],[0,false,620,391]]
+bladder = 4000
+roboty = 0
+robotx = 0
+robotdirection = true
+aroboty = 2000
+arobotx = 0
+arobotdirection = true
+startx = -100
+endx = 500
+secondfloor = true
+stairsa = -360
+stairsb = -90
+boxx = 340
+boxy = 0
+angryx = 0
+angryy = 0
+angrydirection = true
+mcwater = 2
+}
+
+
+
+if (level == 7){
+carpets=[[1,false,-240,0],[1,false,200,0]]
+bladder = 4000
+roboty = 0
+robotx = 0
+robotdirection = true
+aroboty = 0
+arobotx = -190
+arobotdirection = true
+startx = -600
+endx = 300
+secondfloor = true
+stairsa = 200
+stairsb = 4000
+boxx = 2000
+boxy = 0
+angryx = 0
+angryy = 0
+angrydirection = true
+mcwater = 0
+yyy = 391
+xxx = 460
+}
+
+
+
+
+
+if (level == 8){
+carpets=[[0,false,170,0],[0,false,350,0],[0,false,440,391],[0,false,620,391]]
+bladder = 4000
+roboty = 0
+robotx = 0
+robotdirection = true
+aroboty = 0
+arobotx = -450
+arobotdirection = false
+startx = -100
+endx = 500
+secondfloor = true
+stairsa = -360
+stairsb = -90
+boxx = 2000
+boxy = 0
+angryx = 0
+angryy = 0
+angrydirection = true
+mcwater = 2
+}
+
+
+
+
+
+
+if (level > 8){
+mode = 12
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.fillRect(0,0,640,480)
+ctx.fillStyle = "rgb(0,255,255)"
+ctx.font = '26pt Arial';ctx.fillText("YOU HAVE COMPLETED THE GAME!", 320, 220)
+
+}else{
+mode = 10
+}
+
+
+}
+
+
+//////////////////////////////////////////// MOUSE FOR WINDOWS
+function m_down(){
+if (windowmover == 0){
+needtofind = true
+if ((x > mrwindow1x) && (x < (mrwindow1x + 300)) && (y > mrwindow1y) && (y < (mrwindow1y + 200)) && (mrwindow1) && (window1priority) && (needtofind)){
+needtofind = false;m_down_1()
+}
+if ((x > mrwindow2x) && (x < (mrwindow2x + 300)) && (y > mrwindow2y) && (y < (mrwindow2y + 200)) && (mrwindow2) && (needtofind)){
+needtofind = false;m_down_2()
+}
+if ((x > mrwindow1x) && (x < (mrwindow1x + 300)) && (y > mrwindow1y) && (y < (mrwindow1y + 200)) && (mrwindow1) && (needtofind)){
+needtofind = false;m_down_1()
+}
+if (needtofind){
+m_down_go()
+}}}
+function m_down_1(){
+window1priority = true
+if ((x > (mrwindow1x + 6)) && (x < (mrwindow1x + 294)) && (y > (mrwindow1y + 20)) && (y < (mrwindow1y + 194))){
+
+if (mode > 9){
+mrclick(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 75,mrwindow1y + 105,     "sound1.play();mrwindow1=false;window1priority = false;setgame(level)") //RESTART LEVEL
+mrclick(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 115,mrwindow1y + 145,     "sound1.play();mode = 1") //RESTART LEVEL
+mrclick(mrwindow1x + 60,mrwindow1x + 145,mrwindow1y + 155,mrwindow1y + 185,     "sound1.play();mrwindow2x = 4;mrwindow2y = 276;mrwindow2=true;window1priority = false;") //SHOW HELP WINDOW
+mrclick(mrwindow1x + 155,mrwindow1x + 240,mrwindow1y + 155,mrwindow1y + 185,     "sound1.play();mrwindow1 = false;window1priority = false;mode = 1;") //HOME
+
+}else{
+mrclick(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(1)")
+mrclick(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(2)")
+mrclick(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(3)")
+mrclick(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(4)")
+mrclick(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 50,mrwindow1y + 90,     "sound1.play();mrwindow1=false;window1priority = false;setgame(5)")
+mrclick(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(6)")
+mrclick(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(7)")
+mrclick(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 100,mrwindow1y + 140,     "sound1.play();mrwindow1=false;window1priority = false;setgame(8)")
+
+}
+
+
+
+
+
+
+
+}else{
+if ((x > (mrwindow1x + 265)) && (x < (mrwindow1x + 294)) && (y > (mrwindow1y + 3)) && (y < (mrwindow1y + 16))){
+mrwindow1 = false;window1priority = false;
+}else if(!inmobileview){
+windowmoverx = (x - mrwindow1x)
+windowmovery = (y - mrwindow1y)
+windowmover = 1
+}}}
+
+
+function m_down_2(){
+window1priority = false
+if ((x > (mrwindow2x + 6)) && (x < (mrwindow2x + 294)) && (y > (mrwindow2y + 20)) && (y < (mrwindow2y + 194))){
+
+}else{
+if ((x > (mrwindow2x + 265)) && (x < (mrwindow2x + 294)) && (y > (mrwindow2y + 3)) && (y < (mrwindow2y + 16))){
+mrwindow2 = false;window1priority = true;
+}else if(!inmobileview){
+windowmoverx = (x - mrwindow2x)
+windowmovery = (y - mrwindow2y)
+windowmover = 2
+}}}
+
+//////////////////////////////////////////// MOUSEDOWN
+function m_down_go(){
+if (mode == 1){ //MOUSE FOR SCREEN 1
+
+
+if (!mrwindow1){
+
+mrclick(200,440,340,370,     "intro1 = 0;sound1.play();mode = 2;setTimeout('sound2.play()',200)") //PLAY SOUND, OPEN WINDOW 1
+mrclick(200,440,375,405,     "sound1.play();mrwindow1=true;mrwindow1x = 170;mrwindow1y = 140;window1priority = true;") //SET VARS, PLAY SOUND, CHANGE TO SCREEN 2
+
+
+if (fullScreenViewMode){
+mrclick(200,440,410,440,     "sound1.play();mrwindow2x = 4;mrwindow2y = 100;mrwindow2=true;window1priority = false;") //SHOW HELP WINDOW
+}else{
+mrclick(200,440,410,440,     "sound1.play();desktopFullScreenMode()") //MAKE FULLSCREEN
+}
+
+
+mrclick(200,440,445,475,     "sound1.play();setTimeout(window.location.href = 'https://beno.uk/games/', 200)") //GO TO WEBSITE
+}
+
+
+
+}else if (mode == 2){ //MOUSE FOR SCREEN 2 (else if is used so 2 scrrens don't get processed when changing screen)
+mrclick(280,360,445,470,     "sound2.pause();sound2.currentTime = 0;sound1.play();mode = 1") //PLAY SOUND, CHANGE TO SCREEN 1
+}else if (mode > 9){ //MOUSE FOR SCREEN 2 (else if is used so 2 scrrens don't get processed when changing screen)
+if (!mrwindow1){
+mrclick(210,290,419,444,     "sound1.play();mrwindow1=true;mrwindow1x = 170;mrwindow1y = 140;window1priority = true;") //PLAY SOUND, OPEN WINDOW 1
+mrclick(210,290,450,475,     "sound1.play();mrwindow1=false;window1priority = false;setgame(level)") //RESTART
+
+
+
+
+}
+}
+
+
+
+}
+
+//////////////////////////////////////////// MOUSEMOVE
+function m_move(){
+if (windowmover == 1){
+mrwindow1x = (x - windowmoverx)
+mrwindow1y = (y - windowmovery)
+if (mrwindow1x > 540){
+mrwindow1x = 540
+}
+if (mrwindow1x < -200){
+mrwindow1x = -200
+}
+if (mrwindow1y > 380){
+mrwindow1y = 380
+}
+if (mrwindow1y < -100){
+mrwindow1y = -100
+}
+}
+if (windowmover == 2){
+mrwindow2x = (x - windowmoverx)
+mrwindow2y = (y - windowmovery)
+if (mrwindow2x > 540){
+mrwindow2x = 540
+}
+if (mrwindow2x < -200){
+mrwindow2x = -200
+}
+if (mrwindow2y > 380){
+mrwindow2y = 380
+}
+if (mrwindow2y < -100){
+mrwindow2y = -100
+}
+}
+
+}
+//////////////////////////////////////////// MOUSEUP
+function m_up(){
+if (windowmover > 0){
+windowmover = 0
+}
+
+
+}
+
+
+
+//////////////////////////////////////////// LOOP FUNCTION
+function loop_function(){
+if (mode != 12){
+if (mode < 9){
+if (mode == 2){
+ctx.fillStyle = "rgb(0,0,0)"
+}else{
+ctx.fillStyle = "rgb(255,255,255)"
+}
+ctx.fillRect(0,0,640,480) //CLEAR THE SCREEN
+}else{
+ctx.fillStyle = "rgb(140,220,255)"
+ctx.fillRect(0,0,640,480) //CLEAR THE SCREEN
+if((yyy+400) < 480){
+ctx.fillStyle = "rgb(50,200,70)"
+ctx.fillRect(0,yyy+400,640,yyy+406) //CLEAR THE SCREEN
+}
+if((yyy+406) < 480){
+ctx.fillStyle = "rgb(71,53,34)"
+ctx.fillRect(0,yyy+406,640,480) //CLEAR THE SCREEN
+}
+}
+}
+if (mode == 1){ //SCREEN 1
+
+
+
+
+ctx.fillStyle = "rgb(0,0,0)";ctx.font = '26pt Arial';ctx.fillText("PISSY DOG GAME", 320, 100) //THE TEXT
+if (!mrwindow1){
+mrbutton(200,440,340,370,"PLAY",'14pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+mrbutton(200,440,375,405,"SELECT LEVEL",'14pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+if (fullScreenViewMode){
+mrbutton(200,440,410,440,"HELP",'14pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}else{
+mrbutton(200,440,410,440,"FULL SCREEN",'14pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+mrbutton(200,440,445,475,"PLAY MORE GAMES AT BENO.UK",'10pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+}
+
+if (mode == 2){ //SCREEN 2
+ctx.globalAlpha = 1
+if (intro1 < 4000){
+ctx.globalAlpha = intro1 / 4000
+}
+if (intro1 > 10000){
+ctx.globalAlpha =  (1 - ((intro1 - 10000) / 2000))
+}
+ctx.drawImage(img1, 1588, 816, 389, 338, 320 - (388 / 2), 240 - (338 / 2), 389, 338)
+ctx.globalAlpha = 1
+intro1 += (1000/fps)
+if (intro1 > 12000){
+setgame(1)
+}
+
+
+mrbutton(280,360,445,470,"BACK",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+}
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+if ((mode == 10) || (mode == 11)){
+if (mode == 11){
+mode = 12
+}
+
+
+
+
+
+
+
+q=startx
+
+while(q < (endx + 200)){
+
+ctx.drawImage(img1, 0, 596, 101, 420, q + xxx + 120, 0 + yyy - 1, 101, 420)
+if (secondfloor){
+ctx.drawImage(img1, 0, 596, 101, 420, q + xxx + 120, 0 + yyy - 391, 101, 420)
+}
+
+if (((q % 400) == 200) || ((q % 400) == -200)){
+ctx.drawImage(img1, 627, 650 + (74 * (level % 5)), 85, 70, q + xxx + 120, 0 + yyy + 53, 85, 70)
+if (secondfloor){
+ctx.drawImage(img1, 627, 650 + (74 * (level % 5)), 85, 70, q + xxx + 120, 0 + yyy - 337, 85, 70)
+}
+}
+
+
+
+q+=100
+}
+
+
+
+
+
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.fillRect(startx + xxx + 120,0 + yyy + 46,10,353)
+ctx.fillRect(endx + xxx + 311,0 + yyy + 46,10,353)
+if (secondfloor){
+ctx.fillRect(startx + xxx + 120,0 + yyy + 46 - 390,10,353)
+ctx.fillRect(endx + xxx + 311,0 + yyy + 46 - 390,10,353)
+
+}
+
+
+
+
+
+
+
+if (mcwater == 2){
+ctx.drawImage(img1, 1179, 0, 87, 118, startx + xxx + 134, 0 + yyy + 270, 87, 118)
+if ((bladder < 2) && (yyy == 0) && (xxx > (0-startx+46))){mcwater = 1;bladder = 1
+
+if (soundwater.paused){soundwater.play()}
+
+
+}
+}
+if (mcwater == 1){
+ctx.drawImage(img1, 1288, 0, 87, 118, startx + xxx + 134, 0 + yyy + 270, 87, 118)
+}
+if (mcwater == 4){
+ctx.drawImage(img1, 1179, 0, 87, 118, startx + xxx + 134, 0 + yyy + 270 - 391, 87, 118)
+if ((bladder < 2) && (yyy == 391) && (xxx > (0-startx+46))){mcwater = 3;bladder = 1
+if (soundwater.paused){soundwater.play()}
+}
+}
+if (mcwater == 3){
+ctx.drawImage(img1, 1288, 0, 87, 118, startx + xxx + 134, 0 + yyy + 270 - 391, 87, 118)
+}
+
+
+q=0
+while(q < carpets.length){
+if(carpets[q][1]){
+ctx.drawImage(img1, 178 + 217, carpets[q][0] * 23, 195, 22, carpets[q][2] + xxx, (0 - carpets[q][3]) + yyy + 380, 195, 22)
+}else{
+
+ctx.drawImage(img1, 178, carpets[q][0] * 23, 195, 22, carpets[q][2] + xxx, (0 - carpets[q][3]) + yyy + 380, 195, 22)
+}
+
+q++
+}
+q=0
+while(q < puddles.length){
+
+ctx.drawImage(img1, 640, puddles[q][2] * 23, 195, 22, puddles[q][0] + xxx, (0 - puddles[q][1]) + 380 + yyy, 195, 22)
+
+
+q++
+}
+
+if (roboty != 0){
+ctx.drawImage(img1, 890, 624, 84, 261, 0 - arobotx + xxx, (yyy + 138) - aroboty, 84, 261)
+}
+
+if(stairs){
+if((key_up) || (key_left)){yyy+= (200 / fps);xxx+= (114 / fps)}
+else if((key_down) || (key_right)){yyy-= (200 / fps);xxx-= (114 / fps)}
+if(yyy < 0){freezer = 400;yyy = 0;stairs = false;key_up = false;key_down = false}
+if(yyy > 391){yyy = 391;stairs = false;key_up = false;key_down = false}
+if (walkdir){
+ctx.drawImage(img1, 192 * 3, 170 + dogpiss, 194, 194, 220 + 8, 220 + 8, 178, 178)
+}else{
+ctx.drawImage(img1, (192 * 6) +50, 170 + dogpiss, 194, 194, 220 + 8, 220 + 8, 178, 178)
+}
+}
+
+if (yyy != 391){
+ctx.drawImage(img1, 140, 620, 285, 530, 0 - stairsa + xxx, yyy - 143, 285, 530)
+ctx.drawImage(img1, 140, 620, 285, 530, 0 - stairsb + xxx, yyy - 143, 285, 530)
+}
+
+
+
+
+if (((0 - (xxx - 249)) > boxx) && ((0 - (xxx - 149)) < boxx) && (boxy == yyy) && (key_right)){
+boxx = (0 - (xxx - 249))
+if ((boxx - 71) > endx){boxx = (endx + 71);xxx = 0 - (endx - 178)}
+
+if ((xxx < (robotx + 483)) && (xxx > (robotx + 380)) && (roboty == yyy) ){xxx = (robotx + 483);boxx = ((0 - xxx)+249);robotdirection = false}
+
+}
+
+if (((0 - (xxx - 119)) > boxx) && ((0 - (xxx - 19)) < boxx) && (boxy == yyy) && (key_left)){
+boxx = (0 - (xxx - 19))
+if ((boxx + 5) < startx){boxx = (startx - 5);xxx = 0 - (startx - 24)};
+
+
+if ((xxx > (robotx + 59)) && (xxx < (robotx + 130)) &&  (roboty == yyy)  ){xxx = (robotx + 59);boxx = ((0 - xxx)+19);robotdirection = true}
+
+}
+
+
+if (((0 - (robotx + 40)) > boxx) && ((0 - (robotx + 140)) < boxx) && (boxy == roboty) ){
+robotdirection = true
+}
+
+if (((0 - (robotx + 140)) > boxx) && ((0 - (robotx + 240)) < boxx) && (boxy == roboty) ){
+robotdirection = false
+}
+
+
+ctx.drawImage(img1, 1417, 0, 106, 116, boxx + xxx + 134, (0 - boxy) + yyy + 280, 106, 116)
+
+walker += framedistance
+if(walker > 320){walker -= 320}
+freezer-=framedistance
+
+
+if (stairs == false){
+if (sitting){
+if((key_up) && (freezer < 0)){
+key_up = false
+sitting = false
+winTime()
+
+q=0
+while(q < puddles.length){
+if ((219-xxx < puddles[q][0]) && (320-xxx > puddles[q][0]) && (yyy == puddles[q][1])){
+
+puddles[q][2]--
+if (puddles[q][2] == -1){
+puddles.splice(q,1)
+}
+
+}
+q++
+}
+
+
+
+}
+
+
+if (walkdir){
+ctx.drawImage(img1, 192 * 4, 170 + dogpiss, 211, 194, 220, 220, 211, 194)
+}else{
+ctx.drawImage(img1, (192 * 5) +40, 170 + dogpiss, 211, 194, 220, 220, 211, 194)
+}
+
+}else if (pissing > 0){
+pissing -= (2000 / fps)
+if (pissing <= 0){
+pissTime()
+winTime()
+}
+if (walkdir){
+ctx.drawImage(img1, 0, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}else{
+ctx.drawImage(img1, (192 * 9) +50, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}
+}else if ((key_left) || (key_right)){
+if(key_left){walkdir = false}
+if(key_right){walkdir = true}
+
+if(key_left){xxx+= (200 / fps)}
+if(key_right){xxx-= (200 / fps)}
+if(xxx>(0-startx+100)){xxx=(0-startx+100)}
+if(xxx<(0-endx+100)){xxx=(0-endx+100)}
+
+
+if(walker > 160){
+if (walkdir){
+ctx.drawImage(img1, 192 * 1, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}else{
+ctx.drawImage(img1, (192 * 8) +50, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}
+}else{
+if (walkdir){
+ctx.drawImage(img1, 192 * 2, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}else{
+ctx.drawImage(img1, (192 * 7) +50, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}
+}
+
+}else{
+
+if(key_down){
+
+if ((yyy == 391) && (xxx > (stairsa + 160)) && (xxx < (stairsa + 140 + 240))){
+xxx = (stairsa + 250)
+stairs = true
+walkdir = true
+}else if ((yyy == 391) && (xxx > (stairsb + 160)) && (xxx < (stairsb + 140 + 240))){
+xxx = (stairsb + 250)
+stairs = true
+walkdir = true
+}else if (freezer < 0){
+if (soundsit.paused){soundsit.play()}
+sitting = true
+qq = true
+q=0
+while((q < carpets.length) && (qq) && (dogpiss == 215)){
+if ((180-xxx < carpets[q][2]) && (290-xxx > carpets[q][2]) && (yyy == carpets[q][3])){
+qq=false
+dogpiss = false
+carpets[q][1]=true
+freezer = 400  
+}
+q++
+}
+
+q=0
+while((q < puddles.length) && (qq)){
+if ((219-xxx < puddles[q][0]) && (320-xxx > puddles[q][0]) && (yyy == puddles[q][1])){
+qq=false
+dogpiss = 215
+}
+q++
+}
+
+
+
+
+}}else if((key_up) && (yyy == 0)){
+if ((yyy == 0) && (xxx > stairsa) && (xxx < (stairsa + 170))){
+xxx = (stairsa + 60)
+stairs = true
+walkdir = false
+}else if ((yyy == 0) && (xxx > stairsb) && (xxx < (stairsb + 170))){
+xxx = (stairsb + 60)
+stairs = true
+walkdir = false
+}}
+if (walkdir){
+ctx.drawImage(img1, 192 * 3, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}else{
+ctx.drawImage(img1, (192 * 6) +50, 170 + dogpiss, 194, 194, 220, 220, 194, 194)
+}
+if ((key_space) && (bladder > 4000)){
+key_space = false
+pissing = 3000
+bladder = 0
+
+pissTime()
+
+}
+
+}}
+
+
+if (yyy == 391){
+ctx.drawImage(img1, 140, 620, 285, 530, 0 - stairsa + xxx, yyy - 143, 285, 530)
+ctx.drawImage(img1, 140, 620, 285, 530, 0 - stairsb + xxx, yyy - 143, 285, 530)
+}
+
+
+pissesNeeded=0
+q=0
+while(q < carpets.length){
+if (carpets[q][1] == false){pissesNeeded++}
+q++
+}
+
+
+if (bladder > 0){
+if (bladder < 10000){
+bladder += framedistance
+}}
+
+if ((bladder > 4000) && (mode == 10)){
+ctx.drawImage(img1, 840, 0, 139, 132, 640 - 139, 0, 139, 132)
+}
+
+
+
+
+if (roboty != -1000){
+
+ctx.drawImage(img1, 1015, 10, 99, 38, 0 - robotx + xxx, yyy + roboty + 364, 99, 38)
+
+if (robotdirection){
+robotx += (300 / fps)
+}else{
+robotx -= (300 / fps)
+}
+
+q = 0
+while (q < carpets.length){
+if ((-70-robotx < carpets[q][2]) && (-10-robotx > carpets[q][2]) && (roboty == carpets[q][3])){
+if (carpets[q][1]){
+carpets[q][1] = false
+if (soundrobot.paused){soundrobot.play()}
+}}
+q++
+}
+q = 0
+while (q < puddles.length){
+if ((-20-robotx < puddles[q][0]) && (-5-robotx > puddles[q][0]) && (roboty == puddles[q][1])){
+puddles.splice(q,1)
+if (soundrobot.paused){soundrobot.play()}
+}
+q++
+}
+if (sitting){
+if (((robotx + 170) < xxx) && ((robotx + 260) > xxx) && (roboty == yyy)){
+robotdirection = true
+}
+if (((robotx + 270) < xxx) && ((robotx + 380) > xxx) && (roboty == yyy)){
+robotdirection = false
+}}
+if (robotx > (0-startx - 126)){
+robotdirection = false
+robotx = (0-startx - 126)
+}
+if (robotx < (0-endx - 216)){
+robotdirection = true
+robotx = (0-endx - 216)
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if (aroboty != -1000){
+if (roboty == 0){
+ctx.drawImage(img1, 890, 624, 84, 261, 0 - arobotx + xxx, (yyy + 138) - aroboty, 84, 261)
+}
+if (arobotdirection){
+arobotx += (200 / fps)
+}else{
+arobotx -= (200 / fps)
+}
+
+if (((arobotx + 170) < xxx) && ((arobotx + 260) > xxx) && (aroboty == yyy) && (stairs == false)){
+xxx = (arobotx + 170)
+if (soundarobot.paused){soundarobot.play()}
+if (sitting){
+freezer = 0;key_up = true;pissing = -2
+}
+}
+if (((arobotx + 270) < xxx) && ((arobotx + 390) > xxx) && (aroboty == yyy) && (stairs == false)){
+xxx = (arobotx + 390);pissing = -2
+if (soundarobot.paused){soundarobot.play()}
+if (sitting){
+freezer = 0;key_up = true
+}
+}
+
+
+if (arobotx > (0-startx - 286)){
+arobotdirection = false
+arobotx = (0-startx - 286)
+}
+if (arobotx < (0-endx - 66)){
+arobotdirection = true
+arobotx = (0-endx - 66)
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (mode == 10){
+ctx.fillStyle = "rgb(0,200,0)"
+ctx.font = '14pt Arial'
+if (pissesNeeded > 1){
+//ctx.fillText(pissesNeeded + " CARPETS NEED TO BE PISSED ON", 320, 31)
+}else{
+if (pissesNeeded == 1){
+//ctx.fillText("1 CARPET NEEDS TO BE PISSED ON", 320, 31)
+}}}
+if (mode == 12){
+ctx.fillStyle = "rgb(0,200,0)"
+ctx.font = '32pt Arial'
+ctx.fillText("YOU WIN!", 320, 200)
+}
+
+
+
+
+if (mode == 10){
+if (level == 1){
+ctx.drawImage(img1, 1400, 667, 576, 109, 0, 0, 576, 109)
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '16pt Arial'
+ctx.fillText("The aim of the game is to piss on all of the carpets", 256,34)
+ctx.fillText("Drink the water in the bowl to do a second piss", 256,68)
+}
+if (level == 2){
+ctx.drawImage(img1, 1400, 667, 576, 109, 0, 0, 576, 109)
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '12pt Arial'
+ctx.fillText("As there is no water bowl, you can only do one piss.", 256,31)
+ctx.fillText("To enable one piss to go on two carpets, piss on the floor, then lie", 256,53)
+ctx.fillText("in your piss to soak it in your fur, then spread it to both carpets", 256,75)
+}
+
+if (level == 4){
+ctx.drawImage(img1, 1400, 667, 576, 109, 0, 0, 576, 109)
+ctx.fillStyle = "rgb(0,0,0)"
+ctx.font = '12pt Arial'
+ctx.fillText("Oh no! There is a vacuum robot that will clean away your piss.", 256,31)
+ctx.fillText("You need to be quick.", 256,53)
+ctx.fillText("Also you can lie in front of the vacuum to block it", 256,75)
+}
+
+
+}
+
+
+
+
+
+
+ctx.drawImage(img1, 1752, 31, 226, 73, 410, 407, 226, 73)
+ctx.fillStyle = "rgb(255,100,0)"
+ctx.font = '32pt Arial'
+ctx.fillText(pissesNeeded, 589, 444)
+
+
+
+ctx.drawImage(img1, 1607, 0, 111, 104, 1, 400, 111, 85)
+ctx.fillStyle = "rgb(255,100,0)"
+ctx.font = '32pt Arial'
+ctx.fillText(level, 58, 452)
+
+if (mode == 10){
+larkytimer -= framedistance
+if (larkytimer < 0){larkytimer = 0}if (larkytimer > 0){ctx.fillStyle = "rgb(0,200,0)";ctx.font = '50pt Arial';ctx.fillText("LEVEL " + level, 320, 240)}
+}else{
+larkytimer += framedistance
+}
+
+}
+if (mode == 12){
+larkytimer += framedistance
+if (larkytimer > 4000){setgame(level + 1)}
+}
+
+if (mode > 9){
+if (!mrwindow1){
+mrbutton(210,290,419,444,"MENU",'9pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+mrbutton(210,290,450,475,"RESTART",'9pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2) //THE BUTTON
+
+}
+}
+
+
+if (mrwindow1 && !window1priority){
+drawwindow1()
+}
+if (mrwindow2){
+drawwindow2()
+}
+if (mrwindow1 && window1priority){
+drawwindow1()
+}
+lasttime = nowtime;nowtime = ((new Date()).getTime());if((nowtime - lasttime) > 100){lasttime = (nowtime - 100)};fps = (1000 / (nowtime - lasttime));framedistance = (nowtime - lasttime);if (framedistance > 40){framedistance = 40};setTimeout("loop_function()",2) // LOOP CONTROLL
+}
+function drawwindow1(){
+ctx.drawImage(img2, mrwindow1x, mrwindow1y)
+
+if (mode > 9){
+ctx.fillStyle = "rgb(0,0,0)";ctx.font = '19pt Arial';ctx.fillText("GAME MENU", mrwindow1x + 149, mrwindow1y + 46);
+mrbutton(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 75,mrwindow1y + 105,"RESTART LEVEL",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 60,mrwindow1x + 240,mrwindow1y + 115,mrwindow1y + 145,"CHANGE LEVEL",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 60,mrwindow1x + 145,mrwindow1y + 155,mrwindow1y + 185,"HELP",'11pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 155,mrwindow1x + 240,mrwindow1y + 155,mrwindow1y + 185,"MAIN MENU",'10pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+}else{
+ctx.fillStyle = "rgb(0,0,0)";ctx.font = '16pt Arial';ctx.fillText("SELECT A LEVEL", mrwindow1x + 149, mrwindow1y + 36);
+mrbutton(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 50,mrwindow1y + 90,"1",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 50,mrwindow1y + 90,"2",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 50,mrwindow1y + 90,"3",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 180,mrwindow1x + 220,mrwindow1y + 50,mrwindow1y + 90,"4",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 230,mrwindow1x + 270,mrwindow1y + 50,mrwindow1y + 90,"5",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+
+mrbutton(mrwindow1x + 30,mrwindow1x + 70,mrwindow1y + 100,mrwindow1y + 140,"6",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 80,mrwindow1x + 120,mrwindow1y + 100,mrwindow1y + 140,"7",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+mrbutton(mrwindow1x + 130,mrwindow1x + 170,mrwindow1y + 100,mrwindow1y + 140,"8",'16pt Arial',"rgb(0,0,0)","rgb(200,200,200)","rgb(150,150,150)","rgb(150,150,150)","rgb(200,200,200)",2)
+
+
+
+
+}
+
+
+}
+function drawwindow2(){
+ctx.drawImage(img2, mrwindow2x, mrwindow2y)
+}
+
+
+function pissTime(){
+if (!walkdir){xxx -= 60}
+qq=true
+q=0
+while((q < carpets.length) && (qq)){
+if ((110-xxx < carpets[q][2]) && (290-xxx > carpets[q][2]) && (yyy == carpets[q][3])){
+qq=false
+carpets[q][1]=true
+if (soundcarpet.paused){soundcarpet.play()}
+}
+q++
+}
+q=0
+while((q < puddles.length) && (qq)){
+if ((209-xxx < puddles[q][0]) && (269-xxx > puddles[q][0]) && (yyy == puddles[q][1])){
+qq=false
+if (puddles[q][2] < 3){
+puddles[q][2]++
+
+}
+}
+q++
+}
+if (qq){
+if (soundcarpet.paused){soundcarpet.play()}
+puddles[puddles.length] = new Array (239 - xxx,yyy,0)
+}
+if (!walkdir){xxx += 60}
+}
+
+function winTime(){
+pissesNeeded=0
+q=0
+while(q < carpets.length){
+if (carpets[q][1] == false){pissesNeeded++}
+q++
+}
+if (pissesNeeded == 0){
+mode = 11
+sound3.play()
+}
+}
+
+
+
+
+
+
+
+//////////////////////////////////////////// HELP FILE
+/*
+------ Draw an image ------
+ctx.drawImage(img1, 0, 0)
+
+------ Draw an image (long) ------
+ctx.drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+
+------ Draw a box ------
+ctx.fillStyle = "rgb(255,255,255)"
+ctx.fillRect(0,0,640,480)
+
+------ Draw text ------
+ctx.fillStyle = "rgb(255,255,255)"
+ctx.font = '18pt Arial'
+ctx.fillText("eat poo", 490, 200)
+
+------ Sound functions ------
+sound1.play()
+sound1.pause();sound1.currentTime = 0
+sound1.playbackRate = 0.5
+sound1.volume = 0.5
+
+------ Keyboard ------
+key_left == false
+key_right == false
+key_up == false
+key_down == false
+key_space == false
+
+------ Mouse click ------
+//add this to mouse down
+mrclick(Xstart,Xfinish,Ystart,Yfinish,"alert('click')")
+//add this to loop
+mrbutton(Xstart,Xfinish,Ystart,Yfinish,text,textfontsize,coltext,col1,col2,coldown1,coldown2,border)
+*/
+
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+margin: 0pt;
+padding: 0pt;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+a.thelinkyayay:link {color:#000000 ; text-decoration: none; }
+a.thelinkyayay:active {color: #000000; text-decoration: none; }
+a.thelinkyayay:visited {color: #000000; text-decoration: none; }
+a.thelinkyayay:hover {color: #000000; text-decoration: none; }
+</style></head><body onresize="setFullScreen()" onload="beno_game_system_start();" onkeydown="k_down(event)" onkeyup="k_up(event)" onmousedown="mm_down(event)" onmouseup="mm_up(event)" onmousemove="mm_move(event)">
+<div id="thePositioner" style="position:absolute;top:30px;left:140px;margin:0px;padding:0px;"><canvas id="canvas" width="640" height="480" style="margin:0px;padding:0px;display:block;" ></canvas></div>
+<div id="theAdvert" style="position:absolute;top:159px;left:849px;"><a class="thelinkyayay" href="https://beno.uk/games/"><img border=1 src="../games/a.jpg"/></a></div>
+</body></html>

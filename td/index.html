@@ -1,0 +1,8213 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="content-type" content="text/html;">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,minimal-ui," /> 
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+
+<title>Beno TD</title>
+
+<script type="text/javascript" src="../beno_game_system.js"></script>
+<script type="text/javascript">
+
+
+mobilemode = "nokeyboard";fullScreenViewMode = false;inmobileview = false;compatibilitymode = "mp3";gameframe = true;gamego = false;var loaderimagesfile=new Array();var loaderimagesname=new Array();var loadersoundsfile=new Array();var loadersoundsname=new Array();var loadersoundsloop=new Array();
+
+
+
+loaderimagesname[0]="imgkkkk"
+loaderimagesfile[0]="kkkk.png"
+loaderimagesname[1]="imgst"
+loaderimagesfile[1]="st.gif"
+loaderimagesname[2]="imgst2"
+loaderimagesfile[2]="st2.png"
+loaderimagesname[3]="imgtower"
+loaderimagesfile[3]="tower.png"
+loaderimagesname[4]="imgltower"
+loaderimagesfile[4]="ltower.png"
+loaderimagesname[5]="imglaser"
+loaderimagesfile[5]="laser.png"
+loaderimagesname[6]="imgsplash"
+loaderimagesfile[6]="splash.png"
+loaderimagesname[7]="imgem1"
+loaderimagesfile[7]="1.png"
+loaderimagesname[8]="imgem2"
+loaderimagesfile[8]="2.png"
+loaderimagesname[9]="imgem3"
+loaderimagesfile[9]="3.png"
+loaderimagesname[10]="imgem4"
+loaderimagesfile[10]="4.png"
+loaderimagesname[11]="imggo"
+loaderimagesfile[11]="go.png"
+loaderimagesname[12]="imggoo"
+loaderimagesfile[12]="goo.png"
+loaderimagesname[13]="imggooo"
+loaderimagesfile[13]="select.png"
+loaderimagesname[14]="imggooor"
+loaderimagesfile[14]="selectred.png"
+loaderimagesname[15]="imggooorr"
+loaderimagesfile[15]="selectgrey.png"
+loaderimagesname[16]="imggoooo"
+loaderimagesfile[16]="select2.png"
+loaderimagesname[17]="imggooooo1"
+loaderimagesfile[17]="t1.png"
+loaderimagesname[18]="imggooooo2"
+loaderimagesfile[18]="t2.png"
+loaderimagesname[19]="imggooooo3"
+loaderimagesfile[19]="t3.png"
+loaderimagesname[20]="imggooooo4"
+loaderimagesfile[20]="t4.png"
+loadersoundsname[0]="sound1"
+loadersoundsfile[0]="1.mp3"
+loadersoundsloop[0]=0;
+loadersoundsname[1]="sound2"
+loadersoundsfile[1]="2.mp3"
+loadersoundsloop[1]=0;
+loadersoundsname[2]="sound3"
+loadersoundsfile[2]="3.mp3"
+loadersoundsloop[2]=0;
+loadersoundsname[3]="sound4"
+loadersoundsfile[3]="4.mp3"
+loadersoundsloop[3]=0;
+loadersoundsname[4]="sound5"
+loadersoundsfile[4]="5.mp3"
+loadersoundsloop[4]=1;
+loadersoundsname[5]="sound6"
+loadersoundsfile[5]="6.mp3"
+loadersoundsloop[5]=0;
+loadersoundsname[6]="sound7"
+loadersoundsfile[6]="7.mp3"
+loadersoundsloop[6]=0;
+loadersoundsname[7]="sound8"
+loadersoundsfile[7]="8.mp3"
+loadersoundsloop[7]=1;
+loadersoundsname[8]="sound9"
+loadersoundsfile[8]="9.mp3"
+loadersoundsloop[8]=1;
+loadersoundsname[9]="sound10"
+loadersoundsfile[9]="10.mp3"
+loadersoundsloop[9]=0;
+loadersoundsname[10]="sound11"
+loadersoundsfile[10]="11.mp3"
+loadersoundsloop[10]=0;
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////set up vars
+//////////////////////////////////////////////////////
+var gun1price = 37            //price of gun 1
+var gun2price = 1000          //price of gun 2
+var gun3price = 910           //price of gun 3
+var gun4price = 340           //price of gun 4
+var gun1power = 0.75          //power of gun 1
+var gun2power = 0.055         //power of gun 2
+var gun3power = 0.11          //power of gun 3
+var gun4power = 0.5             //power of gun 4
+var moneyback = 1             //how much mony do you get per enimy
+var startlevel = 1           //set start level (starting at the start must be set to 0 to use this)
+var startmoney = 115          //set start money (note: if are at level 1000 you should have 60500 money. level 10 660 money)
+var startlives = 10           //how many lives at start
+var littlenumberr = 0.2      //this set the increasing differculty
+var startingatthestart = 1    //debug mode (must be set to 0 if not starting at the start)
+var em1s = 2                  //speed of emeny 1
+var em2s = 8                  //speed of emeny 2
+var em3s = 0.8                //speed of emeny 3
+var em4s = 1.4                //speed of emeny 4
+
+
+
+
+
+
+
+var littlenumber
+var q1
+var q2
+var q3
+var q4
+var q5
+var q6 = 0
+
+var abcd
+var abcde
+var abcdef
+
+var apoo = 0
+
+var redmode = 0
+var selectmode4 = 0
+var selectmode3 = 0
+var selectmode2 = 0
+var selectmode = 0
+var timetilnext = 0
+var emcount = 0
+var emspeed = 0
+var allow = 1
+var wave = 0
+var lives = 10
+var money = 100
+var level = 1
+var emtype = 0
+var wavemoving = 0
+
+var mx = 13
+var my = 13
+
+var q88
+
+var wooYayIntervalId = 0
+
+var towers = 0
+var towerss = 0
+
+var ltowers = 0
+var ltowerss = 0
+
+var lasers = 0
+var laserss = 0
+
+var splashs = 0
+var splashss = 0
+
+var tower1 = 0
+var tower1x = 0
+var tower1y = 0
+var tower1z = 0
+var tower2 = 0
+var tower2x = 0
+var tower2y = 0
+var tower2z = 0
+var tower3 = 0
+var tower3x = 0
+var tower3y = 0
+var tower3z = 0
+var tower4 = 0
+var tower4x = 0
+var tower4y = 0
+var tower4z = 0
+var tower5 = 0
+var tower5x = 0
+var tower5y = 0
+var tower5z = 0
+var tower6 = 0
+var tower6x = 0
+var tower6y = 0
+var tower6z = 0
+var tower7 = 0
+var tower7x = 0
+var tower7y = 0
+var tower7z = 0
+var tower8 = 0
+var tower8x = 0
+var tower8y = 0
+var tower8z = 0
+var tower9 = 0
+var tower9x = 0
+var tower9y = 0
+var tower9z = 0
+var tower10 = 0
+var tower10x = 0
+var tower10y = 0
+var tower10z = 0
+var tower11 = 0
+var tower11x = 0
+var tower11y = 0
+var tower11z = 0
+var tower12 = 0
+var tower12x = 0
+var tower12y = 0
+var tower12z = 0
+var tower13 = 0
+var tower13x = 0
+var tower13y = 0
+var tower13z = 0
+var tower14 = 0
+var tower14x = 0
+var tower14y = 0
+var tower14z = 0
+var tower15 = 0
+var tower15x = 0
+var tower15y = 0
+var tower15z = 0
+var tower16 = 0
+var tower16x = 0
+var tower16y = 0
+var tower16z = 0
+var tower17 = 0
+var tower17x = 0
+var tower17y = 0
+var tower17z = 0
+var tower18 = 0
+var tower18x = 0
+var tower18y = 0
+var tower18z = 0
+var tower19 = 0
+var tower19x = 0
+var tower19y = 0
+var tower19z = 0
+var tower20 = 0
+var tower20x = 0
+var tower20y = 0
+var tower20z = 0
+var tower21 = 0
+var tower21x = 0
+var tower21y = 0
+var tower21z = 0
+var tower22 = 0
+var tower22x = 0
+var tower22y = 0
+var tower22z = 0
+var tower23 = 0
+var tower23x = 0
+var tower23y = 0
+var tower23z = 0
+var tower24 = 0
+var tower24x = 0
+var tower24y = 0
+var tower24z = 0
+var tower25 = 0
+var tower25x = 0
+var tower25y = 0
+var tower25z = 0
+var tower26 = 0
+var tower26x = 0
+var tower26y = 0
+var tower26z = 0
+var tower27 = 0
+var tower27x = 0
+var tower27y = 0
+var tower27z = 0
+var tower28 = 0
+var tower28x = 0
+var tower28y = 0
+var tower28z = 0
+var tower29 = 0
+var tower29x = 0
+var tower29y = 0
+var tower29z = 0
+var tower30 = 0
+var tower30x = 0
+var tower30y = 0
+var tower30z = 0
+var tower31 = 0
+var tower31x = 0
+var tower31y = 0
+var tower31z = 0
+var tower32 = 0
+var tower32x = 0
+var tower32y = 0
+var tower32z = 0
+var tower33 = 0
+var tower33x = 0
+var tower33y = 0
+var tower33z = 0
+var tower34 = 0
+var tower34x = 0
+var tower34y = 0
+var tower34z = 0
+var tower35 = 0
+var tower35x = 0
+var tower35y = 0
+var tower35z = 0
+var tower36 = 0
+var tower36x = 0
+var tower36y = 0
+var tower36z = 0
+var tower37 = 0
+var tower37x = 0
+var tower37y = 0
+var tower37z = 0
+var tower38 = 0
+var tower38x = 0
+var tower38y = 0
+var tower38z = 0
+var tower39 = 0
+var tower39x = 0
+var tower39y = 0
+var tower39z = 0
+var tower40 = 0
+var tower40x = 0
+var tower40y = 0
+var tower40z = 0
+var tower41 = 0
+var tower41x = 0
+var tower41y = 0
+var tower41z = 0
+var tower42 = 0
+var tower42x = 0
+var tower42y = 0
+var tower42z = 0
+var tower43 = 0
+var tower43x = 0
+var tower43y = 0
+var tower43z = 0
+var tower44 = 0
+var tower44x = 0
+var tower44y = 0
+var tower44z = 0
+var tower45 = 0
+var tower45x = 0
+var tower45y = 0
+var tower45z = 0
+var tower46 = 0
+var tower46x = 0
+var tower46y = 0
+var tower46z = 0
+var tower47 = 0
+var tower47x = 0
+var tower47y = 0
+var tower47z = 0
+var tower48 = 0
+var tower48x = 0
+var tower48y = 0
+var tower48z = 0
+var tower49 = 0
+var tower49x = 0
+var tower49y = 0
+var tower49z = 0
+var tower50 = 0
+var tower50x = 0
+var tower50y = 0
+var tower50z = 0
+var tower51 = 0
+var tower51x = 0
+var tower51y = 0
+var tower51z = 0
+var tower52 = 0
+var tower52x = 0
+var tower52y = 0
+var tower52z = 0
+var tower53 = 0
+var tower53x = 0
+var tower53y = 0
+var tower53z = 0
+var tower54 = 0
+var tower54x = 0
+var tower54y = 0
+var tower54z = 0
+var tower55 = 0
+var tower55x = 0
+var tower55y = 0
+var tower55z = 0
+var tower56 = 0
+var tower56x = 0
+var tower56y = 0
+var tower56z = 0
+var tower57 = 0
+var tower57x = 0
+var tower57y = 0
+var tower57z = 0
+var tower58 = 0
+var tower58x = 0
+var tower58y = 0
+var tower58z = 0
+var tower59 = 0
+var tower59x = 0
+var tower59y = 0
+var tower59z = 0
+var tower60 = 0
+var tower60x = 0
+var tower60y = 0
+var tower60z = 0
+var tower61 = 0
+var tower61x = 0
+var tower61y = 0
+var tower61z = 0
+var tower62 = 0
+var tower62x = 0
+var tower62y = 0
+var tower62z = 0
+var tower63 = 0
+var tower63x = 0
+var tower63y = 0
+var tower63z = 0
+var tower64 = 0
+var tower64x = 0
+var tower64y = 0
+var tower64z = 0
+var tower65 = 0
+var tower65x = 0
+var tower65y = 0
+var tower65z = 0
+var tower66 = 0
+var tower66x = 0
+var tower66y = 0
+var tower66z = 0
+var tower67 = 0
+var tower67x = 0
+var tower67y = 0
+var tower67z = 0
+var tower68 = 0
+var tower68x = 0
+var tower68y = 0
+var tower68z = 0
+var tower69 = 0
+var tower69x = 0
+var tower69y = 0
+var tower69z = 0
+var tower70 = 0
+var tower70x = 0
+var tower70y = 0
+var tower70z = 0
+var tower71 = 0
+var tower71x = 0
+var tower71y = 0
+var tower71z = 0
+var tower72 = 0
+var tower72x = 0
+var tower72y = 0
+var tower72z = 0
+var tower73 = 0
+var tower73x = 0
+var tower73y = 0
+var tower73z = 0
+var tower74 = 0
+var tower74x = 0
+var tower74y = 0
+var tower74z = 0
+var tower75 = 0
+var tower75x = 0
+var tower75y = 0
+var tower75z = 0
+var tower76 = 0
+var tower76x = 0
+var tower76y = 0
+var tower76z = 0
+var tower77 = 0
+var tower77x = 0
+var tower77y = 0
+var tower77z = 0
+var tower78 = 0
+var tower78x = 0
+var tower78y = 0
+var tower78z = 0
+var tower79 = 0
+var tower79x = 0
+var tower79y = 0
+var tower79z = 0
+var tower80 = 0
+var tower80x = 0
+var tower80y = 0
+var tower80z = 0
+var tower91 = 0
+var tower91x = 0
+var tower91y = 0
+var tower91z = 0
+var tower92 = 0
+var tower92x = 0
+var tower92y = 0
+var tower92z = 0
+var tower93 = 0
+var tower93x = 0
+var tower93y = 0
+var tower93z = 0
+var tower94 = 0
+var tower94x = 0
+var tower94y = 0
+var tower94z = 0
+var tower95 = 0
+var tower95x = 0
+var tower95y = 0
+var tower95z = 0
+var tower96 = 0
+var tower96x = 0
+var tower96y = 0
+var tower96z = 0
+var tower97 = 0
+var tower97x = 0
+var tower97y = 0
+var tower97z = 0
+var tower98 = 0
+var tower98x = 0
+var tower98y = 0
+var tower98z = 0
+var tower99 = 0
+var tower99x = 0
+var tower99y = 0
+var tower99z = 0
+var tower100 = 0
+var tower100x = 0
+var tower100y = 0
+var tower100z = 0
+var tower101 = 0
+var tower101x = 0
+var tower101y = 0
+var tower101z = 0
+var tower102 = 0
+var tower102x = 0
+var tower102y = 0
+var tower102z = 0
+var tower103 = 0
+var tower103x = 0
+var tower103y = 0
+var tower103z = 0
+var tower104 = 0
+var tower104x = 0
+var tower104y = 0
+var tower104z = 0
+var tower105 = 0
+var tower105x = 0
+var tower105y = 0
+var tower105z = 0
+var tower106 = 0
+var tower106x = 0
+var tower106y = 0
+var tower106z = 0
+var tower107 = 0
+var tower107x = 0
+var tower107y = 0
+var tower107z = 0
+var tower108 = 0
+var tower108x = 0
+var tower108y = 0
+var tower108z = 0
+var tower109 = 0
+var tower109x = 0
+var tower109y = 0
+var tower109z = 0
+var tower110 = 0
+var tower110x = 0
+var tower110y = 0
+var tower110z = 0
+var tower111 = 0
+var tower111x = 0
+var tower111y = 0
+var tower111z = 0
+var tower112 = 0
+var tower112x = 0
+var tower112y = 0
+var tower112z = 0
+var tower113 = 0
+var tower113x = 0
+var tower113y = 0
+var tower113z = 0
+var tower114 = 0
+var tower114x = 0
+var tower114y = 0
+var tower114z = 0
+var tower115 = 0
+var tower115x = 0
+var tower115y = 0
+var tower115z = 0
+var tower116 = 0
+var tower116x = 0
+var tower116y = 0
+var tower116z = 0
+var tower117 = 0
+var tower117x = 0
+var tower117y = 0
+var tower117z = 0
+var tower118 = 0
+var tower118x = 0
+var tower118y = 0
+var tower118z = 0
+var tower119 = 0
+var tower119x = 0
+var tower119y = 0
+var tower119z = 0
+var tower120 = 0
+var tower120x = 0
+var tower120y = 0
+var tower120z = 0
+var tower121 = 0
+var tower121x = 0
+var tower121y = 0
+var tower121z = 0
+var tower122 = 0
+var tower122x = 0
+var tower122y = 0
+var tower122z = 0
+var tower123 = 0
+var tower123x = 0
+var tower123y = 0
+var tower123z = 0
+var tower124 = 0
+var tower124x = 0
+var tower124y = 0
+var tower124z = 0
+var tower125 = 0
+var tower125x = 0
+var tower125y = 0
+var tower125z = 0
+var tower126 = 0
+var tower126x = 0
+var tower126y = 0
+var tower126z = 0
+var tower127 = 0
+var tower127x = 0
+var tower127y = 0
+var tower127z = 0
+var tower128 = 0
+var tower128x = 0
+var tower128y = 0
+var tower128z = 0
+var tower129 = 0
+var tower129x = 0
+var tower129y = 0
+var tower129z = 0
+var tower130 = 0
+var tower130x = 0
+var tower130y = 0
+var tower130z = 0
+var tower131 = 0
+var tower131x = 0
+var tower131y = 0
+var tower131z = 0
+var tower132 = 0
+var tower132x = 0
+var tower132y = 0
+var tower132z = 0
+var tower133 = 0
+var tower133x = 0
+var tower133y = 0
+var tower133z = 0
+var tower134 = 0
+var tower134x = 0
+var tower134y = 0
+var tower134z = 0
+var tower135 = 0
+var tower135x = 0
+var tower135y = 0
+var tower135z = 0
+var tower136 = 0
+var tower136x = 0
+var tower136y = 0
+var tower136z = 0
+var tower137 = 0
+var tower137x = 0
+var tower137y = 0
+var tower137z = 0
+var tower138 = 0
+var tower138x = 0
+var tower138y = 0
+var tower138z = 0
+var tower139 = 0
+var tower139x = 0
+var tower139y = 0
+var tower139z = 0
+var tower140 = 0
+var tower140x = 0
+var tower140y = 0
+var tower140z = 0
+var tower141 = 0
+var tower141x = 0
+var tower141y = 0
+var tower141z = 0
+var tower142 = 0
+var tower142x = 0
+var tower142y = 0
+var tower142z = 0
+var tower143 = 0
+var tower143x = 0
+var tower143y = 0
+var tower143z = 0
+var tower144 = 0
+var tower144x = 0
+var tower144y = 0
+var tower144z = 0
+var tower145 = 0
+var tower145x = 0
+var tower145y = 0
+var tower145z = 0
+var tower146 = 0
+var tower146x = 0
+var tower146y = 0
+var tower146z = 0
+var tower147 = 0
+var tower147x = 0
+var tower147y = 0
+var tower147z = 0
+var tower148 = 0
+var tower148x = 0
+var tower148y = 0
+var tower148z = 0
+var tower149 = 0
+var tower149x = 0
+var tower149y = 0
+var tower149z = 0
+var tower150 = 0
+var tower150x = 0
+var tower150y = 0
+var tower150z = 0
+var tower151 = 0
+var tower151x = 0
+var tower151y = 0
+var tower151z = 0
+var tower152 = 0
+var tower152x = 0
+var tower152y = 0
+var tower152z = 0
+var tower153 = 0
+var tower153x = 0
+var tower153y = 0
+var tower153z = 0
+var tower154 = 0
+var tower154x = 0
+var tower154y = 0
+var tower154z = 0
+var tower155 = 0
+var tower155x = 0
+var tower155y = 0
+var tower155z = 0
+var tower156 = 0
+var tower156x = 0
+var tower156y = 0
+var tower156z = 0
+var tower157 = 0
+var tower157x = 0
+var tower157y = 0
+var tower157z = 0
+var tower158 = 0
+var tower158x = 0
+var tower158y = 0
+var tower158z = 0
+var tower159 = 0
+var tower159x = 0
+var tower159y = 0
+var tower159z = 0
+var tower160 = 0
+var tower160x = 0
+var tower160y = 0
+var tower160z = 0
+var tower161 = 0
+var tower161x = 0
+var tower161y = 0
+var tower161z = 0
+var tower162 = 0
+var tower162x = 0
+var tower162y = 0
+var tower162z = 0
+var tower163 = 0
+var tower163x = 0
+var tower163y = 0
+var tower163z = 0
+var tower164 = 0
+var tower164x = 0
+var tower164y = 0
+var tower164z = 0
+var tower165 = 0
+var tower165x = 0
+var tower165y = 0
+var tower165z = 0
+var tower166 = 0
+var tower166x = 0
+var tower166y = 0
+var tower166z = 0
+var tower167 = 0
+var tower167x = 0
+var tower167y = 0
+var tower167z = 0
+var tower168 = 0
+var tower168x = 0
+var tower168y = 0
+var tower168z = 0
+var tower169 = 0
+var tower169x = 0
+var tower169y = 0
+var tower169z = 0
+var tower170 = 0
+var tower170x = 0
+var tower170y = 0
+var tower170z = 0
+var tower171 = 0
+var tower171x = 0
+var tower171y = 0
+var tower171z = 0
+var tower172 = 0
+var tower172x = 0
+var tower172y = 0
+var tower172z = 0
+var tower173 = 0
+var tower173x = 0
+var tower173y = 0
+var tower173z = 0
+var tower174 = 0
+var tower174x = 0
+var tower174y = 0
+var tower174z = 0
+var tower175 = 0
+var tower175x = 0
+var tower175y = 0
+var tower175z = 0
+var tower176 = 0
+var tower176x = 0
+var tower176y = 0
+var tower176z = 0
+var tower177 = 0
+var tower177x = 0
+var tower177y = 0
+var tower177z = 0
+var tower178 = 0
+var tower178x = 0
+var tower178y = 0
+var tower178z = 0
+var tower179 = 0
+var tower179x = 0
+var tower179y = 0
+var tower179z = 0
+var tower180 = 0
+var tower180x = 0
+var tower180y = 0
+var tower180z = 0
+var tower191 = 0
+var tower191x = 0
+var tower191y = 0
+var tower191z = 0
+var tower192 = 0
+var tower192x = 0
+var tower192y = 0
+var tower192z = 0
+var tower193 = 0
+var tower193x = 0
+var tower193y = 0
+var tower193z = 0
+var tower194 = 0
+var tower194x = 0
+var tower194y = 0
+var tower194z = 0
+var tower195 = 0
+var tower195x = 0
+var tower195y = 0
+var tower195z = 0
+var tower196 = 0
+var tower196x = 0
+var tower196y = 0
+var tower196z = 0
+var tower197 = 0
+var tower197x = 0
+var tower197y = 0
+var tower197z = 0
+var tower198 = 0
+var tower198x = 0
+var tower198y = 0
+var tower198z = 0
+var tower199 = 0
+var tower199x = 0
+var tower199y = 0
+var tower199z = 0
+var tower200 = 0
+var tower200x = 0
+var tower200y = 0
+var tower200z = 0
+
+
+
+var ltower1 = 0
+var ltower1x = 0
+var ltower1y = 0
+var ltower1z = 0
+var ltower2 = 0
+var ltower2x = 0
+var ltower2y = 0
+var ltower2z = 0
+var ltower3 = 0
+var ltower3x = 0
+var ltower3y = 0
+var ltower3z = 0
+var ltower4 = 0
+var ltower4x = 0
+var ltower4y = 0
+var ltower4z = 0
+var ltower5 = 0
+var ltower5x = 0
+var ltower5y = 0
+var ltower5z = 0
+var ltower6 = 0
+var ltower6x = 0
+var ltower6y = 0
+var ltower6z = 0
+var ltower7 = 0
+var ltower7x = 0
+var ltower7y = 0
+var ltower7z = 0
+var ltower8 = 0
+var ltower8x = 0
+var ltower8y = 0
+var ltower8z = 0
+var ltower9 = 0
+var ltower9x = 0
+var ltower9y = 0
+var ltower9z = 0
+var ltower10 = 0
+var ltower10x = 0
+var ltower10y = 0
+var ltower10z = 0
+var ltower11 = 0
+var ltower11x = 0
+var ltower11y = 0
+var ltower11z = 0
+var ltower12 = 0
+var ltower12x = 0
+var ltower12y = 0
+var ltower12z = 0
+var ltower13 = 0
+var ltower13x = 0
+var ltower13y = 0
+var ltower13z = 0
+var ltower14 = 0
+var ltower14x = 0
+var ltower14y = 0
+var ltower14z = 0
+var ltower15 = 0
+var ltower15x = 0
+var ltower15y = 0
+var ltower15z = 0
+var ltower16 = 0
+var ltower16x = 0
+var ltower16y = 0
+var ltower16z = 0
+var ltower17 = 0
+var ltower17x = 0
+var ltower17y = 0
+var ltower17z = 0
+var ltower18 = 0
+var ltower18x = 0
+var ltower18y = 0
+var ltower18z = 0
+var ltower19 = 0
+var ltower19x = 0
+var ltower19y = 0
+var ltower19z = 0
+var ltower20 = 0
+var ltower20x = 0
+var ltower20y = 0
+var ltower20z = 0
+var ltower21 = 0
+var ltower21x = 0
+var ltower21y = 0
+var ltower21z = 0
+var ltower22 = 0
+var ltower22x = 0
+var ltower22y = 0
+var ltower22z = 0
+var ltower23 = 0
+var ltower23x = 0
+var ltower23y = 0
+var ltower23z = 0
+var ltower24 = 0
+var ltower24x = 0
+var ltower24y = 0
+var ltower24z = 0
+var ltower25 = 0
+var ltower25x = 0
+var ltower25y = 0
+var ltower25z = 0
+var ltower26 = 0
+var ltower26x = 0
+var ltower26y = 0
+var ltower26z = 0
+var ltower27 = 0
+var ltower27x = 0
+var ltower27y = 0
+var ltower27z = 0
+var ltower28 = 0
+var ltower28x = 0
+var ltower28y = 0
+var ltower28z = 0
+var ltower29 = 0
+var ltower29x = 0
+var ltower29y = 0
+var ltower29z = 0
+var ltower30 = 0
+var ltower30x = 0
+var ltower30y = 0
+var ltower30z = 0
+var ltower31 = 0
+var ltower31x = 0
+var ltower31y = 0
+var ltower31z = 0
+var ltower32 = 0
+var ltower32x = 0
+var ltower32y = 0
+var ltower32z = 0
+var ltower33 = 0
+var ltower33x = 0
+var ltower33y = 0
+var ltower33z = 0
+var ltower34 = 0
+var ltower34x = 0
+var ltower34y = 0
+var ltower34z = 0
+var ltower35 = 0
+var ltower35x = 0
+var ltower35y = 0
+var ltower35z = 0
+var ltower36 = 0
+var ltower36x = 0
+var ltower36y = 0
+var ltower36z = 0
+var ltower37 = 0
+var ltower37x = 0
+var ltower37y = 0
+var ltower37z = 0
+var ltower38 = 0
+var ltower38x = 0
+var ltower38y = 0
+var ltower38z = 0
+var ltower39 = 0
+var ltower39x = 0
+var ltower39y = 0
+var ltower39z = 0
+var ltower40 = 0
+var ltower40x = 0
+var ltower40y = 0
+var ltower40z = 0
+var ltower41 = 0
+var ltower41x = 0
+var ltower41y = 0
+var ltower41z = 0
+var ltower42 = 0
+var ltower42x = 0
+var ltower42y = 0
+var ltower42z = 0
+var ltower43 = 0
+var ltower43x = 0
+var ltower43y = 0
+var ltower43z = 0
+var ltower44 = 0
+var ltower44x = 0
+var ltower44y = 0
+var ltower44z = 0
+var ltower45 = 0
+var ltower45x = 0
+var ltower45y = 0
+var ltower45z = 0
+var ltower46 = 0
+var ltower46x = 0
+var ltower46y = 0
+var ltower46z = 0
+var ltower47 = 0
+var ltower47x = 0
+var ltower47y = 0
+var ltower47z = 0
+var ltower48 = 0
+var ltower48x = 0
+var ltower48y = 0
+var ltower48z = 0
+var ltower49 = 0
+var ltower49x = 0
+var ltower49y = 0
+var ltower49z = 0
+var ltower50 = 0
+var ltower50x = 0
+var ltower50y = 0
+var ltower50z = 0
+var ltower51 = 0
+var ltower51x = 0
+var ltower51y = 0
+var ltower51z = 0
+var ltower52 = 0
+var ltower52x = 0
+var ltower52y = 0
+var ltower52z = 0
+var ltower53 = 0
+var ltower53x = 0
+var ltower53y = 0
+var ltower53z = 0
+var ltower54 = 0
+var ltower54x = 0
+var ltower54y = 0
+var ltower54z = 0
+var ltower55 = 0
+var ltower55x = 0
+var ltower55y = 0
+var ltower55z = 0
+var ltower56 = 0
+var ltower56x = 0
+var ltower56y = 0
+var ltower56z = 0
+var ltower57 = 0
+var ltower57x = 0
+var ltower57y = 0
+var ltower57z = 0
+var ltower58 = 0
+var ltower58x = 0
+var ltower58y = 0
+var ltower58z = 0
+var ltower59 = 0
+var ltower59x = 0
+var ltower59y = 0
+var ltower59z = 0
+var ltower60 = 0
+var ltower60x = 0
+var ltower60y = 0
+var ltower60z = 0
+var ltower61 = 0
+var ltower61x = 0
+var ltower61y = 0
+var ltower61z = 0
+var ltower62 = 0
+var ltower62x = 0
+var ltower62y = 0
+var ltower62z = 0
+var ltower63 = 0
+var ltower63x = 0
+var ltower63y = 0
+var ltower63z = 0
+var ltower64 = 0
+var ltower64x = 0
+var ltower64y = 0
+var ltower64z = 0
+var ltower65 = 0
+var ltower65x = 0
+var ltower65y = 0
+var ltower65z = 0
+var ltower66 = 0
+var ltower66x = 0
+var ltower66y = 0
+var ltower66z = 0
+var ltower67 = 0
+var ltower67x = 0
+var ltower67y = 0
+var ltower67z = 0
+var ltower68 = 0
+var ltower68x = 0
+var ltower68y = 0
+var ltower68z = 0
+var ltower69 = 0
+var ltower69x = 0
+var ltower69y = 0
+var ltower69z = 0
+var ltower70 = 0
+var ltower70x = 0
+var ltower70y = 0
+var ltower70z = 0
+var ltower71 = 0
+var ltower71x = 0
+var ltower71y = 0
+var ltower71z = 0
+var ltower72 = 0
+var ltower72x = 0
+var ltower72y = 0
+var ltower72z = 0
+var ltower73 = 0
+var ltower73x = 0
+var ltower73y = 0
+var ltower73z = 0
+var ltower74 = 0
+var ltower74x = 0
+var ltower74y = 0
+var ltower74z = 0
+var ltower75 = 0
+var ltower75x = 0
+var ltower75y = 0
+var ltower75z = 0
+var ltower76 = 0
+var ltower76x = 0
+var ltower76y = 0
+var ltower76z = 0
+var ltower77 = 0
+var ltower77x = 0
+var ltower77y = 0
+var ltower77z = 0
+var ltower78 = 0
+var ltower78x = 0
+var ltower78y = 0
+var ltower78z = 0
+var ltower79 = 0
+var ltower79x = 0
+var ltower79y = 0
+var ltower79z = 0
+var ltower80 = 0
+var ltower80x = 0
+var ltower80y = 0
+var ltower80z = 0
+var ltower91 = 0
+var ltower91x = 0
+var ltower91y = 0
+var ltower91z = 0
+var ltower92 = 0
+var ltower92x = 0
+var ltower92y = 0
+var ltower92z = 0
+var ltower93 = 0
+var ltower93x = 0
+var ltower93y = 0
+var ltower93z = 0
+var ltower94 = 0
+var ltower94x = 0
+var ltower94y = 0
+var ltower94z = 0
+var ltower95 = 0
+var ltower95x = 0
+var ltower95y = 0
+var ltower95z = 0
+var ltower96 = 0
+var ltower96x = 0
+var ltower96y = 0
+var ltower96z = 0
+var ltower97 = 0
+var ltower97x = 0
+var ltower97y = 0
+var ltower97z = 0
+var ltower98 = 0
+var ltower98x = 0
+var ltower98y = 0
+var ltower98z = 0
+var ltower99 = 0
+var ltower99x = 0
+var ltower99y = 0
+var ltower99z = 0
+var ltower100 = 0
+var ltower100x = 0
+var ltower100y = 0
+var ltower100z = 0
+var ltower101 = 0
+var ltower101x = 0
+var ltower101y = 0
+var ltower101z = 0
+var ltower102 = 0
+var ltower102x = 0
+var ltower102y = 0
+var ltower102z = 0
+var ltower103 = 0
+var ltower103x = 0
+var ltower103y = 0
+var ltower103z = 0
+var ltower104 = 0
+var ltower104x = 0
+var ltower104y = 0
+var ltower104z = 0
+var ltower105 = 0
+var ltower105x = 0
+var ltower105y = 0
+var ltower105z = 0
+var ltower106 = 0
+var ltower106x = 0
+var ltower106y = 0
+var ltower106z = 0
+var ltower107 = 0
+var ltower107x = 0
+var ltower107y = 0
+var ltower107z = 0
+var ltower108 = 0
+var ltower108x = 0
+var ltower108y = 0
+var ltower108z = 0
+var ltower109 = 0
+var ltower109x = 0
+var ltower109y = 0
+var ltower109z = 0
+var ltower110 = 0
+var ltower110x = 0
+var ltower110y = 0
+var ltower110z = 0
+var ltower111 = 0
+var ltower111x = 0
+var ltower111y = 0
+var ltower111z = 0
+var ltower112 = 0
+var ltower112x = 0
+var ltower112y = 0
+var ltower112z = 0
+var ltower113 = 0
+var ltower113x = 0
+var ltower113y = 0
+var ltower113z = 0
+var ltower114 = 0
+var ltower114x = 0
+var ltower114y = 0
+var ltower114z = 0
+var ltower115 = 0
+var ltower115x = 0
+var ltower115y = 0
+var ltower115z = 0
+var ltower116 = 0
+var ltower116x = 0
+var ltower116y = 0
+var ltower116z = 0
+var ltower117 = 0
+var ltower117x = 0
+var ltower117y = 0
+var ltower117z = 0
+var ltower118 = 0
+var ltower118x = 0
+var ltower118y = 0
+var ltower118z = 0
+var ltower119 = 0
+var ltower119x = 0
+var ltower119y = 0
+var ltower119z = 0
+var ltower120 = 0
+var ltower120x = 0
+var ltower120y = 0
+var ltower120z = 0
+var ltower121 = 0
+var ltower121x = 0
+var ltower121y = 0
+var ltower121z = 0
+var ltower122 = 0
+var ltower122x = 0
+var ltower122y = 0
+var ltower122z = 0
+var ltower123 = 0
+var ltower123x = 0
+var ltower123y = 0
+var ltower123z = 0
+var ltower124 = 0
+var ltower124x = 0
+var ltower124y = 0
+var ltower124z = 0
+var ltower125 = 0
+var ltower125x = 0
+var ltower125y = 0
+var ltower125z = 0
+var ltower126 = 0
+var ltower126x = 0
+var ltower126y = 0
+var ltower126z = 0
+var ltower127 = 0
+var ltower127x = 0
+var ltower127y = 0
+var ltower127z = 0
+var ltower128 = 0
+var ltower128x = 0
+var ltower128y = 0
+var ltower128z = 0
+var ltower129 = 0
+var ltower129x = 0
+var ltower129y = 0
+var ltower129z = 0
+var ltower130 = 0
+var ltower130x = 0
+var ltower130y = 0
+var ltower130z = 0
+var ltower131 = 0
+var ltower131x = 0
+var ltower131y = 0
+var ltower131z = 0
+var ltower132 = 0
+var ltower132x = 0
+var ltower132y = 0
+var ltower132z = 0
+var ltower133 = 0
+var ltower133x = 0
+var ltower133y = 0
+var ltower133z = 0
+var ltower134 = 0
+var ltower134x = 0
+var ltower134y = 0
+var ltower134z = 0
+var ltower135 = 0
+var ltower135x = 0
+var ltower135y = 0
+var ltower135z = 0
+var ltower136 = 0
+var ltower136x = 0
+var ltower136y = 0
+var ltower136z = 0
+var ltower137 = 0
+var ltower137x = 0
+var ltower137y = 0
+var ltower137z = 0
+var ltower138 = 0
+var ltower138x = 0
+var ltower138y = 0
+var ltower138z = 0
+var ltower139 = 0
+var ltower139x = 0
+var ltower139y = 0
+var ltower139z = 0
+var ltower140 = 0
+var ltower140x = 0
+var ltower140y = 0
+var ltower140z = 0
+var ltower141 = 0
+var ltower141x = 0
+var ltower141y = 0
+var ltower141z = 0
+var ltower142 = 0
+var ltower142x = 0
+var ltower142y = 0
+var ltower142z = 0
+var ltower143 = 0
+var ltower143x = 0
+var ltower143y = 0
+var ltower143z = 0
+var ltower144 = 0
+var ltower144x = 0
+var ltower144y = 0
+var ltower144z = 0
+var ltower145 = 0
+var ltower145x = 0
+var ltower145y = 0
+var ltower145z = 0
+var ltower146 = 0
+var ltower146x = 0
+var ltower146y = 0
+var ltower146z = 0
+var ltower147 = 0
+var ltower147x = 0
+var ltower147y = 0
+var ltower147z = 0
+var ltower148 = 0
+var ltower148x = 0
+var ltower148y = 0
+var ltower148z = 0
+var ltower149 = 0
+var ltower149x = 0
+var ltower149y = 0
+var ltower149z = 0
+var ltower150 = 0
+var ltower150x = 0
+var ltower150y = 0
+var ltower150z = 0
+var ltower151 = 0
+var ltower151x = 0
+var ltower151y = 0
+var ltower151z = 0
+var ltower152 = 0
+var ltower152x = 0
+var ltower152y = 0
+var ltower152z = 0
+var ltower153 = 0
+var ltower153x = 0
+var ltower153y = 0
+var ltower153z = 0
+var ltower154 = 0
+var ltower154x = 0
+var ltower154y = 0
+var ltower154z = 0
+var ltower155 = 0
+var ltower155x = 0
+var ltower155y = 0
+var ltower155z = 0
+var ltower156 = 0
+var ltower156x = 0
+var ltower156y = 0
+var ltower156z = 0
+var ltower157 = 0
+var ltower157x = 0
+var ltower157y = 0
+var ltower157z = 0
+var ltower158 = 0
+var ltower158x = 0
+var ltower158y = 0
+var ltower158z = 0
+var ltower159 = 0
+var ltower159x = 0
+var ltower159y = 0
+var ltower159z = 0
+var ltower160 = 0
+var ltower160x = 0
+var ltower160y = 0
+var ltower160z = 0
+var ltower161 = 0
+var ltower161x = 0
+var ltower161y = 0
+var ltower161z = 0
+var ltower162 = 0
+var ltower162x = 0
+var ltower162y = 0
+var ltower162z = 0
+var ltower163 = 0
+var ltower163x = 0
+var ltower163y = 0
+var ltower163z = 0
+var ltower164 = 0
+var ltower164x = 0
+var ltower164y = 0
+var ltower164z = 0
+var ltower165 = 0
+var ltower165x = 0
+var ltower165y = 0
+var ltower165z = 0
+var ltower166 = 0
+var ltower166x = 0
+var ltower166y = 0
+var ltower166z = 0
+var ltower167 = 0
+var ltower167x = 0
+var ltower167y = 0
+var ltower167z = 0
+var ltower168 = 0
+var ltower168x = 0
+var ltower168y = 0
+var ltower168z = 0
+var ltower169 = 0
+var ltower169x = 0
+var ltower169y = 0
+var ltower169z = 0
+var ltower170 = 0
+var ltower170x = 0
+var ltower170y = 0
+var ltower170z = 0
+var ltower171 = 0
+var ltower171x = 0
+var ltower171y = 0
+var ltower171z = 0
+var ltower172 = 0
+var ltower172x = 0
+var ltower172y = 0
+var ltower172z = 0
+var ltower173 = 0
+var ltower173x = 0
+var ltower173y = 0
+var ltower173z = 0
+var ltower174 = 0
+var ltower174x = 0
+var ltower174y = 0
+var ltower174z = 0
+var ltower175 = 0
+var ltower175x = 0
+var ltower175y = 0
+var ltower175z = 0
+var ltower176 = 0
+var ltower176x = 0
+var ltower176y = 0
+var ltower176z = 0
+var ltower177 = 0
+var ltower177x = 0
+var ltower177y = 0
+var ltower177z = 0
+var ltower178 = 0
+var ltower178x = 0
+var ltower178y = 0
+var ltower178z = 0
+var ltower179 = 0
+var ltower179x = 0
+var ltower179y = 0
+var ltower179z = 0
+var ltower180 = 0
+var ltower180x = 0
+var ltower180y = 0
+var ltower180z = 0
+var ltower191 = 0
+var ltower191x = 0
+var ltower191y = 0
+var ltower191z = 0
+var ltower192 = 0
+var ltower192x = 0
+var ltower192y = 0
+var ltower192z = 0
+var ltower193 = 0
+var ltower193x = 0
+var ltower193y = 0
+var ltower193z = 0
+var ltower194 = 0
+var ltower194x = 0
+var ltower194y = 0
+var ltower194z = 0
+var ltower195 = 0
+var ltower195x = 0
+var ltower195y = 0
+var ltower195z = 0
+var ltower196 = 0
+var ltower196x = 0
+var ltower196y = 0
+var ltower196z = 0
+var ltower197 = 0
+var ltower197x = 0
+var ltower197y = 0
+var ltower197z = 0
+var ltower198 = 0
+var ltower198x = 0
+var ltower198y = 0
+var ltower198z = 0
+var ltower199 = 0
+var ltower199x = 0
+var ltower199y = 0
+var ltower199z = 0
+var ltower200 = 0
+var ltower200x = 0
+var ltower200y = 0
+var ltower200z = 0
+
+
+var laser1 = 0
+var laser1x = 0
+var laser1y = 0
+var laser1z = 0
+var laser2 = 0
+var laser2x = 0
+var laser2y = 0
+var laser2z = 0
+var laser3 = 0
+var laser3x = 0
+var laser3y = 0
+var laser3z = 0
+var laser4 = 0
+var laser4x = 0
+var laser4y = 0
+var laser4z = 0
+var laser5 = 0
+var laser5x = 0
+var laser5y = 0
+var laser5z = 0
+var laser6 = 0
+var laser6x = 0
+var laser6y = 0
+var laser6z = 0
+var laser7 = 0
+var laser7x = 0
+var laser7y = 0
+var laser7z = 0
+var laser8 = 0
+var laser8x = 0
+var laser8y = 0
+var laser8z = 0
+var laser9 = 0
+var laser9x = 0
+var laser9y = 0
+var laser9z = 0
+var laser10 = 0
+var laser10x = 0
+var laser10y = 0
+var laser10z = 0
+var laser11 = 0
+var laser11x = 0
+var laser11y = 0
+var laser11z = 0
+var laser12 = 0
+var laser12x = 0
+var laser12y = 0
+var laser12z = 0
+var laser13 = 0
+var laser13x = 0
+var laser13y = 0
+var laser13z = 0
+var laser14 = 0
+var laser14x = 0
+var laser14y = 0
+var laser14z = 0
+var laser15 = 0
+var laser15x = 0
+var laser15y = 0
+var laser15z = 0
+var laser16 = 0
+var laser16x = 0
+var laser16y = 0
+var laser16z = 0
+var laser17 = 0
+var laser17x = 0
+var laser17y = 0
+var laser17z = 0
+var laser18 = 0
+var laser18x = 0
+var laser18y = 0
+var laser18z = 0
+var laser19 = 0
+var laser19x = 0
+var laser19y = 0
+var laser19z = 0
+var laser20 = 0
+var laser20x = 0
+var laser20y = 0
+var laser20z = 0
+var laser21 = 0
+var laser21x = 0
+var laser21y = 0
+var laser21z = 0
+var laser22 = 0
+var laser22x = 0
+var laser22y = 0
+var laser22z = 0
+var laser23 = 0
+var laser23x = 0
+var laser23y = 0
+var laser23z = 0
+var laser24 = 0
+var laser24x = 0
+var laser24y = 0
+var laser24z = 0
+var laser25 = 0
+var laser25x = 0
+var laser25y = 0
+var laser25z = 0
+var laser26 = 0
+var laser26x = 0
+var laser26y = 0
+var laser26z = 0
+var laser27 = 0
+var laser27x = 0
+var laser27y = 0
+var laser27z = 0
+var laser28 = 0
+var laser28x = 0
+var laser28y = 0
+var laser28z = 0
+var laser29 = 0
+var laser29x = 0
+var laser29y = 0
+var laser29z = 0
+var laser30 = 0
+var laser30x = 0
+var laser30y = 0
+var laser30z = 0
+var laser31 = 0
+var laser31x = 0
+var laser31y = 0
+var laser31z = 0
+var laser32 = 0
+var laser32x = 0
+var laser32y = 0
+var laser32z = 0
+var laser33 = 0
+var laser33x = 0
+var laser33y = 0
+var laser33z = 0
+var laser34 = 0
+var laser34x = 0
+var laser34y = 0
+var laser34z = 0
+var laser35 = 0
+var laser35x = 0
+var laser35y = 0
+var laser35z = 0
+var laser36 = 0
+var laser36x = 0
+var laser36y = 0
+var laser36z = 0
+var laser37 = 0
+var laser37x = 0
+var laser37y = 0
+var laser37z = 0
+var laser38 = 0
+var laser38x = 0
+var laser38y = 0
+var laser38z = 0
+var laser39 = 0
+var laser39x = 0
+var laser39y = 0
+var laser39z = 0
+var laser40 = 0
+var laser40x = 0
+var laser40y = 0
+var laser40z = 0
+var laser41 = 0
+var laser41x = 0
+var laser41y = 0
+var laser41z = 0
+var laser42 = 0
+var laser42x = 0
+var laser42y = 0
+var laser42z = 0
+var laser43 = 0
+var laser43x = 0
+var laser43y = 0
+var laser43z = 0
+var laser44 = 0
+var laser44x = 0
+var laser44y = 0
+var laser44z = 0
+var laser45 = 0
+var laser45x = 0
+var laser45y = 0
+var laser45z = 0
+var laser46 = 0
+var laser46x = 0
+var laser46y = 0
+var laser46z = 0
+var laser47 = 0
+var laser47x = 0
+var laser47y = 0
+var laser47z = 0
+var laser48 = 0
+var laser48x = 0
+var laser48y = 0
+var laser48z = 0
+var laser49 = 0
+var laser49x = 0
+var laser49y = 0
+var laser49z = 0
+var laser50 = 0
+var laser50x = 0
+var laser50y = 0
+var laser50z = 0
+var laser51 = 0
+var laser51x = 0
+var laser51y = 0
+var laser51z = 0
+var laser52 = 0
+var laser52x = 0
+var laser52y = 0
+var laser52z = 0
+var laser53 = 0
+var laser53x = 0
+var laser53y = 0
+var laser53z = 0
+var laser54 = 0
+var laser54x = 0
+var laser54y = 0
+var laser54z = 0
+var laser55 = 0
+var laser55x = 0
+var laser55y = 0
+var laser55z = 0
+var laser56 = 0
+var laser56x = 0
+var laser56y = 0
+var laser56z = 0
+var laser57 = 0
+var laser57x = 0
+var laser57y = 0
+var laser57z = 0
+var laser58 = 0
+var laser58x = 0
+var laser58y = 0
+var laser58z = 0
+var laser59 = 0
+var laser59x = 0
+var laser59y = 0
+var laser59z = 0
+var laser60 = 0
+var laser60x = 0
+var laser60y = 0
+var laser60z = 0
+var laser61 = 0
+var laser61x = 0
+var laser61y = 0
+var laser61z = 0
+var laser62 = 0
+var laser62x = 0
+var laser62y = 0
+var laser62z = 0
+var laser63 = 0
+var laser63x = 0
+var laser63y = 0
+var laser63z = 0
+var laser64 = 0
+var laser64x = 0
+var laser64y = 0
+var laser64z = 0
+var laser65 = 0
+var laser65x = 0
+var laser65y = 0
+var laser65z = 0
+var laser66 = 0
+var laser66x = 0
+var laser66y = 0
+var laser66z = 0
+var laser67 = 0
+var laser67x = 0
+var laser67y = 0
+var laser67z = 0
+var laser68 = 0
+var laser68x = 0
+var laser68y = 0
+var laser68z = 0
+var laser69 = 0
+var laser69x = 0
+var laser69y = 0
+var laser69z = 0
+var laser70 = 0
+var laser70x = 0
+var laser70y = 0
+var laser70z = 0
+var laser71 = 0
+var laser71x = 0
+var laser71y = 0
+var laser71z = 0
+var laser72 = 0
+var laser72x = 0
+var laser72y = 0
+var laser72z = 0
+var laser73 = 0
+var laser73x = 0
+var laser73y = 0
+var laser73z = 0
+var laser74 = 0
+var laser74x = 0
+var laser74y = 0
+var laser74z = 0
+var laser75 = 0
+var laser75x = 0
+var laser75y = 0
+var laser75z = 0
+var laser76 = 0
+var laser76x = 0
+var laser76y = 0
+var laser76z = 0
+var laser77 = 0
+var laser77x = 0
+var laser77y = 0
+var laser77z = 0
+var laser78 = 0
+var laser78x = 0
+var laser78y = 0
+var laser78z = 0
+var laser79 = 0
+var laser79x = 0
+var laser79y = 0
+var laser79z = 0
+var laser80 = 0
+var laser80x = 0
+var laser80y = 0
+var laser80z = 0
+var laser91 = 0
+var laser91x = 0
+var laser91y = 0
+var laser91z = 0
+var laser92 = 0
+var laser92x = 0
+var laser92y = 0
+var laser92z = 0
+var laser93 = 0
+var laser93x = 0
+var laser93y = 0
+var laser93z = 0
+var laser94 = 0
+var laser94x = 0
+var laser94y = 0
+var laser94z = 0
+var laser95 = 0
+var laser95x = 0
+var laser95y = 0
+var laser95z = 0
+var laser96 = 0
+var laser96x = 0
+var laser96y = 0
+var laser96z = 0
+var laser97 = 0
+var laser97x = 0
+var laser97y = 0
+var laser97z = 0
+var laser98 = 0
+var laser98x = 0
+var laser98y = 0
+var laser98z = 0
+var laser99 = 0
+var laser99x = 0
+var laser99y = 0
+var laser99z = 0
+var laser100 = 0
+var laser100x = 0
+var laser100y = 0
+var laser100z = 0
+var laser101 = 0
+var laser101x = 0
+var laser101y = 0
+var laser101z = 0
+var laser102 = 0
+var laser102x = 0
+var laser102y = 0
+var laser102z = 0
+var laser103 = 0
+var laser103x = 0
+var laser103y = 0
+var laser103z = 0
+var laser104 = 0
+var laser104x = 0
+var laser104y = 0
+var laser104z = 0
+var laser105 = 0
+var laser105x = 0
+var laser105y = 0
+var laser105z = 0
+var laser106 = 0
+var laser106x = 0
+var laser106y = 0
+var laser106z = 0
+var laser107 = 0
+var laser107x = 0
+var laser107y = 0
+var laser107z = 0
+var laser108 = 0
+var laser108x = 0
+var laser108y = 0
+var laser108z = 0
+var laser109 = 0
+var laser109x = 0
+var laser109y = 0
+var laser109z = 0
+var laser110 = 0
+var laser110x = 0
+var laser110y = 0
+var laser110z = 0
+var laser111 = 0
+var laser111x = 0
+var laser111y = 0
+var laser111z = 0
+var laser112 = 0
+var laser112x = 0
+var laser112y = 0
+var laser112z = 0
+var laser113 = 0
+var laser113x = 0
+var laser113y = 0
+var laser113z = 0
+var laser114 = 0
+var laser114x = 0
+var laser114y = 0
+var laser114z = 0
+var laser115 = 0
+var laser115x = 0
+var laser115y = 0
+var laser115z = 0
+var laser116 = 0
+var laser116x = 0
+var laser116y = 0
+var laser116z = 0
+var laser117 = 0
+var laser117x = 0
+var laser117y = 0
+var laser117z = 0
+var laser118 = 0
+var laser118x = 0
+var laser118y = 0
+var laser118z = 0
+var laser119 = 0
+var laser119x = 0
+var laser119y = 0
+var laser119z = 0
+var laser120 = 0
+var laser120x = 0
+var laser120y = 0
+var laser120z = 0
+var laser121 = 0
+var laser121x = 0
+var laser121y = 0
+var laser121z = 0
+var laser122 = 0
+var laser122x = 0
+var laser122y = 0
+var laser122z = 0
+var laser123 = 0
+var laser123x = 0
+var laser123y = 0
+var laser123z = 0
+var laser124 = 0
+var laser124x = 0
+var laser124y = 0
+var laser124z = 0
+var laser125 = 0
+var laser125x = 0
+var laser125y = 0
+var laser125z = 0
+var laser126 = 0
+var laser126x = 0
+var laser126y = 0
+var laser126z = 0
+var laser127 = 0
+var laser127x = 0
+var laser127y = 0
+var laser127z = 0
+var laser128 = 0
+var laser128x = 0
+var laser128y = 0
+var laser128z = 0
+var laser129 = 0
+var laser129x = 0
+var laser129y = 0
+var laser129z = 0
+var laser130 = 0
+var laser130x = 0
+var laser130y = 0
+var laser130z = 0
+var laser131 = 0
+var laser131x = 0
+var laser131y = 0
+var laser131z = 0
+var laser132 = 0
+var laser132x = 0
+var laser132y = 0
+var laser132z = 0
+var laser133 = 0
+var laser133x = 0
+var laser133y = 0
+var laser133z = 0
+var laser134 = 0
+var laser134x = 0
+var laser134y = 0
+var laser134z = 0
+var laser135 = 0
+var laser135x = 0
+var laser135y = 0
+var laser135z = 0
+var laser136 = 0
+var laser136x = 0
+var laser136y = 0
+var laser136z = 0
+var laser137 = 0
+var laser137x = 0
+var laser137y = 0
+var laser137z = 0
+var laser138 = 0
+var laser138x = 0
+var laser138y = 0
+var laser138z = 0
+var laser139 = 0
+var laser139x = 0
+var laser139y = 0
+var laser139z = 0
+var laser140 = 0
+var laser140x = 0
+var laser140y = 0
+var laser140z = 0
+var laser141 = 0
+var laser141x = 0
+var laser141y = 0
+var laser141z = 0
+var laser142 = 0
+var laser142x = 0
+var laser142y = 0
+var laser142z = 0
+var laser143 = 0
+var laser143x = 0
+var laser143y = 0
+var laser143z = 0
+var laser144 = 0
+var laser144x = 0
+var laser144y = 0
+var laser144z = 0
+var laser145 = 0
+var laser145x = 0
+var laser145y = 0
+var laser145z = 0
+var laser146 = 0
+var laser146x = 0
+var laser146y = 0
+var laser146z = 0
+var laser147 = 0
+var laser147x = 0
+var laser147y = 0
+var laser147z = 0
+var laser148 = 0
+var laser148x = 0
+var laser148y = 0
+var laser148z = 0
+var laser149 = 0
+var laser149x = 0
+var laser149y = 0
+var laser149z = 0
+var laser150 = 0
+var laser150x = 0
+var laser150y = 0
+var laser150z = 0
+var laser151 = 0
+var laser151x = 0
+var laser151y = 0
+var laser151z = 0
+var laser152 = 0
+var laser152x = 0
+var laser152y = 0
+var laser152z = 0
+var laser153 = 0
+var laser153x = 0
+var laser153y = 0
+var laser153z = 0
+var laser154 = 0
+var laser154x = 0
+var laser154y = 0
+var laser154z = 0
+var laser155 = 0
+var laser155x = 0
+var laser155y = 0
+var laser155z = 0
+var laser156 = 0
+var laser156x = 0
+var laser156y = 0
+var laser156z = 0
+var laser157 = 0
+var laser157x = 0
+var laser157y = 0
+var laser157z = 0
+var laser158 = 0
+var laser158x = 0
+var laser158y = 0
+var laser158z = 0
+var laser159 = 0
+var laser159x = 0
+var laser159y = 0
+var laser159z = 0
+var laser160 = 0
+var laser160x = 0
+var laser160y = 0
+var laser160z = 0
+var laser161 = 0
+var laser161x = 0
+var laser161y = 0
+var laser161z = 0
+var laser162 = 0
+var laser162x = 0
+var laser162y = 0
+var laser162z = 0
+var laser163 = 0
+var laser163x = 0
+var laser163y = 0
+var laser163z = 0
+var laser164 = 0
+var laser164x = 0
+var laser164y = 0
+var laser164z = 0
+var laser165 = 0
+var laser165x = 0
+var laser165y = 0
+var laser165z = 0
+var laser166 = 0
+var laser166x = 0
+var laser166y = 0
+var laser166z = 0
+var laser167 = 0
+var laser167x = 0
+var laser167y = 0
+var laser167z = 0
+var laser168 = 0
+var laser168x = 0
+var laser168y = 0
+var laser168z = 0
+var laser169 = 0
+var laser169x = 0
+var laser169y = 0
+var laser169z = 0
+var laser170 = 0
+var laser170x = 0
+var laser170y = 0
+var laser170z = 0
+var laser171 = 0
+var laser171x = 0
+var laser171y = 0
+var laser171z = 0
+var laser172 = 0
+var laser172x = 0
+var laser172y = 0
+var laser172z = 0
+var laser173 = 0
+var laser173x = 0
+var laser173y = 0
+var laser173z = 0
+var laser174 = 0
+var laser174x = 0
+var laser174y = 0
+var laser174z = 0
+var laser175 = 0
+var laser175x = 0
+var laser175y = 0
+var laser175z = 0
+var laser176 = 0
+var laser176x = 0
+var laser176y = 0
+var laser176z = 0
+var laser177 = 0
+var laser177x = 0
+var laser177y = 0
+var laser177z = 0
+var laser178 = 0
+var laser178x = 0
+var laser178y = 0
+var laser178z = 0
+var laser179 = 0
+var laser179x = 0
+var laser179y = 0
+var laser179z = 0
+var laser180 = 0
+var laser180x = 0
+var laser180y = 0
+var laser180z = 0
+var laser191 = 0
+var laser191x = 0
+var laser191y = 0
+var laser191z = 0
+var laser192 = 0
+var laser192x = 0
+var laser192y = 0
+var laser192z = 0
+var laser193 = 0
+var laser193x = 0
+var laser193y = 0
+var laser193z = 0
+var laser194 = 0
+var laser194x = 0
+var laser194y = 0
+var laser194z = 0
+var laser195 = 0
+var laser195x = 0
+var laser195y = 0
+var laser195z = 0
+var laser196 = 0
+var laser196x = 0
+var laser196y = 0
+var laser196z = 0
+var laser197 = 0
+var laser197x = 0
+var laser197y = 0
+var laser197z = 0
+var laser198 = 0
+var laser198x = 0
+var laser198y = 0
+var laser198z = 0
+var laser199 = 0
+var laser199x = 0
+var laser199y = 0
+var laser199z = 0
+var laser200 = 0
+var laser200x = 0
+var laser200y = 0
+var laser200z = 0
+
+
+
+var splash1 = 0
+var splash1x = 0
+var splash1y = 0
+var splash1z = 0
+var splash2 = 0
+var splash2x = 0
+var splash2y = 0
+var splash2z = 0
+var splash3 = 0
+var splash3x = 0
+var splash3y = 0
+var splash3z = 0
+var splash4 = 0
+var splash4x = 0
+var splash4y = 0
+var splash4z = 0
+var splash5 = 0
+var splash5x = 0
+var splash5y = 0
+var splash5z = 0
+var splash6 = 0
+var splash6x = 0
+var splash6y = 0
+var splash6z = 0
+var splash7 = 0
+var splash7x = 0
+var splash7y = 0
+var splash7z = 0
+var splash8 = 0
+var splash8x = 0
+var splash8y = 0
+var splash8z = 0
+var splash9 = 0
+var splash9x = 0
+var splash9y = 0
+var splash9z = 0
+var splash10 = 0
+var splash10x = 0
+var splash10y = 0
+var splash10z = 0
+var splash11 = 0
+var splash11x = 0
+var splash11y = 0
+var splash11z = 0
+var splash12 = 0
+var splash12x = 0
+var splash12y = 0
+var splash12z = 0
+var splash13 = 0
+var splash13x = 0
+var splash13y = 0
+var splash13z = 0
+var splash14 = 0
+var splash14x = 0
+var splash14y = 0
+var splash14z = 0
+var splash15 = 0
+var splash15x = 0
+var splash15y = 0
+var splash15z = 0
+var splash16 = 0
+var splash16x = 0
+var splash16y = 0
+var splash16z = 0
+var splash17 = 0
+var splash17x = 0
+var splash17y = 0
+var splash17z = 0
+var splash18 = 0
+var splash18x = 0
+var splash18y = 0
+var splash18z = 0
+var splash19 = 0
+var splash19x = 0
+var splash19y = 0
+var splash19z = 0
+var splash20 = 0
+var splash20x = 0
+var splash20y = 0
+var splash20z = 0
+var splash21 = 0
+var splash21x = 0
+var splash21y = 0
+var splash21z = 0
+var splash22 = 0
+var splash22x = 0
+var splash22y = 0
+var splash22z = 0
+var splash23 = 0
+var splash23x = 0
+var splash23y = 0
+var splash23z = 0
+var splash24 = 0
+var splash24x = 0
+var splash24y = 0
+var splash24z = 0
+var splash25 = 0
+var splash25x = 0
+var splash25y = 0
+var splash25z = 0
+var splash26 = 0
+var splash26x = 0
+var splash26y = 0
+var splash26z = 0
+var splash27 = 0
+var splash27x = 0
+var splash27y = 0
+var splash27z = 0
+var splash28 = 0
+var splash28x = 0
+var splash28y = 0
+var splash28z = 0
+var splash29 = 0
+var splash29x = 0
+var splash29y = 0
+var splash29z = 0
+var splash30 = 0
+var splash30x = 0
+var splash30y = 0
+var splash30z = 0
+var splash31 = 0
+var splash31x = 0
+var splash31y = 0
+var splash31z = 0
+var splash32 = 0
+var splash32x = 0
+var splash32y = 0
+var splash32z = 0
+var splash33 = 0
+var splash33x = 0
+var splash33y = 0
+var splash33z = 0
+var splash34 = 0
+var splash34x = 0
+var splash34y = 0
+var splash34z = 0
+var splash35 = 0
+var splash35x = 0
+var splash35y = 0
+var splash35z = 0
+var splash36 = 0
+var splash36x = 0
+var splash36y = 0
+var splash36z = 0
+var splash37 = 0
+var splash37x = 0
+var splash37y = 0
+var splash37z = 0
+var splash38 = 0
+var splash38x = 0
+var splash38y = 0
+var splash38z = 0
+var splash39 = 0
+var splash39x = 0
+var splash39y = 0
+var splash39z = 0
+var splash40 = 0
+var splash40x = 0
+var splash40y = 0
+var splash40z = 0
+var splash41 = 0
+var splash41x = 0
+var splash41y = 0
+var splash41z = 0
+var splash42 = 0
+var splash42x = 0
+var splash42y = 0
+var splash42z = 0
+var splash43 = 0
+var splash43x = 0
+var splash43y = 0
+var splash43z = 0
+var splash44 = 0
+var splash44x = 0
+var splash44y = 0
+var splash44z = 0
+var splash45 = 0
+var splash45x = 0
+var splash45y = 0
+var splash45z = 0
+var splash46 = 0
+var splash46x = 0
+var splash46y = 0
+var splash46z = 0
+var splash47 = 0
+var splash47x = 0
+var splash47y = 0
+var splash47z = 0
+var splash48 = 0
+var splash48x = 0
+var splash48y = 0
+var splash48z = 0
+var splash49 = 0
+var splash49x = 0
+var splash49y = 0
+var splash49z = 0
+var splash50 = 0
+var splash50x = 0
+var splash50y = 0
+var splash50z = 0
+var splash51 = 0
+var splash51x = 0
+var splash51y = 0
+var splash51z = 0
+var splash52 = 0
+var splash52x = 0
+var splash52y = 0
+var splash52z = 0
+var splash53 = 0
+var splash53x = 0
+var splash53y = 0
+var splash53z = 0
+var splash54 = 0
+var splash54x = 0
+var splash54y = 0
+var splash54z = 0
+var splash55 = 0
+var splash55x = 0
+var splash55y = 0
+var splash55z = 0
+var splash56 = 0
+var splash56x = 0
+var splash56y = 0
+var splash56z = 0
+var splash57 = 0
+var splash57x = 0
+var splash57y = 0
+var splash57z = 0
+var splash58 = 0
+var splash58x = 0
+var splash58y = 0
+var splash58z = 0
+var splash59 = 0
+var splash59x = 0
+var splash59y = 0
+var splash59z = 0
+var splash60 = 0
+var splash60x = 0
+var splash60y = 0
+var splash60z = 0
+var splash61 = 0
+var splash61x = 0
+var splash61y = 0
+var splash61z = 0
+var splash62 = 0
+var splash62x = 0
+var splash62y = 0
+var splash62z = 0
+var splash63 = 0
+var splash63x = 0
+var splash63y = 0
+var splash63z = 0
+var splash64 = 0
+var splash64x = 0
+var splash64y = 0
+var splash64z = 0
+var splash65 = 0
+var splash65x = 0
+var splash65y = 0
+var splash65z = 0
+var splash66 = 0
+var splash66x = 0
+var splash66y = 0
+var splash66z = 0
+var splash67 = 0
+var splash67x = 0
+var splash67y = 0
+var splash67z = 0
+var splash68 = 0
+var splash68x = 0
+var splash68y = 0
+var splash68z = 0
+var splash69 = 0
+var splash69x = 0
+var splash69y = 0
+var splash69z = 0
+var splash70 = 0
+var splash70x = 0
+var splash70y = 0
+var splash70z = 0
+var splash71 = 0
+var splash71x = 0
+var splash71y = 0
+var splash71z = 0
+var splash72 = 0
+var splash72x = 0
+var splash72y = 0
+var splash72z = 0
+var splash73 = 0
+var splash73x = 0
+var splash73y = 0
+var splash73z = 0
+var splash74 = 0
+var splash74x = 0
+var splash74y = 0
+var splash74z = 0
+var splash75 = 0
+var splash75x = 0
+var splash75y = 0
+var splash75z = 0
+var splash76 = 0
+var splash76x = 0
+var splash76y = 0
+var splash76z = 0
+var splash77 = 0
+var splash77x = 0
+var splash77y = 0
+var splash77z = 0
+var splash78 = 0
+var splash78x = 0
+var splash78y = 0
+var splash78z = 0
+var splash79 = 0
+var splash79x = 0
+var splash79y = 0
+var splash79z = 0
+var splash80 = 0
+var splash80x = 0
+var splash80y = 0
+var splash80z = 0
+var splash91 = 0
+var splash91x = 0
+var splash91y = 0
+var splash91z = 0
+var splash92 = 0
+var splash92x = 0
+var splash92y = 0
+var splash92z = 0
+var splash93 = 0
+var splash93x = 0
+var splash93y = 0
+var splash93z = 0
+var splash94 = 0
+var splash94x = 0
+var splash94y = 0
+var splash94z = 0
+var splash95 = 0
+var splash95x = 0
+var splash95y = 0
+var splash95z = 0
+var splash96 = 0
+var splash96x = 0
+var splash96y = 0
+var splash96z = 0
+var splash97 = 0
+var splash97x = 0
+var splash97y = 0
+var splash97z = 0
+var splash98 = 0
+var splash98x = 0
+var splash98y = 0
+var splash98z = 0
+var splash99 = 0
+var splash99x = 0
+var splash99y = 0
+var splash99z = 0
+var splash100 = 0
+var splash100x = 0
+var splash100y = 0
+var splash100z = 0
+var splash101 = 0
+var splash101x = 0
+var splash101y = 0
+var splash101z = 0
+var splash102 = 0
+var splash102x = 0
+var splash102y = 0
+var splash102z = 0
+var splash103 = 0
+var splash103x = 0
+var splash103y = 0
+var splash103z = 0
+var splash104 = 0
+var splash104x = 0
+var splash104y = 0
+var splash104z = 0
+var splash105 = 0
+var splash105x = 0
+var splash105y = 0
+var splash105z = 0
+var splash106 = 0
+var splash106x = 0
+var splash106y = 0
+var splash106z = 0
+var splash107 = 0
+var splash107x = 0
+var splash107y = 0
+var splash107z = 0
+var splash108 = 0
+var splash108x = 0
+var splash108y = 0
+var splash108z = 0
+var splash109 = 0
+var splash109x = 0
+var splash109y = 0
+var splash109z = 0
+var splash110 = 0
+var splash110x = 0
+var splash110y = 0
+var splash110z = 0
+var splash111 = 0
+var splash111x = 0
+var splash111y = 0
+var splash111z = 0
+var splash112 = 0
+var splash112x = 0
+var splash112y = 0
+var splash112z = 0
+var splash113 = 0
+var splash113x = 0
+var splash113y = 0
+var splash113z = 0
+var splash114 = 0
+var splash114x = 0
+var splash114y = 0
+var splash114z = 0
+var splash115 = 0
+var splash115x = 0
+var splash115y = 0
+var splash115z = 0
+var splash116 = 0
+var splash116x = 0
+var splash116y = 0
+var splash116z = 0
+var splash117 = 0
+var splash117x = 0
+var splash117y = 0
+var splash117z = 0
+var splash118 = 0
+var splash118x = 0
+var splash118y = 0
+var splash118z = 0
+var splash119 = 0
+var splash119x = 0
+var splash119y = 0
+var splash119z = 0
+var splash120 = 0
+var splash120x = 0
+var splash120y = 0
+var splash120z = 0
+var splash121 = 0
+var splash121x = 0
+var splash121y = 0
+var splash121z = 0
+var splash122 = 0
+var splash122x = 0
+var splash122y = 0
+var splash122z = 0
+var splash123 = 0
+var splash123x = 0
+var splash123y = 0
+var splash123z = 0
+var splash124 = 0
+var splash124x = 0
+var splash124y = 0
+var splash124z = 0
+var splash125 = 0
+var splash125x = 0
+var splash125y = 0
+var splash125z = 0
+var splash126 = 0
+var splash126x = 0
+var splash126y = 0
+var splash126z = 0
+var splash127 = 0
+var splash127x = 0
+var splash127y = 0
+var splash127z = 0
+var splash128 = 0
+var splash128x = 0
+var splash128y = 0
+var splash128z = 0
+var splash129 = 0
+var splash129x = 0
+var splash129y = 0
+var splash129z = 0
+var splash130 = 0
+var splash130x = 0
+var splash130y = 0
+var splash130z = 0
+var splash131 = 0
+var splash131x = 0
+var splash131y = 0
+var splash131z = 0
+var splash132 = 0
+var splash132x = 0
+var splash132y = 0
+var splash132z = 0
+var splash133 = 0
+var splash133x = 0
+var splash133y = 0
+var splash133z = 0
+var splash134 = 0
+var splash134x = 0
+var splash134y = 0
+var splash134z = 0
+var splash135 = 0
+var splash135x = 0
+var splash135y = 0
+var splash135z = 0
+var splash136 = 0
+var splash136x = 0
+var splash136y = 0
+var splash136z = 0
+var splash137 = 0
+var splash137x = 0
+var splash137y = 0
+var splash137z = 0
+var splash138 = 0
+var splash138x = 0
+var splash138y = 0
+var splash138z = 0
+var splash139 = 0
+var splash139x = 0
+var splash139y = 0
+var splash139z = 0
+var splash140 = 0
+var splash140x = 0
+var splash140y = 0
+var splash140z = 0
+var splash141 = 0
+var splash141x = 0
+var splash141y = 0
+var splash141z = 0
+var splash142 = 0
+var splash142x = 0
+var splash142y = 0
+var splash142z = 0
+var splash143 = 0
+var splash143x = 0
+var splash143y = 0
+var splash143z = 0
+var splash144 = 0
+var splash144x = 0
+var splash144y = 0
+var splash144z = 0
+var splash145 = 0
+var splash145x = 0
+var splash145y = 0
+var splash145z = 0
+var splash146 = 0
+var splash146x = 0
+var splash146y = 0
+var splash146z = 0
+var splash147 = 0
+var splash147x = 0
+var splash147y = 0
+var splash147z = 0
+var splash148 = 0
+var splash148x = 0
+var splash148y = 0
+var splash148z = 0
+var splash149 = 0
+var splash149x = 0
+var splash149y = 0
+var splash149z = 0
+var splash150 = 0
+var splash150x = 0
+var splash150y = 0
+var splash150z = 0
+var splash151 = 0
+var splash151x = 0
+var splash151y = 0
+var splash151z = 0
+var splash152 = 0
+var splash152x = 0
+var splash152y = 0
+var splash152z = 0
+var splash153 = 0
+var splash153x = 0
+var splash153y = 0
+var splash153z = 0
+var splash154 = 0
+var splash154x = 0
+var splash154y = 0
+var splash154z = 0
+var splash155 = 0
+var splash155x = 0
+var splash155y = 0
+var splash155z = 0
+var splash156 = 0
+var splash156x = 0
+var splash156y = 0
+var splash156z = 0
+var splash157 = 0
+var splash157x = 0
+var splash157y = 0
+var splash157z = 0
+var splash158 = 0
+var splash158x = 0
+var splash158y = 0
+var splash158z = 0
+var splash159 = 0
+var splash159x = 0
+var splash159y = 0
+var splash159z = 0
+var splash160 = 0
+var splash160x = 0
+var splash160y = 0
+var splash160z = 0
+var splash161 = 0
+var splash161x = 0
+var splash161y = 0
+var splash161z = 0
+var splash162 = 0
+var splash162x = 0
+var splash162y = 0
+var splash162z = 0
+var splash163 = 0
+var splash163x = 0
+var splash163y = 0
+var splash163z = 0
+var splash164 = 0
+var splash164x = 0
+var splash164y = 0
+var splash164z = 0
+var splash165 = 0
+var splash165x = 0
+var splash165y = 0
+var splash165z = 0
+var splash166 = 0
+var splash166x = 0
+var splash166y = 0
+var splash166z = 0
+var splash167 = 0
+var splash167x = 0
+var splash167y = 0
+var splash167z = 0
+var splash168 = 0
+var splash168x = 0
+var splash168y = 0
+var splash168z = 0
+var splash169 = 0
+var splash169x = 0
+var splash169y = 0
+var splash169z = 0
+var splash170 = 0
+var splash170x = 0
+var splash170y = 0
+var splash170z = 0
+var splash171 = 0
+var splash171x = 0
+var splash171y = 0
+var splash171z = 0
+var splash172 = 0
+var splash172x = 0
+var splash172y = 0
+var splash172z = 0
+var splash173 = 0
+var splash173x = 0
+var splash173y = 0
+var splash173z = 0
+var splash174 = 0
+var splash174x = 0
+var splash174y = 0
+var splash174z = 0
+var splash175 = 0
+var splash175x = 0
+var splash175y = 0
+var splash175z = 0
+var splash176 = 0
+var splash176x = 0
+var splash176y = 0
+var splash176z = 0
+var splash177 = 0
+var splash177x = 0
+var splash177y = 0
+var splash177z = 0
+var splash178 = 0
+var splash178x = 0
+var splash178y = 0
+var splash178z = 0
+var splash179 = 0
+var splash179x = 0
+var splash179y = 0
+var splash179z = 0
+var splash180 = 0
+var splash180x = 0
+var splash180y = 0
+var splash180z = 0
+var splash191 = 0
+var splash191x = 0
+var splash191y = 0
+var splash191z = 0
+var splash192 = 0
+var splash192x = 0
+var splash192y = 0
+var splash192z = 0
+var splash193 = 0
+var splash193x = 0
+var splash193y = 0
+var splash193z = 0
+var splash194 = 0
+var splash194x = 0
+var splash194y = 0
+var splash194z = 0
+var splash195 = 0
+var splash195x = 0
+var splash195y = 0
+var splash195z = 0
+var splash196 = 0
+var splash196x = 0
+var splash196y = 0
+var splash196z = 0
+var splash197 = 0
+var splash197x = 0
+var splash197y = 0
+var splash197z = 0
+var splash198 = 0
+var splash198x = 0
+var splash198y = 0
+var splash198z = 0
+var splash199 = 0
+var splash199x = 0
+var splash199y = 0
+var splash199z = 0
+var splash200 = 0
+var splash200x = 0
+var splash200y = 0
+var splash200z = 0
+
+
+
+
+
+
+
+
+var e1 = 0
+var e1x = 0
+var e1y = 0
+var e2 = 0
+var e2x = 0
+var e2y = 0
+var e3 = 0
+var e3x = 0
+var e3y = 0
+var e4 = 0
+var e4x = 0
+var e4y = 0
+var e5 = 0
+var e5x = 0
+var e5y = 0
+var e6 = 0
+var e6x = 0
+var e6y = 0
+var e7 = 0
+var e7x = 0
+var e7y = 0
+var e8 = 0
+var e8x = 0
+var e8y = 0
+var e9 = 0
+var e9x = 0
+var e9y = 0
+var e10 = 0
+var e10x = 0
+var e10y = 0
+
+
+var e1a = 10
+var e2a = 10
+var e3a = 10
+var e4a = 10
+var e5a = 10
+var e6a = 10
+var e7a = 10
+var e8a = 10
+var e9a = 10
+var e10a = 10
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////at last! it is now time for the game
+//////////////////////////////////////////////////////
+
+
+
+
+function wow(){
+ctx.fillStyle = "rgb(0,0,0)";
+q88 = 1
+
+
+littlenumber = 1
+
+
+
+
+
+selectmode2 = 0
+selectmode = 0
+timetilnext = 0
+emcount = 0
+apoo = 0
+abcd = 0
+abcde = 0
+abcdef = 0
+wavemoving = 0
+emspeed = 0
+
+allow = 1
+wave = 0
+lives = startlives
+money = startmoney
+level = startlevel
+emtype = 1
+wooYayIntervalId = 0
+
+towers = 0
+towerss = 0
+
+ltowers = 0
+ltowerss = 0
+
+lasers = 0
+laserss = 0
+
+splashs = 0
+splashss = 0
+
+
+
+////////function for testing
+
+if (startingatthestart == 0){
+
+if (level > 6){
+littlenumber = (((littlenumberr * (level - 6)) + 1) - littlenumberr)
+}
+
+alert ('level')
+alert (level)
+alert ('littlenumber')
+alert (littlenumber)
+
+}
+
+
+tower1 = 0
+tower1x = 0
+tower1y = 0
+tower1z = 0
+tower2 = 0
+tower2x = 0
+tower2y = 0
+tower2z = 0
+tower3 = 0
+tower3x = 0
+tower3y = 0
+tower3z = 0
+tower4 = 0
+tower4x = 0
+tower4y = 0
+tower4z = 0
+tower5 = 0
+tower5x = 0
+tower5y = 0
+tower5z = 0
+tower6 = 0
+tower6x = 0
+tower6y = 0
+tower6z = 0
+tower7 = 0
+tower7x = 0
+tower7y = 0
+tower7z = 0
+tower8 = 0
+tower8x = 0
+tower8y = 0
+tower8z = 0
+tower9 = 0
+tower9x = 0
+tower9y = 0
+tower9z = 0
+tower10 = 0
+tower10x = 0
+tower10y = 0
+tower10z = 0
+tower11 = 0
+tower11x = 0
+tower11y = 0
+tower11z = 0
+tower12 = 0
+tower12x = 0
+tower12y = 0
+tower12z = 0
+tower13 = 0
+tower13x = 0
+tower13y = 0
+tower13z = 0
+tower14 = 0
+tower14x = 0
+tower14y = 0
+tower14z = 0
+tower15 = 0
+tower15x = 0
+tower15y = 0
+tower15z = 0
+tower16 = 0
+tower16x = 0
+tower16y = 0
+tower16z = 0
+tower17 = 0
+tower17x = 0
+tower17y = 0
+tower17z = 0
+tower18 = 0
+tower18x = 0
+tower18y = 0
+tower18z = 0
+tower19 = 0
+tower19x = 0
+tower19y = 0
+tower19z = 0
+tower20 = 0
+tower20x = 0
+tower20y = 0
+tower20z = 0
+tower21 = 0
+tower21x = 0
+tower21y = 0
+tower21z = 0
+tower22 = 0
+tower22x = 0
+tower22y = 0
+tower22z = 0
+tower23 = 0
+tower23x = 0
+tower23y = 0
+tower23z = 0
+tower24 = 0
+tower24x = 0
+tower24y = 0
+tower24z = 0
+tower25 = 0
+tower25x = 0
+tower25y = 0
+tower25z = 0
+tower26 = 0
+tower26x = 0
+tower26y = 0
+tower26z = 0
+tower27 = 0
+tower27x = 0
+tower27y = 0
+tower27z = 0
+tower28 = 0
+tower28x = 0
+tower28y = 0
+tower28z = 0
+tower29 = 0
+tower29x = 0
+tower29y = 0
+tower29z = 0
+tower30 = 0
+tower30x = 0
+tower30y = 0
+tower30z = 0
+tower31 = 0
+tower31x = 0
+tower31y = 0
+tower31z = 0
+tower32 = 0
+tower32x = 0
+tower32y = 0
+tower32z = 0
+tower33 = 0
+tower33x = 0
+tower33y = 0
+tower33z = 0
+tower34 = 0
+tower34x = 0
+tower34y = 0
+tower34z = 0
+tower35 = 0
+tower35x = 0
+tower35y = 0
+tower35z = 0
+tower36 = 0
+tower36x = 0
+tower36y = 0
+tower36z = 0
+tower37 = 0
+tower37x = 0
+tower37y = 0
+tower37z = 0
+tower38 = 0
+tower38x = 0
+tower38y = 0
+tower38z = 0
+tower39 = 0
+tower39x = 0
+tower39y = 0
+tower39z = 0
+tower40 = 0
+tower40x = 0
+tower40y = 0
+tower40z = 0
+tower41 = 0
+tower41x = 0
+tower41y = 0
+tower41z = 0
+tower42 = 0
+tower42x = 0
+tower42y = 0
+tower42z = 0
+tower43 = 0
+tower43x = 0
+tower43y = 0
+tower43z = 0
+tower44 = 0
+tower44x = 0
+tower44y = 0
+tower44z = 0
+tower45 = 0
+tower45x = 0
+tower45y = 0
+tower45z = 0
+tower46 = 0
+tower46x = 0
+tower46y = 0
+tower46z = 0
+tower47 = 0
+tower47x = 0
+tower47y = 0
+tower47z = 0
+tower48 = 0
+tower48x = 0
+tower48y = 0
+tower48z = 0
+tower49 = 0
+tower49x = 0
+tower49y = 0
+tower49z = 0
+tower50 = 0
+tower50x = 0
+tower50y = 0
+tower50z = 0
+tower51 = 0
+tower51x = 0
+tower51y = 0
+tower51z = 0
+tower52 = 0
+tower52x = 0
+tower52y = 0
+tower52z = 0
+tower53 = 0
+tower53x = 0
+tower53y = 0
+tower53z = 0
+tower54 = 0
+tower54x = 0
+tower54y = 0
+tower54z = 0
+tower55 = 0
+tower55x = 0
+tower55y = 0
+tower55z = 0
+tower56 = 0
+tower56x = 0
+tower56y = 0
+tower56z = 0
+tower57 = 0
+tower57x = 0
+tower57y = 0
+tower57z = 0
+tower58 = 0
+tower58x = 0
+tower58y = 0
+tower58z = 0
+tower59 = 0
+tower59x = 0
+tower59y = 0
+tower59z = 0
+tower60 = 0
+tower60x = 0
+tower60y = 0
+tower60z = 0
+tower61 = 0
+tower61x = 0
+tower61y = 0
+tower61z = 0
+tower62 = 0
+tower62x = 0
+tower62y = 0
+tower62z = 0
+tower63 = 0
+tower63x = 0
+tower63y = 0
+tower63z = 0
+tower64 = 0
+tower64x = 0
+tower64y = 0
+tower64z = 0
+tower65 = 0
+tower65x = 0
+tower65y = 0
+tower65z = 0
+tower66 = 0
+tower66x = 0
+tower66y = 0
+tower66z = 0
+tower67 = 0
+tower67x = 0
+tower67y = 0
+tower67z = 0
+tower68 = 0
+tower68x = 0
+tower68y = 0
+tower68z = 0
+tower69 = 0
+tower69x = 0
+tower69y = 0
+tower69z = 0
+tower70 = 0
+tower70x = 0
+tower70y = 0
+tower70z = 0
+tower71 = 0
+tower71x = 0
+tower71y = 0
+tower71z = 0
+tower72 = 0
+tower72x = 0
+tower72y = 0
+tower72z = 0
+tower73 = 0
+tower73x = 0
+tower73y = 0
+tower73z = 0
+tower74 = 0
+tower74x = 0
+tower74y = 0
+tower74z = 0
+tower75 = 0
+tower75x = 0
+tower75y = 0
+tower75z = 0
+tower76 = 0
+tower76x = 0
+tower76y = 0
+tower76z = 0
+tower77 = 0
+tower77x = 0
+tower77y = 0
+tower77z = 0
+tower78 = 0
+tower78x = 0
+tower78y = 0
+tower78z = 0
+tower79 = 0
+tower79x = 0
+tower79y = 0
+tower79z = 0
+tower80 = 0
+tower80x = 0
+tower80y = 0
+tower80z = 0
+tower91 = 0
+tower91x = 0
+tower91y = 0
+tower91z = 0
+tower92 = 0
+tower92x = 0
+tower92y = 0
+tower92z = 0
+tower93 = 0
+tower93x = 0
+tower93y = 0
+tower93z = 0
+tower94 = 0
+tower94x = 0
+tower94y = 0
+tower94z = 0
+tower95 = 0
+tower95x = 0
+tower95y = 0
+tower95z = 0
+tower96 = 0
+tower96x = 0
+tower96y = 0
+tower96z = 0
+tower97 = 0
+tower97x = 0
+tower97y = 0
+tower97z = 0
+tower98 = 0
+tower98x = 0
+tower98y = 0
+tower98z = 0
+tower99 = 0
+tower99x = 0
+tower99y = 0
+tower99z = 0
+tower100 = 0
+tower100x = 0
+tower100y = 0
+tower100z = 0
+tower101 = 0
+tower101x = 0
+tower101y = 0
+tower101z = 0
+tower102 = 0
+tower102x = 0
+tower102y = 0
+tower102z = 0
+tower103 = 0
+tower103x = 0
+tower103y = 0
+tower103z = 0
+tower104 = 0
+tower104x = 0
+tower104y = 0
+tower104z = 0
+tower105 = 0
+tower105x = 0
+tower105y = 0
+tower105z = 0
+tower106 = 0
+tower106x = 0
+tower106y = 0
+tower106z = 0
+tower107 = 0
+tower107x = 0
+tower107y = 0
+tower107z = 0
+tower108 = 0
+tower108x = 0
+tower108y = 0
+tower108z = 0
+tower109 = 0
+tower109x = 0
+tower109y = 0
+tower109z = 0
+tower110 = 0
+tower110x = 0
+tower110y = 0
+tower110z = 0
+tower111 = 0
+tower111x = 0
+tower111y = 0
+tower111z = 0
+tower112 = 0
+tower112x = 0
+tower112y = 0
+tower112z = 0
+tower113 = 0
+tower113x = 0
+tower113y = 0
+tower113z = 0
+tower114 = 0
+tower114x = 0
+tower114y = 0
+tower114z = 0
+tower115 = 0
+tower115x = 0
+tower115y = 0
+tower115z = 0
+tower116 = 0
+tower116x = 0
+tower116y = 0
+tower116z = 0
+tower117 = 0
+tower117x = 0
+tower117y = 0
+tower117z = 0
+tower118 = 0
+tower118x = 0
+tower118y = 0
+tower118z = 0
+tower119 = 0
+tower119x = 0
+tower119y = 0
+tower119z = 0
+tower120 = 0
+tower120x = 0
+tower120y = 0
+tower120z = 0
+tower121 = 0
+tower121x = 0
+tower121y = 0
+tower121z = 0
+tower122 = 0
+tower122x = 0
+tower122y = 0
+tower122z = 0
+tower123 = 0
+tower123x = 0
+tower123y = 0
+tower123z = 0
+tower124 = 0
+tower124x = 0
+tower124y = 0
+tower124z = 0
+tower125 = 0
+tower125x = 0
+tower125y = 0
+tower125z = 0
+tower126 = 0
+tower126x = 0
+tower126y = 0
+tower126z = 0
+tower127 = 0
+tower127x = 0
+tower127y = 0
+tower127z = 0
+tower128 = 0
+tower128x = 0
+tower128y = 0
+tower128z = 0
+tower129 = 0
+tower129x = 0
+tower129y = 0
+tower129z = 0
+tower130 = 0
+tower130x = 0
+tower130y = 0
+tower130z = 0
+tower131 = 0
+tower131x = 0
+tower131y = 0
+tower131z = 0
+tower132 = 0
+tower132x = 0
+tower132y = 0
+tower132z = 0
+tower133 = 0
+tower133x = 0
+tower133y = 0
+tower133z = 0
+tower134 = 0
+tower134x = 0
+tower134y = 0
+tower134z = 0
+tower135 = 0
+tower135x = 0
+tower135y = 0
+tower135z = 0
+tower136 = 0
+tower136x = 0
+tower136y = 0
+tower136z = 0
+tower137 = 0
+tower137x = 0
+tower137y = 0
+tower137z = 0
+tower138 = 0
+tower138x = 0
+tower138y = 0
+tower138z = 0
+tower139 = 0
+tower139x = 0
+tower139y = 0
+tower139z = 0
+tower140 = 0
+tower140x = 0
+tower140y = 0
+tower140z = 0
+tower141 = 0
+tower141x = 0
+tower141y = 0
+tower141z = 0
+tower142 = 0
+tower142x = 0
+tower142y = 0
+tower142z = 0
+tower143 = 0
+tower143x = 0
+tower143y = 0
+tower143z = 0
+tower144 = 0
+tower144x = 0
+tower144y = 0
+tower144z = 0
+tower145 = 0
+tower145x = 0
+tower145y = 0
+tower145z = 0
+tower146 = 0
+tower146x = 0
+tower146y = 0
+tower146z = 0
+tower147 = 0
+tower147x = 0
+tower147y = 0
+tower147z = 0
+tower148 = 0
+tower148x = 0
+tower148y = 0
+tower148z = 0
+tower149 = 0
+tower149x = 0
+tower149y = 0
+tower149z = 0
+tower150 = 0
+tower150x = 0
+tower150y = 0
+tower150z = 0
+tower151 = 0
+tower151x = 0
+tower151y = 0
+tower151z = 0
+tower152 = 0
+tower152x = 0
+tower152y = 0
+tower152z = 0
+tower153 = 0
+tower153x = 0
+tower153y = 0
+tower153z = 0
+tower154 = 0
+tower154x = 0
+tower154y = 0
+tower154z = 0
+tower155 = 0
+tower155x = 0
+tower155y = 0
+tower155z = 0
+tower156 = 0
+tower156x = 0
+tower156y = 0
+tower156z = 0
+tower157 = 0
+tower157x = 0
+tower157y = 0
+tower157z = 0
+tower158 = 0
+tower158x = 0
+tower158y = 0
+tower158z = 0
+tower159 = 0
+tower159x = 0
+tower159y = 0
+tower159z = 0
+tower160 = 0
+tower160x = 0
+tower160y = 0
+tower160z = 0
+tower161 = 0
+tower161x = 0
+tower161y = 0
+tower161z = 0
+tower162 = 0
+tower162x = 0
+tower162y = 0
+tower162z = 0
+tower163 = 0
+tower163x = 0
+tower163y = 0
+tower163z = 0
+tower164 = 0
+tower164x = 0
+tower164y = 0
+tower164z = 0
+tower165 = 0
+tower165x = 0
+tower165y = 0
+tower165z = 0
+tower166 = 0
+tower166x = 0
+tower166y = 0
+tower166z = 0
+tower167 = 0
+tower167x = 0
+tower167y = 0
+tower167z = 0
+tower168 = 0
+tower168x = 0
+tower168y = 0
+tower168z = 0
+tower169 = 0
+tower169x = 0
+tower169y = 0
+tower169z = 0
+tower170 = 0
+tower170x = 0
+tower170y = 0
+tower170z = 0
+tower171 = 0
+tower171x = 0
+tower171y = 0
+tower171z = 0
+tower172 = 0
+tower172x = 0
+tower172y = 0
+tower172z = 0
+tower173 = 0
+tower173x = 0
+tower173y = 0
+tower173z = 0
+tower174 = 0
+tower174x = 0
+tower174y = 0
+tower174z = 0
+tower175 = 0
+tower175x = 0
+tower175y = 0
+tower175z = 0
+tower176 = 0
+tower176x = 0
+tower176y = 0
+tower176z = 0
+tower177 = 0
+tower177x = 0
+tower177y = 0
+tower177z = 0
+tower178 = 0
+tower178x = 0
+tower178y = 0
+tower178z = 0
+tower179 = 0
+tower179x = 0
+tower179y = 0
+tower179z = 0
+tower180 = 0
+tower180x = 0
+tower180y = 0
+tower180z = 0
+tower191 = 0
+tower191x = 0
+tower191y = 0
+tower191z = 0
+tower192 = 0
+tower192x = 0
+tower192y = 0
+tower192z = 0
+tower193 = 0
+tower193x = 0
+tower193y = 0
+tower193z = 0
+tower194 = 0
+tower194x = 0
+tower194y = 0
+tower194z = 0
+tower195 = 0
+tower195x = 0
+tower195y = 0
+tower195z = 0
+tower196 = 0
+tower196x = 0
+tower196y = 0
+tower196z = 0
+tower197 = 0
+tower197x = 0
+tower197y = 0
+tower197z = 0
+tower198 = 0
+tower198x = 0
+tower198y = 0
+tower198z = 0
+tower199 = 0
+tower199x = 0
+tower199y = 0
+tower199z = 0
+tower200 = 0
+tower200x = 0
+tower200y = 0
+tower200z = 0
+
+
+
+ltower1 = 0
+ltower1x = 0
+ltower1y = 0
+ltower1z = 0
+ltower2 = 0
+ltower2x = 0
+ltower2y = 0
+ltower2z = 0
+ltower3 = 0
+ltower3x = 0
+ltower3y = 0
+ltower3z = 0
+ltower4 = 0
+ltower4x = 0
+ltower4y = 0
+ltower4z = 0
+ltower5 = 0
+ltower5x = 0
+ltower5y = 0
+ltower5z = 0
+ltower6 = 0
+ltower6x = 0
+ltower6y = 0
+ltower6z = 0
+ltower7 = 0
+ltower7x = 0
+ltower7y = 0
+ltower7z = 0
+ltower8 = 0
+ltower8x = 0
+ltower8y = 0
+ltower8z = 0
+ltower9 = 0
+ltower9x = 0
+ltower9y = 0
+ltower9z = 0
+ltower10 = 0
+ltower10x = 0
+ltower10y = 0
+ltower10z = 0
+ltower11 = 0
+ltower11x = 0
+ltower11y = 0
+ltower11z = 0
+ltower12 = 0
+ltower12x = 0
+ltower12y = 0
+ltower12z = 0
+ltower13 = 0
+ltower13x = 0
+ltower13y = 0
+ltower13z = 0
+ltower14 = 0
+ltower14x = 0
+ltower14y = 0
+ltower14z = 0
+ltower15 = 0
+ltower15x = 0
+ltower15y = 0
+ltower15z = 0
+ltower16 = 0
+ltower16x = 0
+ltower16y = 0
+ltower16z = 0
+ltower17 = 0
+ltower17x = 0
+ltower17y = 0
+ltower17z = 0
+ltower18 = 0
+ltower18x = 0
+ltower18y = 0
+ltower18z = 0
+ltower19 = 0
+ltower19x = 0
+ltower19y = 0
+ltower19z = 0
+ltower20 = 0
+ltower20x = 0
+ltower20y = 0
+ltower20z = 0
+ltower21 = 0
+ltower21x = 0
+ltower21y = 0
+ltower21z = 0
+ltower22 = 0
+ltower22x = 0
+ltower22y = 0
+ltower22z = 0
+ltower23 = 0
+ltower23x = 0
+ltower23y = 0
+ltower23z = 0
+ltower24 = 0
+ltower24x = 0
+ltower24y = 0
+ltower24z = 0
+ltower25 = 0
+ltower25x = 0
+ltower25y = 0
+ltower25z = 0
+ltower26 = 0
+ltower26x = 0
+ltower26y = 0
+ltower26z = 0
+ltower27 = 0
+ltower27x = 0
+ltower27y = 0
+ltower27z = 0
+ltower28 = 0
+ltower28x = 0
+ltower28y = 0
+ltower28z = 0
+ltower29 = 0
+ltower29x = 0
+ltower29y = 0
+ltower29z = 0
+ltower30 = 0
+ltower30x = 0
+ltower30y = 0
+ltower30z = 0
+ltower31 = 0
+ltower31x = 0
+ltower31y = 0
+ltower31z = 0
+ltower32 = 0
+ltower32x = 0
+ltower32y = 0
+ltower32z = 0
+ltower33 = 0
+ltower33x = 0
+ltower33y = 0
+ltower33z = 0
+ltower34 = 0
+ltower34x = 0
+ltower34y = 0
+ltower34z = 0
+ltower35 = 0
+ltower35x = 0
+ltower35y = 0
+ltower35z = 0
+ltower36 = 0
+ltower36x = 0
+ltower36y = 0
+ltower36z = 0
+ltower37 = 0
+ltower37x = 0
+ltower37y = 0
+ltower37z = 0
+ltower38 = 0
+ltower38x = 0
+ltower38y = 0
+ltower38z = 0
+ltower39 = 0
+ltower39x = 0
+ltower39y = 0
+ltower39z = 0
+ltower40 = 0
+ltower40x = 0
+ltower40y = 0
+ltower40z = 0
+ltower41 = 0
+ltower41x = 0
+ltower41y = 0
+ltower41z = 0
+ltower42 = 0
+ltower42x = 0
+ltower42y = 0
+ltower42z = 0
+ltower43 = 0
+ltower43x = 0
+ltower43y = 0
+ltower43z = 0
+ltower44 = 0
+ltower44x = 0
+ltower44y = 0
+ltower44z = 0
+ltower45 = 0
+ltower45x = 0
+ltower45y = 0
+ltower45z = 0
+ltower46 = 0
+ltower46x = 0
+ltower46y = 0
+ltower46z = 0
+ltower47 = 0
+ltower47x = 0
+ltower47y = 0
+ltower47z = 0
+ltower48 = 0
+ltower48x = 0
+ltower48y = 0
+ltower48z = 0
+ltower49 = 0
+ltower49x = 0
+ltower49y = 0
+ltower49z = 0
+ltower50 = 0
+ltower50x = 0
+ltower50y = 0
+ltower50z = 0
+ltower51 = 0
+ltower51x = 0
+ltower51y = 0
+ltower51z = 0
+ltower52 = 0
+ltower52x = 0
+ltower52y = 0
+ltower52z = 0
+ltower53 = 0
+ltower53x = 0
+ltower53y = 0
+ltower53z = 0
+ltower54 = 0
+ltower54x = 0
+ltower54y = 0
+ltower54z = 0
+ltower55 = 0
+ltower55x = 0
+ltower55y = 0
+ltower55z = 0
+ltower56 = 0
+ltower56x = 0
+ltower56y = 0
+ltower56z = 0
+ltower57 = 0
+ltower57x = 0
+ltower57y = 0
+ltower57z = 0
+ltower58 = 0
+ltower58x = 0
+ltower58y = 0
+ltower58z = 0
+ltower59 = 0
+ltower59x = 0
+ltower59y = 0
+ltower59z = 0
+ltower60 = 0
+ltower60x = 0
+ltower60y = 0
+ltower60z = 0
+ltower61 = 0
+ltower61x = 0
+ltower61y = 0
+ltower61z = 0
+ltower62 = 0
+ltower62x = 0
+ltower62y = 0
+ltower62z = 0
+ltower63 = 0
+ltower63x = 0
+ltower63y = 0
+ltower63z = 0
+ltower64 = 0
+ltower64x = 0
+ltower64y = 0
+ltower64z = 0
+ltower65 = 0
+ltower65x = 0
+ltower65y = 0
+ltower65z = 0
+ltower66 = 0
+ltower66x = 0
+ltower66y = 0
+ltower66z = 0
+ltower67 = 0
+ltower67x = 0
+ltower67y = 0
+ltower67z = 0
+ltower68 = 0
+ltower68x = 0
+ltower68y = 0
+ltower68z = 0
+ltower69 = 0
+ltower69x = 0
+ltower69y = 0
+ltower69z = 0
+ltower70 = 0
+ltower70x = 0
+ltower70y = 0
+ltower70z = 0
+ltower71 = 0
+ltower71x = 0
+ltower71y = 0
+ltower71z = 0
+ltower72 = 0
+ltower72x = 0
+ltower72y = 0
+ltower72z = 0
+ltower73 = 0
+ltower73x = 0
+ltower73y = 0
+ltower73z = 0
+ltower74 = 0
+ltower74x = 0
+ltower74y = 0
+ltower74z = 0
+ltower75 = 0
+ltower75x = 0
+ltower75y = 0
+ltower75z = 0
+ltower76 = 0
+ltower76x = 0
+ltower76y = 0
+ltower76z = 0
+ltower77 = 0
+ltower77x = 0
+ltower77y = 0
+ltower77z = 0
+ltower78 = 0
+ltower78x = 0
+ltower78y = 0
+ltower78z = 0
+ltower79 = 0
+ltower79x = 0
+ltower79y = 0
+ltower79z = 0
+ltower80 = 0
+ltower80x = 0
+ltower80y = 0
+ltower80z = 0
+ltower91 = 0
+ltower91x = 0
+ltower91y = 0
+ltower91z = 0
+ltower92 = 0
+ltower92x = 0
+ltower92y = 0
+ltower92z = 0
+ltower93 = 0
+ltower93x = 0
+ltower93y = 0
+ltower93z = 0
+ltower94 = 0
+ltower94x = 0
+ltower94y = 0
+ltower94z = 0
+ltower95 = 0
+ltower95x = 0
+ltower95y = 0
+ltower95z = 0
+ltower96 = 0
+ltower96x = 0
+ltower96y = 0
+ltower96z = 0
+ltower97 = 0
+ltower97x = 0
+ltower97y = 0
+ltower97z = 0
+ltower98 = 0
+ltower98x = 0
+ltower98y = 0
+ltower98z = 0
+ltower99 = 0
+ltower99x = 0
+ltower99y = 0
+ltower99z = 0
+ltower100 = 0
+ltower100x = 0
+ltower100y = 0
+ltower100z = 0
+ltower101 = 0
+ltower101x = 0
+ltower101y = 0
+ltower101z = 0
+ltower102 = 0
+ltower102x = 0
+ltower102y = 0
+ltower102z = 0
+ltower103 = 0
+ltower103x = 0
+ltower103y = 0
+ltower103z = 0
+ltower104 = 0
+ltower104x = 0
+ltower104y = 0
+ltower104z = 0
+ltower105 = 0
+ltower105x = 0
+ltower105y = 0
+ltower105z = 0
+ltower106 = 0
+ltower106x = 0
+ltower106y = 0
+ltower106z = 0
+ltower107 = 0
+ltower107x = 0
+ltower107y = 0
+ltower107z = 0
+ltower108 = 0
+ltower108x = 0
+ltower108y = 0
+ltower108z = 0
+ltower109 = 0
+ltower109x = 0
+ltower109y = 0
+ltower109z = 0
+ltower110 = 0
+ltower110x = 0
+ltower110y = 0
+ltower110z = 0
+ltower111 = 0
+ltower111x = 0
+ltower111y = 0
+ltower111z = 0
+ltower112 = 0
+ltower112x = 0
+ltower112y = 0
+ltower112z = 0
+ltower113 = 0
+ltower113x = 0
+ltower113y = 0
+ltower113z = 0
+ltower114 = 0
+ltower114x = 0
+ltower114y = 0
+ltower114z = 0
+ltower115 = 0
+ltower115x = 0
+ltower115y = 0
+ltower115z = 0
+ltower116 = 0
+ltower116x = 0
+ltower116y = 0
+ltower116z = 0
+ltower117 = 0
+ltower117x = 0
+ltower117y = 0
+ltower117z = 0
+ltower118 = 0
+ltower118x = 0
+ltower118y = 0
+ltower118z = 0
+ltower119 = 0
+ltower119x = 0
+ltower119y = 0
+ltower119z = 0
+ltower120 = 0
+ltower120x = 0
+ltower120y = 0
+ltower120z = 0
+ltower121 = 0
+ltower121x = 0
+ltower121y = 0
+ltower121z = 0
+ltower122 = 0
+ltower122x = 0
+ltower122y = 0
+ltower122z = 0
+ltower123 = 0
+ltower123x = 0
+ltower123y = 0
+ltower123z = 0
+ltower124 = 0
+ltower124x = 0
+ltower124y = 0
+ltower124z = 0
+ltower125 = 0
+ltower125x = 0
+ltower125y = 0
+ltower125z = 0
+ltower126 = 0
+ltower126x = 0
+ltower126y = 0
+ltower126z = 0
+ltower127 = 0
+ltower127x = 0
+ltower127y = 0
+ltower127z = 0
+ltower128 = 0
+ltower128x = 0
+ltower128y = 0
+ltower128z = 0
+ltower129 = 0
+ltower129x = 0
+ltower129y = 0
+ltower129z = 0
+ltower130 = 0
+ltower130x = 0
+ltower130y = 0
+ltower130z = 0
+ltower131 = 0
+ltower131x = 0
+ltower131y = 0
+ltower131z = 0
+ltower132 = 0
+ltower132x = 0
+ltower132y = 0
+ltower132z = 0
+ltower133 = 0
+ltower133x = 0
+ltower133y = 0
+ltower133z = 0
+ltower134 = 0
+ltower134x = 0
+ltower134y = 0
+ltower134z = 0
+ltower135 = 0
+ltower135x = 0
+ltower135y = 0
+ltower135z = 0
+ltower136 = 0
+ltower136x = 0
+ltower136y = 0
+ltower136z = 0
+ltower137 = 0
+ltower137x = 0
+ltower137y = 0
+ltower137z = 0
+ltower138 = 0
+ltower138x = 0
+ltower138y = 0
+ltower138z = 0
+ltower139 = 0
+ltower139x = 0
+ltower139y = 0
+ltower139z = 0
+ltower140 = 0
+ltower140x = 0
+ltower140y = 0
+ltower140z = 0
+ltower141 = 0
+ltower141x = 0
+ltower141y = 0
+ltower141z = 0
+ltower142 = 0
+ltower142x = 0
+ltower142y = 0
+ltower142z = 0
+ltower143 = 0
+ltower143x = 0
+ltower143y = 0
+ltower143z = 0
+ltower144 = 0
+ltower144x = 0
+ltower144y = 0
+ltower144z = 0
+ltower145 = 0
+ltower145x = 0
+ltower145y = 0
+ltower145z = 0
+ltower146 = 0
+ltower146x = 0
+ltower146y = 0
+ltower146z = 0
+ltower147 = 0
+ltower147x = 0
+ltower147y = 0
+ltower147z = 0
+ltower148 = 0
+ltower148x = 0
+ltower148y = 0
+ltower148z = 0
+ltower149 = 0
+ltower149x = 0
+ltower149y = 0
+ltower149z = 0
+ltower150 = 0
+ltower150x = 0
+ltower150y = 0
+ltower150z = 0
+ltower151 = 0
+ltower151x = 0
+ltower151y = 0
+ltower151z = 0
+ltower152 = 0
+ltower152x = 0
+ltower152y = 0
+ltower152z = 0
+ltower153 = 0
+ltower153x = 0
+ltower153y = 0
+ltower153z = 0
+ltower154 = 0
+ltower154x = 0
+ltower154y = 0
+ltower154z = 0
+ltower155 = 0
+ltower155x = 0
+ltower155y = 0
+ltower155z = 0
+ltower156 = 0
+ltower156x = 0
+ltower156y = 0
+ltower156z = 0
+ltower157 = 0
+ltower157x = 0
+ltower157y = 0
+ltower157z = 0
+ltower158 = 0
+ltower158x = 0
+ltower158y = 0
+ltower158z = 0
+ltower159 = 0
+ltower159x = 0
+ltower159y = 0
+ltower159z = 0
+ltower160 = 0
+ltower160x = 0
+ltower160y = 0
+ltower160z = 0
+ltower161 = 0
+ltower161x = 0
+ltower161y = 0
+ltower161z = 0
+ltower162 = 0
+ltower162x = 0
+ltower162y = 0
+ltower162z = 0
+ltower163 = 0
+ltower163x = 0
+ltower163y = 0
+ltower163z = 0
+ltower164 = 0
+ltower164x = 0
+ltower164y = 0
+ltower164z = 0
+ltower165 = 0
+ltower165x = 0
+ltower165y = 0
+ltower165z = 0
+ltower166 = 0
+ltower166x = 0
+ltower166y = 0
+ltower166z = 0
+ltower167 = 0
+ltower167x = 0
+ltower167y = 0
+ltower167z = 0
+ltower168 = 0
+ltower168x = 0
+ltower168y = 0
+ltower168z = 0
+ltower169 = 0
+ltower169x = 0
+ltower169y = 0
+ltower169z = 0
+ltower170 = 0
+ltower170x = 0
+ltower170y = 0
+ltower170z = 0
+ltower171 = 0
+ltower171x = 0
+ltower171y = 0
+ltower171z = 0
+ltower172 = 0
+ltower172x = 0
+ltower172y = 0
+ltower172z = 0
+ltower173 = 0
+ltower173x = 0
+ltower173y = 0
+ltower173z = 0
+ltower174 = 0
+ltower174x = 0
+ltower174y = 0
+ltower174z = 0
+ltower175 = 0
+ltower175x = 0
+ltower175y = 0
+ltower175z = 0
+ltower176 = 0
+ltower176x = 0
+ltower176y = 0
+ltower176z = 0
+ltower177 = 0
+ltower177x = 0
+ltower177y = 0
+ltower177z = 0
+ltower178 = 0
+ltower178x = 0
+ltower178y = 0
+ltower178z = 0
+ltower179 = 0
+ltower179x = 0
+ltower179y = 0
+ltower179z = 0
+ltower180 = 0
+ltower180x = 0
+ltower180y = 0
+ltower180z = 0
+ltower191 = 0
+ltower191x = 0
+ltower191y = 0
+ltower191z = 0
+ltower192 = 0
+ltower192x = 0
+ltower192y = 0
+ltower192z = 0
+ltower193 = 0
+ltower193x = 0
+ltower193y = 0
+ltower193z = 0
+ltower194 = 0
+ltower194x = 0
+ltower194y = 0
+ltower194z = 0
+ltower195 = 0
+ltower195x = 0
+ltower195y = 0
+ltower195z = 0
+ltower196 = 0
+ltower196x = 0
+ltower196y = 0
+ltower196z = 0
+ltower197 = 0
+ltower197x = 0
+ltower197y = 0
+ltower197z = 0
+ltower198 = 0
+ltower198x = 0
+ltower198y = 0
+ltower198z = 0
+ltower199 = 0
+ltower199x = 0
+ltower199y = 0
+ltower199z = 0
+ltower200 = 0
+ltower200x = 0
+ltower200y = 0
+ltower200z = 0
+
+
+laser1 = 0
+laser1x = 0
+laser1y = 0
+laser1z = 0
+laser2 = 0
+laser2x = 0
+laser2y = 0
+laser2z = 0
+laser3 = 0
+laser3x = 0
+laser3y = 0
+laser3z = 0
+laser4 = 0
+laser4x = 0
+laser4y = 0
+laser4z = 0
+laser5 = 0
+laser5x = 0
+laser5y = 0
+laser5z = 0
+laser6 = 0
+laser6x = 0
+laser6y = 0
+laser6z = 0
+laser7 = 0
+laser7x = 0
+laser7y = 0
+laser7z = 0
+laser8 = 0
+laser8x = 0
+laser8y = 0
+laser8z = 0
+laser9 = 0
+laser9x = 0
+laser9y = 0
+laser9z = 0
+laser10 = 0
+laser10x = 0
+laser10y = 0
+laser10z = 0
+laser11 = 0
+laser11x = 0
+laser11y = 0
+laser11z = 0
+laser12 = 0
+laser12x = 0
+laser12y = 0
+laser12z = 0
+laser13 = 0
+laser13x = 0
+laser13y = 0
+laser13z = 0
+laser14 = 0
+laser14x = 0
+laser14y = 0
+laser14z = 0
+laser15 = 0
+laser15x = 0
+laser15y = 0
+laser15z = 0
+laser16 = 0
+laser16x = 0
+laser16y = 0
+laser16z = 0
+laser17 = 0
+laser17x = 0
+laser17y = 0
+laser17z = 0
+laser18 = 0
+laser18x = 0
+laser18y = 0
+laser18z = 0
+laser19 = 0
+laser19x = 0
+laser19y = 0
+laser19z = 0
+laser20 = 0
+laser20x = 0
+laser20y = 0
+laser20z = 0
+laser21 = 0
+laser21x = 0
+laser21y = 0
+laser21z = 0
+laser22 = 0
+laser22x = 0
+laser22y = 0
+laser22z = 0
+laser23 = 0
+laser23x = 0
+laser23y = 0
+laser23z = 0
+laser24 = 0
+laser24x = 0
+laser24y = 0
+laser24z = 0
+laser25 = 0
+laser25x = 0
+laser25y = 0
+laser25z = 0
+laser26 = 0
+laser26x = 0
+laser26y = 0
+laser26z = 0
+laser27 = 0
+laser27x = 0
+laser27y = 0
+laser27z = 0
+laser28 = 0
+laser28x = 0
+laser28y = 0
+laser28z = 0
+laser29 = 0
+laser29x = 0
+laser29y = 0
+laser29z = 0
+laser30 = 0
+laser30x = 0
+laser30y = 0
+laser30z = 0
+laser31 = 0
+laser31x = 0
+laser31y = 0
+laser31z = 0
+laser32 = 0
+laser32x = 0
+laser32y = 0
+laser32z = 0
+laser33 = 0
+laser33x = 0
+laser33y = 0
+laser33z = 0
+laser34 = 0
+laser34x = 0
+laser34y = 0
+laser34z = 0
+laser35 = 0
+laser35x = 0
+laser35y = 0
+laser35z = 0
+laser36 = 0
+laser36x = 0
+laser36y = 0
+laser36z = 0
+laser37 = 0
+laser37x = 0
+laser37y = 0
+laser37z = 0
+laser38 = 0
+laser38x = 0
+laser38y = 0
+laser38z = 0
+laser39 = 0
+laser39x = 0
+laser39y = 0
+laser39z = 0
+laser40 = 0
+laser40x = 0
+laser40y = 0
+laser40z = 0
+laser41 = 0
+laser41x = 0
+laser41y = 0
+laser41z = 0
+laser42 = 0
+laser42x = 0
+laser42y = 0
+laser42z = 0
+laser43 = 0
+laser43x = 0
+laser43y = 0
+laser43z = 0
+laser44 = 0
+laser44x = 0
+laser44y = 0
+laser44z = 0
+laser45 = 0
+laser45x = 0
+laser45y = 0
+laser45z = 0
+laser46 = 0
+laser46x = 0
+laser46y = 0
+laser46z = 0
+laser47 = 0
+laser47x = 0
+laser47y = 0
+laser47z = 0
+laser48 = 0
+laser48x = 0
+laser48y = 0
+laser48z = 0
+laser49 = 0
+laser49x = 0
+laser49y = 0
+laser49z = 0
+laser50 = 0
+laser50x = 0
+laser50y = 0
+laser50z = 0
+laser51 = 0
+laser51x = 0
+laser51y = 0
+laser51z = 0
+laser52 = 0
+laser52x = 0
+laser52y = 0
+laser52z = 0
+laser53 = 0
+laser53x = 0
+laser53y = 0
+laser53z = 0
+laser54 = 0
+laser54x = 0
+laser54y = 0
+laser54z = 0
+laser55 = 0
+laser55x = 0
+laser55y = 0
+laser55z = 0
+laser56 = 0
+laser56x = 0
+laser56y = 0
+laser56z = 0
+laser57 = 0
+laser57x = 0
+laser57y = 0
+laser57z = 0
+laser58 = 0
+laser58x = 0
+laser58y = 0
+laser58z = 0
+laser59 = 0
+laser59x = 0
+laser59y = 0
+laser59z = 0
+laser60 = 0
+laser60x = 0
+laser60y = 0
+laser60z = 0
+laser61 = 0
+laser61x = 0
+laser61y = 0
+laser61z = 0
+laser62 = 0
+laser62x = 0
+laser62y = 0
+laser62z = 0
+laser63 = 0
+laser63x = 0
+laser63y = 0
+laser63z = 0
+laser64 = 0
+laser64x = 0
+laser64y = 0
+laser64z = 0
+laser65 = 0
+laser65x = 0
+laser65y = 0
+laser65z = 0
+laser66 = 0
+laser66x = 0
+laser66y = 0
+laser66z = 0
+laser67 = 0
+laser67x = 0
+laser67y = 0
+laser67z = 0
+laser68 = 0
+laser68x = 0
+laser68y = 0
+laser68z = 0
+laser69 = 0
+laser69x = 0
+laser69y = 0
+laser69z = 0
+laser70 = 0
+laser70x = 0
+laser70y = 0
+laser70z = 0
+laser71 = 0
+laser71x = 0
+laser71y = 0
+laser71z = 0
+laser72 = 0
+laser72x = 0
+laser72y = 0
+laser72z = 0
+laser73 = 0
+laser73x = 0
+laser73y = 0
+laser73z = 0
+laser74 = 0
+laser74x = 0
+laser74y = 0
+laser74z = 0
+laser75 = 0
+laser75x = 0
+laser75y = 0
+laser75z = 0
+laser76 = 0
+laser76x = 0
+laser76y = 0
+laser76z = 0
+laser77 = 0
+laser77x = 0
+laser77y = 0
+laser77z = 0
+laser78 = 0
+laser78x = 0
+laser78y = 0
+laser78z = 0
+laser79 = 0
+laser79x = 0
+laser79y = 0
+laser79z = 0
+laser80 = 0
+laser80x = 0
+laser80y = 0
+laser80z = 0
+laser91 = 0
+laser91x = 0
+laser91y = 0
+laser91z = 0
+laser92 = 0
+laser92x = 0
+laser92y = 0
+laser92z = 0
+laser93 = 0
+laser93x = 0
+laser93y = 0
+laser93z = 0
+laser94 = 0
+laser94x = 0
+laser94y = 0
+laser94z = 0
+laser95 = 0
+laser95x = 0
+laser95y = 0
+laser95z = 0
+laser96 = 0
+laser96x = 0
+laser96y = 0
+laser96z = 0
+laser97 = 0
+laser97x = 0
+laser97y = 0
+laser97z = 0
+laser98 = 0
+laser98x = 0
+laser98y = 0
+laser98z = 0
+laser99 = 0
+laser99x = 0
+laser99y = 0
+laser99z = 0
+laser100 = 0
+laser100x = 0
+laser100y = 0
+laser100z = 0
+laser101 = 0
+laser101x = 0
+laser101y = 0
+laser101z = 0
+laser102 = 0
+laser102x = 0
+laser102y = 0
+laser102z = 0
+laser103 = 0
+laser103x = 0
+laser103y = 0
+laser103z = 0
+laser104 = 0
+laser104x = 0
+laser104y = 0
+laser104z = 0
+laser105 = 0
+laser105x = 0
+laser105y = 0
+laser105z = 0
+laser106 = 0
+laser106x = 0
+laser106y = 0
+laser106z = 0
+laser107 = 0
+laser107x = 0
+laser107y = 0
+laser107z = 0
+laser108 = 0
+laser108x = 0
+laser108y = 0
+laser108z = 0
+laser109 = 0
+laser109x = 0
+laser109y = 0
+laser109z = 0
+laser110 = 0
+laser110x = 0
+laser110y = 0
+laser110z = 0
+laser111 = 0
+laser111x = 0
+laser111y = 0
+laser111z = 0
+laser112 = 0
+laser112x = 0
+laser112y = 0
+laser112z = 0
+laser113 = 0
+laser113x = 0
+laser113y = 0
+laser113z = 0
+laser114 = 0
+laser114x = 0
+laser114y = 0
+laser114z = 0
+laser115 = 0
+laser115x = 0
+laser115y = 0
+laser115z = 0
+laser116 = 0
+laser116x = 0
+laser116y = 0
+laser116z = 0
+laser117 = 0
+laser117x = 0
+laser117y = 0
+laser117z = 0
+laser118 = 0
+laser118x = 0
+laser118y = 0
+laser118z = 0
+laser119 = 0
+laser119x = 0
+laser119y = 0
+laser119z = 0
+laser120 = 0
+laser120x = 0
+laser120y = 0
+laser120z = 0
+laser121 = 0
+laser121x = 0
+laser121y = 0
+laser121z = 0
+laser122 = 0
+laser122x = 0
+laser122y = 0
+laser122z = 0
+laser123 = 0
+laser123x = 0
+laser123y = 0
+laser123z = 0
+laser124 = 0
+laser124x = 0
+laser124y = 0
+laser124z = 0
+laser125 = 0
+laser125x = 0
+laser125y = 0
+laser125z = 0
+laser126 = 0
+laser126x = 0
+laser126y = 0
+laser126z = 0
+laser127 = 0
+laser127x = 0
+laser127y = 0
+laser127z = 0
+laser128 = 0
+laser128x = 0
+laser128y = 0
+laser128z = 0
+laser129 = 0
+laser129x = 0
+laser129y = 0
+laser129z = 0
+laser130 = 0
+laser130x = 0
+laser130y = 0
+laser130z = 0
+laser131 = 0
+laser131x = 0
+laser131y = 0
+laser131z = 0
+laser132 = 0
+laser132x = 0
+laser132y = 0
+laser132z = 0
+laser133 = 0
+laser133x = 0
+laser133y = 0
+laser133z = 0
+laser134 = 0
+laser134x = 0
+laser134y = 0
+laser134z = 0
+laser135 = 0
+laser135x = 0
+laser135y = 0
+laser135z = 0
+laser136 = 0
+laser136x = 0
+laser136y = 0
+laser136z = 0
+laser137 = 0
+laser137x = 0
+laser137y = 0
+laser137z = 0
+laser138 = 0
+laser138x = 0
+laser138y = 0
+laser138z = 0
+laser139 = 0
+laser139x = 0
+laser139y = 0
+laser139z = 0
+laser140 = 0
+laser140x = 0
+laser140y = 0
+laser140z = 0
+laser141 = 0
+laser141x = 0
+laser141y = 0
+laser141z = 0
+laser142 = 0
+laser142x = 0
+laser142y = 0
+laser142z = 0
+laser143 = 0
+laser143x = 0
+laser143y = 0
+laser143z = 0
+laser144 = 0
+laser144x = 0
+laser144y = 0
+laser144z = 0
+laser145 = 0
+laser145x = 0
+laser145y = 0
+laser145z = 0
+laser146 = 0
+laser146x = 0
+laser146y = 0
+laser146z = 0
+laser147 = 0
+laser147x = 0
+laser147y = 0
+laser147z = 0
+laser148 = 0
+laser148x = 0
+laser148y = 0
+laser148z = 0
+laser149 = 0
+laser149x = 0
+laser149y = 0
+laser149z = 0
+laser150 = 0
+laser150x = 0
+laser150y = 0
+laser150z = 0
+laser151 = 0
+laser151x = 0
+laser151y = 0
+laser151z = 0
+laser152 = 0
+laser152x = 0
+laser152y = 0
+laser152z = 0
+laser153 = 0
+laser153x = 0
+laser153y = 0
+laser153z = 0
+laser154 = 0
+laser154x = 0
+laser154y = 0
+laser154z = 0
+laser155 = 0
+laser155x = 0
+laser155y = 0
+laser155z = 0
+laser156 = 0
+laser156x = 0
+laser156y = 0
+laser156z = 0
+laser157 = 0
+laser157x = 0
+laser157y = 0
+laser157z = 0
+laser158 = 0
+laser158x = 0
+laser158y = 0
+laser158z = 0
+laser159 = 0
+laser159x = 0
+laser159y = 0
+laser159z = 0
+laser160 = 0
+laser160x = 0
+laser160y = 0
+laser160z = 0
+laser161 = 0
+laser161x = 0
+laser161y = 0
+laser161z = 0
+laser162 = 0
+laser162x = 0
+laser162y = 0
+laser162z = 0
+laser163 = 0
+laser163x = 0
+laser163y = 0
+laser163z = 0
+laser164 = 0
+laser164x = 0
+laser164y = 0
+laser164z = 0
+laser165 = 0
+laser165x = 0
+laser165y = 0
+laser165z = 0
+laser166 = 0
+laser166x = 0
+laser166y = 0
+laser166z = 0
+laser167 = 0
+laser167x = 0
+laser167y = 0
+laser167z = 0
+laser168 = 0
+laser168x = 0
+laser168y = 0
+laser168z = 0
+laser169 = 0
+laser169x = 0
+laser169y = 0
+laser169z = 0
+laser170 = 0
+laser170x = 0
+laser170y = 0
+laser170z = 0
+laser171 = 0
+laser171x = 0
+laser171y = 0
+laser171z = 0
+laser172 = 0
+laser172x = 0
+laser172y = 0
+laser172z = 0
+laser173 = 0
+laser173x = 0
+laser173y = 0
+laser173z = 0
+laser174 = 0
+laser174x = 0
+laser174y = 0
+laser174z = 0
+laser175 = 0
+laser175x = 0
+laser175y = 0
+laser175z = 0
+laser176 = 0
+laser176x = 0
+laser176y = 0
+laser176z = 0
+laser177 = 0
+laser177x = 0
+laser177y = 0
+laser177z = 0
+laser178 = 0
+laser178x = 0
+laser178y = 0
+laser178z = 0
+laser179 = 0
+laser179x = 0
+laser179y = 0
+laser179z = 0
+laser180 = 0
+laser180x = 0
+laser180y = 0
+laser180z = 0
+laser191 = 0
+laser191x = 0
+laser191y = 0
+laser191z = 0
+laser192 = 0
+laser192x = 0
+laser192y = 0
+laser192z = 0
+laser193 = 0
+laser193x = 0
+laser193y = 0
+laser193z = 0
+laser194 = 0
+laser194x = 0
+laser194y = 0
+laser194z = 0
+laser195 = 0
+laser195x = 0
+laser195y = 0
+laser195z = 0
+laser196 = 0
+laser196x = 0
+laser196y = 0
+laser196z = 0
+laser197 = 0
+laser197x = 0
+laser197y = 0
+laser197z = 0
+laser198 = 0
+laser198x = 0
+laser198y = 0
+laser198z = 0
+laser199 = 0
+laser199x = 0
+laser199y = 0
+laser199z = 0
+laser200 = 0
+laser200x = 0
+laser200y = 0
+laser200z = 0
+
+
+
+splash1 = 0
+splash1x = 0
+splash1y = 0
+splash1z = 0
+splash2 = 0
+splash2x = 0
+splash2y = 0
+splash2z = 0
+splash3 = 0
+splash3x = 0
+splash3y = 0
+splash3z = 0
+splash4 = 0
+splash4x = 0
+splash4y = 0
+splash4z = 0
+splash5 = 0
+splash5x = 0
+splash5y = 0
+splash5z = 0
+splash6 = 0
+splash6x = 0
+splash6y = 0
+splash6z = 0
+splash7 = 0
+splash7x = 0
+splash7y = 0
+splash7z = 0
+splash8 = 0
+splash8x = 0
+splash8y = 0
+splash8z = 0
+splash9 = 0
+splash9x = 0
+splash9y = 0
+splash9z = 0
+splash10 = 0
+splash10x = 0
+splash10y = 0
+splash10z = 0
+splash11 = 0
+splash11x = 0
+splash11y = 0
+splash11z = 0
+splash12 = 0
+splash12x = 0
+splash12y = 0
+splash12z = 0
+splash13 = 0
+splash13x = 0
+splash13y = 0
+splash13z = 0
+splash14 = 0
+splash14x = 0
+splash14y = 0
+splash14z = 0
+splash15 = 0
+splash15x = 0
+splash15y = 0
+splash15z = 0
+splash16 = 0
+splash16x = 0
+splash16y = 0
+splash16z = 0
+splash17 = 0
+splash17x = 0
+splash17y = 0
+splash17z = 0
+splash18 = 0
+splash18x = 0
+splash18y = 0
+splash18z = 0
+splash19 = 0
+splash19x = 0
+splash19y = 0
+splash19z = 0
+splash20 = 0
+splash20x = 0
+splash20y = 0
+splash20z = 0
+splash21 = 0
+splash21x = 0
+splash21y = 0
+splash21z = 0
+splash22 = 0
+splash22x = 0
+splash22y = 0
+splash22z = 0
+splash23 = 0
+splash23x = 0
+splash23y = 0
+splash23z = 0
+splash24 = 0
+splash24x = 0
+splash24y = 0
+splash24z = 0
+splash25 = 0
+splash25x = 0
+splash25y = 0
+splash25z = 0
+splash26 = 0
+splash26x = 0
+splash26y = 0
+splash26z = 0
+splash27 = 0
+splash27x = 0
+splash27y = 0
+splash27z = 0
+splash28 = 0
+splash28x = 0
+splash28y = 0
+splash28z = 0
+splash29 = 0
+splash29x = 0
+splash29y = 0
+splash29z = 0
+splash30 = 0
+splash30x = 0
+splash30y = 0
+splash30z = 0
+splash31 = 0
+splash31x = 0
+splash31y = 0
+splash31z = 0
+splash32 = 0
+splash32x = 0
+splash32y = 0
+splash32z = 0
+splash33 = 0
+splash33x = 0
+splash33y = 0
+splash33z = 0
+splash34 = 0
+splash34x = 0
+splash34y = 0
+splash34z = 0
+splash35 = 0
+splash35x = 0
+splash35y = 0
+splash35z = 0
+splash36 = 0
+splash36x = 0
+splash36y = 0
+splash36z = 0
+splash37 = 0
+splash37x = 0
+splash37y = 0
+splash37z = 0
+splash38 = 0
+splash38x = 0
+splash38y = 0
+splash38z = 0
+splash39 = 0
+splash39x = 0
+splash39y = 0
+splash39z = 0
+splash40 = 0
+splash40x = 0
+splash40y = 0
+splash40z = 0
+splash41 = 0
+splash41x = 0
+splash41y = 0
+splash41z = 0
+splash42 = 0
+splash42x = 0
+splash42y = 0
+splash42z = 0
+splash43 = 0
+splash43x = 0
+splash43y = 0
+splash43z = 0
+splash44 = 0
+splash44x = 0
+splash44y = 0
+splash44z = 0
+splash45 = 0
+splash45x = 0
+splash45y = 0
+splash45z = 0
+splash46 = 0
+splash46x = 0
+splash46y = 0
+splash46z = 0
+splash47 = 0
+splash47x = 0
+splash47y = 0
+splash47z = 0
+splash48 = 0
+splash48x = 0
+splash48y = 0
+splash48z = 0
+splash49 = 0
+splash49x = 0
+splash49y = 0
+splash49z = 0
+splash50 = 0
+splash50x = 0
+splash50y = 0
+splash50z = 0
+splash51 = 0
+splash51x = 0
+splash51y = 0
+splash51z = 0
+splash52 = 0
+splash52x = 0
+splash52y = 0
+splash52z = 0
+splash53 = 0
+splash53x = 0
+splash53y = 0
+splash53z = 0
+splash54 = 0
+splash54x = 0
+splash54y = 0
+splash54z = 0
+splash55 = 0
+splash55x = 0
+splash55y = 0
+splash55z = 0
+splash56 = 0
+splash56x = 0
+splash56y = 0
+splash56z = 0
+splash57 = 0
+splash57x = 0
+splash57y = 0
+splash57z = 0
+splash58 = 0
+splash58x = 0
+splash58y = 0
+splash58z = 0
+splash59 = 0
+splash59x = 0
+splash59y = 0
+splash59z = 0
+splash60 = 0
+splash60x = 0
+splash60y = 0
+splash60z = 0
+splash61 = 0
+splash61x = 0
+splash61y = 0
+splash61z = 0
+splash62 = 0
+splash62x = 0
+splash62y = 0
+splash62z = 0
+splash63 = 0
+splash63x = 0
+splash63y = 0
+splash63z = 0
+splash64 = 0
+splash64x = 0
+splash64y = 0
+splash64z = 0
+splash65 = 0
+splash65x = 0
+splash65y = 0
+splash65z = 0
+splash66 = 0
+splash66x = 0
+splash66y = 0
+splash66z = 0
+splash67 = 0
+splash67x = 0
+splash67y = 0
+splash67z = 0
+splash68 = 0
+splash68x = 0
+splash68y = 0
+splash68z = 0
+splash69 = 0
+splash69x = 0
+splash69y = 0
+splash69z = 0
+splash70 = 0
+splash70x = 0
+splash70y = 0
+splash70z = 0
+splash71 = 0
+splash71x = 0
+splash71y = 0
+splash71z = 0
+splash72 = 0
+splash72x = 0
+splash72y = 0
+splash72z = 0
+splash73 = 0
+splash73x = 0
+splash73y = 0
+splash73z = 0
+splash74 = 0
+splash74x = 0
+splash74y = 0
+splash74z = 0
+splash75 = 0
+splash75x = 0
+splash75y = 0
+splash75z = 0
+splash76 = 0
+splash76x = 0
+splash76y = 0
+splash76z = 0
+splash77 = 0
+splash77x = 0
+splash77y = 0
+splash77z = 0
+splash78 = 0
+splash78x = 0
+splash78y = 0
+splash78z = 0
+splash79 = 0
+splash79x = 0
+splash79y = 0
+splash79z = 0
+splash80 = 0
+splash80x = 0
+splash80y = 0
+splash80z = 0
+splash91 = 0
+splash91x = 0
+splash91y = 0
+splash91z = 0
+splash92 = 0
+splash92x = 0
+splash92y = 0
+splash92z = 0
+splash93 = 0
+splash93x = 0
+splash93y = 0
+splash93z = 0
+splash94 = 0
+splash94x = 0
+splash94y = 0
+splash94z = 0
+splash95 = 0
+splash95x = 0
+splash95y = 0
+splash95z = 0
+splash96 = 0
+splash96x = 0
+splash96y = 0
+splash96z = 0
+splash97 = 0
+splash97x = 0
+splash97y = 0
+splash97z = 0
+splash98 = 0
+splash98x = 0
+splash98y = 0
+splash98z = 0
+splash99 = 0
+splash99x = 0
+splash99y = 0
+splash99z = 0
+splash100 = 0
+splash100x = 0
+splash100y = 0
+splash100z = 0
+splash101 = 0
+splash101x = 0
+splash101y = 0
+splash101z = 0
+splash102 = 0
+splash102x = 0
+splash102y = 0
+splash102z = 0
+splash103 = 0
+splash103x = 0
+splash103y = 0
+splash103z = 0
+splash104 = 0
+splash104x = 0
+splash104y = 0
+splash104z = 0
+splash105 = 0
+splash105x = 0
+splash105y = 0
+splash105z = 0
+splash106 = 0
+splash106x = 0
+splash106y = 0
+splash106z = 0
+splash107 = 0
+splash107x = 0
+splash107y = 0
+splash107z = 0
+splash108 = 0
+splash108x = 0
+splash108y = 0
+splash108z = 0
+splash109 = 0
+splash109x = 0
+splash109y = 0
+splash109z = 0
+splash110 = 0
+splash110x = 0
+splash110y = 0
+splash110z = 0
+splash111 = 0
+splash111x = 0
+splash111y = 0
+splash111z = 0
+splash112 = 0
+splash112x = 0
+splash112y = 0
+splash112z = 0
+splash113 = 0
+splash113x = 0
+splash113y = 0
+splash113z = 0
+splash114 = 0
+splash114x = 0
+splash114y = 0
+splash114z = 0
+splash115 = 0
+splash115x = 0
+splash115y = 0
+splash115z = 0
+splash116 = 0
+splash116x = 0
+splash116y = 0
+splash116z = 0
+splash117 = 0
+splash117x = 0
+splash117y = 0
+splash117z = 0
+splash118 = 0
+splash118x = 0
+splash118y = 0
+splash118z = 0
+splash119 = 0
+splash119x = 0
+splash119y = 0
+splash119z = 0
+splash120 = 0
+splash120x = 0
+splash120y = 0
+splash120z = 0
+splash121 = 0
+splash121x = 0
+splash121y = 0
+splash121z = 0
+splash122 = 0
+splash122x = 0
+splash122y = 0
+splash122z = 0
+splash123 = 0
+splash123x = 0
+splash123y = 0
+splash123z = 0
+splash124 = 0
+splash124x = 0
+splash124y = 0
+splash124z = 0
+splash125 = 0
+splash125x = 0
+splash125y = 0
+splash125z = 0
+splash126 = 0
+splash126x = 0
+splash126y = 0
+splash126z = 0
+splash127 = 0
+splash127x = 0
+splash127y = 0
+splash127z = 0
+splash128 = 0
+splash128x = 0
+splash128y = 0
+splash128z = 0
+splash129 = 0
+splash129x = 0
+splash129y = 0
+splash129z = 0
+splash130 = 0
+splash130x = 0
+splash130y = 0
+splash130z = 0
+splash131 = 0
+splash131x = 0
+splash131y = 0
+splash131z = 0
+splash132 = 0
+splash132x = 0
+splash132y = 0
+splash132z = 0
+splash133 = 0
+splash133x = 0
+splash133y = 0
+splash133z = 0
+splash134 = 0
+splash134x = 0
+splash134y = 0
+splash134z = 0
+splash135 = 0
+splash135x = 0
+splash135y = 0
+splash135z = 0
+splash136 = 0
+splash136x = 0
+splash136y = 0
+splash136z = 0
+splash137 = 0
+splash137x = 0
+splash137y = 0
+splash137z = 0
+splash138 = 0
+splash138x = 0
+splash138y = 0
+splash138z = 0
+splash139 = 0
+splash139x = 0
+splash139y = 0
+splash139z = 0
+splash140 = 0
+splash140x = 0
+splash140y = 0
+splash140z = 0
+splash141 = 0
+splash141x = 0
+splash141y = 0
+splash141z = 0
+splash142 = 0
+splash142x = 0
+splash142y = 0
+splash142z = 0
+splash143 = 0
+splash143x = 0
+splash143y = 0
+splash143z = 0
+splash144 = 0
+splash144x = 0
+splash144y = 0
+splash144z = 0
+splash145 = 0
+splash145x = 0
+splash145y = 0
+splash145z = 0
+splash146 = 0
+splash146x = 0
+splash146y = 0
+splash146z = 0
+splash147 = 0
+splash147x = 0
+splash147y = 0
+splash147z = 0
+splash148 = 0
+splash148x = 0
+splash148y = 0
+splash148z = 0
+splash149 = 0
+splash149x = 0
+splash149y = 0
+splash149z = 0
+splash150 = 0
+splash150x = 0
+splash150y = 0
+splash150z = 0
+splash151 = 0
+splash151x = 0
+splash151y = 0
+splash151z = 0
+splash152 = 0
+splash152x = 0
+splash152y = 0
+splash152z = 0
+splash153 = 0
+splash153x = 0
+splash153y = 0
+splash153z = 0
+splash154 = 0
+splash154x = 0
+splash154y = 0
+splash154z = 0
+splash155 = 0
+splash155x = 0
+splash155y = 0
+splash155z = 0
+splash156 = 0
+splash156x = 0
+splash156y = 0
+splash156z = 0
+splash157 = 0
+splash157x = 0
+splash157y = 0
+splash157z = 0
+splash158 = 0
+splash158x = 0
+splash158y = 0
+splash158z = 0
+splash159 = 0
+splash159x = 0
+splash159y = 0
+splash159z = 0
+splash160 = 0
+splash160x = 0
+splash160y = 0
+splash160z = 0
+splash161 = 0
+splash161x = 0
+splash161y = 0
+splash161z = 0
+splash162 = 0
+splash162x = 0
+splash162y = 0
+splash162z = 0
+splash163 = 0
+splash163x = 0
+splash163y = 0
+splash163z = 0
+splash164 = 0
+splash164x = 0
+splash164y = 0
+splash164z = 0
+splash165 = 0
+splash165x = 0
+splash165y = 0
+splash165z = 0
+splash166 = 0
+splash166x = 0
+splash166y = 0
+splash166z = 0
+splash167 = 0
+splash167x = 0
+splash167y = 0
+splash167z = 0
+splash168 = 0
+splash168x = 0
+splash168y = 0
+splash168z = 0
+splash169 = 0
+splash169x = 0
+splash169y = 0
+splash169z = 0
+splash170 = 0
+splash170x = 0
+splash170y = 0
+splash170z = 0
+splash171 = 0
+splash171x = 0
+splash171y = 0
+splash171z = 0
+splash172 = 0
+splash172x = 0
+splash172y = 0
+splash172z = 0
+splash173 = 0
+splash173x = 0
+splash173y = 0
+splash173z = 0
+splash174 = 0
+splash174x = 0
+splash174y = 0
+splash174z = 0
+splash175 = 0
+splash175x = 0
+splash175y = 0
+splash175z = 0
+splash176 = 0
+splash176x = 0
+splash176y = 0
+splash176z = 0
+splash177 = 0
+splash177x = 0
+splash177y = 0
+splash177z = 0
+splash178 = 0
+splash178x = 0
+splash178y = 0
+splash178z = 0
+splash179 = 0
+splash179x = 0
+splash179y = 0
+splash179z = 0
+splash180 = 0
+splash180x = 0
+splash180y = 0
+splash180z = 0
+splash191 = 0
+splash191x = 0
+splash191y = 0
+splash191z = 0
+splash192 = 0
+splash192x = 0
+splash192y = 0
+splash192z = 0
+splash193 = 0
+splash193x = 0
+splash193y = 0
+splash193z = 0
+splash194 = 0
+splash194x = 0
+splash194y = 0
+splash194z = 0
+splash195 = 0
+splash195x = 0
+splash195y = 0
+splash195z = 0
+splash196 = 0
+splash196x = 0
+splash196y = 0
+splash196z = 0
+splash197 = 0
+splash197x = 0
+splash197y = 0
+splash197z = 0
+splash198 = 0
+splash198x = 0
+splash198y = 0
+splash198z = 0
+splash199 = 0
+splash199x = 0
+splash199y = 0
+splash199z = 0
+splash200 = 0
+splash200x = 0
+splash200y = 0
+splash200z = 0
+
+
+
+
+
+
+
+
+
+
+
+
+e1 = 0
+e1x = 0
+e1y = 0
+e2 = 0
+e2x = 0
+e2y = 0
+e3 = 0
+e3x = 0
+e3y = 0
+e4 = 0
+e4x = 0
+e4y = 0
+e5 = 0
+e5x = 0
+e5y = 0
+e6 = 0
+e6x = 0
+e6y = 0
+e7 = 0
+e7x = 0
+e7y = 0
+e8 = 0
+e8x = 0
+e8y = 0
+e9 = 0
+e9x = 0
+e9y = 0
+e10 = 0
+e10x = 0
+e10y = 0
+
+
+e1a = 10
+e2a = 10
+e3a = 10
+e4a = 10
+e5a = 10
+e6a = 10
+e7a = 10
+e8a = 10
+e9a = 10
+e10a = 10
+
+
+
+
+
+
+
+
+
+wooYayIntervalId = setInterval(function (){if (allow == 1){qwerty()}}, 22);
+}
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////game loop
+//////////////////////////////////////////////////////
+
+
+function qwerty(){
+allow == 0
+
+ctx.drawImage(imgst,0,0)
+
+
+
+
+
+
+
+//////win
+if ((wavemoving == 1) && (timetilnext == 0) && (e1 <= 0) && (e2 <= 0) && (e3 <= 0) && (e4 <= 0) && (e5 <= 0) && (e6 <= 0) && (e7 <= 0) && (e8 <= 0) && (e9 <= 0) && (e10 <= 0)){
+wavemoving = 0
+if (level > 9){
+emtype = ((Math.floor(Math.random()*4))+1)
+if (((Math.floor(Math.random()*2))+1) == 1){
+emtype = 1
+}
+}else{
+emtype = 1
+}
+level++
+if (level > 6){
+littlenumber += littlenumberr
+}
+if (startingatthestart == 0){
+alert ('level')
+alert (level)
+alert ('littlenumber')
+alert (littlenumber)
+}}
+
+
+
+
+//////create enimys
+if (timetilnext > 0){
+if (timetilnext == 1){
+emcount ++
+if (emcount < 11){
+if (emtype == 1){
+window['e' + emcount] = ((level + 1.2) * littlenumber)
+}
+if (emtype == 2){
+window['e' + emcount] = ((level / 1.6) * littlenumber)
+}
+if (emtype == 3){
+window['e' + emcount] = ((level * 1.8) * littlenumber)
+}
+if (emtype == 4){
+window['e' + emcount] = ((level / 1.4) * littlenumber)
+}
+window['e' + emcount + 'x'] = 74
+window['e' + emcount + 'y'] = 0
+window['e' + emcount + 'a'] = 1
+timetilnext = 44
+if (emtype == 4){
+timetilnext = 14
+}}}
+timetilnext --
+}
+
+
+
+themoveing()
+
+
+
+
+//////draw towers
+towerss = 0
+while (towers > towerss){
+towerss++
+ctx.drawImage(imgtower, (eval ('tower' + towerss + 'x')) ,(eval ('tower' + towerss + 'y')))
+}
+ltowerss = 0
+while (ltowers > ltowerss){
+ltowerss++
+ctx.drawImage(imgltower, (eval ('ltower' + ltowerss + 'x')) ,(eval ('ltower' + ltowerss + 'y')))
+}
+laserss = 0
+while (lasers > laserss){
+laserss++
+ctx.drawImage(imglaser, (eval ('laser' + laserss + 'x')) ,(eval ('laser' + laserss + 'y')))
+}
+splashss = 0
+while (splashs > splashss){
+splashss++
+ctx.drawImage(imgsplash, (eval ('splash' + splashss + 'x')) ,(eval ('splash' + splashss + 'y')))
+}
+
+
+
+
+
+
+shooting()
+
+
+
+
+
+
+
+
+////////draw
+
+
+if (apoo == 0){
+
+
+if ((selectmode > 0) && (selectmode < 4)){
+
+
+if (selectmode2 == 1){
+
+
+
+if (((selectmode == 1) && (money >= 30)) || ((selectmode == 2) && (money >= 70)) || ((selectmode == 3) && (money >= 130)) || ((selectmode == 4) && (money >= 250))){
+ctx.drawImage(imggooo, (mx - 70) , (my - 70) )
+}else{
+ctx.drawImage(imggooorr, (mx - 70) , (my - 70) )
+}
+
+
+}else{
+
+if (redmode == 1){
+ctx.drawImage(imggooor, (mx - 70) , (my - 70) )
+}}}}
+
+
+
+
+
+ctx.drawImage(imgst2,506,0)
+if (wavemoving == 0){
+ctx.drawImage(imggo,520,5)
+}
+if (selectmode == 0){
+ctx.drawImage(imggoo,511,179)
+}
+if (selectmode == 1){
+ctx.drawImage(imggoo,511,220)
+}
+if (selectmode == 2){
+ctx.drawImage(imggoo,511,262)
+}
+if (selectmode == 3){
+ctx.drawImage(imggoo,511,304)
+}
+if (selectmode == 4){
+ctx.drawImage(imggoo,511,340)
+}
+ctx.font = "8pt Arial";
+if (emtype == 1){
+ctx.fillText("TYPE: NORMAL", 530, 68);
+}
+if (emtype == 2){
+ctx.fillText("TYPE: FAST", 530, 68);
+}
+if (emtype == 3){
+ctx.fillText("TYPE: STRONG", 530, 68);
+}
+if (emtype == 4){
+ctx.fillText("TYPE: SWARM", 530, 68);
+}
+ctx.font = "12pt Arial";
+ctx.fillText(eval ("'Money: ' + money"), 518, 100);
+ctx.fillText(eval ("'Level: ' + level"), 518, 120);
+ctx.fillText(eval ("'Lives: ' + lives"), 518, 140);
+
+
+
+
+
+
+if ((selectmode2 == 1) && (selectmode == 4)){
+ctx.drawImage(imggoooo, mx , my )
+}
+
+
+if ((selectmode2 == 1) && (selectmode == 0)){
+
+
+
+if (selectmode3 == 1){
+ctx.font = "16pt Arial";
+ctx.drawImage(imggooooo1, (mx + 28) , (my - 20) )
+ctx.fillText(((eval ('tower' + selectmode4 + 'z')) + 1), (mx + 115), my);
+ctx.font = "12pt Arial";
+ctx.fillText((Math.round(gun1price * (eval ('tower' + selectmode4)))), (mx + 31), (my + 29));
+}
+
+if (selectmode3 == 2){
+ctx.font = "16pt Arial";
+ctx.drawImage(imggooooo2, (mx + 28) , (my - 20) )
+ctx.fillText(((eval ('ltower' + selectmode4 + 'z')) + 1), (mx + 115), my);
+ctx.font = "12pt Arial";
+ctx.fillText((Math.round(gun2price * (eval ('ltower' + selectmode4)))), (mx + 31), (my + 29));
+}
+
+if (selectmode3 == 3){
+ctx.font = "16pt Arial";
+ctx.drawImage(imggooooo3, (mx + 28) , (my - 20) )
+ctx.fillText(((eval ('laser' + selectmode4 + 'z')) + 1), (mx + 115), my);
+ctx.font = "12pt Arial";
+ctx.fillText((Math.round(gun3price * (eval ('laser' + selectmode4)))), (mx + 31), (my + 29));
+}
+
+if (selectmode3 == 4){
+ctx.font = "16pt Arial";
+ctx.drawImage(imggooooo4, (mx + 28) , (my - 20) )
+ctx.fillText(((eval ('splash' + selectmode4 + 'z')) + 1), (mx + 115), my);
+ctx.font = "12pt Arial";
+ctx.fillText((Math.round(gun4price * (eval ('splash' + selectmode4)))), (mx + 31), (my + 29));
+}
+
+
+
+}
+
+
+
+
+allow == 1
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////shooting
+//////////////////////////////////////////////////////
+
+
+
+
+
+
+
+function shooting(){
+
+
+
+q1 = 0
+q4 = 0
+while (splashs > q1){
+q1++
+
+
+q2 = (eval ('splash' + q1 + 'x'))
+q3 = (eval ('splash' + q1 + 'y'))
+
+if (((q2 - 15) < e1x) && ((q2 + 15) > e1x) && ((q3 - 15) < e1y) && ((q3 + 15) > e1y) && (e1 > 0)){
+e1 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e2x) && ((q2 + 15) > e2x) && ((q3 - 15) < e2y) && ((q3 + 15) > e2y) && (e2 > 0)){
+e2 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e3x) && ((q2 + 15) > e3x) && ((q3 - 15) < e3y) && ((q3 + 15) > e3y) && (e3 > 0)){
+e3 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e4x) && ((q2 + 15) > e4x) && ((q3 - 15) < e4y) && ((q3 + 15) > e4y) && (e4 > 0)){
+e4 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e5x) && ((q2 + 15) > e5x) && ((q3 - 15) < e5y) && ((q3 + 15) > e5y) && (e5 > 0)){
+e5 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e6x) && ((q2 + 15) > e6x) && ((q3 - 15) < e6y) && ((q3 + 15) > e6y) && (e6 > 0)){
+e6 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e7x) && ((q2 + 15) > e7x) && ((q3 - 15) < e7y) && ((q3 + 15) > e7y) && (e7 > 0)){
+e7 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e8x) && ((q2 + 15) > e8x) && ((q3 - 15) < e8y) && ((q3 + 15) > e8y) && (e8 > 0)){
+e8 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e9x) && ((q2 + 15) > e9x) && ((q3 - 15) < e9y) && ((q3 + 15) > e9y) && (e9 > 0)){
+e9 -= (eval ('splash' + q1))
+q4++
+}
+if (((q2 - 15) < e10x) && ((q2 + 15) > e10x) && ((q3 - 15) < e10y) && ((q3 + 15) > e10y) && (e10 > 0)){
+e10 -= (eval ('splash' + q1))
+q4++
+}
+
+
+
+}
+
+
+if (q4 > 0){
+if (abcd == 0){
+sound5.play()
+abcd = 1
+}
+}
+
+
+if (q4 == 0){
+if (abcd == 1){
+
+
+
+sound5.pause()
+sound5.currentTime = 0
+abcd = 0
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ctx.lineWidth = 2
+
+q1 = 0
+q4 = 0
+while (lasers > q1){
+q1++
+q5 = 0
+
+q2 = (eval ('laser' + q1 + 'x'))
+q3 = (eval ('laser' + q1 + 'y'))
+
+if (((q2 - 75) < e1x) && ((q2 + 75) > e1x) && ((q3 - 75) < e1y) && ((q3 + 75) > e1y) && (e1 > 0) && (q5 == 0)){
+e1 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e1x + 10 , e1y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e2x) && ((q2 + 75) > e2x) && ((q3 - 75) < e2y) && ((q3 + 75) > e2y) && (e2 > 0) && (q5 == 0)){
+e2 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e2x + 10 , e2y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e3x) && ((q2 + 75) > e3x) && ((q3 - 75) < e3y) && ((q3 + 75) > e3y) && (e3 > 0) && (q5 == 0)){
+e3 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e3x + 10 , e3y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e4x) && ((q2 + 75) > e4x) && ((q3 - 75) < e4y) && ((q3 + 75) > e4y) && (e4 > 0) && (q5 == 0)){
+e4 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e4x + 10 , e4y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e5x) && ((q2 + 75) > e5x) && ((q3 - 75) < e5y) && ((q3 + 75) > e5y) && (e5 > 0) && (q5 == 0)){
+e5 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e5x + 10 , e5y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e6x) && ((q2 + 75) > e6x) && ((q3 - 75) < e6y) && ((q3 + 75) > e6y) && (e6 > 0) && (q5 == 0)){
+e6 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e6x + 10 , e6y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e7x) && ((q2 + 75) > e7x) && ((q3 - 75) < e7y) && ((q3 + 75) > e7y) && (e7 > 0) && (q5 == 0)){
+e7 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e7x + 10 , e7y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e8x) && ((q2 + 75) > e8x) && ((q3 - 75) < e8y) && ((q3 + 75) > e8y) && (e8 > 0) && (q5 == 0)){
+e8 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e8x + 10 , e8y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e9x) && ((q2 + 75) > e9x) && ((q3 - 75) < e9y) && ((q3 + 75) > e9y) && (e9 > 0) && (q5 == 0)){
+e9 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e9x + 10 , e9y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e10x) && ((q2 + 75) > e10x) && ((q3 - 75) < e10y) && ((q3 + 75) > e10y) && (e10 > 0) && (q5 == 0)){
+e10 -= (eval ('laser' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('laser' + q1 + 'x')) + 12.5  ,   (eval ('laser' + q1 + 'y')) + 12.5);  ctx.lineTo( e10x + 10 , e10y + 10 );  ctx.stroke(); 
+}
+
+
+
+}
+
+
+if (q4 > 0){
+if (abcde == 0){
+sound9.play()
+abcde = 1
+}
+}
+
+
+if (q4 == 0){
+if (abcde == 1){
+
+
+
+sound9.pause()
+sound9.currentTime = 0
+abcde = 0
+}
+}
+
+ctx.lineWidth = 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (q6 == 0){
+
+q6 = 28
+
+
+
+
+ctx.lineWidth = 10
+
+q1 = 0
+q4 = 0
+while (towers > q1){
+q1++
+q5 = 0
+
+q2 = (eval ('tower' + q1 + 'x'))
+q3 = (eval ('tower' + q1 + 'y'))
+
+if (((q2 - 75) < e1x) && ((q2 + 75) > e1x) && ((q3 - 75) < e1y) && ((q3 + 75) > e1y) && (e1 > 0) && (q5 == 0)){
+e1 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e1x + 10 , e1y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e2x) && ((q2 + 75) > e2x) && ((q3 - 75) < e2y) && ((q3 + 75) > e2y) && (e2 > 0) && (q5 == 0)){
+e2 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e2x + 10 , e2y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e3x) && ((q2 + 75) > e3x) && ((q3 - 75) < e3y) && ((q3 + 75) > e3y) && (e3 > 0) && (q5 == 0)){
+e3 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e3x + 10 , e3y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e4x) && ((q2 + 75) > e4x) && ((q3 - 75) < e4y) && ((q3 + 75) > e4y) && (e4 > 0) && (q5 == 0)){
+e4 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e4x + 10 , e4y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e5x) && ((q2 + 75) > e5x) && ((q3 - 75) < e5y) && ((q3 + 75) > e5y) && (e5 > 0) && (q5 == 0)){
+e5 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e5x + 10 , e5y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e6x) && ((q2 + 75) > e6x) && ((q3 - 75) < e6y) && ((q3 + 75) > e6y) && (e6 > 0) && (q5 == 0)){
+e6 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e6x + 10 , e6y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e7x) && ((q2 + 75) > e7x) && ((q3 - 75) < e7y) && ((q3 + 75) > e7y) && (e7 > 0) && (q5 == 0)){
+e7 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e7x + 10 , e7y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e8x) && ((q2 + 75) > e8x) && ((q3 - 75) < e8y) && ((q3 + 75) > e8y) && (e8 > 0) && (q5 == 0)){
+e8 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e8x + 10 , e8y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e9x) && ((q2 + 75) > e9x) && ((q3 - 75) < e9y) && ((q3 + 75) > e9y) && (e9 > 0) && (q5 == 0)){
+e9 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e9x + 10 , e9y + 10 );  ctx.stroke(); 
+}
+if (((q2 - 75) < e10x) && ((q2 + 75) > e10x) && ((q3 - 75) < e10y) && ((q3 + 75) > e10y) && (e10 > 0) && (q5 == 0)){
+e10 -= (eval ('tower' + q1))
+q4++;    q5++;   ctx.beginPath();  ctx.moveTo( (eval ('tower' + q1 + 'x')) + 12.5  ,   (eval ('tower' + q1 + 'y')) + 12.5);  ctx.lineTo( e10x + 10 , e10y + 10 );  ctx.stroke(); 
+}
+
+
+
+}
+
+
+if (q4 > 0){
+sound3.play()
+}
+
+ctx.lineWidth = 1
+
+}else{
+q6--
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+q1 = 0
+q4 = 0
+while (ltowers > q1){
+q1++
+q5 = 0
+
+q2 = (eval ('ltower' + q1 + 'x'))
+q3 = (eval ('ltower' + q1 + 'y'))
+
+if (((q2 - 75) < e1x) && ((q2 + 75) > e1x) && ((q3 - 75) < e1y) && ((q3 + 75) > e1y) && (e1 > 0) && (q5 == 0)){
+e1 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e1x + 10 , e1y + 10 ); 
+}
+if (((q2 - 75) < e2x) && ((q2 + 75) > e2x) && ((q3 - 75) < e2y) && ((q3 + 75) > e2y) && (e2 > 0) && (q5 == 0)){
+e2 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e2x + 10 , e2y + 10 ); 
+}
+if (((q2 - 75) < e3x) && ((q2 + 75) > e3x) && ((q3 - 75) < e3y) && ((q3 + 75) > e3y) && (e3 > 0) && (q5 == 0)){
+e3 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e3x + 10 , e3y + 10 ); 
+}
+if (((q2 - 75) < e4x) && ((q2 + 75) > e4x) && ((q3 - 75) < e4y) && ((q3 + 75) > e4y) && (e4 > 0) && (q5 == 0)){
+e4 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e4x + 10 , e4y + 10 ); 
+}
+if (((q2 - 75) < e5x) && ((q2 + 75) > e5x) && ((q3 - 75) < e5y) && ((q3 + 75) > e5y) && (e5 > 0) && (q5 == 0)){
+e5 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e5x + 10 , e5y + 10 ); 
+}
+if (((q2 - 75) < e6x) && ((q2 + 75) > e6x) && ((q3 - 75) < e6y) && ((q3 + 75) > e6y) && (e6 > 0) && (q5 == 0)){
+e6 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e6x + 10 , e6y + 10 ); 
+}
+if (((q2 - 75) < e7x) && ((q2 + 75) > e7x) && ((q3 - 75) < e7y) && ((q3 + 75) > e7y) && (e7 > 0) && (q5 == 0)){
+e7 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e7x + 10 , e7y + 10 ); 
+}
+if (((q2 - 75) < e8x) && ((q2 + 75) > e8x) && ((q3 - 75) < e8y) && ((q3 + 75) > e8y) && (e8 > 0) && (q5 == 0)){
+e8 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e8x + 10 , e8y + 10 ); 
+}
+if (((q2 - 75) < e9x) && ((q2 + 75) > e9x) && ((q3 - 75) < e9y) && ((q3 + 75) > e9y) && (e9 > 0) && (q5 == 0)){
+e9 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e9x + 10 , e9y + 10 ); 
+}
+if (((q2 - 75) < e10x) && ((q2 + 75) > e10x) && ((q3 - 75) < e10y) && ((q3 + 75) > e10y) && (e10 > 0) && (q5 == 0)){
+e10 -= (eval ('ltower' + q1))
+q4++;    q5++;   shooter((eval ('ltower' + q1 + 'x')) + 12.5  ,   (eval ('ltower' + q1 + 'y')) + 12.5  , e10x + 10 , e10y + 10 ); 
+}
+
+
+
+}
+
+
+if (q4 > 0){
+if (abcdef == 0){
+sound8.play()
+abcdef = 1
+}
+}
+
+
+if (q4 == 0){
+if (abcdef == 1){
+
+
+
+sound8.pause()
+sound8.currentTime = 0
+abcdef = 0
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if ((e1a != 10) && (e1 <= 0)){
+e1a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e2a != 10) && (e2 <= 0)){
+e2a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e3a != 10) && (e3 <= 0)){
+e3a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e4a != 10) && (e4 <= 0)){
+e4a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e5a != 10) && (e5 <= 0)){
+e5a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e6a != 10) && (e6 <= 0)){
+e6a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e7a != 10) && (e7 <= 0)){
+e7a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e8a != 10) && (e8 <= 0)){
+e8a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e9a != 10) && (e9 <= 0)){
+e9a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+if ((e10a != 10) && (e10 <= 0)){
+e10a = 10
+money += ((level / moneyback))
+sound10.play()
+}
+
+
+
+
+
+
+}
+
+
+
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////other stuff
+//////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////is near to function
+
+
+
+
+function isnearto(r1,r2){
+selectmode3 = 0
+selectmode4 = 0
+
+
+q1 = 0
+while (towers > q1){
+q1++
+if (((r1 - 12) < (eval ('tower' + q1 + 'x'))) && ((r2 - 12) < (eval ('tower' + q1 + 'y')))   &&      ((r1 + 12) > (eval ('tower' + q1 + 'x'))) && ((r2 + 12) > (eval ('tower' + q1 + 'y')))){
+selectmode3 = 1
+selectmode4 = q1
+}}
+
+
+
+
+
+q1 = 0
+while (ltowers > q1){
+q1++
+if (((r1 - 12) < (eval ('ltower' + q1 + 'x'))) && ((r2 - 12) < (eval ('ltower' + q1 + 'y')))   &&      ((r1 + 12) > (eval ('ltower' + q1 + 'x'))) && ((r2 + 12) > (eval ('ltower' + q1 + 'y')))){
+selectmode3 = 2
+selectmode4 = q1
+}}
+
+
+
+q1 = 0
+while (lasers > q1){
+q1++
+if (((r1 - 12) < (eval ('laser' + q1 + 'x'))) && ((r2 - 12) < (eval ('laser' + q1 + 'y')))   &&      ((r1 + 12) > (eval ('laser' + q1 + 'x'))) && ((r2 + 12) > (eval ('laser' + q1 + 'y')))){
+selectmode3 = 3
+selectmode4 = q1
+}}
+
+
+q1 = 0
+while (splashs > q1){
+q1++
+if (((r1 - 12) < (eval ('splash' + q1 + 'x'))) && ((r2 - 12) < (eval ('splash' + q1 + 'y')))   &&      ((r1 + 12) > (eval ('splash' + q1 + 'x'))) && ((r2 + 12) > (eval ('splash' + q1 + 'y')))){
+selectmode3 = 4
+selectmode4 = q1
+}}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+function isnearto2(r1,r2){
+selectmode3 = 0
+selectmode4 = 0
+
+
+q1 = 0
+while (towers > q1){
+q1++
+if (((r1 - 25) < (eval ('tower' + q1 + 'x'))) && ((r2 - 25) < (eval ('tower' + q1 + 'y')))   &&      ((r1 + 25) > (eval ('tower' + q1 + 'x'))) && ((r2 + 25) > (eval ('tower' + q1 + 'y')))){
+selectmode3 = 1
+selectmode4 = q1
+}}
+
+
+
+
+
+q1 = 0
+while (ltowers > q1){
+q1++
+if (((r1 - 25) < (eval ('ltower' + q1 + 'x'))) && ((r2 - 25) < (eval ('ltower' + q1 + 'y')))   &&      ((r1 + 25) > (eval ('ltower' + q1 + 'x'))) && ((r2 + 25) > (eval ('ltower' + q1 + 'y')))){
+selectmode3 = 2
+selectmode4 = q1
+}}
+
+
+
+q1 = 0
+while (lasers > q1){
+q1++
+if (((r1 - 25) < (eval ('laser' + q1 + 'x'))) && ((r2 - 25) < (eval ('laser' + q1 + 'y')))   &&      ((r1 + 25) > (eval ('laser' + q1 + 'x'))) && ((r2 + 25) > (eval ('laser' + q1 + 'y')))){
+selectmode3 = 3
+selectmode4 = q1
+}}
+
+
+q1 = 0
+while (splashs > q1){
+q1++
+if (((r1 - 25) < (eval ('splash' + q1 + 'x'))) && ((r2 - 25) < (eval ('splash' + q1 + 'y')))   &&      ((r1 + 25) > (eval ('splash' + q1 + 'x'))) && ((r2 + 25) > (eval ('splash' + q1 + 'y')))){
+selectmode3 = 4
+selectmode4 = q1
+}}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////mouse function
+
+function m_down (ev) {
+
+zz = 0
+
+
+
+
+if ((x > 585) && (x < 635) && (y > 460) && (y < 475) && (zz == 0)) {
+zz = 1
+looser4()
+}
+
+
+
+if ((x > 518) && (x < 630) && (y > 3) && (y < 58) && (zz == 0) && (wavemoving == 0)) {
+zz = 1
+sound11.play()
+emchoose()
+}
+
+
+
+if ((x > 505) && (y > 166) && (y < 208) && (zz == 0)) {
+zz = 1
+sound4.play()
+selectmode = 0
+}
+
+if ((x > 505) && (y > 207) && (y < 250) && (zz == 0)) {
+zz = 1
+sound4.play()
+selectmode = 1
+}
+
+
+if ((x > 505) && (y > 249) && (y < 296) && (zz == 0)) {
+zz = 1
+sound4.play()
+selectmode = 2
+}
+
+
+if ((x > 505) && (y > 295) && (y < 332) && (zz == 0)) {
+zz = 1
+sound4.play()
+selectmode = 3
+}
+
+
+if ((x > 505) && (y > 331) && (y < 390) && (zz == 0)) {
+zz = 1
+sound4.play()
+selectmode = 4
+}
+
+
+
+
+
+
+
+
+
+
+
+
+if ((selectmode > 0) && (selectmode < 4)){
+isnearto2((x - 12),(y - 12))
+if ((x > 12) && (x < 490) && (y > 12) && (y < 468) && (zz == 0) && (selectmode3 == 0) &&   !((x > 60) && (x < 108) && (y < 412)) &&     !((x > 216) && (x < 265) && (y < 412) && (y > 46)) &&   !((x > 381) && (x < 430) && (y > 46))  &&      !((x > 60) && (x < 265) && (y > 362) && (y < 412))    &&       !((x > 216) && (x < 430) && (y > 46) && (y < 94))     ){
+
+
+
+zz = 1
+mx = (x - 10)
+my = (y - 10)
+
+
+
+
+if ((selectmode == 1) && (money >= 30)){
+sound2.play()
+apoo = 1
+money -= 30
+towers++
+window['tower' + towers] = gun1power
+window['tower' + towers + 'x'] = (mx - 3)
+window['tower' + towers + 'y'] = (my - 3)
+}
+
+
+if ((selectmode == 2) && (money >= 70)){
+sound2.play()
+apoo = 1
+money -= 70
+ltowers++
+window['ltower' + ltowers] = gun2power
+window['ltower' + ltowers + 'x'] = (mx - 3)
+window['ltower' + ltowers + 'y'] = (my - 3)
+}
+
+if ((selectmode == 3) && (money >= 130)){
+sound2.play()
+apoo = 1
+money -= 130
+lasers++
+window['laser' + lasers] = gun3power
+window['laser' + lasers + 'x'] = (mx - 3)
+window['laser' + lasers + 'y'] = (my - 3)
+}
+
+
+
+}
+}
+
+if (selectmode == 0){
+isnearto((x - 12),(y - 12))
+
+if ((x > 12) && (x < 490) && (y > 12) && (y < 468) && (zz == 0) && (selectmode3 > 0)){
+
+
+
+zz = 1
+
+
+
+
+if ((selectmode3 == 1) && (money >= (Math.round(gun1price * (eval ('tower' + selectmode4)))))){
+money -= (Math.round(gun1price * (eval ('tower' + selectmode4))))
+window['tower' + selectmode4 + 'z']++
+window['tower' + selectmode4] *= 2
+sound6.play()
+}
+
+if ((selectmode3 == 2) && (Math.round(money >= (gun2price * (eval ('ltower' + selectmode4)))))){
+money -= (Math.round(gun2price * (eval ('ltower' + selectmode4))))
+window['ltower' + selectmode4 + 'z']++
+window['ltower' + selectmode4] *= 2
+sound6.play()
+}
+
+if ((selectmode3 == 3) && (money >= (Math.round(gun3price * (eval ('laser' + selectmode4)))))){
+money -= (Math.round(gun3price * (eval ('laser' + selectmode4))))
+window['laser' + selectmode4 + 'z']++
+window['laser' + selectmode4] *= 2
+sound6.play()
+}
+
+if ((selectmode3 == 4) && (money >= (Math.round(gun4price * (eval ('splash' + selectmode4)))))){
+money -= (Math.round(gun4price * (eval ('splash' + selectmode4))))
+window['splash' + selectmode4 + 'z']++
+window['splash' + selectmode4] *= 2
+sound6.play()
+}
+
+
+
+
+
+
+}
+}
+
+
+
+if (selectmode == 4){
+isnearto2((x - 12),(y - 12))
+if ((x > 12) && (x < 490) && (y > 12) && (y < 448) && (zz == 0) && (selectmode3 == 0) &&  !( !((x > 60) && (x < 108) && (y < 412)) &&     !((x > 216) && (x < 265) && (y < 412) && (y > 46)) &&   !((x > 381) && (x < 430) && (y > 46))  &&      !((x > 60) && (x < 265) && (y > 362) && (y < 412))    &&       !((x > 216) && (x < 430) && (y > 46) && (y < 94))    ) ){
+mx = (x - 10)
+my = (y - 10)
+
+
+if ((x > 60) && (x < 108) && (y < 412)){
+mx = 74
+}
+
+if ((x > 216) && (x < 265) && (y < 412) && (y > 46)){
+mx = 230
+}
+
+if ((x > 381) && (x < 430) && (y > 46)){
+mx = 395
+}
+
+if ((x > 60) && (x < 265) && (y > 362) && (y < 421)){
+my = 376
+}
+
+if ((x > 216) && (x < 430) && (y > 46) && (y < 94)){
+my = 59
+}
+
+
+zz = 1
+
+
+
+if (money >= 250){
+sound2.play()
+apoo = 1
+money -= 250
+splashs++
+window['splash' + splashs] = gun4power
+window['splash' + splashs + 'x'] = (mx - 3)
+window['splash' + splashs + 'y'] = (my - 3)
+}
+
+
+}
+}
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function m_move (ev) {
+
+
+apoo = 0
+zz = 0
+
+
+if ((selectmode > 0) && (selectmode < 4)){
+isnearto2((x - 12),(y - 12))
+if ((x > 12) && (x < 490) && (y > 12) && (y < 468) && (zz == 0) && (selectmode3 == 0) &&   !((x > 60) && (x < 108) && (y < 412)) &&     !((x > 216) && (x < 265) && (y < 412) && (y > 46)) &&   !((x > 381) && (x < 430) && (y > 46))  &&      !((x > 60) && (x < 265) && (y > 362) && (y < 412))    &&       !((x > 216) && (x < 430) && (y > 46) && (y < 94))     ){
+
+
+
+zz = 1
+mx = (x - 10)
+my = (y - 10)
+selectmode2 = 1
+}else{
+selectmode2 = 0
+
+
+
+
+
+if ((x > 12) && (x < 490) && (y > 12) && (y < 468)){
+redmode = 1
+mx = (x - 10)
+my = (y - 10)
+}else{
+redmode = 0
+}
+
+
+}
+}
+
+if (selectmode == 0){
+isnearto((x - 12),(y - 12))
+if ((x > 12) && (x < 490) && (y > 12) && (y < 468) && (zz == 0) && (selectmode3 > 0) ){
+
+
+
+zz = 1
+mx = (x - 10)
+my = (y - 10)
+selectmode2 = 1
+}else{
+selectmode2 = 0
+}
+}
+
+
+
+if (selectmode == 4){
+isnearto2((x - 12),(y - 12))
+if ((x > 12) && (x < 490) && (y > 12) && (y < 448) && (zz == 0) && (selectmode3 == 0) &&   !( !((x > 60) && (x < 108) && (y < 412)) &&     !((x > 216) && (x < 265) && (y < 412) && (y > 46)) &&   !((x > 381) && (x < 430) && (y > 46))  &&      !((x > 60) && (x < 265) && (y > 362) && (y < 412))    &&       !((x > 216) && (x < 430) && (y > 46) && (y < 94))    ) ){
+mx = (x - 10)
+my = (y - 10)
+
+
+if ((x > 60) && (x < 108) && (y < 412)){
+mx = 74
+}
+
+if ((x > 216) && (x < 265) && (y < 412) && (y > 46)){
+mx = 230
+}
+
+if ((x > 381) && (x < 430) && (y > 46)){
+mx = 395
+}
+
+if ((x > 60) && (x < 265) && (y > 362) && (y < 421)){
+my = 376
+}
+
+if ((x > 216) && (x < 430) && (y > 46) && (y < 94)){
+my = 59
+}
+
+
+zz = 1
+
+selectmode2 = 1
+}else{
+selectmode2 = 0
+}
+}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////shooting function
+
+var q99
+
+
+function shooter(ee1,ee2,ee3,ee4){
+
+
+q99 = Math.random()
+
+
+if (ee1 > ee3){
+
+
+
+
+if (ee2 > ee4){
+ctx.drawImage(imgkkkk, ((((ee1 - ee3) * (1 - q99)) + ee3) - 4), ((((ee2 - ee4) * (1 - q99)) + ee4) - 4))
+}else{
+ctx.drawImage(imgkkkk, ((((ee1 - ee3) * (1 - q99)) + ee3) - 4), ((((ee4 - ee2) * q99) + ee2) - 4))
+}
+
+
+
+}else{
+
+
+
+
+if (ee2 > ee4){
+ctx.drawImage(imgkkkk, ((((ee3 - ee1) * q99) + ee1) - 4), ((((ee2 - ee4) * (1 - q99)) + ee4) - 4))
+}else{
+ctx.drawImage(imgkkkk, ((((ee3 - ee1) * q99) + ee1) - 4), ((((ee4 - ee2) * q99) + ee2) - 4))
+}
+
+
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
+//////////////////////////////////////new wave function
+
+function emchoose(){
+wavemoving = 1
+if (emtype == 1){
+emspeed = em1s
+}
+if (emtype == 2){
+emspeed = em2s
+}
+if (emtype == 3){
+emspeed = em3s
+}
+if (emtype == 4){
+emspeed = em4s
+}
+emcount = 0
+timetilnext = 10
+}
+
+
+
+//////////////////////////////////////looseing function
+function looser(){
+
+lives--
+if (lives == 0){
+sound5.pause()
+sound5.currentTime = 0
+sound8.pause()
+sound8.currentTime = 0
+sound9.pause()
+sound9.currentTime = 0
+sound1.pause()
+sound1.currentTime = 0
+
+clearInterval ( wooYayIntervalId )
+
+
+
+setTimeout("qwerty()"  ,60);
+
+
+
+setTimeout("looser2()",640);
+
+
+setTimeout("looser3()"  ,6000);
+
+
+setTimeout("wow()",10000);
+}else{
+sound1.play()
+}}
+
+
+function looser2(){
+
+sound7.play()
+ctx.font = '25pt Arial'
+ctx.fillText('GAME OVER', 180, 200)
+}
+
+
+function looser3(){
+
+ctx.fillStyle = "rgb(0,0,0)"; 
+ctx.fillRect (0, 0, 640, 480);  
+ctx.fillStyle = "rgb(255,255,255)"; 
+ctx.font = '30pt Arial'
+ctx.fillText('GAME OVER', 200, 200)
+ctx.fillStyle = "rgb(0,0,0)"; 
+
+
+
+}
+
+
+
+
+
+
+function looser4(){
+
+
+
+
+sound5.pause()
+sound5.currentTime = 0
+sound8.pause()
+sound8.currentTime = 0
+sound9.pause()
+sound9.currentTime = 0
+
+clearInterval ( wooYayIntervalId )
+
+
+
+
+setTimeout("looser5()"  ,200);
+
+
+setTimeout("wow()",2200);
+
+
+
+
+}
+
+
+
+
+function looser5(){
+
+ctx.fillStyle = "rgb(0,0,0)"; 
+ctx.fillRect (0, 0, 640, 480);  
+ctx.fillStyle = "rgb(255,255,255)"; 
+ctx.font = '30pt Arial'
+ctx.fillText('RESTART', 200, 200)
+ctx.fillStyle = "rgb(0,0,0)"; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////movement controller
+
+function themoveing(){
+
+ctx.font = "7pt Arial";
+
+
+
+
+if (e1 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e1 / ((level + 1.2) * littlenumber)) * 100), (e1x + 3), (e1y - 3));
+ctx.drawImage(imgem1, e1x , e1y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e1 / ((level / 1.6) * littlenumber)) * 100), (e1x + 3), (e1y - 3));
+ctx.drawImage(imgem2, e1x , e1y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e1 / ((level * 1.8) * littlenumber)) * 100), (e1x + 3), (e1y - 3));
+ctx.drawImage(imgem3, e1x , e1y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e1 / ((level / 1.4) * littlenumber)) * 100), (e1x + 3), (e1y - 3));
+ctx.drawImage(imgem4, e1x , e1y )
+}
+if (e1a == 1){
+e1y += emspeed
+if (e1y > 376){
+e1a++
+e1y = 376
+}}
+if (e1a == 2){
+e1x += emspeed
+if (e1x > 230){
+e1a++
+e1x = 230
+}}
+if (e1a == 3){
+e1y -= emspeed
+if (e1y < 59){
+e1a++
+e1y = 59
+}}
+if (e1a == 4){
+e1x += emspeed
+if (e1x > 395){
+e1a++
+e1x = 395
+}}
+if (e1a == 5){
+e1y += emspeed
+if (e1y > 435){
+e1a++
+e1 = 0
+e1a = 10
+looser()
+}}}
+
+
+
+
+if (e2 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e2 / ((level + 1.2) * littlenumber)) * 100), (e2x + 3), (e2y - 3));
+ctx.drawImage(imgem1, e2x , e2y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e2 / ((level / 1.6) * littlenumber)) * 100), (e2x + 3), (e2y - 3));
+ctx.drawImage(imgem2, e2x , e2y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e2 / ((level * 1.8) * littlenumber)) * 100), (e2x + 3), (e2y - 3));
+ctx.drawImage(imgem3, e2x , e2y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e2 / ((level / 1.4) * littlenumber)) * 100), (e2x + 3), (e2y - 3));
+ctx.drawImage(imgem4, e2x , e2y )
+}
+if (e2a == 1){
+e2y += emspeed
+if (e2y > 376){
+e2a++
+e2y = 376
+}}
+if (e2a == 2){
+e2x += emspeed
+if (e2x > 230){
+e2a++
+e2x = 230
+}}
+if (e2a == 3){
+e2y -= emspeed
+if (e2y < 59){
+e2a++
+e2y = 59
+}}
+if (e2a == 4){
+e2x += emspeed
+if (e2x > 395){
+e2a++
+e2x = 395
+}}
+if (e2a == 5){
+e2y += emspeed
+if (e2y > 435){
+e2a++
+e2 = 0
+e2a = 10
+looser()
+}}}
+
+
+
+if (e3 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e3 / ((level + 1.2) * littlenumber)) * 100), (e3x + 3), (e3y - 3));
+ctx.drawImage(imgem1, e3x , e3y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e3 / ((level / 1.6) * littlenumber)) * 100), (e3x + 3), (e3y - 3));
+ctx.drawImage(imgem2, e3x , e3y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e3 / ((level * 1.8) * littlenumber)) * 100), (e3x + 3), (e3y - 3));
+ctx.drawImage(imgem3, e3x , e3y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e3 / ((level / 1.4) * littlenumber)) * 100), (e3x + 3), (e3y - 3));
+ctx.drawImage(imgem4, e3x , e3y )
+}
+if (e3a == 1){
+e3y += emspeed
+if (e3y > 376){
+e3a++
+e3y = 376
+}}
+if (e3a == 2){
+e3x += emspeed
+if (e3x > 230){
+e3a++
+e3x = 230
+}}
+if (e3a == 3){
+e3y -= emspeed
+if (e3y < 59){
+e3a++
+e3y = 59
+}}
+if (e3a == 4){
+e3x += emspeed
+if (e3x > 395){
+e3a++
+e3x = 395
+}}
+if (e3a == 5){
+e3y += emspeed
+if (e3y > 435){
+e3a++
+e3 = 0
+e3a = 10
+looser()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+if (e4 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e4 / ((level + 1.2) * littlenumber)) * 100), (e4x + 3), (e4y - 3));
+ctx.drawImage(imgem1, e4x , e4y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e4 / ((level / 1.6) * littlenumber)) * 100), (e4x + 3), (e4y - 3));
+ctx.drawImage(imgem2, e4x , e4y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e4 / ((level * 1.8) * littlenumber)) * 100), (e4x + 3), (e4y - 3));
+ctx.drawImage(imgem3, e4x , e4y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e4 / ((level / 1.4) * littlenumber)) * 100), (e4x + 3), (e4y - 3));
+ctx.drawImage(imgem4, e4x , e4y )
+}
+if (e4a == 1){
+e4y += emspeed
+if (e4y > 376){
+e4a++
+e4y = 376
+}}
+if (e4a == 2){
+e4x += emspeed
+if (e4x > 230){
+e4a++
+e4x = 230
+}}
+if (e4a == 3){
+e4y -= emspeed
+if (e4y < 59){
+e4a++
+e4y = 59
+}}
+if (e4a == 4){
+e4x += emspeed
+if (e4x > 395){
+e4a++
+e4x = 395
+}}
+if (e4a == 5){
+e4y += emspeed
+if (e4y > 435){
+e4a++
+e4 = 0
+e4a = 10
+looser()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (e5 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e5 / ((level + 1.2) * littlenumber)) * 100), (e5x + 3), (e5y - 3));
+ctx.drawImage(imgem1, e5x , e5y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e5 / ((level / 1.6) * littlenumber)) * 100), (e5x + 3), (e5y - 3));
+ctx.drawImage(imgem2, e5x , e5y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e5 / ((level * 1.8) * littlenumber)) * 100), (e5x + 3), (e5y - 3));
+ctx.drawImage(imgem3, e5x , e5y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e5 / ((level / 1.4) * littlenumber)) * 100), (e5x + 3), (e5y - 3));
+ctx.drawImage(imgem4, e5x , e5y )
+}
+if (e5a == 1){
+e5y += emspeed
+if (e5y > 376){
+e5a++
+e5y = 376
+}}
+if (e5a == 2){
+e5x += emspeed
+if (e5x > 230){
+e5a++
+e5x = 230
+}}
+if (e5a == 3){
+e5y -= emspeed
+if (e5y < 59){
+e5a++
+e5y = 59
+}}
+if (e5a == 4){
+e5x += emspeed
+if (e5x > 395){
+e5a++
+e5x = 395
+}}
+if (e5a == 5){
+e5y += emspeed
+if (e5y > 435){
+e5a++
+e5 = 0
+e5a = 10
+looser()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (e6 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e6 / ((level + 1.2) * littlenumber)) * 100), (e6x + 3), (e6y - 3));
+ctx.drawImage(imgem1, e6x , e6y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e6 / ((level / 1.6) * littlenumber)) * 100), (e6x + 3), (e6y - 3));
+ctx.drawImage(imgem2, e6x , e6y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e6 / ((level * 1.8) * littlenumber)) * 100), (e6x + 3), (e6y - 3));
+ctx.drawImage(imgem3, e6x , e6y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e6 / ((level / 1.4) * littlenumber)) * 100), (e6x + 3), (e6y - 3));
+ctx.drawImage(imgem4, e6x , e6y )
+}
+if (e6a == 1){
+e6y += emspeed
+if (e6y > 376){
+e6a++
+e6y = 376
+}}
+if (e6a == 2){
+e6x += emspeed
+if (e6x > 230){
+e6a++
+e6x = 230
+}}
+if (e6a == 3){
+e6y -= emspeed
+if (e6y < 59){
+e6a++
+e6y = 59
+}}
+if (e6a == 4){
+e6x += emspeed
+if (e6x > 395){
+e6a++
+e6x = 395
+}}
+if (e6a == 5){
+e6y += emspeed
+if (e6y > 435){
+e6a++
+e6 = 0
+e6a = 10
+looser()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (e7 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e7 / ((level + 1.2) * littlenumber)) * 100), (e7x + 3), (e7y - 3));
+ctx.drawImage(imgem1, e7x , e7y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e7 / ((level / 1.6) * littlenumber)) * 100), (e7x + 3), (e7y - 3));
+ctx.drawImage(imgem2, e7x , e7y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e7 / ((level * 1.8) * littlenumber)) * 100), (e7x + 3), (e7y - 3));
+ctx.drawImage(imgem3, e7x , e7y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e7 / ((level / 1.4) * littlenumber)) * 100), (e7x + 3), (e7y - 3));
+ctx.drawImage(imgem4, e7x , e7y )
+}
+if (e7a == 1){
+e7y += emspeed
+if (e7y > 376){
+e7a++
+e7y = 376
+}}
+if (e7a == 2){
+e7x += emspeed
+if (e7x > 230){
+e7a++
+e7x = 230
+}}
+if (e7a == 3){
+e7y -= emspeed
+if (e7y < 59){
+e7a++
+e7y = 59
+}}
+if (e7a == 4){
+e7x += emspeed
+if (e7x > 395){
+e7a++
+e7x = 395
+}}
+if (e7a == 5){
+e7y += emspeed
+if (e7y > 435){
+e7a++
+e7 = 0
+e7a = 10
+looser()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+if (e8 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e8 / ((level + 1.2) * littlenumber)) * 100), (e8x + 3), (e8y - 3));
+ctx.drawImage(imgem1, e8x , e8y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e8 / ((level / 1.6) * littlenumber)) * 100), (e8x + 3), (e8y - 3));
+ctx.drawImage(imgem2, e8x , e8y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e8 / ((level * 1.8) * littlenumber)) * 100), (e8x + 3), (e8y - 3));
+ctx.drawImage(imgem3, e8x , e8y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e8 / ((level / 1.4) * littlenumber)) * 100), (e8x + 3), (e8y - 3));
+ctx.drawImage(imgem4, e8x , e8y )
+}
+if (e8a == 1){
+e8y += emspeed
+if (e8y > 376){
+e8a++
+e8y = 376
+}}
+if (e8a == 2){
+e8x += emspeed
+if (e8x > 230){
+e8a++
+e8x = 230
+}}
+if (e8a == 3){
+e8y -= emspeed
+if (e8y < 59){
+e8a++
+e8y = 59
+}}
+if (e8a == 4){
+e8x += emspeed
+if (e8x > 395){
+e8a++
+e8x = 395
+}}
+if (e8a == 5){
+e8y += emspeed
+if (e8y > 435){
+e8a++
+e8 = 0
+e8a = 10
+looser()
+}}}
+
+
+
+
+
+
+
+
+
+
+
+if (e9 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e9 / ((level + 1.2) * littlenumber)) * 100), (e9x + 3), (e9y - 3));
+ctx.drawImage(imgem1, e9x , e9y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e9 / ((level / 1.6) * littlenumber)) * 100), (e9x + 3), (e9y - 3));
+ctx.drawImage(imgem2, e9x , e9y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e9 / ((level * 1.8) * littlenumber)) * 100), (e9x + 3), (e9y - 3));
+ctx.drawImage(imgem3, e9x , e9y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e9 / ((level / 1.4) * littlenumber)) * 100), (e9x + 3), (e9y - 3));
+ctx.drawImage(imgem4, e9x , e9y )
+}
+if (e9a == 1){
+e9y += emspeed
+if (e9y > 376){
+e9a++
+e9y = 376
+}}
+if (e9a == 2){
+e9x += emspeed
+if (e9x > 230){
+e9a++
+e9x = 230
+}}
+if (e9a == 3){
+e9y -= emspeed
+if (e9y < 59){
+e9a++
+e9y = 59
+}}
+if (e9a == 4){
+e9x += emspeed
+if (e9x > 395){
+e9a++
+e9x = 395
+}}
+if (e9a == 5){
+e9y += emspeed
+if (e9y > 435){
+e9a++
+e9 = 0
+e9a = 10
+looser()
+}}}
+
+
+
+if (e10 > 0){
+if (emtype == 1){
+ctx.fillText(Math.round((e10 / ((level + 1.2) * littlenumber)) * 100), (e10x + 3), (e10y - 3));
+ctx.drawImage(imgem1, e10x , e10y )
+}
+if (emtype == 2){
+ctx.fillText(Math.round((e10 / ((level / 1.6) * littlenumber)) * 100), (e10x + 3), (e10y - 3));
+ctx.drawImage(imgem2, e10x , e10y )
+}
+if (emtype == 3){
+ctx.fillText(Math.round((e10 / ((level * 1.8) * littlenumber)) * 100), (e10x + 3), (e10y - 3));
+ctx.drawImage(imgem3, e10x , e10y )
+}
+if (emtype == 4){
+ctx.fillText(Math.round((e10 / ((level / 1.4) * littlenumber)) * 100), (e10x + 3), (e10y - 3));
+ctx.drawImage(imgem4, e10x , e10y )
+}
+if (e10a == 1){
+e10y += emspeed
+if (e10y > 376){
+e10a++
+e10y = 376
+}}
+if (e10a == 2){
+e10x += emspeed
+if (e10x > 230){
+e10a++
+e10x = 230
+}}
+if (e10a == 3){
+e10y -= emspeed
+if (e10y < 59){
+e10a++
+e10y = 59
+}}
+if (e10a == 4){
+e10x += emspeed
+if (e10x > 395){
+e10a++
+e10x = 395
+}}
+if (e10a == 5){
+e10y += emspeed
+if (e10y > 435){
+e10a++
+e10 = 0
+e10a = 10
+looser()
+}}}
+
+
+
+}
+
+
+function startup_function(){
+ctx.textAlign = "start"
+ctx.textBaseline = "alphabetic"
+}
+function loop_function(){
+wow()
+}
+
+
+function m_up(){
+
+}
+
+
+//////////////////////////////////////////////////////
+//////////////////////////////////////////////////////and now for the html!
+//////////////////////////////////////////////////////
+</script><STYLE type="text/css">
+body {
+background-image: url("../games/back.jpg");
+background-repeat: no-repeat;
+margin: 0pt;
+padding: 0pt;
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-khtml-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+a.thelinkyayay:link {color:#000000 ; text-decoration: none; }
+a.thelinkyayay:active {color: #000000; text-decoration: none; }
+a.thelinkyayay:visited {color: #000000; text-decoration: none; }
+a.thelinkyayay:hover {color: #000000; text-decoration: none; }
+</style></head><body onresize="setFullScreen()" onload="beno_game_system_start();" onkeydown="k_down(event)" onkeyup="k_up(event)" onmousedown="mm_down(event)" onmouseup="mm_up(event)" onmousemove="mm_move(event)">
+<div id="thePositioner" style="position:absolute;top:30px;left:140px;margin:0px;padding:0px;"><canvas id="canvas" width="640" height="480" style="margin:0px;padding:0px;display:block;" ></canvas></div>
+<div id="theAdvert" style="position:absolute;top:159px;left:849px;"><a class="thelinkyayay" href="https://beno.uk/games/"><img border=1 src="../games/a.jpg"/></a></div>
+</body></html>

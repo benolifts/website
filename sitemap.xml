@@ -1,0 +1,20 @@
+<urlset 
+      xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9
+            https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"> 
+
+<url> 
+  <loc>https://beno.uk/</loc> 
+  <priority>1</priority> 
+  <changefreq>daily</changefreq> 
+</url> 
+<url> 
+  <loc>https://beno.uk/lift/</loc> 
+  <priority>1</priority> 
+  <changefreq>daily</changefreq> 
+</url> 
+
+
+
+</urlset>
