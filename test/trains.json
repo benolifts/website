@@ -52,7 +52,7 @@
 	"max_speed": 70,
 	"rolling_resistance": 0.3,
 	"peak_point": 40,
-	"decel_cutoff": 1,
+	"decel_cutoff": 0.3,
 	"controls": {
 		"accelleration": 2.2,
 		"decelleration": 3.5,
@@ -378,7 +378,7 @@
 		}
 	]
 },
-	"kiepe tram (50 mph)": {
+	"Kiepe Croydon tram (50 mph)": {
 	"wheel_diameter": 0.6,
 	"gear_ratio_motor_side": 7.25,
 	"gear_ratio_wheel_side": 1,
@@ -489,7 +489,7 @@
 	"rolling_resistance": 0.3,
 	"traction": "AC_PWM",
 	"audio_mode": "48T",
-	"decel_cutoff": 1,
+	"decel_cutoff": 0.3,
 	"motor_poles": 4,
 	"pulsing": [
 		{
@@ -724,7 +724,7 @@
 	"max_speed": 160,
 	"rolling_resistance": 0.3,
 	"peak_point": 50,
-	"decel_cutoff": 1,
+	"decel_cutoff": 0.3,
 	"motor_poles": 4,
 	"controls": {
 		"accelleration": 3.2,
@@ -768,7 +768,7 @@
 	"max_speed": 100,
 	"rolling_resistance": 0.3,
 	"peak_point": 15,
-	"decel_cutoff": 1,
+	"decel_cutoff": 0.3,
 	"controls": {
 		"accelleration": 4,
 		"decelleration": 5.5,

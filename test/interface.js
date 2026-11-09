@@ -329,8 +329,8 @@ function commandVF(frequency, power, deltaTime) {
 					}
 				case "ASYNC-SWEEP":
 					{
-						data.oscillation_function = `(microsec) => {
-							let calculatedCarrierFrequency = (sineFreq - ${min_motor_frequency})
+						data.oscillation_function = `(microsec, motorFrequency) => {
+							let calculatedCarrierFrequency = (motorFrequency - ${min_motor_frequency})
 							/ (${max_motor_frequency - min_motor_frequency})
 							* (${max_carrier_frequency - min_carrier_frequency})
 							+ ${min_carrier_frequency}; 

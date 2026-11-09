@@ -104,7 +104,7 @@ class NoiseGenerator3Phase extends AudioWorkletProcessor {
 		const output = outputs[0];
 		const nowBuffering = output[0];
 		const len = nowBuffering.length;
-
+		const interpolationStart = interpolationProgress;
 		if (soundOptions.useInterpolation && deltaTime > 0) {
 			const interp = Math.min(1, interpolationProgress / deltaTime);
 			setFrequency(prevFrequency + interp * (targetFrequency - prevFrequency));
@@ -120,7 +120,20 @@ class NoiseGenerator3Phase extends AudioWorkletProcessor {
 		idx = Math.floor(noOfSamples * sineProgress);
 
 		for (let i = 0; i < len; ++i) {
-			const registers = pulse((i + idx) * microsecPerSamples, (i + PWMIndex) * microsecPerSamples);
+			const sampleMotorFrequency =
+			soundOptions.useInterpolation && deltaTime > 0
+			? prevFrequency +
+			Math.min(
+				1,
+			(interpolationStart + i * microsecPerSamples) / deltaTime
+			) * (targetFrequency - prevFrequency)
+			: sineFreq;
+
+			const registers = pulse(
+				(i + idx) * microsecPerSamples,
+									(i + PWMIndex) * microsecPerSamples,
+									sampleMotorFrequency
+			);
 			const high = popCount(registers & highMask);
 			const low = popCount(registers & lowMask);
 			let current = high + low;
@@ -170,7 +183,7 @@ class NoiseGeneratorSinglePhase extends AudioWorkletProcessor {
 		const output = outputs[0];
 		const nowBuffering = output[0];
 		const len = nowBuffering.length;
-
+		const interpolationStart = interpolationProgress;
 		if (soundOptions.useInterpolation && deltaTime > 0) {
 			const interp = Math.min(1, interpolationProgress / deltaTime);
 			setFrequency(prevFrequency + interp * (targetFrequency - prevFrequency));
@@ -186,18 +199,27 @@ class NoiseGeneratorSinglePhase extends AudioWorkletProcessor {
 		idx = Math.floor(noOfSamples * sineProgress);
 
 		for (let i = 0; i < len; ++i) {
-			const registers = pulse((i + idx) * microsecPerSamples, (i + PWMIndex) * microsecPerSamples);
+			const sampleMotorFrequency =
+			soundOptions.useInterpolation && deltaTime > 0
+			? prevFrequency +
+			Math.min(
+				1,
+			(interpolationStart + i * microsecPerSamples) / deltaTime
+			) * (targetFrequency - prevFrequency)
+			: sineFreq;
+
+			const registers = pulse(
+				(i + idx) * microsecPerSamples,
+									(i + PWMIndex) * microsecPerSamples,
+									sampleMotorFrequency
+			);
 			let current = registers & high1 ? 1 : registers & low1 ? -1 : 0;
 
 			nowBuffering[i] = current * 3 * powerIncrementFactor; // make it the same volume as 3 phase sim
 		}
 		PWMIndex += len;
 		
-		if (oscillationFrequency != null) {
-			PWMIndex %= 1000000 / oscillationFrequency / microsecPerSamples;
-		} else {			
-			PWMIndex %= 1000000 / PWMfreq / microsecPerSamples;
-		}
+
 
 		sineProgress += len / noOfSamples;
 		sineProgress %= 1;

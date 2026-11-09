@@ -5735,10 +5735,10 @@ async function initialise() {
         renderTrainList();
         setTrainTab("included");
 
-        const preferred = "kiepe tram (50 mph)";
+        const preferred = "Kiepe Croydon tram (50 mph)";
 
         const selected = includedTrains.find(
-            name => name.toLowerCase() === preferred
+            name => name.toLowerCase() === preferred.toLowerCase()
         ) ?? includedTrains[0];
 
         // Honour a remote drive command received before
