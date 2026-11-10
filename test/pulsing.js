@@ -199,16 +199,7 @@ function setOscillationFunction(newFunction) {
         carrierCycleStart = null;
         carrierCyclePeriod = 0;
 
-        // Only initialise the phase when changing between
-        // continuous and cycle-based carrier operation.
-        if (
-            useContinuousCarrierPhase !==
-            nextUsesContinuousCarrierPhase
-        ) {
-            continuousCarrierPhase = 0;
-            continuousCarrierLastTime = null;
-            continuousCarrierLastFrequency = 0;
-        }
+
 
         oscillationFunction =
         typeof newFunction === "function"
@@ -397,10 +388,29 @@ function pulse(microsec, pwmMicrosec, motorFrequency = sineFreq) {
 
             } else {
 
-                // Original fixed-frequency ASYNC timing.
-                curTime = PWMfreqTimeInt > 0
-                ? pwmTime % PWMfreqTimeInt
-                : 0;
+                // Fixed ASYNC uses the same continuous carrier phase.
+                if (
+                    continuousCarrierLastTime === null ||
+                    pwmTime < continuousCarrierLastTime
+                ) {
+                    continuousCarrierPhase = 0;
+                } else {
+                    const elapsed = pwmTime - continuousCarrierLastTime;
+
+                    const averageFrequency =
+                    (continuousCarrierLastFrequency + PWMfreq) / 2;
+
+                    continuousCarrierPhase +=
+                    averageFrequency * elapsed / 1000000;
+
+                    continuousCarrierPhase -= floor(continuousCarrierPhase);
+                }
+
+                continuousCarrierLastTime = pwmTime;
+                continuousCarrierLastFrequency = PWMfreq;
+
+                continuousCarrierPosition =
+                PWMfreq >= 1 ? continuousCarrierPhase : 1;
             }
 
 

@@ -443,7 +443,7 @@ function calculateMaxSpeedOffset(train = currentTrain) {
         statedMaxSpeed + REQUIRED_SPEED_MARGIN_KMH;
 
     const accel = Number(
-        train.controls?.accelleration ?? 2.5
+        train.controls?.acceleration ?? 2.5
     );
 
     if (
@@ -661,15 +661,15 @@ function normalisePowerControls(raw = {}, traction = currentTrain.traction) {
         ...(raw && typeof raw === "object" ? raw : {})
     };
 
-    controls.accelleration = clamp(
-        controls.accelleration,
+    controls.acceleration = clamp(
+        controls.acceleration,
         0,
         100,
         2.5
     );
 
-    controls.decelleration = clamp(
-        controls.decelleration,
+    controls.deceleration = clamp(
+        controls.deceleration,
         0,
         100,
         3
@@ -1914,7 +1914,7 @@ if (soundStarted) {
         editor,
         "Acceleration (km/h)",
         currentTrain.controls,
-        "accelleration",
+        "acceleration",
         { min: 0 }
     );
 
@@ -1922,7 +1922,7 @@ if (soundStarted) {
         editor,
         "Deceleration (km/h)",
         currentTrain.controls,
-        "decelleration",
+        "deceleration",
         { min: 0 }
     );
 
@@ -2484,19 +2484,20 @@ if (
 // MUSIC EDITOR
 // ========================================================
 
+
 // Note lengths are expressed as multiples of a quarter note.
 // 3/4, 1.5 and 3 are dotted note values.
 
 const MUSIC_NOTE_LENGTHS = [
-    { key: "eighth", label: "1/8", ratio: 0.5, dotted: false },
-    { key: "quarter", label: "1/4", ratio: 1, dotted: false },
-    { key: "half", label: "1/2", ratio: 2, dotted: false },
-    { key: "dottedHalf", label: "3/4", ratio: 3, dotted: true },
-    { key: "whole", label: "1", ratio: 4, dotted: false },
-    { key: "dottedWhole", label: "1.5", ratio: 6, dotted: true },
-    { key: "breve", label: "2", ratio: 8, dotted: false },
-    { key: "dottedBreve", label: "3", ratio: 12, dotted: true },
-    { key: "longa", label: "4", ratio: 16, dotted: false }
+    { key: "demisemiquaver", label: "1/8", ratio: 0.125, dotted: false },
+    { key: "semiquaver", label: "1/4", ratio: 0.25, dotted: false },
+    { key: "quaver", label: "1/2", ratio: 0.5, dotted: false },
+    { key: "dottedQuaver", label: "3/4", ratio: 0.75, dotted: true },
+    { key: "crotchet", label: "1", ratio: 1, dotted: false },
+    { key: "dottedCrotchet", label: "1.5", ratio: 1.5, dotted: true },
+    { key: "minim", label: "2", ratio: 2, dotted: false },
+    { key: "dottedMinim", label: "3", ratio: 3, dotted: true },
+    { key: "semibreve", label: "4", ratio: 4, dotted: false }
 ];
 
 const MUSIC_NOTE_NAMES = [
@@ -2565,7 +2566,7 @@ const MUSIC_JUST_RATIOS = [
 
 let musicNotes = [];
 
-let musicSelectedLength = "quarter";
+let musicSelectedLength = "crotchet";
 let musicQuarterMs = 500;
 let musicTuningIndex = 0;
 let musicNotation = "sharps";
@@ -2575,6 +2576,7 @@ let musicHeldPointer = null;
 let musicLastPreviewFrequency = 440;
 
 let musicPlaybackID = 0;
+let musicPlayingNoteIndex = -1;
 
 let musicCanvasButtons = [];
 let musicWhiteKeys = [];
@@ -2622,12 +2624,12 @@ function musicGetPitch(midi) {
 
 function musicGetLength(key) {
     return MUSIC_NOTE_LENGTHS.find(note => note.key === key)
-        ?? MUSIC_NOTE_LENGTHS[1];
+        ?? MUSIC_NOTE_LENGTHS[4];
 }
 
 
 function musicGetLengthFromDuration(duration) {
-    let best = MUSIC_NOTE_LENGTHS[1];
+    let best = MUSIC_NOTE_LENGTHS[4];
     let bestError = Infinity;
 
     for (const note of MUSIC_NOTE_LENGTHS) {
@@ -2880,6 +2882,7 @@ function deleteMusicNote() {
     if (!musicNotes.length) return;
 
     musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
 
     musicNotes.pop();
 
@@ -2976,6 +2979,20 @@ function releaseMusicKey() {
 
 
 // ========================================================
+// PLAYBACK STOP
+// ========================================================
+
+function stopMusicSequence() {
+    musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
+
+    sendMusicTone(440, 0);
+
+    drawMusicEditor();
+}
+
+
+// ========================================================
 // PLAY ONE ROUND OF THE MUSIC
 // ========================================================
 
@@ -2991,6 +3008,9 @@ async function playMusicSequence() {
         releaseMusicKey();
     }
 
+    musicPlayingNoteIndex = -1;
+    drawMusicEditor();
+
     try {
         await ensureSoundStarted();
 
@@ -3002,13 +3022,19 @@ async function playMusicSequence() {
             return;
         }
 
-        for (const note of sequence) {
+        for (let i = 0; i < sequence.length; i++) {
             if (
                 playbackID !== musicPlaybackID ||
                 activeMusicSession !== session
             ) {
                 break;
             }
+
+            const note = sequence[i];
+
+            // Highlight the note currently being played.
+            musicPlayingNoteIndex = i;
+            drawMusicEditor();
 
             if (note.rest || note.frequency <= 0) {
                 sendMusicTone(440, 0);
@@ -3026,10 +3052,17 @@ async function playMusicSequence() {
             activeMusicSession === session
         ) {
             sendMusicTone(440, 0);
+            musicPlayingNoteIndex = -1;
+            drawMusicEditor();
         }
 
     } catch (error) {
         console.error("Music playback failed:", error);
+
+        if (playbackID === musicPlaybackID) {
+            musicPlayingNoteIndex = -1;
+            drawMusicEditor();
+        }
     }
 }
 
@@ -3048,14 +3081,17 @@ function drawMusicNoteSymbol(
 ) {
     const ratio = note.ratio;
 
-    const open =
-        ratio >= 2;
+    // Minims and longer have open note heads.
+    const open = ratio >= 2;
 
-    const hasStem =
-        ratio === 0.5 ||
-        ratio === 1 ||
-        ratio === 2 ||
-        ratio === 3;
+    // All notes shorter than a semibreve have stems.
+    const hasStem = ratio < 4;
+
+    // Number of flags for shorter notes.
+    const flagCount =
+        ratio <= 0.125 ? 3 :
+        ratio <= 0.25 ? 2 :
+        ratio < 1 ? 1 : 0;
 
     ctx.save();
 
@@ -3064,7 +3100,9 @@ function drawMusicNoteSymbol(
     ctx.lineWidth = 1.7 * scale;
     ctx.lineCap = "round";
 
+    // Note head.
     ctx.beginPath();
+
     ctx.ellipse(
         x,
         y,
@@ -3081,6 +3119,7 @@ function drawMusicNoteSymbol(
         ctx.fill();
     }
 
+    // Stem.
     if (hasStem) {
         const stemX = x + 5.5 * scale;
         const stemTop = y - 25 * scale;
@@ -3090,42 +3129,29 @@ function drawMusicNoteSymbol(
         ctx.lineTo(stemX, stemTop);
         ctx.stroke();
 
-        // Eighth-note flag.
-        if (ratio === 0.5) {
+        // Flags: one for quaver, two for semiquaver,
+        // three for demisemiquaver.
+        for (let i = 0; i < flagCount; i++) {
+            const flagY = stemTop + i * 5 * scale;
+
             ctx.beginPath();
-            ctx.moveTo(stemX, stemTop);
+            ctx.moveTo(stemX, flagY);
+
             ctx.quadraticCurveTo(
                 stemX + 13 * scale,
-                stemTop + 7 * scale,
+                flagY + 7 * scale,
                 stemX + 7 * scale,
-                stemTop + 14 * scale
+                flagY + 14 * scale
             );
+
             ctx.stroke();
         }
     }
 
-    // Breve and longa symbols.
-    if (ratio >= 8) {
-        for (const side of [-1, 1]) {
-            ctx.beginPath();
-            ctx.moveTo(x + side * 9 * scale, y - 7 * scale);
-            ctx.lineTo(x + side * 9 * scale, y + 7 * scale);
-            ctx.stroke();
-        }
-
-        if (ratio === 16) {
-            ctx.beginPath();
-            ctx.moveTo(x - 12 * scale, y - 5 * scale);
-            ctx.lineTo(x - 12 * scale, y + 5 * scale);
-            ctx.moveTo(x + 12 * scale, y - 5 * scale);
-            ctx.lineTo(x + 12 * scale, y + 5 * scale);
-            ctx.stroke();
-        }
-    }
-
-    // Dotted-note symbol.
+    // Dotted notes.
     if (note.dotted) {
         ctx.beginPath();
+
         ctx.arc(
             x + 13 * scale,
             y - 2 * scale,
@@ -3133,6 +3159,7 @@ function drawMusicNoteSymbol(
             0,
             Math.PI * 2
         );
+
         ctx.fill();
     }
 
@@ -3251,15 +3278,20 @@ function drawMusicScoreNote(
     x,
     trebleTop,
     bassTop,
-    gap
+    gap,
+    highlighted = false
 ) {
+    const noteColour = highlighted
+        ? "#00d9ff"
+        : "#f0efce";
+
     if (note.rest || note.frequency <= 0) {
         drawMusicRestSymbol(
             ctx,
             x,
             trebleTop + gap * 2,
             musicGetLength(note.length),
-            "#f0efce"
+            noteColour
         );
 
         return;
@@ -3331,7 +3363,7 @@ function drawMusicScoreNote(
 
     // Sharps or flats are purely visual notation choices.
     if (pitch.accidental) {
-        ctx.fillStyle = "#f0efce";
+        ctx.fillStyle = noteColour;
         ctx.font = "19px serif";
 
         ctx.fillText(
@@ -3346,7 +3378,7 @@ function drawMusicScoreNote(
         x,
         y,
         musicGetLength(note.length),
-        "#f0efce",
+        noteColour,
         0.85
     );
 }
@@ -3463,60 +3495,168 @@ function drawMusicToolbar(ctx, width) {
 
 
 // ========================================================
-// REST BUTTON
+// REST AND DELETE BUTTONS
 // ========================================================
 
-// Rest is deliberately separate from the main control panel.
-// Its duration is determined by the selected note length.
+// Rest and Delete sit side by side directly below the score.
+// Both buttons have exactly the same dimensions.
 
-function drawMusicRestButton(ctx, width, y) {
-    const buttonWidth = Math.min(110, width - 20);
-    const buttonHeight = 30;
+function drawMusicRestDeleteButtons(ctx, width, y) {
+    const buttonWidth = Math.min(130, (width - 36) / 2);
+    const buttonHeight = 38;
+    const gap = 10;
 
-    const x = (width - buttonWidth) / 2;
+    const totalWidth = buttonWidth * 2 + gap;
+    const startX = (width - totalWidth) / 2;
 
+    const restX = startX;
+    const deleteX = startX + buttonWidth + gap;
+
+    // Rest button.
     ctx.save();
 
     ctx.fillStyle = "#252525";
     ctx.strokeStyle = "#777";
     ctx.lineWidth = 1;
 
-    ctx.fillRect(x, y, buttonWidth, buttonHeight);
-    ctx.strokeRect(x, y, buttonWidth, buttonHeight);
+    ctx.fillRect(
+        restX,
+        y,
+        buttonWidth,
+        buttonHeight
+    );
+
+    ctx.strokeRect(
+        restX,
+        y,
+        buttonWidth,
+        buttonHeight
+    );
 
     drawMusicRestSymbol(
         ctx,
-        x + 29,
+        restX + buttonWidth * 0.28,
         y + buttonHeight / 2,
         musicGetLength(musicSelectedLength),
         "#f0efce"
     );
 
     ctx.fillStyle = "#f0efce";
-    ctx.font = "bold 11px Arial";
+    ctx.font = "bold 12px Arial";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
 
     ctx.fillText(
         "REST",
-        x + 77,
+        restX + buttonWidth * 0.7,
         y + buttonHeight / 2
     );
 
     ctx.restore();
 
     musicCanvasButtons.push({
-        x,
+        x: restX,
         y,
         width: buttonWidth,
         height: buttonHeight,
         action: addMusicRest
     });
+
+    // Delete button.
+    addMusicCanvasButton(
+        ctx,
+        deleteX,
+        y,
+        buttonWidth,
+        buttonHeight,
+        "DELETE",
+        deleteMusicNote,
+        false,
+        12
+    );
 }
 
 
 // ========================================================
-// PLAY / TEMPO / DELETE / VIEW PANEL
+// TUNING SELECTOR
+// ========================================================
+
+// The tuning selector now occupies part of the main control bar.
+
+function drawMusicTuningSelector(ctx, x, y, width, height) {
+    const arrowWidth = Math.min(25, width * 0.17);
+
+    ctx.save();
+
+    ctx.fillStyle = "#171717";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(x, y, width, height);
+    ctx.strokeRect(x, y, width, height);
+
+    ctx.fillStyle = "#b9b79c";
+    ctx.font = "bold 9px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "TUNING",
+        x + width / 2,
+        y + 11
+    );
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 11px Arial";
+
+    ctx.fillText(
+        MUSIC_TUNING_PROFILES[musicTuningIndex].label,
+        x + width / 2,
+        y + 30,
+        Math.max(10, width - arrowWidth * 2 - 8)
+    );
+
+    ctx.restore();
+
+    addMusicCanvasButton(
+        ctx,
+        x + 2,
+        y + 4,
+        arrowWidth,
+        height - 8,
+        "◀",
+        () => {
+            musicTuningIndex =
+                (musicTuningIndex - 1 + MUSIC_TUNING_PROFILES.length) %
+                MUSIC_TUNING_PROFILES.length;
+
+            musicApplyTuning();
+        },
+        false,
+        10
+    );
+
+    addMusicCanvasButton(
+        ctx,
+        x + width - arrowWidth - 2,
+        y + 4,
+        arrowWidth,
+        height - 8,
+        "▶",
+        () => {
+            musicTuningIndex =
+                (musicTuningIndex + 1) %
+                MUSIC_TUNING_PROFILES.length;
+
+            musicApplyTuning();
+        },
+        false,
+        10
+    );
+}
+
+
+// ========================================================
+// PLAY / STOP / TEMPO / TUNING / NOTATION CONTROL BAR
 // ========================================================
 
 function drawMusicControls(ctx, width, y) {
@@ -3552,29 +3692,47 @@ function drawMusicControls(ctx, width, y) {
     const innerX = panelX + 6;
     const innerWidth = panelWidth - 12 - gap * 3;
 
-    const playWidth = innerWidth * 0.22;
-    const tempoWidth = innerWidth * 0.34;
-    const deleteWidth = innerWidth * 0.19;
-    const viewWidth = innerWidth - playWidth - tempoWidth - deleteWidth;
+    const playStopWidth = innerWidth * 0.24;
+    const tempoWidth = innerWidth * 0.25;
+    const tuningWidth = innerWidth * 0.36;
+    const viewWidth =
+        innerWidth - playStopWidth - tempoWidth - tuningWidth;
 
     const buttonY = y + 8;
     const buttonHeight = 44;
 
     let x = innerX;
 
+    // PLAY and STOP buttons.
+    const playStopGap = 3;
+    const individualButtonWidth =
+        (playStopWidth - playStopGap) / 2;
+
     addMusicCanvasButton(
         ctx,
         x,
         buttonY,
-        playWidth,
+        individualButtonWidth,
         buttonHeight,
         "PLAY",
         playMusicSequence,
         false,
-        13
+        11
     );
 
-    x += playWidth + gap;
+    addMusicCanvasButton(
+        ctx,
+        x + individualButtonWidth + playStopGap,
+        buttonY,
+        individualButtonWidth,
+        buttonHeight,
+        "STOP",
+        stopMusicSequence,
+        false,
+        11
+    );
+
+    x += playStopWidth + gap;
 
     // Tempo display.
     ctx.save();
@@ -3597,6 +3755,8 @@ function drawMusicControls(ctx, width, y) {
         buttonHeight
     );
 
+    const smallWidth = Math.min(22, tempoWidth * 0.2);
+
     ctx.fillStyle = "#f0dc65";
     ctx.font = "bold 13px Arial";
     ctx.textAlign = "center";
@@ -3604,7 +3764,7 @@ function drawMusicControls(ctx, width, y) {
     ctx.fillText(
         `${Math.round(60000 / musicQuarterMs)} BPM`,
         x + tempoWidth / 2,
-        buttonY + 18
+        buttonY + 17
     );
 
     ctx.fillStyle = "#b9b79c";
@@ -3618,48 +3778,44 @@ function drawMusicControls(ctx, width, y) {
 
     ctx.restore();
 
-    const smallWidth = Math.min(25, tempoWidth * 0.22);
-
     addMusicCanvasButton(
         ctx,
-        x + 3,
+        x + 2,
         buttonY + 8,
         smallWidth,
         28,
         "−",
         () => changeMusicTempo(-5),
         false,
-        16
+        15
     );
 
     addMusicCanvasButton(
         ctx,
-        x + tempoWidth - smallWidth - 3,
+        x + tempoWidth - smallWidth - 2,
         buttonY + 8,
         smallWidth,
         28,
         "+",
         () => changeMusicTempo(5),
         false,
-        16
+        15
     );
 
     x += tempoWidth + gap;
 
-    addMusicCanvasButton(
+    // Tuning sits directly alongside tempo.
+    drawMusicTuningSelector(
         ctx,
         x,
         buttonY,
-        deleteWidth,
-        buttonHeight,
-        "DELETE",
-        deleteMusicNote,
-        false,
-        10
+        tuningWidth,
+        buttonHeight
     );
 
-    x += deleteWidth + gap;
+    x += tuningWidth + gap;
 
+    // Notation display.
     addMusicCanvasButton(
         ctx,
         x,
@@ -3679,92 +3835,6 @@ function drawMusicControls(ctx, width, y) {
         },
         false,
         9
-    );
-}
-
-
-// ========================================================
-// TUNING SELECTOR
-// ========================================================
-
-function drawMusicTuningSelector(ctx, width, y) {
-    const margin = 8;
-    const height = 40;
-    const arrowWidth = 38;
-
-    const panelWidth = width - margin * 2;
-
-    ctx.save();
-
-    ctx.fillStyle = "#222";
-    ctx.strokeStyle = "#777";
-    ctx.lineWidth = 1;
-
-    ctx.fillRect(
-        margin,
-        y,
-        panelWidth,
-        height
-    );
-
-    ctx.strokeRect(
-        margin,
-        y,
-        panelWidth,
-        height
-    );
-
-    ctx.fillStyle = "#b9b79c";
-    ctx.font = "bold 9px Arial";
-    ctx.textAlign = "center";
-
-    ctx.fillText(
-        "TUNING",
-        width / 2,
-        y + 11
-    );
-
-    ctx.fillStyle = "#f0dc65";
-    ctx.font = "bold 11px Arial";
-
-    ctx.fillText(
-        MUSIC_TUNING_PROFILES[musicTuningIndex].label,
-        width / 2,
-        y + 27
-    );
-
-    ctx.restore();
-
-    addMusicCanvasButton(
-        ctx,
-        margin + 3,
-        y + 4,
-        arrowWidth,
-        height - 8,
-        "◀",
-        () => {
-            musicTuningIndex =
-                (musicTuningIndex - 1 + MUSIC_TUNING_PROFILES.length) %
-                MUSIC_TUNING_PROFILES.length;
-
-            musicApplyTuning();
-        }
-    );
-
-    addMusicCanvasButton(
-        ctx,
-        width - margin - arrowWidth - 3,
-        y + 4,
-        arrowWidth,
-        height - 8,
-        "▶",
-        () => {
-            musicTuningIndex =
-                (musicTuningIndex + 1) %
-                MUSIC_TUNING_PROFILES.length;
-
-            musicApplyTuning();
-        }
     );
 }
 
@@ -3942,27 +4012,13 @@ function drawMusicEditor() {
 
     musicCanvasButtons = [];
 
-    musicEditorCtx.clearRect(
-        0,
-        0,
-        width,
-        height
-    );
+    musicEditorCtx.clearRect(0, 0, width, height);
 
     musicEditorCtx.fillStyle = "#101010";
-
-    musicEditorCtx.fillRect(
-        0,
-        0,
-        width,
-        height
-    );
+    musicEditorCtx.fillRect(0, 0, width, height);
 
     // Note lengths across the top.
-    drawMusicToolbar(
-        musicEditorCtx,
-        width
-    );
+    drawMusicToolbar(musicEditorCtx, width);
 
     // Piano keyboard at the bottom.
     const keyboardHeight = Math.min(
@@ -3972,21 +4028,16 @@ function drawMusicEditor() {
 
     const keyboardTop = height - keyboardHeight;
 
-    // Tuning selector.
-    const tuningHeight = 40;
-    const tuningY = keyboardTop - tuningHeight - 6;
-
-    // Larger control panel.
+    // Main control bar above the keyboard.
     const controlsHeight = 60;
-    const controlsY = tuningY - controlsHeight - 6;
+    const controlsY = keyboardTop - controlsHeight - 6;
 
-    // Separate Rest button below the sheet music.
-    const restHeight = 30;
-    const restY = controlsY - restHeight - 6;
+    // REST and DELETE button dimensions.
+    const restDeleteHeight = 38;
 
-    // Available vertical space for the two staves.
+    // Keep the original available score area and staff positioning.
     const scoreTop = 62;
-    const scoreBottom = restY - 7;
+    const scoreBottom = controlsY - restDeleteHeight - 13;
 
     const scoreHeight = Math.max(
         10,
@@ -4010,6 +4061,13 @@ function drawMusicEditor() {
     const bassTop = staffTop + staffGap * 6;
     const staffBottom = bassTop + staffGap * 4;
 
+    // Position REST and DELETE just below the staff,
+    // allowing room for ledger lines below the bass staff.
+    const restDeleteY = Math.min(
+        staffBottom + staffGap * 2 + 8,
+        controlsY - restDeleteHeight - 6
+    );
+
     // Treble staff.
     drawMusicStaff(
         musicEditorCtx,
@@ -4031,6 +4089,7 @@ function drawMusicEditor() {
     // Draw the entered notes.
     if (musicNotes.length) {
         const left = 82;
+
         const availableWidth = Math.max(
             20,
             width - left - 18
@@ -4047,7 +4106,8 @@ function drawMusicEditor() {
                 x,
                 staffTop,
                 bassTop,
-                staffGap
+                staffGap,
+                index === musicPlayingNoteIndex
             );
         });
 
@@ -4063,28 +4123,21 @@ function drawMusicEditor() {
         );
     }
 
-    // Rest is directly below the sheet music.
-    drawMusicRestButton(
+    // REST and DELETE directly below the sheet music.
+    drawMusicRestDeleteButtons(
         musicEditorCtx,
         width,
-        restY
+        restDeleteY
     );
 
-    // Play, tempo, delete and notation controls.
+    // PLAY, STOP, TEMPO, TUNING and notation controls.
     drawMusicControls(
         musicEditorCtx,
         width,
         controlsY
     );
 
-    // Tuning is separate, below the control panel.
-    drawMusicTuningSelector(
-        musicEditorCtx,
-        width,
-        tuningY
-    );
-
-    // Expanded piano keyboard.
+    // Piano keyboard.
     drawMusicKeyboard(
         musicEditorCtx,
         width,
@@ -4193,6 +4246,7 @@ musicEditorCanvas.addEventListener("pointerdown", event => {
 
     // Stop any sequence currently playing.
     musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
 
     if (musicHeldMidi !== null) {
         releaseMusicKey();
@@ -4247,7 +4301,7 @@ function openMusicEditor(item, commitFunction) {
 
     musicNotes = [];
 
-    musicSelectedLength = "quarter";
+    musicSelectedLength = "crotchet";
     musicNotation = "sharps";
 
     musicQuarterMs = 500;
@@ -4255,6 +4309,7 @@ function openMusicEditor(item, commitFunction) {
 
     musicHeldMidi = null;
     musicHeldPointer = null;
+    musicPlayingNoteIndex = -1;
 
     musicPlaybackID++;
 
@@ -4340,6 +4395,7 @@ function closeMusicEditor() {
     if (!session) return;
 
     musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
 
     // Stop the preview before returning to the simulator.
     sendMusicTone(440, 0);
@@ -4396,18 +4452,6 @@ window.addEventListener("resize", () => {
     }
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
 ////////////////////////////////////////////////
 
 
@@ -4445,8 +4489,8 @@ document.getElementById("new").addEventListener("click", () => {
         rolling_resistance: 0.3,
 
         controls: {
-            accelleration: 2.5,
-            decelleration: 3,
+            acceleration: 2.5,
+            deceleration: 3,
 
             initial_min_power: 10,
             initial_max_power: 20,
@@ -5318,8 +5362,8 @@ function loop() {
     const traction = normaliseTraction(currentTrain.traction);
     const controls = currentTrain.controls ?? {};
 
-    const accel = Number(controls.accelleration ?? 2.5);
-    const decel = Number(controls.decelleration ?? 3);
+    const accel = Number(controls.acceleration ?? 2.5);
+    const decel = Number(controls.deceleration ?? 3);
 
     // The actual speed limit is always stated max speed + 6.
     const physicsMaxSpeed = effectiveMaxSpeed;

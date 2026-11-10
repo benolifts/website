@@ -14,8 +14,8 @@
 	"decel_cutoff": 0.3,
 	"rolling_resistance": 0.3,
 	"controls": {
-		"accelleration": 4.6,
-		"decelleration": 5.6,
+		"acceleration": 4.6,
+		"deceleration": 5.6,
 		"initial_min_power": 10,
 		"initial_max_power": 20,
 		"peak_min_power": 25,
@@ -54,8 +54,8 @@
 	"peak_point": 40,
 	"decel_cutoff": 0.3,
 	"controls": {
-		"accelleration": 2.2,
-		"decelleration": 3.5,
+		"acceleration": 2.2,
+		"deceleration": 3.5,
 		"initial_min_power": 3,
 		"initial_max_power": 16,
 		"peak_min_power": 15,
@@ -343,8 +343,8 @@
 	"peak_point": 20,
 	"decel_cutoff": 1,
 	"controls": {
-		"accelleration": 4,
-		"decelleration": 5,
+		"acceleration": 4,
+		"deceleration": 5,
 		"initial_min_power": 20,
 		"initial_max_power": 30,
 		"peak_min_power": 40,
@@ -385,8 +385,8 @@
 	"max_speed": 80,
 	"peak_point": 18,
 	"controls": {
-		"accelleration": 4.6,
-		"decelleration": 5.5,
+		"acceleration": 4.6,
+		"deceleration": 5.5,
 		"initial_max_power": 20,
 		"initial_min_power": 10,
 		"peak_min_power": 35,
@@ -432,8 +432,8 @@
 	"max_speed": 100,
 	"peak_point": 22,
 	"controls": {
-		"accelleration": 4.6,
-		"decelleration": 5.5,
+		"acceleration": 4.6,
+		"deceleration": 5.5,
 		"initial_max_power": 20,
 		"initial_min_power": 10,
 		"peak_min_power": 35,
@@ -477,8 +477,8 @@
 	"gear_ratio_motor_side": 6.5,
 	"gear_ratio_wheel_side": 1,
 	"controls": {
-		"accelleration": 4.6,
-		"decelleration": 5.6,
+		"acceleration": 4.6,
+		"deceleration": 5.6,
 		"initial_min_power": 10,
 		"initial_max_power": 20,
 		"peak_min_power": 25,
@@ -545,8 +545,8 @@
 	"gear_ratio_motor_side": 6.5,
 	"gear_ratio_wheel_side": 1,
 	"controls": {
-		"accelleration": 4.6,
-		"decelleration": 5.6,
+		"acceleration": 4.6,
+		"deceleration": 5.6,
 		"initial_min_power": 10,
 		"initial_max_power": 20,
 		"peak_min_power": 25,
@@ -613,6 +613,53 @@
 		}
 	]
 },
+"Class 465/2 GEC VF":{
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"wheel_diameter": 0.84,
+	"motor_poles": 4,
+	"gear_ratio_motor_side": 6,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 120,
+	"peak_point": 50,
+	"decel_cutoff": 1,
+	"rolling_resistance": 0.3,
+	"controls": {
+		"accelleration": 3.4,
+		"decelleration": 4.4,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 10,
+		"peak_max_power": 100
+	},
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 600
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 15,
+			"pulses": 13
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 18,
+			"pulses": 11
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 24,
+			"pulses": 7
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 43,
+			"pulses": 3
+		}
+	]
+},
 	"taurus":{
 	"wheel_diameter": 1.11,
 	"gear_ratio_motor_side": 6,
@@ -620,8 +667,8 @@
 	"max_speed": 160,
 	"peak_point": 50,
 	"controls": {
-		"accelleration": 3,
-		"decelleration": 5,
+		"acceleration": 3,
+		"deceleration": 5,
 		"initial_min_power": 10,
 		"initial_max_power": 20,
 		"peak_min_power": 25,
@@ -636,22 +683,32 @@
 		{
 			"mode": "ASYNC",
 			"min_speed": 0,
-			"carrier_frequency": 175
+			"carrier_frequency": 146
 		},
 		{
 			"mode": "ASYNC",
 			"min_speed": 0.7,
+			"carrier_frequency": 165
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 0.9,
+			"carrier_frequency": 174
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 1.1,
 			"carrier_frequency": 197
 		},
 		{
 			"mode": "ASYNC",
-			"min_speed": 1.2,
-			"carrier_frequency": 223
+			"min_speed": 1.3,
+			"carrier_frequency": 222
 		},
 		{
 			"mode": "ASYNC",
 			"min_speed": 1.5,
-			"carrier_frequency": 234
+			"carrier_frequency": 247
 		},
 		{
 			"mode": "ASYNC",
@@ -660,23 +717,48 @@
 		},
 		{
 			"mode": "ASYNC",
-			"min_speed": 2,
+			"min_speed": 1.9,
 			"carrier_frequency": 294
 		},
 		{
 			"mode": "ASYNC",
-			"min_speed": 2.3,
-			"carrier_frequency": 312
+			"min_speed": 2.1,
+			"carrier_frequency": 330
 		},
 		{
 			"mode": "ASYNC",
-			"min_speed": 2.7,
+			"min_speed": 2.3,
 			"carrier_frequency": 350
 		},
 		{
 			"mode": "ASYNC",
-			"min_speed": 3.2,
-			"carrier_frequency": 400
+			"min_speed": 2.5,
+			"carrier_frequency": 392
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.7,
+			"carrier_frequency": 440
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.9,
+			"carrier_frequency": 493
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 3.1,
+			"carrier_frequency": 523
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 3.3,
+			"carrier_frequency": 590
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 3.5,
+			"carrier_frequency": 600
 		},
 		{
 			"mode": "SYNC",
@@ -717,7 +799,7 @@
 },
 	"Siemens Desiro (100mph)": {
 	"wheel_diameter": 0.84,
-	"gear_ratio_motor_side": 3.5,
+	"gear_ratio_motor_side": 4.5,
 	"gear_ratio_wheel_side": 1,
 	"traction": "AC_PWM",
 	"audio_mode": "48T",
@@ -727,8 +809,8 @@
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
 	"controls": {
-		"accelleration": 3.2,
-		"decelleration": 3,
+		"acceleration": 3.2,
+		"deceleration": 4.2,
 		"initial_min_power": 10,
 		"initial_max_power": 20,
 		"peak_min_power": 40,
@@ -746,14 +828,14 @@
 		{
 			"mode": "ASYNC-OSCILLATING",
 			"oscillation_mode": "SAW-RISING",
-			"min_speed": 40,
+			"min_speed": 35,
 			"oscillation_frequency": 6.5,
 			"min_carrier_frequency": 1400,
 			"max_carrier_frequency": 1600
 		},
 		{
 			"mode": "SYNC",
-			"min_speed": 80,
+			"min_speed": 70,
 			"pulses": 9
 		}
 	]
@@ -770,8 +852,8 @@
 	"peak_point": 15,
 	"decel_cutoff": 0.3,
 	"controls": {
-		"accelleration": 4,
-		"decelleration": 5.5,
+		"acceleration": 4,
+		"deceleration": 5.5,
 		"initial_min_power": 15,
 		"initial_max_power": 25,
 		"peak_min_power": 25,
@@ -807,8 +889,8 @@
 	"gear_ratio_motor_side": 3.6,
 	"gear_ratio_wheel_side": 1,
 	"controls": {
-		"accelleration": 3,
-		"decelleration": 5,
+		"acceleration": 3,
+		"deceleration": 5,
 		"initial_min_power": 3,
 		"initial_max_power": 20,
 		"peak_min_power": 3,
@@ -841,8 +923,8 @@
 	"gear_ratio_wheel_side": 1,
 	"max_speed": 100,
 	"controls": {
-		"accelleration": 3.8,
-		"decelleration": 5
+		"acceleration": 3.8,
+		"deceleration": 5
 	},
 	"rolling_resistance": 0.3,
 	"traction": "DC_RESISTOR",
