@@ -58,11 +58,11 @@ const routes = [
                 ]; // Lists which textures should relate to which track id. So textureoverrides = [[1,7]] means track 1 has texture 7. Set it to -1 for the track to not show.  -1 means track does not show and points will not be created, and -2 means track doesn't show but points will still be processed.  -1 means track does not show and points will not be created, and -2 means track doesn't show but points will still be processed
 
                 // Terrain and curves
-                //globalThis.TRACK_GRADIENT_SCALE = 0.2; // How much should the route have terrain
-                //globalThis.curveMultiplier = 1.3; // How tight should the curves be
-
-                globalThis.TRACK_GRADIENT_SCALE = 20; // How much should the route have terrain
+                globalThis.TRACK_GRADIENT_SCALE = 0.2; // How much should the route have terrain
                 globalThis.curveMultiplier = 1.3; // How tight should the curves be
+
+               // globalThis.TRACK_GRADIENT_SCALE = 20; // How much should the route have terrain
+                //globalThis.curveMultiplier = 1.3; // How tight should the curves be
 
 
 
