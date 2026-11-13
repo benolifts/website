@@ -1,0 +1,5868 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train V/F Simulator</title>
+
+<style>
+:root{color-scheme:dark;--page:#080808;--panel:#171717;--raised:#222;--border:#454545;--text:#f0efce;--muted:#b9b79c;--accent:#f0dc65;--input:#101010}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--page);color:var(--text);font:14px "Fira Sans",Arial,sans-serif}body{display:flex;flex-direction:column}button,input,select,textarea{font:inherit}button,input,select{accent-color:var(--accent)}button{padding:.35rem .65rem;margin:.12rem .2rem .12rem 0;color:var(--text);background:#303030;border:1px solid #666;border-radius:3px;cursor:pointer}button:hover{background:#424242}button:disabled{opacity:.55;cursor:not-allowed}input,select{min-height:1.8rem;padding:.18rem .35rem;color:var(--text);background:var(--input);border:1px solid #666;border-radius:3px}input[type=number]{width:6.5rem}input[type=range]{padding:0}.app{position:relative;z-index:1;display:flex;flex-direction:column;flex:1 1 auto;min-height:0}.workspace{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;flex:1;min-height:0;padding:.7rem;overflow:hidden}.panel{min-width:0;min-height:0;padding:.8rem;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:5px}.panel h2{margin:0 0 .75rem;padding-bottom:.55rem;color:var(--accent);font-size:1.05rem;border-bottom:1px solid var(--border)}.panel h3{margin:1rem 0 .35rem;color:var(--accent);font-size:.95rem}#train-list-panel{display:grid;grid-template-rows:minmax(0,1fr) 148px;gap:.65rem;overflow:hidden}.train-library{display:flex;flex-direction:column;min-height:0;overflow:hidden}.train-library-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}.train-library-header h2{margin:0;padding:0;border:0}.train-library-actions{display:flex;flex-wrap:wrap;gap:.2rem}.train-library-actions button{margin:0}.train-tabs{display:flex;gap:.35rem;margin-top:.55rem}.train-tabs button{flex:1;margin:0}.train-tabs button.active,.train-list-item.active,.traction-options button.active{color:var(--accent);background:#383522;border-color:var(--accent)}#train-list{display:flex;flex:1;flex-direction:column;align-items:stretch;gap:.35rem;min-height:0;margin-top:.6rem;overflow-y:auto}.train-list-item{width:100%;min-height:2.1rem;margin:0;padding:.45rem .6rem;text-align:left;overflow-wrap:anywhere}.driving-controls{display:flex;flex-direction:column;justify-content:space-between;gap:.35rem;height:148px;min-height:148px;padding:.55rem .65rem;overflow:hidden;background:var(--raised);border:1px solid #555;border-radius:5px}.driving-controls-header{display:flex;justify-content:space-between;align-items:center;gap:.5rem}.driving-controls-header h3{margin:0;color:var(--accent);font-size:1rem}.driving-controls-header button{margin:0;padding:.25rem .5rem}.driving-control-row{display:flex;align-items:center;gap:.5rem;min-width:0}.driving-control-row label{flex:0 0 4.1rem;color:var(--muted);font-weight:600}#throttle,#hill{flex:1;width:100%;min-width:0;height:1.65rem}#hill-val{flex:0 0 2.8rem;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums}.traction-selector{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.9rem}.traction-label{color:var(--muted);font-weight:600}.traction-options{display:flex;flex-wrap:wrap;gap:.35rem}.traction-options button{flex:1;margin:0}.audio-setting{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:.9rem;padding:.45rem 0;border-bottom:1px solid var(--border)}.audio-setting label{color:var(--muted);font-weight:600}.setting-row{display:flex;justify-content:space-between;align-items:center;gap:.6rem;min-height:2.2rem;margin:.18rem 0}.setting-row>span:first-child{min-width:0;color:var(--muted)}.setting-row input,.setting-row select{flex:0 0 auto}.setting-row[hidden]{display:none!important}.gear-ratio-inputs{display:inline-flex;gap:.35rem;align-items:center}.gear-ratio-inputs input{width:5rem}.calculated-value{min-width:6.5rem;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums}.pulsing-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem;margin-bottom:.65rem}.pulsing-header h2{flex:1;margin-bottom:0}#pulsing-config{display:flex;flex-direction:column;gap:.65rem;margin-top:.65rem}.pulsing-element{padding:.7rem;background:var(--raised);border:1px solid #555;border-radius:4px}.pulsing-element .setting-row{gap:.8rem}.pulsing-element .setting-row input,.pulsing-element .setting-row select{width:min(12rem,48%)}.pulsing-element .mode-row select{width:min(15rem,60%)}.pulsing-actions{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.55rem}.pulsing-actions button{margin:0}.muted-note{color:var(--muted);font-size:.85rem}canvas{position:relative;z-index:0;display:block;width:100%;height:25vh;flex:0 0 25vh;background:#000}.status-bar{position:relative;z-index:5;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.45rem 1.6rem;min-height:3.6rem;padding:.65rem 1rem;background:rgba(5,5,5,.86);border-top:1px solid #777}#status-text{width:100%;text-align:center;line-height:1.5;font-size:1rem;font-weight:600;font-variant-numeric:tabular-nums}#text{position:fixed;z-index:20;top:5vh;left:5vw;width:90vw;height:80vh;padding:1rem;overflow:auto;color:var(--text);background:#252525;border:1px solid #777;border-radius:5px;font:13px/1.45 monospace}.buttons{position:fixed;z-index:21;right:5vw;bottom:8vh;display:flex;gap:.4rem}#music-editor-view{position:fixed;z-index:50;inset:0;display:flex;flex-direction:column;padding:.8rem;background:var(--page)}#music-editor-view[hidden]{display:none!important}.music-editor-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:.65rem;border-bottom:1px solid var(--border)}.music-editor-header h2{margin:0;color:var(--accent)}#music-editor-canvas{width:100%;flex:1;min-height:0;margin-top:.75rem;background:#000;border:1px solid var(--border)}@media(max-width:1050px){.workspace{grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;padding:.5rem}.panel{padding:.6rem}.pulsing-element{padding:.5rem}}@media(max-width:620px){.workspace{grid-template-columns:repeat(3,minmax(0,1fr));gap:.3rem;padding:.3rem}.panel{padding:.4rem}.panel h2{font-size:.9rem}.train-library-actions{flex-direction:column}.train-library-actions button{font-size:.7rem;padding:.2rem}.setting-row{flex-wrap:wrap;gap:.2rem}.driving-controls{padding:.35rem}.driving-control-row label{flex-basis:2.8rem}.status-bar{justify-content:flex-start;gap:.25rem .6rem;padding:.4rem}#status-text{font-size:.8rem}}
+</style>
+</head>
+<body>
+
+<main class="app">
+    <section class="workspace">
+
+        <!-- LEFT: TRAIN LIBRARY -->
+        <aside class="panel" id="train-list-panel">
+            <section class="train-library">
+                <div class="train-library-header">
+                    <h2>Trains</h2>
+                    <div class="train-library-actions">
+                        <button id="new" type="button">New Train</button>
+                        <button id="save-train" type="button">Save</button>
+                        <button id="save" type="button">JSON Editor</button>
+                    </div>
+                </div>
+
+                <div class="train-tabs">
+                    <button id="train-tab-included" class="active" type="button">
+                        Included Trains
+                    </button>
+                    <button id="train-tab-user" type="button">
+                        User Trains
+                    </button>
+                </div>
+
+                <div id="train-list">Loading trains…</div>
+            </section>
+
+            <section class="driving-controls" aria-label="Driving controls">
+                <div class="driving-controls-header">
+                    <h3>Driving Controls</h3>
+                    <button id="reset" type="button">Reset Speed</button>
+                </div>
+
+                <div class="driving-control-row">
+                    <label for="throttle">Throttle</label>
+                    <input id="throttle" type="range"
+                           min="-1" max="1" step="0.01" value="0">
+                </div>
+
+                <div class="driving-control-row">
+                    <label for="hill">Hill</label>
+                    <input id="hill" type="range"
+                           min="0" max="2" step="0.01" value="1">
+                    <span id="hill-val">1.00</span>
+                </div>
+            </section>
+        </aside>
+
+        <!-- MIDDLE: TRAIN SETTINGS -->
+        <section class="panel" id="train-panel">
+            <h2>Train Settings</h2>
+
+            <div class="traction-selector">
+                <span class="traction-label">Traction</span>
+                <div class="traction-options">
+                    <button type="button" data-traction="AC_PWM">AC PWM</button>
+                    <button type="button" data-traction="DC_PWM">DC PWM</button>
+                    <button type="button" data-traction="DC_RESISTOR">DC Resistor</button>
+                </div>
+            </div>
+
+            <div class="audio-setting">
+                <label for="audio">Audio Mode</label>
+                <select id="audio">
+                    <option value="48T">48kHz 3 Phase</option>
+                    <option value="48S">48kHz Single Phase</option>
+                </select>
+            </div>
+
+            <div id="train-config"></div>
+        </section>
+
+        <!-- RIGHT: PULSING CONFIGURATION -->
+        <section class="panel" id="pulsing-panel">
+            <div class="pulsing-header">
+                <h2>Pulsing Configuration</h2>
+                <button id="add-pulsing" type="button">Add Mode</button>
+            </div>
+
+            <div class="muted-note">
+                Make sure to put these in the order of speed
+            </div>
+
+            <div id="pulsing-config"></div>
+        </section>
+    </section>
+</main>
+
+<!-- Dedicated MUSIC editor. -->
+<section id="music-editor-view" hidden>
+    <div class="music-editor-header">
+        <h2>Music Editor</h2>
+        <button id="music-editor-back" type="button">Back</button>
+    </div>
+    <canvas id="music-editor-canvas"></canvas>
+</section>
+
+<canvas id="canvas"></canvas>
+
+<div class="status-bar" aria-live="polite">
+    <div id="status-text">
+        Frequency: — Hz | Pulsing: — Hz | Power: 0% |
+        Speed: 0.00 km/h | Acceleration: 0.00 km/h/s | Mode: —
+    </div>
+</div>
+
+<textarea id="text" hidden aria-label="JSON editor"></textarea>
+
+<script type="module" src="./pulsing.js"></script>
+<script type="module" src="./render.js"></script>
+<script type="module" src="./sound.js"></script>
+<script type="module" src="./interface.js"></script>
+
+<script type="module">
+
+import {
+    setupDatabase,
+    setTrain,
+    commandVF,
+    getVFData,
+    getAvailableTrains,
+    setSoundUpdateFunction
+} from "./interface.js";
+
+import {
+    setSoundOptions,
+    startSound,
+    stopSound
+} from "./sound.js";
+
+import {
+    setCanvas,
+    setRenderOptions,
+    renderVisualisations
+} from "./render.js";
+
+
+let hide_unnecessary_modes = true;
+
+
+// ========================================================
+// STATE
+// ========================================================
+
+let currentTrain = {
+    traction: "AC_PWM",
+    audio_mode: "48T",
+    controls: {},
+    pulsing: []
+};
+
+let trainName = "";
+
+let frequency = 0;
+let dcPwmSpeedKmh = 0;
+let dcResistorSpeedKmh = 0;
+
+let power = 0;
+let acceleration = 0;
+let throttle = 0;
+let hill = 1;
+
+let previousFrame = 0;
+let animationStarted = false;
+let lastSpeedKmh = 0;
+
+let vfErrorLogged = false;
+let soundStarted = false;
+let soundUpdateFunction = null;
+
+let activeMusicSession = null;
+
+let refreshPulsingHighlight = () => {};
+
+const USER_TRAINS_KEY = "vf-simulator-user-trains-v1";
+
+let includedTrains = [];
+let includedTrainConfigs = new Map();
+
+let userTrains = readUserTrains();
+let activeTrainTab = "included";
+
+// Automatic maximum-speed calibration.
+let effectiveMaxSpeed = 0;
+let maxSpeedOffset = 0;
+let taperEndSpeed = 0;
+
+const REQUIRED_SPEED_MARGIN_KMH = 6;
+const OFFSET_REFERENCE_ROLLING_RESISTANCE = 0.3;
+
+// Remote simulation state.
+let simulationEnabled = false;
+let simulationPaused = false;
+
+let databaseReady = false;
+let pendingDriveName = null;
+let initialResetRequested = false;
+
+// Tracks the configuration currently loaded into interface.js.
+let interfaceTrainReady = false;
+let dcPwmInterfaceCarrier = null;
+
+// Public speed value for other scripts.
+globalThis.simulated_speed = 0;
+
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+const throttleSlider = document.getElementById("throttle");
+const resetButton = document.getElementById("reset");
+const hillSlider = document.getElementById("hill");
+const hillValue = document.getElementById("hill-val");
+
+const audioSelect = document.getElementById("audio");
+const displayArea = document.getElementById("text");
+const trainListElement = document.getElementById("train-list");
+
+const musicEditorView = document.getElementById("music-editor-view");
+const musicEditorCanvas = document.getElementById("music-editor-canvas");
+const musicEditorCtx = musicEditorCanvas.getContext("2d");
+const musicEditorBack = document.getElementById("music-editor-back");
+
+const statusText = document.getElementById("status-text");
+
+
+// ========================================================
+// GENERAL HELPERS
+// ========================================================
+
+function createElement(type, properties = {}, classes = []) {
+    const element = Object.assign(
+        document.createElement(type),
+        properties
+    );
+
+    if (typeof classes === "string") {
+        classes = classes.split(/\s+/).filter(Boolean);
+    }
+
+    if (classes.length) {
+        element.classList.add(...classes);
+    }
+
+    return element;
+}
+
+
+function createInput(label, input, className = "setting-row") {
+    const row = createElement("div", {}, className);
+
+    row.append(
+        createElement("span", { textContent: label }),
+        input
+    );
+
+    return row;
+}
+
+
+function clamp(value, min, max, fallback = min) {
+    const number = Number(value);
+
+    return Number.isFinite(number)
+        ? Math.max(min, Math.min(max, number))
+        : fallback;
+}
+
+
+function lerp(a, b, amount) {
+    return a + (b - a) * amount;
+}
+
+
+function normaliseTraction(value) {
+    return ["AC_PWM", "DC_PWM", "DC_RESISTOR"].includes(value)
+        ? value
+        : "AC_PWM";
+}
+
+
+function normaliseAudioMode(value) {
+    return value === "48S" ? "48S" : "48T";
+}
+
+
+function isAC(train = currentTrain) {
+    return normaliseTraction(train.traction) === "AC_PWM";
+}
+
+
+function isDCPWM(train = currentTrain) {
+    return normaliseTraction(train.traction) === "DC_PWM";
+}
+
+
+function isDCResistor(train = currentTrain) {
+    return normaliseTraction(train.traction) === "DC_RESISTOR";
+}
+
+
+function parseNumberArray(value) {
+    if (Array.isArray(value)) {
+        if (!value.length) return null;
+
+        const numbers = value.map(Number);
+
+        return numbers.every(Number.isFinite)
+            ? numbers
+            : null;
+    }
+
+    const text = String(value ?? "").trim();
+
+    if (!text) return null;
+
+    const parts = text.split(",").map(part => part.trim());
+
+    if (parts.some(part => part === "")) return null;
+
+    const numbers = parts.map(Number);
+
+    return numbers.every(Number.isFinite)
+        ? numbers
+        : null;
+}
+
+
+// ========================================================
+// HILL-ADJUSTED ROLLING / WIND RESISTANCE
+// ========================================================
+
+// The user's specified formula:
+//
+// (((2 - hill) * 2) - 1) + rolling_resistance
+//
+// Hill = 1 is flat track.
+// The result is a percentage speed change per second.
+//
+// The formula is deliberately retained exactly as specified.
+function getEffectiveResistancePercent(
+    hillValue,
+    rollingResistance
+) {
+    const safeHill = clamp(hillValue, 0, 2, 1);
+
+    const safeRollingResistance = Number.isFinite(
+        Number(rollingResistance)
+    )
+        ? Number(rollingResistance)
+        : 0.3;
+
+    return (
+        ((2 - safeHill) * 2) - 1
+    ) + safeRollingResistance;
+}
+
+
+// Convert a percentage speed change per second into the
+// continuous rate used by the simulation.
+//
+// Positive rate = resistance / slowing down.
+// Negative rate = assistance / speeding up.
+//
+// This makes a speed of 100 lose exactly the specified
+// percentage over one second when considered continuously.
+function getResistanceRate(percentPerSecond) {
+    const fraction = Number(percentPerSecond) / 100;
+
+    if (!Number.isFinite(fraction)) return 0;
+
+    if (fraction >= 1) return Infinity;
+
+    return -Math.log1p(-fraction);
+}
+
+
+// The resistance contribution in km/h per second.
+//
+// A negative result means the hill is assisting the train.
+// At zero speed the contribution is zero.
+function getRollingResistanceAcceleration(
+    speedKmh,
+    train = currentTrain,
+    hillValue = hill
+) {
+    const rawResistance = Number(
+        train.rolling_resistance ?? 0.3
+    );
+
+    const rollingResistance = Number.isFinite(rawResistance)
+        ? rawResistance
+        : 0.3;
+
+    const effectiveResistancePercent =
+        getEffectiveResistancePercent(
+            hillValue,
+            rollingResistance
+        );
+
+    const rate = getResistanceRate(
+        effectiveResistancePercent
+    );
+
+    const speed = Math.max(0, Number(speedKmh) || 0);
+
+    if (rate === Infinity) {
+        return Infinity;
+    }
+
+    return Number.isFinite(rate)
+        ? speed * rate
+        : 0;
+}
+
+
+// ========================================================
+// AUTOMATIC MAXIMUM-SPEED CALIBRATION
+// ========================================================
+
+function calculateMaxSpeedOffset(train = currentTrain) {
+    const rawMaxSpeed = Number(train.max_speed ?? 120);
+
+    const statedMaxSpeed = Number.isFinite(rawMaxSpeed)
+        ? Math.max(0, rawMaxSpeed)
+        : 120;
+
+    // The actual speed limit is stated max speed + 6.
+    const targetSpeed =
+        statedMaxSpeed + REQUIRED_SPEED_MARGIN_KMH;
+
+    const accel = Number(
+        train.controls?.acceleration ?? 2.5
+    );
+
+    if (
+        !Number.isFinite(targetSpeed) ||
+        targetSpeed <= 0 ||
+        !Number.isFinite(accel) ||
+        accel <= 0
+    ) {
+        return 0;
+    }
+
+    // Fixed reference value for calibration.
+    // The live user setting does not change this calculation.
+    //
+    // IMPORTANT:
+    // With the specified additive hill formula, flat-track
+    // resistance at 0.3 is 1.3%, not 0.3%.
+    const referenceResistancePercent =
+        getEffectiveResistancePercent(
+            1,
+            OFFSET_REFERENCE_ROLLING_RESISTANCE
+        );
+
+    const referenceRate = getResistanceRate(
+        referenceResistancePercent
+    );
+
+    const resistanceAtTarget =
+        targetSpeed * referenceRate;
+
+    if (
+        !Number.isFinite(resistanceAtTarget) ||
+        accel <= resistanceAtTarget
+    ) {
+        return 0;
+    }
+
+
+    // ----------------------------------------------------
+    // DC RESISTOR
+    //
+    // The final notch has its own taper exponent and power.
+    // Calibrate the final notch so that its remaining
+    // acceleration balances the reference resistance.
+    // ----------------------------------------------------
+
+    if (isDCResistor(train)) {
+        const notches = (train.pulsing ?? [])
+            .filter(item => item.mode === "NOTCH")
+            .map(item => ({
+                ...item,
+                min_speed: Number(item.min_speed ?? 0)
+            }))
+            .sort((a, b) => a.min_speed - b.min_speed);
+
+        if (!notches.length) return 0;
+
+        const finalIndex = notches.length - 1;
+
+        const finalNotchStart =
+            notches[finalIndex].min_speed;
+
+        if (
+            !Number.isFinite(finalNotchStart) ||
+            finalNotchStart >= targetSpeed
+        ) {
+            return 0;
+        }
+
+        const finalStagePower =
+            Math.min(1, (finalIndex + 1) / 3);
+
+        const taperExponent = Number(train.taper_off ?? 1);
+
+        if (
+            !Number.isFinite(taperExponent) ||
+            taperExponent <= 0
+        ) {
+            return 0;
+        }
+
+        const maximumFinalNotchAcceleration =
+            accel * finalStagePower;
+
+        if (
+            maximumFinalNotchAcceleration <= resistanceAtTarget
+        ) {
+            return 0;
+        }
+
+        const requiredPowerRatio =
+            resistanceAtTarget /
+            maximumFinalNotchAcceleration;
+
+        const taperRatio = Math.pow(
+            requiredPowerRatio,
+            1 / taperExponent
+        );
+
+        if (
+            !Number.isFinite(taperRatio) ||
+            taperRatio <= 0 ||
+            taperRatio >= 1
+        ) {
+            return 0;
+        }
+
+        return (
+            taperRatio *
+            (targetSpeed - finalNotchStart) /
+            (1 - taperRatio)
+        );
+    }
+
+
+    // ----------------------------------------------------
+    // AC PWM AND DC PWM
+    //
+    // The acceleration tapers linearly from peak_point
+    // to the calculated taper endpoint.
+    // ----------------------------------------------------
+
+    const peakPoint = Number(train.peak_point ?? 50);
+
+    if (
+        !Number.isFinite(peakPoint) ||
+        targetSpeed <= peakPoint
+    ) {
+        return 0;
+    }
+
+    return (
+        resistanceAtTarget *
+        (targetSpeed - peakPoint) /
+        (accel - resistanceAtTarget)
+    );
+}
+
+
+// Recalculate the speed limit and taper endpoint whenever
+// a train is loaded or a relevant setting changes.
+function updateMaxSpeedCalibration() {
+    const rawMaxSpeed = Number(currentTrain.max_speed ?? 120);
+
+    const statedMaxSpeed = Number.isFinite(rawMaxSpeed)
+        ? Math.max(0, rawMaxSpeed)
+        : 120;
+
+    effectiveMaxSpeed =
+        statedMaxSpeed + REQUIRED_SPEED_MARGIN_KMH;
+
+    maxSpeedOffset = calculateMaxSpeedOffset(currentTrain);
+
+    taperEndSpeed =
+        effectiveMaxSpeed + maxSpeedOffset;
+}
+
+
+// ========================================================
+// AC PWM SPEED CONVERSION ONLY
+// ========================================================
+
+function calculateSpeedPerMotorHz(train) {
+    if (!isAC(train)) return NaN;
+
+    const wheel = Number(train.wheel_diameter);
+    const poles = Number(train.motor_poles ?? 4);
+    const motorSide = Number(train.gear_ratio_motor_side);
+    const wheelSide = Number(train.gear_ratio_wheel_side);
+
+    if (
+        !Number.isFinite(wheel) || wheel <= 0 ||
+        !Number.isFinite(poles) || poles <= 0 || poles % 2 !== 0 ||
+        !Number.isFinite(motorSide) || motorSide <= 0 ||
+        !Number.isFinite(wheelSide) || wheelSide <= 0
+    ) {
+        return NaN;
+    }
+
+    return (poles * motorSide / wheelSide) /
+        (7.2 * Math.PI * wheel);
+}
+function calculateDCMotorRotationHz(speedKmh, train = currentTrain) {
+    const wheel = Number(train.wheel_diameter);
+    const motorSide = Number(train.gear_ratio_motor_side);
+    const wheelSide = Number(train.gear_ratio_wheel_side);
+
+    const motorPoles = 4;
+
+    if (
+        !Number.isFinite(wheel) || wheel <= 0 ||
+        !Number.isFinite(motorSide) || motorSide <= 0 ||
+        !Number.isFinite(wheelSide) || wheelSide <= 0
+    ) {
+        return 0;
+    }
+
+    const speed = Number.isFinite(Number(speedKmh))
+        ? Math.max(0, Number(speedKmh))
+        : 0;
+
+    return (
+        speed * motorPoles * motorSide
+    ) / (
+        7.2 * Math.PI * wheel * wheelSide
+    );
+}
+
+// ========================================================
+// PWM POWER SETTINGS
+// ========================================================
+
+function normalisePowerControls(raw = {}, traction = currentTrain.traction) {
+    const controls = {
+        ...(raw && typeof raw === "object" ? raw : {})
+    };
+
+    controls.acceleration = clamp(
+        controls.acceleration,
+        0,
+        100,
+        2.5
+    );
+
+    controls.deceleration = clamp(
+        controls.deceleration,
+        0,
+        100,
+        3
+    );
+
+    if (traction === "DC_RESISTOR") {
+        for (const key of [
+            "min_power",
+            "max_power",
+            "initial_min_power",
+            "initial_max_power",
+            "peak_min_power",
+            "peak_max_power"
+        ]) {
+            delete controls[key];
+        }
+
+        return controls;
+    }
+
+    const hasNewPowerFields = [
+        "initial_min_power",
+        "peak_min_power",
+        "peak_max_power"
+    ].some(key => controls[key] != null);
+
+    function legacyPercent(value, fallback) {
+        if (value == null || value === "") return fallback;
+
+        const number = Number(value);
+
+        if (!Number.isFinite(number)) return fallback;
+
+        return number > 0 && number <= 1
+            ? number * 100
+            : number;
+    }
+
+    const initialMin = hasNewPowerFields
+        ? (controls.initial_min_power ?? 10)
+        : legacyPercent(controls.min_power, 10);
+
+    const initialMax = hasNewPowerFields
+        ? (controls.initial_max_power ?? 20)
+        : legacyPercent(controls.initial_max_power, 20);
+
+    const peakMin = hasNewPowerFields
+        ? (controls.peak_min_power ?? 10)
+        : legacyPercent(controls.min_power, 10);
+
+    const peakMax = hasNewPowerFields
+        ? (controls.peak_max_power ?? 100)
+        : legacyPercent(controls.max_power, 100);
+
+    controls.initial_min_power = clamp(initialMin, 0, 100, 10);
+    controls.initial_max_power = clamp(initialMax, 0, 100, 20);
+    controls.peak_min_power = clamp(peakMin, 0, 100, 10);
+    controls.peak_max_power = clamp(peakMax, 0, 100, 100);
+
+    controls.initial_max_power = Math.max(
+        controls.initial_min_power,
+        controls.initial_max_power
+    );
+
+    controls.peak_max_power = Math.max(
+        controls.peak_min_power,
+        controls.peak_max_power
+    );
+
+    delete controls.min_power;
+    delete controls.max_power;
+
+    return controls;
+}
+
+
+function getPWMpowerFraction(speedKmh, throttleAmount, train = currentTrain) {
+    const amount = Math.abs(Number(throttleAmount));
+
+    if (amount <= 0) return 0;
+
+    const controls = train.controls ?? {};
+
+    const throttleProgress = clamp(
+        (amount - 0.01) / 0.99,
+        0,
+        1,
+        0
+    );
+
+    const peakPoint = Math.max(
+        0.001,
+        Number(train.peak_point ?? 50)
+    );
+
+    const speedProgress = clamp(
+        Number(speedKmh) / peakPoint,
+        0,
+        1,
+        0
+    );
+
+    const initialPower = lerp(
+        Number(controls.initial_min_power ?? 10),
+        Number(controls.initial_max_power ?? 20),
+        throttleProgress
+    );
+
+    const peakPower = lerp(
+        Number(controls.peak_min_power ?? 10),
+        Number(controls.peak_max_power ?? 100),
+        throttleProgress
+    );
+
+    return clamp(
+        lerp(initialPower, peakPower, speedProgress) / 100,
+        0,
+        1,
+        0
+    );
+}
+
+
+// ========================================================
+// PULSING SCHEMAS
+// ========================================================
+
+const OSCILLATION_MODES = [
+    "TRIANGLE",
+    "SINE",
+    "SQUARE",
+    "SAW-RISING",
+    "SAW-FALLING",
+    "RANDOM"
+];
+
+const AC_SCHEMA = {
+    "ASYNC": {
+        fields: ["min_speed", "carrier_frequency"],
+        defaults: {
+            min_speed: 0,
+            carrier_frequency: 400
+        }
+    },
+
+    "ASYNC-OSCILLATING": {
+        fields: [
+            "min_speed",
+            "oscillation_mode",
+            "oscillation_frequency",
+            "min_carrier_frequency",
+            "max_carrier_frequency"
+        ],
+        defaults: {
+            min_speed: 0,
+            oscillation_mode: "TRIANGLE",
+            oscillation_frequency: 5,
+            min_carrier_frequency: 350,
+            max_carrier_frequency: 450
+        }
+    },
+
+    "ASYNC-SWEEP": {
+        fields: [
+            "min_speed",
+            "min_carrier_frequency",
+            "max_carrier_frequency"
+        ],
+        defaults: {
+            min_speed: 0,
+            min_carrier_frequency: 350,
+            max_carrier_frequency: 450
+        }
+    },
+    "ASYNC-MUSIC": {
+        fields: [
+            "min_motor_frequency",
+            "frequencies",
+            "beats"
+        ],
+        defaults: {
+            min_motor_frequency: 0,
+            frequencies: [440],
+            beats: [1]
+        }
+    },
+    "SYNC": {
+        fields: ["min_speed", "pulses"],
+        defaults: {
+            min_speed: 0,
+            pulses: 21
+        }
+    },
+
+    "SHE-PWM": {
+        fields: ["min_speed", "pulses"],
+        defaults: {
+            min_speed: 0,
+            pulses: 21
+        }
+    },
+
+    "ASYNC-STEP": {
+        fields: ["min_speed", "carrier_frequencies"],
+        defaults: {
+            min_speed: 0,
+            carrier_frequencies: [400]
+        }
+    },
+
+    "AUTO-SYNC": {
+        fields: [
+            "min_speed",
+            "min_pulses",
+            "max_pulses",
+            "pulse_step",
+            "max_switching_frequency"
+        ],
+        defaults: {
+            min_speed: 0,
+            min_pulses: 1,
+            max_pulses: 99,
+            pulse_step: 1,
+            max_switching_frequency: 1200
+        }
+    },
+
+
+};
+
+const DC_PWM_SCHEMA = {
+    "PWM": {
+        fields: ["min_speed", "carrier_frequency"],
+        defaults: {
+            min_speed: 0,
+            carrier_frequency: 400
+        }
+    }
+};
+
+const DC_RESISTOR_SCHEMA = {
+    "NOTCH": {
+        fields: ["min_speed"],
+        defaults: {
+            min_speed: 0
+        }
+    }
+};
+
+const FIELD_DEFINITIONS = {
+    min_speed: {
+        label: "Start Speed (km/h)",
+        type: "number",
+        step: 0.1,
+        min: 0
+    },
+
+    min_motor_frequency: {
+        label: "Start Motor Frequency (Hz)",
+        type: "number",
+        step: 0.1,
+        min: 0
+    },
+
+    oscillation_mode: {
+        label: "Oscillation Mode",
+        type: "select",
+        options: OSCILLATION_MODES
+    },
+
+    oscillation_frequency: {
+        label: "Oscillation Frequency (Hz)",
+        type: "number",
+        step: 0.1,
+        min: 0.1
+    },
+
+    carrier_frequency: {
+        label: "Carrier Frequency (Hz)",
+        type: "number",
+        step: 10,
+        min: 0
+    },
+
+    min_carrier_frequency: {
+        label: "Min Carrier Frequency (Hz)",
+        type: "number",
+        step: 10,
+        min: 0
+    },
+
+    max_carrier_frequency: {
+        label: "Max Carrier Frequency (Hz)",
+        type: "number",
+        step: 10,
+        min: 0
+    },
+
+    pulses: {
+        label: "Pulses",
+        type: "number",
+        step: 1,
+        min: 1
+    },
+
+    carrier_frequencies: {
+        label: "Carrier Frequencies (comma separated)",
+        type: "array"
+    },
+
+    min_pulses: {
+        label: "Minimum Pulses",
+        type: "number",
+        step: 1,
+        min: 1
+    },
+
+    max_pulses: {
+        label: "Maximum Pulses",
+        type: "number",
+        step: 1,
+        min: 1
+    },
+
+    pulse_step: {
+        label: "Pulse Step",
+        type: "number",
+        step: 1,
+        min: 1
+    },
+
+    max_switching_frequency: {
+        label: "Max Switching Frequency (Hz)",
+        type: "number",
+        step: 1,
+        min: 0
+    },
+
+
+
+    frequencies: {
+        label: "Frequencies (comma separated)",
+        type: "array"
+    },
+
+    beats: {
+        label: "Beats (comma separated)",
+        type: "array"
+    }
+};
+
+
+function getPulsingSchema(train = currentTrain) {
+    if (isDCPWM(train)) return DC_PWM_SCHEMA;
+    if (isDCResistor(train)) return DC_RESISTOR_SCHEMA;
+    return AC_SCHEMA;
+}
+
+
+function getActiveFields(config, schemaSet = getPulsingSchema()) {
+    const schema = schemaSet[config.mode];
+
+    if (!schema) return [];
+
+    const fields = [...schema.fields];
+
+    if (
+        config.mode === "ASYNC-OSCILLATING" &&
+        config.oscillation_mode === "RANDOM"
+    ) {
+        return fields.filter(key => key !== "oscillation_frequency");
+    }
+
+    return fields;
+}
+
+
+// ========================================================
+// NORMALISE PULSING CONFIGURATION
+// ========================================================
+
+function normalisePulsingConfig(raw = {}, train = currentTrain) {
+    if (
+        !raw ||
+        typeof raw !== "object" ||
+        Array.isArray(raw)
+    ) {
+        raw = {};
+    }
+
+    const source = { ...raw };
+    const schemaSet = getPulsingSchema(train);
+    const modes = Object.keys(schemaSet);
+
+    const mode = modes.includes(source.mode)
+        ? source.mode
+        : modes[0];
+
+    const schema = schemaSet[mode];
+    const result = { mode };
+
+    const factor = calculateSpeedPerMotorHz(train);
+
+    if (
+        mode !== "ASYNC-MUSIC" &&
+        source.min_speed == null &&
+        source.min_motor_frequency != null &&
+        Number.isFinite(factor) &&
+        factor > 0
+    ) {
+        source.min_speed =
+            Number(source.min_motor_frequency) / factor;
+    }
+
+    if (
+        mode === "ASYNC-MUSIC" &&
+        source.min_motor_frequency == null
+    ) {
+        source.min_motor_frequency =
+            source.min_speed != null &&
+            Number.isFinite(factor) &&
+            factor > 0
+                ? Number(source.min_speed) * factor
+                : schema.defaults.min_motor_frequency;
+    }
+
+    if (mode === "ASYNC-OSCILLATING") {
+        const waveform =
+            source.oscillation_mode ??
+            schema.defaults.oscillation_mode;
+
+        result.oscillation_mode =
+            OSCILLATION_MODES.includes(waveform)
+                ? waveform
+                : schema.defaults.oscillation_mode;
+    }
+
+    for (const key of getActiveFields(result, schemaSet)) {
+        if (key === "oscillation_mode") continue;
+
+        const def = FIELD_DEFINITIONS[key];
+        let value = source[key];
+
+        if (def.type === "array") {
+            const parsed = parseNumberArray(value);
+
+            result[key] = parsed?.length
+                ? parsed
+                : [...schema.defaults[key]];
+
+            continue;
+        }
+
+        if (value == null || value === "") {
+            value = schema.defaults[key];
+        }
+
+        const number = Number(value);
+
+        result[key] =
+            Number.isFinite(number) &&
+            number >= (def.min ?? -Infinity) &&
+            number <= (def.max ?? Infinity)
+                ? number
+                : schema.defaults[key];
+    }
+
+    return result;
+}
+
+
+function serialisePulsingConfig(config) {
+    return normalisePulsingConfig(config, currentTrain);
+}
+
+
+// ========================================================
+// TRANSITION BETWEEN PULSING MODES
+// ========================================================
+
+function transitionPulsingConfig(previous, newMode) {
+    const old = normalisePulsingConfig(previous);
+    const schemaSet = getPulsingSchema();
+
+    if (!schemaSet[newMode]) return old;
+
+    const oldFields = schemaSet[old.mode].fields;
+    const newFields = schemaSet[newMode].fields;
+
+    const next = { mode: newMode };
+
+    for (const key of newFields) {
+        if (
+            oldFields.includes(key) &&
+            Object.hasOwn(old, key)
+        ) {
+            next[key] = Array.isArray(old[key])
+                ? [...old[key]]
+                : old[key];
+        }
+    }
+
+    const factor = calculateSpeedPerMotorHz(currentTrain);
+
+    if (newMode === "ASYNC-MUSIC" && old.min_speed != null) {
+        next.min_motor_frequency =
+            Number.isFinite(factor) && factor > 0
+                ? old.min_speed * factor
+                : 0;
+    }
+
+    if (old.mode === "ASYNC-MUSIC" && newMode !== "ASYNC-MUSIC") {
+        next.min_speed =
+            Number.isFinite(factor) && factor > 0
+                ? old.min_motor_frequency / factor
+                : 0;
+    }
+
+    const isRangeMode = mode =>
+        mode === "ASYNC-OSCILLATING" ||
+        mode === "ASYNC-SWEEP";
+
+    if (isRangeMode(newMode)) {
+        if (isRangeMode(old.mode)) {
+            next.min_carrier_frequency =
+                old.min_carrier_frequency;
+
+            next.max_carrier_frequency =
+                old.max_carrier_frequency;
+        } else {
+            const carrier = old.carrier_frequency ?? 400;
+
+            next.min_carrier_frequency =
+                Math.max(0, carrier - 50);
+
+            next.max_carrier_frequency =
+                carrier + 50;
+        }
+    }
+
+    if (newMode === "ASYNC") {
+        next.carrier_frequency = isRangeMode(old.mode)
+            ? (
+                old.min_carrier_frequency +
+                old.max_carrier_frequency
+            ) / 2
+            : (old.carrier_frequency ?? 400);
+    }
+
+    return normalisePulsingConfig(next);
+}
+
+
+// ========================================================
+// USER TRAIN STORAGE
+// ========================================================
+
+function readUserTrains() {
+    try {
+        const stored = JSON.parse(
+            localStorage.getItem(USER_TRAINS_KEY) || "[]"
+        );
+
+        if (!Array.isArray(stored)) return [];
+
+        return stored.filter(item =>
+            item &&
+            typeof item.name === "string" &&
+            item.config &&
+            typeof item.config === "object"
+        );
+
+    } catch (error) {
+        console.warn("Could not read saved user trains:", error);
+        return [];
+    }
+}
+
+
+function setActiveTrain(name) {
+    trainListElement
+        .querySelectorAll(".train-list-item")
+        .forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.trainName === name
+            );
+        });
+}
+
+
+function renderTrainList() {
+    trainListElement.replaceChildren();
+
+    const entries = activeTrainTab === "included"
+        ? includedTrains.map(name => ({
+            name,
+            included: true
+        }))
+        : userTrains.map(item => ({
+            name: item.name,
+            config: item.config,
+            included: false
+        }));
+
+    if (!entries.length) {
+        trainListElement.textContent = "No trains in this tab.";
+        return;
+    }
+
+    for (const entry of entries) {
+        const button = createElement("button", {
+            type: "button",
+            textContent: entry.name
+        }, ["train-list-item"]);
+
+        button.dataset.trainName = entry.name;
+
+        button.addEventListener("click", () => {
+            if (entry.included) {
+                loadSelectedTrain(entry.name);
+            } else {
+                loadEditor(
+                    entry.name,
+                    structuredClone(entry.config)
+                );
+            }
+        });
+
+        trainListElement.appendChild(button);
+    }
+
+    setActiveTrain(trainName);
+}
+
+
+function setTrainTab(tab) {
+    activeTrainTab = tab;
+
+    document.getElementById("train-tab-included")
+        .classList.toggle("active", tab === "included");
+
+    document.getElementById("train-tab-user")
+        .classList.toggle("active", tab === "user");
+
+    renderTrainList();
+}
+
+
+document.getElementById("train-tab-included").addEventListener(
+    "click",
+    () => setTrainTab("included")
+);
+
+document.getElementById("train-tab-user").addEventListener(
+    "click",
+    () => setTrainTab("user")
+);
+
+
+// ========================================================
+// INTERFACE.JS COMPATIBILITY
+// ========================================================
+
+// interface.js supports these AC pulsing modes.
+const INTERFACE_AC_MODES = new Set([
+    "ASYNC",
+    "ASYNC-OSCILLATING",
+    "ASYNC-SWEEP",
+    "ASYNC-MUSIC",
+    "SYNC",
+    "SHE-PWM",
+    "ASYNC-STEP",
+    "AUTO-SYNC"
+]);
+
+
+// Make a safe AC configuration for interface.js.
+//
+// MUSIC remains in the local train configuration and editor,
+// but is not passed to an interface that does not support it.
+function getACInterfaceTrain(train) {
+    const interfaceTrain = structuredClone(train);
+
+    interfaceTrain.pulsing = (
+        Array.isArray(train.pulsing)
+            ? train.pulsing
+            : []
+    ).filter(config =>
+        INTERFACE_AC_MODES.has(config.mode)
+    );
+
+    // interface.js requires at least one pulsing entry.
+    if (!interfaceTrain.pulsing.length) {
+        interfaceTrain.pulsing = [
+            {
+                mode: "ASYNC",
+                min_speed: 0,
+                carrier_frequency: 400
+            }
+        ];
+    }
+
+    return interfaceTrain;
+}
+
+
+// Select the DC PWM carrier entry active at a given speed.
+// This is independent of the order in which entries were saved.
+function getActiveDCPWMCarrier(speedKmh, train = currentTrain) {
+    const matching = (train.pulsing ?? [])
+        .filter(config =>
+            config.mode === "PWM" &&
+            Number(config.min_speed ?? 0) <= speedKmh
+        )
+        .sort((a, b) =>
+            Number(a.min_speed ?? 0) -
+            Number(b.min_speed ?? 0)
+        );
+
+    if (!matching.length) {
+        return 400;
+    }
+
+    const carrier = Number(
+        matching[matching.length - 1].carrier_frequency ?? 400
+    );
+
+    return Number.isFinite(carrier)
+        ? Math.max(0, carrier)
+        : 400;
+}
+
+
+// interface.js does not know the custom DC PWM mode.
+//
+// It can, however, output the required carrier frequency
+// and power through its existing ASYNC mode.
+//
+// Motor frequency is set to zero. The ASYNC configuration
+// supplies the carrier frequency to the pulsing engine.
+function configureDCPWMInterface(carrierFrequency) {
+    const carrier = Number.isFinite(Number(carrierFrequency))
+        ? Math.max(0, Number(carrierFrequency))
+        : 400;
+
+    if (
+        interfaceTrainReady &&
+        dcPwmInterfaceCarrier === carrier
+    ) {
+        return true;
+    }
+
+    try {
+        setTrain({
+            speed_per_motor_hz: 1,
+
+            pulsing: [
+                {
+                    mode: "ASYNC",
+                    min_motor_frequency: 0,
+                    max_motor_frequency: 1000,
+                    carrier_frequency: carrier
+                }
+            ]
+        });
+
+        interfaceTrainReady = true;
+        dcPwmInterfaceCarrier = carrier;
+
+        return true;
+
+    } catch (error) {
+        interfaceTrainReady = false;
+        dcPwmInterfaceCarrier = null;
+
+        console.warn(
+            "DC PWM interface configuration failed:",
+            error
+        );
+
+        return false;
+    }
+}
+
+
+// ========================================================
+// STOP CURRENT INTERFACE OUTPUT
+// ========================================================
+
+function stopDriveOutput() {
+    if (!interfaceTrainReady) return;
+
+    try {
+        commandVF(0, 0, 16);
+    } catch (error) {
+        console.warn("Could not stop V/F output:", error);
+    }
+}
+
+
+// ========================================================
+// APPLY CONFIGURATION TO VF
+// ========================================================
+
+function loadTrainToSim() {
+    currentTrain.pulsing = (
+        Array.isArray(currentTrain.pulsing)
+            ? currentTrain.pulsing
+            : []
+    ).map(config =>
+        normalisePulsingConfig(config, currentTrain)
+    );
+
+    // Recalculate maximum-speed taper for this train.
+    updateMaxSpeedCalibration();
+
+    if (isAC()) {
+        const factor = calculateSpeedPerMotorHz(currentTrain);
+
+        if (Number.isFinite(factor) && factor > 0) {
+            currentTrain.speed_per_motor_hz = factor;
+        } else {
+            delete currentTrain.speed_per_motor_hz;
+        }
+
+        const display = document.getElementById("speed-per-motor-hz");
+
+        if (display) {
+            display.textContent =
+                Number.isFinite(factor) && factor > 0
+                    ? factor.toFixed(4)
+                    : "Invalid gear ratio";
+        }
+
+        try {
+            setTrain(getACInterfaceTrain(currentTrain));
+
+            interfaceTrainReady = true;
+            dcPwmInterfaceCarrier = null;
+            vfErrorLogged = false;
+
+        } catch (error) {
+            interfaceTrainReady = false;
+
+            console.warn("AC PWM V/F setup failed:", error);
+        }
+
+        return;
+    }
+
+
+    // ----------------------------------------------------
+    // DC PWM
+    // ----------------------------------------------------
+
+    if (isDCPWM()) {
+        delete currentTrain.speed_per_motor_hz;
+
+        const carrier = getActiveDCPWMCarrier(
+            lastSpeedKmh,
+            currentTrain
+        );
+
+        configureDCPWMInterface(carrier);
+
+        vfErrorLogged = false;
+
+        return;
+    }
+
+
+    // ----------------------------------------------------
+    // DC RESISTOR
+    // ----------------------------------------------------
+
+    delete currentTrain.speed_per_motor_hz;
+
+    interfaceTrainReady = false;
+    dcPwmInterfaceCarrier = null;
+
+
+}
+
+
+// ========================================================
+// PULSING START SPEED AND HIGHLIGHT
+// ========================================================
+
+function getPulsingStartSpeed(config) {
+    if (config.mode === "ASYNC-MUSIC") {
+        const factor = calculateSpeedPerMotorHz(currentTrain);
+
+        return Number.isFinite(factor) && factor > 0
+            ? Number(config.min_motor_frequency ?? 0) / factor
+            : 0;
+    }
+
+    return Number(config.min_speed ?? 0);
+}
+
+
+function getInheritedStartSpeed(items, insertIndex) {
+    for (let i = insertIndex - 1; i >= 0; i--) {
+        const speed = getPulsingStartSpeed(items[i].config);
+
+        if (Number.isFinite(speed)) return speed;
+    }
+
+    return 0;
+}
+
+
+function setPulsingHighlight(items, speedKmh) {
+    items.forEach(item => {
+        item.element.style.backgroundColor = "";
+        item.element.style.borderColor = "";
+    });
+
+    if (Math.abs(Number(throttleSlider.value)) < 0.000001) {
+        return;
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        const start = getPulsingStartSpeed(items[i].config);
+
+        const nextStart = i + 1 < items.length
+            ? getPulsingStartSpeed(items[i + 1].config)
+            : Infinity;
+
+        if (speedKmh >= start && speedKmh < nextStart) {
+            items[i].element.style.backgroundColor = "#302f25";
+            items[i].element.style.borderColor = "#756b40";
+            break;
+        }
+    }
+}
+
+
+// ========================================================
+// TRAIN EDITOR
+// ========================================================
+
+function loadEditor(name, trainConfig) {
+    // Stop the previous interface output before replacing
+    // the current train configuration.
+    stopDriveOutput();
+
+    trainName = name;
+
+    currentTrain =
+        trainConfig &&
+        typeof trainConfig === "object" &&
+        !Array.isArray(trainConfig)
+            ? structuredClone(trainConfig)
+            : {};
+
+    currentTrain.traction = normaliseTraction(currentTrain.traction);
+
+    currentTrain.audio_mode = normaliseAudioMode(
+        currentTrain.audio_mode ?? currentTrain.audio
+    );
+
+    delete currentTrain.audio;
+    delete currentTrain.speed_per_motor_hz;
+
+    currentTrain.wheel_diameter ??= 0.84;
+    currentTrain.gear_ratio_motor_side ??= 6;
+    currentTrain.gear_ratio_wheel_side ??= 1;
+    currentTrain.max_speed ??= 120;
+    currentTrain.rolling_resistance ??= 0.3;
+
+    if (isDCResistor()) {
+        delete currentTrain.motor_poles;
+        delete currentTrain.peak_point;
+        delete currentTrain.decel_cutoff;
+
+        currentTrain.taper_off ??= 1;
+
+    } else {
+        currentTrain.peak_point ??= 50;
+        currentTrain.decel_cutoff ??= 1;
+
+        delete currentTrain.taper_off;
+
+        if (isAC()) {
+            currentTrain.motor_poles ??= 4;
+        } else {
+            delete currentTrain.motor_poles;
+        }
+    }
+
+    currentTrain.controls = normalisePowerControls(
+        currentTrain.controls ?? {},
+        currentTrain.traction
+    );
+
+    currentTrain.pulsing = Array.isArray(currentTrain.pulsing)
+        ? currentTrain.pulsing
+        : [];
+
+    currentTrain.pulsing = currentTrain.pulsing.map(config =>
+        normalisePulsingConfig(config, currentTrain)
+    );
+
+
+    // ----------------------------------------------------
+    // Reset each traction type's speed.
+    // Reset hill and its slider whenever a train is loaded.
+    // ----------------------------------------------------
+
+    frequency = 0;
+    dcPwmSpeedKmh = 0;
+    dcResistorSpeedKmh = 0;
+
+    power = 0;
+    acceleration = 0;
+    throttle = 0;
+    hill = 1;
+    lastSpeedKmh = 0;
+
+    simulationEnabled = true;
+    simulationPaused = false;
+
+    previousFrame = performance.now();
+
+    globalThis.simulated_speed = 0;
+
+    throttleSlider.value = "0";
+    hillSlider.value = "1";
+    hillValue.textContent = "1.00";
+
+applyAudioMode(currentTrain.audio_mode);
+
+if (soundStarted) {
+    restartSound();
+}
+
+    const editor = document.getElementById("train-config");
+    const pulsingEditor = document.getElementById("pulsing-config");
+
+    editor.replaceChildren();
+    pulsingEditor.replaceChildren();
+
+    refreshPulsingHighlight = () => {};
+
+    setActiveTrain(trainName);
+
+
+    // ----------------------------------------------------
+    // Number setting helper.
+    // ----------------------------------------------------
+
+    function addNumberSetting(
+        parent,
+        label,
+        target,
+        key,
+        options = {}
+    ) {
+        const input = createElement("input", {
+            type: "number",
+            step: options.step ?? 1,
+            min: options.min ?? "",
+            max: options.max ?? "",
+            value: target[key] ?? ""
+        });
+
+        input.addEventListener("change", () => {
+            const value = input.valueAsNumber;
+
+            if (
+                !Number.isFinite(value) ||
+                value < (options.min ?? -Infinity) ||
+                value > (options.max ?? Infinity)
+            ) {
+                input.value = target[key];
+                return;
+            }
+
+            target[key] = value;
+            loadTrainToSim();
+        });
+
+        parent.appendChild(createInput(label, input));
+        return input;
+    }
+
+
+    // ----------------------------------------------------
+    // Train name.
+    // ----------------------------------------------------
+
+    const nameInput = createElement("input", {
+        id: "train-name",
+        type: "text",
+        value: trainName
+    });
+
+    nameInput.addEventListener("change", () => {
+        trainName = nameInput.value.trim();
+        setActiveTrain(trainName);
+    });
+
+    editor.appendChild(createInput("Name", nameInput));
+
+
+    // ----------------------------------------------------
+    // Mechanical settings.
+    // ----------------------------------------------------
+
+    addNumberSetting(
+        editor,
+        "Wheel Diameter (m)",
+        currentTrain,
+        "wheel_diameter",
+        { step: 0.01, min: 0.1 }
+    );
+
+    if (isAC()) {
+        addNumberSetting(
+            editor,
+            "Motor Poles",
+            currentTrain,
+            "motor_poles",
+            { step: 2, min: 2 }
+        );
+    }
+
+    const motorRatio = createElement("input", {
+        type: "number",
+        step: 0.1,
+        min: 0.1,
+        value: currentTrain.gear_ratio_motor_side
+    });
+
+    const wheelRatio = createElement("input", {
+        type: "number",
+        step: 0.1,
+        min: 0.1,
+        value: currentTrain.gear_ratio_wheel_side
+    });
+
+    const ratioContainer = createElement(
+        "span",
+        {},
+        ["gear-ratio-inputs"]
+    );
+
+    ratioContainer.append(
+        motorRatio,
+        document.createTextNode(":"),
+        wheelRatio
+    );
+
+    function updateGearRatio() {
+        const motor = motorRatio.valueAsNumber;
+        const wheel = wheelRatio.valueAsNumber;
+
+        if (
+            !Number.isFinite(motor) || motor <= 0 ||
+            !Number.isFinite(wheel) || wheel <= 0
+        ) {
+            motorRatio.value = currentTrain.gear_ratio_motor_side;
+            wheelRatio.value = currentTrain.gear_ratio_wheel_side;
+            return;
+        }
+
+        currentTrain.gear_ratio_motor_side = motor;
+        currentTrain.gear_ratio_wheel_side = wheel;
+
+        loadTrainToSim();
+    }
+
+    motorRatio.addEventListener("change", updateGearRatio);
+    wheelRatio.addEventListener("change", updateGearRatio);
+
+    editor.appendChild(
+        createInput("Gear Ratio", ratioContainer)
+    );
+
+
+    // ----------------------------------------------------
+    // Speed per motor Hz: AC PWM only.
+    // ----------------------------------------------------
+
+    if (isAC()) {
+        const factorDisplay = createElement("div", {
+            id: "speed-per-motor-hz",
+            className: "calculated-value"
+        });
+
+        const factor = calculateSpeedPerMotorHz(currentTrain);
+
+        factorDisplay.textContent =
+            Number.isFinite(factor) && factor > 0
+                ? factor.toFixed(4)
+                : "Invalid gear ratio";
+
+        editor.appendChild(
+            createInput("Speed Per Motor Hz", factorDisplay)
+        );
+    }
+
+
+    // ----------------------------------------------------
+    // General performance settings.
+    // ----------------------------------------------------
+
+    addNumberSetting(
+        editor,
+        "Max Speed (km/h)",
+        currentTrain,
+        "max_speed",
+        { min: 0 }
+    );
+
+    if (!isDCResistor()) {
+        addNumberSetting(
+            editor,
+            "Decel Cutoff (km/h)",
+            currentTrain,
+            "decel_cutoff",
+            { step: 0.1, min: 0 }
+        );
+    }
+
+    addNumberSetting(
+        editor,
+        "Rolling Resistance",
+        currentTrain,
+        "rolling_resistance",
+        { step: 0.01, min: 0 }
+    );
+
+
+    // ----------------------------------------------------
+    // Acceleration and deceleration.
+    // ----------------------------------------------------
+
+    addNumberSetting(
+        editor,
+        "Acceleration (km/h)",
+        currentTrain.controls,
+        "acceleration",
+        { min: 0 }
+    );
+
+    addNumberSetting(
+        editor,
+        "Deceleration (km/h)",
+        currentTrain.controls,
+        "deceleration",
+        { min: 0 }
+    );
+
+
+    // ----------------------------------------------------
+    // Resistor taper or PWM peak point.
+    // ----------------------------------------------------
+
+    if (isDCResistor()) {
+
+        addNumberSetting(
+            editor,
+            "Taper Off",
+            currentTrain,
+            "taper_off",
+            { step: "any" }
+        );
+
+    } else {
+
+        addNumberSetting(
+            editor,
+            "Peak Point (km/h)",
+            currentTrain,
+            "peak_point",
+            { min: 0 }
+        );
+
+
+        // Four PWM power settings.
+        const powerInputs = {};
+
+        function addPowerSetting(key, label) {
+            const input = createElement("input", {
+                type: "number",
+                min: 0,
+                max: 100,
+                step: 1,
+                value: currentTrain.controls[key]
+            });
+
+            powerInputs[key] = input;
+
+            input.addEventListener("change", () => {
+                const value = input.valueAsNumber;
+
+                if (
+                    !Number.isFinite(value) ||
+                    value < 0 ||
+                    value > 100
+                ) {
+                    input.value = currentTrain.controls[key];
+                    return;
+                }
+
+                Object.assign(
+                    currentTrain.controls,
+                    normalisePowerControls({
+                        ...currentTrain.controls,
+                        [key]: value
+                    }, currentTrain.traction)
+                );
+
+                for (const [name, field] of Object.entries(powerInputs)) {
+                    field.value = currentTrain.controls[name];
+                }
+
+                loadTrainToSim();
+            });
+
+            editor.appendChild(createInput(label, input));
+        }
+
+        addPowerSetting(
+            "initial_min_power",
+            "Initial Min Power (%)"
+        );
+
+        addPowerSetting(
+            "initial_max_power",
+            "Initial Max Power (%)"
+        );
+
+        addPowerSetting(
+            "peak_min_power",
+            "Peak Min Power (%)"
+        );
+
+        addPowerSetting(
+            "peak_max_power",
+            "Peak Max Power (%)"
+        );
+    }
+
+
+    // ====================================================
+    // PULSING EDITOR
+    // ====================================================
+
+    const pulsingItems = [];
+    let nextPulsingID = 0;
+
+
+    function syncFirstPulsingMode() {
+        if (!pulsingItems.length) return;
+
+        const first = pulsingItems[0];
+
+        const key = first.config.mode === "ASYNC-MUSIC"
+            ? "min_motor_frequency"
+            : "min_speed";
+
+        first.config[key] = 0;
+
+        const field = first.fields.get(key);
+
+        if (field) field.value = "0";
+    }
+
+
+    function commitPulsing(updateSimulation = true) {
+        syncFirstPulsingMode();
+
+        currentTrain.pulsing = pulsingItems.map(item =>
+            serialisePulsingConfig(item.config)
+        );
+
+        if (updateSimulation) {
+            loadTrainToSim();
+        }
+
+        refreshPulsingHighlight(lastSpeedKmh);
+    }
+
+
+    function updatePulsingFields(item) {
+        const activeFields = new Set(
+            getActiveFields(item.config, getPulsingSchema())
+        );
+
+        if (item.modeSelect) {
+            item.modeSelect.value = item.config.mode;
+        }
+
+        for (const [key, field] of item.fields) {
+            const visible = activeFields.has(key);
+
+            item.rows.get(key).hidden = !visible;
+
+            if (!visible) {
+                field.value = "";
+                continue;
+            }
+
+            const value = item.config[key];
+
+            field.value = Array.isArray(value)
+                ? value.join(", ")
+                : String(value ?? "");
+        }
+
+        item.musicButton.hidden =
+            item.config.mode !== "ASYNC-MUSIC";
+
+        syncFirstPulsingMode();
+    }
+
+
+    function addPulsingMode(
+        insertIndex = pulsingItems.length,
+        rawConfig = null,
+        updateSimulation = true
+    ) {
+        insertIndex = Math.max(
+            0,
+            Math.min(insertIndex, pulsingItems.length)
+        );
+
+        const availableModes = Object.keys(getPulsingSchema());
+        const hiddenModes = ["ASYNC-STEP", "AUTO-SYNC"];
+
+const selectableModes = hide_unnecessary_modes
+    ? availableModes.filter(mode => !hiddenModes.includes(mode))
+    : availableModes;
+
+        const inheritedSpeed = getInheritedStartSpeed(
+            pulsingItems,
+            insertIndex
+        );
+
+        const config = normalisePulsingConfig(
+            rawConfig ?? {
+                mode: availableModes[0],
+                min_speed: inheritedSpeed
+            }
+        );
+
+        const item = {
+            id: nextPulsingID++,
+            config,
+            fields: new Map(),
+            rows: new Map(),
+            modeSelect: null,
+            element: null,
+            musicButton: null,
+            updateFields: null
+        };
+
+        const element = createElement(
+            "div",
+            {},
+            ["pulsing-element"]
+        );
+
+        item.element = element;
+
+
+        // Mode selector.
+        const modeRow = createElement(
+            "div",
+            {},
+            ["setting-row", "mode-row"]
+        );
+
+        modeRow.appendChild(
+            createElement("span", { textContent: "Mode" })
+        );
+
+        if (
+    selectableModes.length > 1 ||
+    (hide_unnecessary_modes && hiddenModes.includes(config.mode))
+) {
+            const select = createElement("select");
+
+            for (const mode of selectableModes) {
+                select.appendChild(
+                    createElement("option", {
+                        value: mode,
+                        textContent: mode
+                    })
+                );
+            }
+if (
+    hide_unnecessary_modes &&
+    hiddenModes.includes(config.mode)
+) {
+    select.appendChild(createElement("option", {
+        value: config.mode,
+        textContent: config.mode,
+        disabled: true,
+        hidden: true
+    }));
+}
+            select.value = config.mode;
+            item.modeSelect = select;
+
+            modeRow.appendChild(select);
+
+            select.addEventListener("change", () => {
+                item.config = transitionPulsingConfig(
+                    item.config,
+                    select.value
+                );
+
+                updatePulsingFields(item);
+                commitPulsing();
+            });
+
+        } else {
+            modeRow.appendChild(
+                createElement("strong", {
+                    textContent: availableModes[0]
+                })
+            );
+        }
+
+        element.appendChild(modeRow);
+
+
+        // Create fields for every mode.
+        for (const [key, def] of Object.entries(FIELD_DEFINITIONS)) {
+            let field;
+
+            if (def.type === "select") {
+                field = createElement("select");
+
+                for (const option of def.options) {
+                    field.appendChild(
+                        createElement("option", {
+                            value: option,
+                            textContent: option === "RANDOM"
+                                ? "Random"
+                                : option
+                        })
+                    );
+                }
+
+            } else {
+                field = createElement("input", {
+                    type: def.type === "array" ? "text" : "number",
+                    step: def.step,
+                    min: def.min,
+                    placeholder: def.type === "array"
+                        ? "e.g. 400, 600, 800"
+                        : ""
+                });
+            }
+
+            const row = createInput(def.label, field);
+
+            item.fields.set(key, field);
+            item.rows.set(key, row);
+
+            element.appendChild(row);
+
+            field.addEventListener("change", () => {
+                const activeFields = getActiveFields(
+                    item.config,
+                    getPulsingSchema()
+                );
+
+                if (!activeFields.includes(key)) return;
+
+                // The first pulsing entry always starts at zero.
+                if (
+                    pulsingItems[0] === item &&
+                    (
+                        key === "min_speed" ||
+                        key === "min_motor_frequency"
+                    )
+                ) {
+                    item.config[key] = 0;
+                    field.value = "0";
+                    return;
+                }
+
+                let value;
+
+                if (def.type === "select") {
+                    value = field.value;
+
+                    if (!def.options.includes(value)) {
+                        updatePulsingFields(item);
+                        return;
+                    }
+
+                } else if (def.type === "array") {
+                    value = parseNumberArray(field.value);
+
+                    if (!value?.length) {
+                        updatePulsingFields(item);
+                        alert("Enter a comma-separated list of valid numbers.");
+                        return;
+                    }
+
+                } else {
+                    value = field.valueAsNumber;
+
+                    if (
+                        !Number.isFinite(value) ||
+                        value < (def.min ?? -Infinity) ||
+                        value > (def.max ?? Infinity)
+                    ) {
+                        updatePulsingFields(item);
+                        return;
+                    }
+                }
+
+                item.config = normalisePulsingConfig({
+                    ...item.config,
+                    [key]: value
+                });
+
+                updatePulsingFields(item);
+                commitPulsing();
+            });
+        }
+
+
+        // Card buttons.
+        const actions = createElement(
+            "div",
+            {},
+            ["pulsing-actions"]
+        );
+
+        const deleteButton = createElement("button", {
+            type: "button",
+            textContent: "Delete"
+        });
+
+        const insertButton = createElement("button", {
+            type: "button",
+            textContent: "Insert After"
+        });
+
+        const musicButton = createElement("button", {
+            type: "button",
+            textContent: "Open Music Editor",
+            hidden: true
+        });
+
+        item.musicButton = musicButton;
+        item.updateFields = () => updatePulsingFields(item);
+
+
+        deleteButton.addEventListener("click", () => {
+            const index = pulsingItems.indexOf(item);
+
+            if (index < 0) return;
+
+            pulsingItems.splice(index, 1);
+            element.remove();
+
+            syncFirstPulsingMode();
+            commitPulsing();
+        });
+
+
+        insertButton.addEventListener("click", () => {
+            const index = pulsingItems.indexOf(item);
+
+            if (index < 0) return;
+
+            const speed = getInheritedStartSpeed(
+                pulsingItems,
+                index + 1
+            );
+
+            addPulsingMode(index + 1, {
+                mode: Object.keys(getPulsingSchema())[0],
+                min_speed: speed
+            });
+        });
+
+
+        musicButton.addEventListener("click", () => {
+            if (item.config.mode === "ASYNC-MUSIC") {
+                openMusicEditor(
+                    item,
+                    () => commitPulsing()
+                );
+            }
+        });
+
+        actions.append(
+            deleteButton,
+            insertButton,
+            musicButton
+        );
+
+        element.appendChild(actions);
+
+
+        const before = pulsingItems[insertIndex]?.element ?? null;
+
+        pulsingItems.splice(insertIndex, 0, item);
+        pulsingEditor.insertBefore(element, before);
+
+        updatePulsingFields(item);
+        syncFirstPulsingMode();
+
+        if (updateSimulation) {
+            commitPulsing();
+        }
+    }
+
+
+    // Load existing pulsing entries.
+    for (const config of currentTrain.pulsing) {
+        addPulsingMode(pulsingItems.length, config, false);
+    }
+
+    commitPulsing(false);
+
+    refreshPulsingHighlight = speed =>
+        setPulsingHighlight(
+            pulsingItems,
+            Number(speed ?? lastSpeedKmh)
+        );
+
+    document.getElementById("add-pulsing").onclick = () =>
+        addPulsingMode(pulsingItems.length);
+
+
+    // ----------------------------------------------------
+    // Traction changes.
+    // ----------------------------------------------------
+
+    function updateTractionButtons() {
+        document.querySelectorAll("[data-traction]").forEach(button => {
+            const active =
+                button.dataset.traction === currentTrain.traction;
+
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+    }
+
+
+    function changeTraction(newTraction) {
+        newTraction = normaliseTraction(newTraction);
+
+        if (newTraction === currentTrain.traction) return;
+
+        if (
+            currentTrain.pulsing.length > 0 &&
+            !confirm("Changing traction will clear the pulsing configuration. Continue?")
+        ) {
+            updateTractionButtons();
+            return;
+        }
+
+        const updated = structuredClone(currentTrain);
+
+        updated.traction = newTraction;
+        updated.pulsing = [];
+
+        loadEditor(trainName, updated);
+    }
+
+
+    document.querySelectorAll("[data-traction]").forEach(button => {
+        button.onclick = () =>
+            changeTraction(button.dataset.traction);
+    });
+
+    updateTractionButtons();
+
+    loadTrainToSim();
+
+} // End loadEditor
+
+
+// ========================================================
+// MUSIC EDITOR
+// ========================================================
+
+
+
+
+
+
+
+// ========================================================
+// MUSIC EDITOR
+// ========================================================////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+// ========================================================
+// MUSIC EDITOR
+// ========================================================
+
+
+// Note lengths are expressed as multiples of a quarter note.
+// 3/4, 1.5 and 3 are dotted note values.
+
+const MUSIC_NOTE_LENGTHS = [
+    { key: "demisemiquaver", label: "1/8", ratio: 0.125, dotted: false },
+    { key: "semiquaver", label: "1/4", ratio: 0.25, dotted: false },
+    { key: "quaver", label: "1/2", ratio: 0.5, dotted: false },
+    { key: "dottedQuaver", label: "3/4", ratio: 0.75, dotted: true },
+    { key: "crotchet", label: "1", ratio: 1, dotted: false },
+    { key: "dottedCrotchet", label: "1.5", ratio: 1.5, dotted: true },
+    { key: "minim", label: "2", ratio: 2, dotted: false },
+    { key: "dottedMinim", label: "3", ratio: 3, dotted: true },
+    { key: "semibreve", label: "4", ratio: 4, dotted: false }
+];
+
+const MUSIC_NOTE_NAMES = [
+    "C", "C#", "D", "D#", "E", "F",
+    "F#", "G", "G#", "A", "A#", "B"
+];
+
+const MUSIC_NOTE_NAMES_FLATS = [
+    "C", "Db", "D", "Eb", "E", "F",
+    "Gb", "G", "Ab", "A", "Bb", "B"
+];
+
+const MUSIC_WHITE_KEYS = [0, 2, 4, 5, 7, 9, 11];
+
+// C2 through F#6.
+const MUSIC_FIRST_MIDI = 36;
+const MUSIC_LAST_MIDI = 90;
+
+// Equal temperament plus useful five-limit just-intonation
+// profiles for all major and minor keys.
+const MUSIC_TUNING_PROFILES = [
+    { label: "Universal · 12-TET", mode: "equal", root: null },
+
+    { label: "C Major · Just", mode: "major", root: 0 },
+    { label: "G Major · Just", mode: "major", root: 7 },
+    { label: "D Major · Just", mode: "major", root: 2 },
+    { label: "A Major · Just", mode: "major", root: 9 },
+    { label: "E Major · Just", mode: "major", root: 4 },
+    { label: "B Major · Just", mode: "major", root: 11 },
+    { label: "F# Major · Just", mode: "major", root: 6 },
+    { label: "Db Major · Just", mode: "major", root: 1 },
+    { label: "Ab Major · Just", mode: "major", root: 8 },
+    { label: "Eb Major · Just", mode: "major", root: 3 },
+    { label: "Bb Major · Just", mode: "major", root: 10 },
+    { label: "F Major · Just", mode: "major", root: 5 },
+
+    { label: "A Minor · Just", mode: "minor", root: 9 },
+    { label: "E Minor · Just", mode: "minor", root: 4 },
+    { label: "B Minor · Just", mode: "minor", root: 11 },
+    { label: "F# Minor · Just", mode: "minor", root: 6 },
+    { label: "C# Minor · Just", mode: "minor", root: 1 },
+    { label: "G# Minor · Just", mode: "minor", root: 8 },
+    { label: "D# Minor · Just", mode: "minor", root: 3 },
+    { label: "Bb Minor · Just", mode: "minor", root: 10 },
+    { label: "F Minor · Just", mode: "minor", root: 5 },
+    { label: "C Minor · Just", mode: "minor", root: 0 },
+    { label: "G Minor · Just", mode: "minor", root: 7 },
+    { label: "D Minor · Just", mode: "minor", root: 2 }
+];
+
+// Five-limit chromatic ratios relative to the tonic.
+const MUSIC_JUST_RATIOS = [
+    1,
+    16 / 15,
+    9 / 8,
+    6 / 5,
+    5 / 4,
+    4 / 3,
+    45 / 32,
+    3 / 2,
+    8 / 5,
+    5 / 3,
+    9 / 5,
+    15 / 8
+];
+
+let musicNotes = [];
+
+let musicSelectedLength = "crotchet";
+let musicQuarterMs = 500;
+let musicTuningIndex = 0;
+let musicNotation = "sharps";
+
+let musicHeldMidi = null;
+let musicHeldPointer = null;
+let musicLastPreviewFrequency = 440;
+
+let musicPlaybackID = 0;
+let musicPlayingNoteIndex = -1;
+
+let musicCanvasButtons = [];
+let musicWhiteKeys = [];
+let musicBlackKeys = [];
+
+
+// ========================================================
+// NOTE CONVERSION
+// ========================================================
+
+function musicMidiToFrequency(midi) {
+    return 440 * Math.pow(2, (midi - 69) / 12);
+}
+
+
+function musicFrequencyToMidi(frequency) {
+    if (!Number.isFinite(frequency) || frequency <= 0) {
+        return null;
+    }
+
+    return Math.round(
+        69 + 12 * Math.log2(frequency / 440)
+    );
+}
+
+
+function musicGetPitch(midi) {
+    const names = musicNotation === "flats"
+        ? MUSIC_NOTE_NAMES_FLATS
+        : MUSIC_NOTE_NAMES;
+
+    const pitch = names[midi % 12];
+
+    return {
+        name: pitch,
+        letter: pitch[0],
+        accidental: pitch.length > 1,
+        accidentalSymbol: pitch.length > 1
+            ? (musicNotation === "flats" ? "♭" : "♯")
+            : "",
+        octave: Math.floor(midi / 12) - 1
+    };
+}
+
+
+function musicGetLength(key) {
+    return MUSIC_NOTE_LENGTHS.find(note => note.key === key)
+        ?? MUSIC_NOTE_LENGTHS[4];
+}
+
+
+function musicGetLengthFromDuration(duration) {
+    let best = MUSIC_NOTE_LENGTHS[4];
+    let bestError = Infinity;
+
+    for (const note of MUSIC_NOTE_LENGTHS) {
+        const expected = musicQuarterMs * note.ratio;
+
+        const error = Math.abs(
+            Math.log(Math.max(1, duration) / expected)
+        );
+
+        if (error < bestError) {
+            bestError = error;
+            best = note;
+        }
+    }
+
+    return best;
+}
+
+
+function musicGetDuration(length) {
+    return Math.max(
+        1,
+        Math.round(
+            musicQuarterMs * musicGetLength(length).ratio
+        )
+    );
+}
+
+
+// ========================================================
+// TEMPO ESTIMATION ON IMPORT
+// ========================================================
+
+// Estimate a quarter-note duration from imported milliseconds.
+// Assumes a modern pop tempo, approximately 70-180 BPM.
+
+function musicEstimateTempo(beats) {
+    const durations = beats
+        .map(Number)
+        .filter(value =>
+            Number.isFinite(value) && value > 0
+        );
+
+    if (!durations.length) return 500;
+
+    let bestQuarter = 500;
+    let bestScore = Infinity;
+
+    for (let bpm = 70; bpm <= 180; bpm += 0.5) {
+        const quarter = 60000 / bpm;
+
+        let score = 0;
+
+        for (const duration of durations) {
+            let bestError = Infinity;
+
+            for (const note of MUSIC_NOTE_LENGTHS) {
+                const expected = quarter * note.ratio;
+
+                const error = Math.abs(
+                    Math.log(duration / expected)
+                );
+
+                bestError = Math.min(bestError, error);
+            }
+
+            score += bestError * bestError;
+        }
+
+        score /= durations.length;
+
+        // Slight preference for common pop tempos.
+        score += Math.pow((bpm - 120) / 100, 2) * 0.0001;
+
+        if (score < bestScore) {
+            bestScore = score;
+            bestQuarter = quarter;
+        }
+    }
+
+    return bestQuarter;
+}
+
+
+// ========================================================
+// KEY ESTIMATION ON IMPORT
+// ========================================================
+
+// Uses pitch-class distribution to estimate the most likely
+// major or minor key. Short melodies may remain ambiguous.
+
+function musicEstimateTuning(frequencies, beats) {
+    const notes = frequencies
+        .map((frequency, index) => ({
+            midi: musicFrequencyToMidi(Number(frequency)),
+            duration: Math.max(
+                1,
+                Number(beats[index]) || 1
+            )
+        }))
+        .filter(note => note.midi !== null);
+
+    if (notes.length < 4) return 0;
+
+    const chroma = new Array(12).fill(0);
+
+    for (const note of notes) {
+        const weight = Math.sqrt(
+            Math.max(0.1, note.duration / 500)
+        );
+
+        chroma[note.midi % 12] += weight;
+    }
+
+    const majorProfile = [
+        6.35, 2.23, 3.48, 2.33, 4.38, 4.09,
+        2.52, 5.19, 2.39, 3.66, 2.29, 2.88
+    ];
+
+    const minorProfile = [
+        6.33, 2.68, 3.52, 5.38, 2.60, 3.53,
+        2.54, 4.75, 3.98, 2.69, 3.34, 3.17
+    ];
+
+    let bestIndex = 0;
+    let bestScore = -Infinity;
+
+    for (
+        let index = 1;
+        index < MUSIC_TUNING_PROFILES.length;
+        index++
+    ) {
+        const candidate = MUSIC_TUNING_PROFILES[index];
+
+        const profile = candidate.mode === "major"
+            ? majorProfile
+            : minorProfile;
+
+        let score = 0;
+
+        for (let pitch = 0; pitch < 12; pitch++) {
+            const relativePitch =
+                (pitch - candidate.root + 12) % 12;
+
+            score += chroma[pitch] * profile[relativePitch];
+        }
+
+        // Give the final note some additional weight as
+        // pop melodies commonly finish on the tonic.
+        const finalMidi = notes[notes.length - 1].midi;
+
+        if (finalMidi % 12 === candidate.root) {
+            score += chroma[candidate.root] * 1.5;
+        }
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestIndex = index;
+        }
+    }
+
+    return bestIndex;
+}
+
+
+// ========================================================
+// KEY-SPECIFIC FREQUENCY TUNING
+// ========================================================
+
+function musicTuneFrequency(midi) {
+    const profile =
+        MUSIC_TUNING_PROFILES[musicTuningIndex];
+
+    if (!profile || profile.mode === "equal") {
+        return musicMidiToFrequency(midi);
+    }
+
+    const interval =
+        (midi - profile.root + 12) % 12;
+
+    const rootMidi = midi - interval;
+
+    return (
+        musicMidiToFrequency(rootMidi) *
+        MUSIC_JUST_RATIOS[interval]
+    );
+}
+
+
+function musicApplyTuning() {
+    for (const note of musicNotes) {
+        if (!note.rest && note.midi !== null) {
+            note.frequency = musicTuneFrequency(note.midi);
+        }
+    }
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+// ========================================================
+// SAVE MUSIC CONFIGURATION
+// ========================================================
+
+function syncMusicData() {
+    if (!activeMusicSession) return;
+
+    activeMusicSession.data.frequencies =
+        musicNotes.map(note => note.frequency);
+
+    activeMusicSession.data.beats =
+        musicNotes.map(note => note.duration);
+}
+
+
+// ========================================================
+// NOTES AND RESTS
+// ========================================================
+
+function addMusicNote(midi) {
+    musicNotes.push({
+        midi,
+        frequency: musicTuneFrequency(midi),
+        duration: musicGetDuration(musicSelectedLength),
+        length: musicSelectedLength,
+        rest: false
+    });
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function addMusicRest() {
+    musicNotes.push({
+        midi: null,
+        frequency: 0,
+        duration: musicGetDuration(musicSelectedLength),
+        length: musicSelectedLength,
+        rest: true
+    });
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function deleteMusicNote() {
+    if (!musicNotes.length) return;
+
+    musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
+
+    musicNotes.pop();
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+// ========================================================
+// TEMPO CONTROL
+// ========================================================
+
+function changeMusicTempo(direction) {
+    const currentBpm = 60000 / musicQuarterMs;
+
+    const newBpm = Math.max(
+        40,
+        Math.min(240, currentBpm + direction)
+    );
+
+    musicQuarterMs = 60000 / newBpm;
+
+    // Keep the selected note values, but recalculate
+    // their millisecond durations using the new tempo.
+    for (const note of musicNotes) {
+        note.duration = musicGetDuration(note.length);
+    }
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+// ========================================================
+// AUDIO
+// ========================================================
+
+// Motor frequency is deliberately kept at zero.
+// The musical note is supplied as the DC-PWM carrier.
+// A 50% duty cycle produces the audible square-wave tone.
+
+function sendMusicTone(frequency, power) {
+    if (!soundUpdateFunction) return;
+
+    const safeFrequency =
+        Number.isFinite(frequency) && frequency > 0
+            ? frequency
+            : 440;
+
+    soundUpdateFunction({
+        mode: "DC-PWM",
+        frequency: 0,
+        carrier_frequency: safeFrequency,
+        pulses: 1,
+        power
+    }, 1);
+}
+
+
+async function previewMusicKey(midi) {
+    const session = activeMusicSession;
+    const noteFrequency = musicTuneFrequency(midi);
+
+    musicLastPreviewFrequency = noteFrequency;
+
+    try {
+        await ensureSoundStarted();
+
+        if (
+            activeMusicSession !== session ||
+            musicHeldMidi !== midi
+        ) {
+            return;
+        }
+
+        sendMusicTone(noteFrequency, 0.5);
+
+    } catch (error) {
+        console.error("Could not play keyboard note:", error);
+    }
+}
+
+
+function releaseMusicKey() {
+    if (musicHeldMidi === null) return;
+
+    sendMusicTone(musicLastPreviewFrequency, 0);
+
+    musicHeldMidi = null;
+    musicHeldPointer = null;
+
+    drawMusicEditor();
+}
+
+
+// ========================================================
+// PLAYBACK STOP
+// ========================================================
+
+function stopMusicSequence() {
+    musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
+
+    sendMusicTone(440, 0);
+
+    drawMusicEditor();
+}
+
+
+// ========================================================
+// PLAY ONE ROUND OF THE MUSIC
+// ========================================================
+
+async function playMusicSequence() {
+    if (!musicNotes.length || !activeMusicSession) return;
+
+    const session = activeMusicSession;
+    const playbackID = ++musicPlaybackID;
+
+    const sequence = musicNotes.map(note => ({ ...note }));
+
+    if (musicHeldMidi !== null) {
+        releaseMusicKey();
+    }
+
+    musicPlayingNoteIndex = -1;
+    drawMusicEditor();
+
+    try {
+        await ensureSoundStarted();
+
+        if (
+            activeMusicSession !== session ||
+            playbackID !== musicPlaybackID ||
+            !soundUpdateFunction
+        ) {
+            return;
+        }
+
+        for (let i = 0; i < sequence.length; i++) {
+            if (
+                playbackID !== musicPlaybackID ||
+                activeMusicSession !== session
+            ) {
+                break;
+            }
+
+            const note = sequence[i];
+
+            // Highlight the note currently being played.
+            musicPlayingNoteIndex = i;
+            drawMusicEditor();
+
+            if (note.rest || note.frequency <= 0) {
+                sendMusicTone(440, 0);
+            } else {
+                sendMusicTone(note.frequency, 0.5);
+            }
+
+            await new Promise(resolve =>
+                setTimeout(resolve, note.duration)
+            );
+        }
+
+        if (
+            playbackID === musicPlaybackID &&
+            activeMusicSession === session
+        ) {
+            sendMusicTone(440, 0);
+            musicPlayingNoteIndex = -1;
+            drawMusicEditor();
+        }
+
+    } catch (error) {
+        console.error("Music playback failed:", error);
+
+        if (playbackID === musicPlaybackID) {
+            musicPlayingNoteIndex = -1;
+            drawMusicEditor();
+        }
+    }
+}
+
+
+// ========================================================
+// DRAW NOTE SYMBOLS
+// ========================================================
+
+function drawMusicNoteSymbol(
+    ctx,
+    x,
+    y,
+    note,
+    colour,
+    scale = 1
+) {
+    const ratio = note.ratio;
+
+    // Minims and longer have open note heads.
+    const open = ratio >= 2;
+
+    // All notes shorter than a semibreve have stems.
+    const hasStem = ratio < 4;
+
+    // Number of flags for shorter notes.
+    const flagCount =
+        ratio <= 0.125 ? 3 :
+        ratio <= 0.25 ? 2 :
+        ratio < 1 ? 1 : 0;
+
+    ctx.save();
+
+    ctx.strokeStyle = colour;
+    ctx.fillStyle = colour;
+    ctx.lineWidth = 1.7 * scale;
+    ctx.lineCap = "round";
+
+    // Note head.
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x,
+        y,
+        6.5 * scale,
+        4.5 * scale,
+        -0.25,
+        0,
+        Math.PI * 2
+    );
+
+    if (open) {
+        ctx.stroke();
+    } else {
+        ctx.fill();
+    }
+
+    // Stem.
+    if (hasStem) {
+        const stemX = x + 5.5 * scale;
+        const stemTop = y - 25 * scale;
+
+        ctx.beginPath();
+        ctx.moveTo(stemX, y);
+        ctx.lineTo(stemX, stemTop);
+        ctx.stroke();
+
+        // Flags: one for quaver, two for semiquaver,
+        // three for demisemiquaver.
+        for (let i = 0; i < flagCount; i++) {
+            const flagY = stemTop + i * 5 * scale;
+
+            ctx.beginPath();
+            ctx.moveTo(stemX, flagY);
+
+            ctx.quadraticCurveTo(
+                stemX + 13 * scale,
+                flagY + 7 * scale,
+                stemX + 7 * scale,
+                flagY + 14 * scale
+            );
+
+            ctx.stroke();
+        }
+    }
+
+    // Dotted notes.
+    if (note.dotted) {
+        ctx.beginPath();
+
+        ctx.arc(
+            x + 13 * scale,
+            y - 2 * scale,
+            2.2 * scale,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+
+function drawMusicRestSymbol(ctx, x, y, note, colour) {
+    ctx.save();
+
+    ctx.strokeStyle = colour;
+    ctx.fillStyle = colour;
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    if (note.ratio >= 4) {
+        // Whole-note and longer rests.
+        ctx.fillRect(
+            x - 7,
+            y + 1,
+            14,
+            5
+        );
+
+        if (note.ratio >= 8) {
+            ctx.fillStyle = colour;
+            ctx.font = "10px Arial";
+            ctx.fillText(
+                note.ratio === 8 ? "2" :
+                note.ratio === 12 ? "3" : "4",
+                x + 11,
+                y + 7
+            );
+        }
+
+    } else if (note.ratio >= 2) {
+        // Half-note rest.
+        ctx.fillRect(
+            x - 7,
+            y - 5,
+            14,
+            5
+        );
+
+    } else {
+        // Quarter and eighth-note rests.
+        ctx.beginPath();
+        ctx.moveTo(x + 3, y - 15);
+        ctx.lineTo(x - 3, y - 5);
+        ctx.lineTo(x + 3, y + 2);
+        ctx.lineTo(x - 3, y + 10);
+        ctx.lineTo(x + 2, y + 15);
+        ctx.stroke();
+
+        if (note.ratio === 0.5) {
+            ctx.beginPath();
+            ctx.arc(x + 7, y - 9, 2, 0, Math.PI * 2);
+            ctx.fill();
+        }
+    }
+
+    if (note.dotted) {
+        ctx.beginPath();
+        ctx.arc(x + 12, y - 2, 2.2, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+
+// ========================================================
+// DRAW TREBLE AND BASS STAFF
+// ========================================================
+
+function drawMusicStaff(ctx, top, clef, width, gap) {
+    ctx.save();
+
+    ctx.strokeStyle = "#b9b79c";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i < 5; i++) {
+        const y = top + i * gap;
+
+        ctx.beginPath();
+        ctx.moveTo(48, y);
+        ctx.lineTo(width - 12, y);
+        ctx.stroke();
+    }
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 10px Arial";
+
+    ctx.fillText(
+        clef === "treble" ? "TREBLE" : "BASS",
+        5,
+        top - 5
+    );
+
+    ctx.font = "39px serif";
+
+    ctx.fillText(
+        clef === "treble" ? "𝄞" : "𝄢",
+        8,
+        top + gap * 4 + 5
+    );
+
+    ctx.restore();
+}
+
+
+function drawMusicScoreNote(
+    ctx,
+    note,
+    x,
+    trebleTop,
+    bassTop,
+    gap,
+    highlighted = false
+) {
+    const noteColour = highlighted
+        ? "#00d9ff"
+        : "#f0efce";
+
+    if (note.rest || note.frequency <= 0) {
+        drawMusicRestSymbol(
+            ctx,
+            x,
+            trebleTop + gap * 2,
+            musicGetLength(note.length),
+            noteColour
+        );
+
+        return;
+    }
+
+    const midi = note.midi ??
+        musicFrequencyToMidi(note.frequency);
+
+    if (midi === null) return;
+
+    const pitch = musicGetPitch(midi);
+
+    const treble = midi >= 60;
+    const top = treble ? trebleTop : bassTop;
+    const bottomY = top + 4 * gap;
+
+    const letterIndex = {
+        C: 0,
+        D: 1,
+        E: 2,
+        F: 3,
+        G: 4,
+        A: 5,
+        B: 6
+    }[pitch.letter];
+
+    const absoluteStep =
+        pitch.octave * 7 + letterIndex;
+
+    // Treble bottom line = E4.
+    // Bass bottom line = G2.
+    const baseStep = treble
+        ? 4 * 7 + 2
+        : 2 * 7 + 4;
+
+    const stepDifference =
+        absoluteStep - baseStep;
+
+    const y = bottomY - stepDifference * gap / 2;
+
+    // Ledger lines.
+    ctx.save();
+
+    ctx.strokeStyle = "#b9b79c";
+    ctx.lineWidth = 1;
+
+    if (stepDifference >= 10) {
+        for (let s = 10; s <= stepDifference; s += 2) {
+            const ledgerY = bottomY - s * gap / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x - 10, ledgerY);
+            ctx.lineTo(x + 10, ledgerY);
+            ctx.stroke();
+        }
+
+    } else if (stepDifference <= -2) {
+        for (let s = -2; s >= stepDifference; s -= 2) {
+            const ledgerY = bottomY - s * gap / 2;
+
+            ctx.beginPath();
+            ctx.moveTo(x - 10, ledgerY);
+            ctx.lineTo(x + 10, ledgerY);
+            ctx.stroke();
+        }
+    }
+
+    ctx.restore();
+
+    // Sharps or flats are purely visual notation choices.
+    if (pitch.accidental) {
+        ctx.fillStyle = noteColour;
+        ctx.font = "19px serif";
+
+        ctx.fillText(
+            pitch.accidentalSymbol,
+            x - 17,
+            y + 6
+        );
+    }
+
+    drawMusicNoteSymbol(
+        ctx,
+        x,
+        y,
+        musicGetLength(note.length),
+        noteColour,
+        0.85
+    );
+}
+
+
+// ========================================================
+// CANVAS BUTTONS
+// ========================================================
+
+function addMusicCanvasButton(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    label,
+    action,
+    selected = false,
+    fontSize = 11
+) {
+    ctx.save();
+
+    ctx.fillStyle = selected ? "#494326" : "#252525";
+    ctx.strokeStyle = selected ? "#f0dc65" : "#777";
+    ctx.lineWidth = selected ? 2 : 1;
+
+    ctx.fillRect(x, y, width, height);
+    ctx.strokeRect(x, y, width, height);
+
+    ctx.fillStyle = "#f0efce";
+    ctx.font = `bold ${fontSize}px Arial`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(
+        label,
+        x + width / 2,
+        y + height / 2
+    );
+
+    ctx.restore();
+
+    musicCanvasButtons.push({
+        x,
+        y,
+        width,
+        height,
+        action
+    });
+}
+
+
+// ========================================================
+// NOTE LENGTH SELECTOR
+// ========================================================
+
+function drawMusicToolbar(ctx, width) {
+    const margin = 7;
+    const gap = 3;
+    const y = 7;
+    const height = 45;
+
+    const buttonWidth =
+        (width - margin * 2 - gap * 8) / 9;
+
+    MUSIC_NOTE_LENGTHS.forEach((note, index) => {
+        const x = margin + index * (buttonWidth + gap);
+
+        const selected =
+            musicSelectedLength === note.key;
+
+        ctx.save();
+
+        ctx.fillStyle = selected ? "#494326" : "#252525";
+        ctx.strokeStyle = selected ? "#f0dc65" : "#777";
+        ctx.lineWidth = selected ? 2 : 1;
+
+        ctx.fillRect(x, y, buttonWidth, height);
+        ctx.strokeRect(x, y, buttonWidth, height);
+
+        drawMusicNoteSymbol(
+            ctx,
+            x + buttonWidth / 2 - 2,
+            y + 16,
+            note,
+            "#f0efce",
+            0.55
+        );
+
+        ctx.fillStyle = "#f0efce";
+        ctx.font = "bold 10px Arial";
+        ctx.textAlign = "center";
+
+        ctx.fillText(
+            note.label,
+            x + buttonWidth / 2,
+            y + 36
+        );
+
+        ctx.restore();
+
+        musicCanvasButtons.push({
+            x,
+            y,
+            width: buttonWidth,
+            height,
+            action: () => {
+                musicSelectedLength = note.key;
+                drawMusicEditor();
+            }
+        });
+    });
+}
+
+
+// ========================================================
+// REST AND DELETE BUTTONS
+// ========================================================
+
+// Rest and Delete sit side by side directly below the score.
+// Both buttons have exactly the same dimensions.
+
+function drawMusicRestDeleteButtons(ctx, width, y) {
+    const buttonWidth = Math.min(130, (width - 36) / 2);
+    const buttonHeight = 38;
+    const gap = 10;
+
+    const totalWidth = buttonWidth * 2 + gap;
+    const startX = (width - totalWidth) / 2;
+
+    const restX = startX;
+    const deleteX = startX + buttonWidth + gap;
+
+    // Rest button.
+    ctx.save();
+
+    ctx.fillStyle = "#252525";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        restX,
+        y,
+        buttonWidth,
+        buttonHeight
+    );
+
+    ctx.strokeRect(
+        restX,
+        y,
+        buttonWidth,
+        buttonHeight
+    );
+
+    drawMusicRestSymbol(
+        ctx,
+        restX + buttonWidth * 0.28,
+        y + buttonHeight / 2,
+        musicGetLength(musicSelectedLength),
+        "#f0efce"
+    );
+
+    ctx.fillStyle = "#f0efce";
+    ctx.font = "bold 12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(
+        "REST",
+        restX + buttonWidth * 0.7,
+        y + buttonHeight / 2
+    );
+
+    ctx.restore();
+
+    musicCanvasButtons.push({
+        x: restX,
+        y,
+        width: buttonWidth,
+        height: buttonHeight,
+        action: addMusicRest
+    });
+
+    // Delete button.
+    addMusicCanvasButton(
+        ctx,
+        deleteX,
+        y,
+        buttonWidth,
+        buttonHeight,
+        "DELETE",
+        deleteMusicNote,
+        false,
+        12
+    );
+}
+
+
+// ========================================================
+// TUNING SELECTOR
+// ========================================================
+
+// The tuning selector now occupies part of the main control bar.
+
+function drawMusicTuningSelector(ctx, x, y, width, height) {
+    const arrowWidth = Math.min(25, width * 0.17);
+
+    ctx.save();
+
+    ctx.fillStyle = "#171717";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(x, y, width, height);
+    ctx.strokeRect(x, y, width, height);
+
+    ctx.fillStyle = "#b9b79c";
+    ctx.font = "bold 9px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "TUNING",
+        x + width / 2,
+        y + 11
+    );
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 11px Arial";
+
+    ctx.fillText(
+        MUSIC_TUNING_PROFILES[musicTuningIndex].label,
+        x + width / 2,
+        y + 30,
+        Math.max(10, width - arrowWidth * 2 - 8)
+    );
+
+    ctx.restore();
+
+    addMusicCanvasButton(
+        ctx,
+        x + 2,
+        y + 4,
+        arrowWidth,
+        height - 8,
+        "◀",
+        () => {
+            musicTuningIndex =
+                (musicTuningIndex - 1 + MUSIC_TUNING_PROFILES.length) %
+                MUSIC_TUNING_PROFILES.length;
+
+            musicApplyTuning();
+        },
+        false,
+        10
+    );
+
+    addMusicCanvasButton(
+        ctx,
+        x + width - arrowWidth - 2,
+        y + 4,
+        arrowWidth,
+        height - 8,
+        "▶",
+        () => {
+            musicTuningIndex =
+                (musicTuningIndex + 1) %
+                MUSIC_TUNING_PROFILES.length;
+
+            musicApplyTuning();
+        },
+        false,
+        10
+    );
+}
+
+
+// ========================================================
+// PLAY / STOP / TEMPO / TUNING / NOTATION CONTROL BAR
+// ========================================================
+
+function drawMusicControls(ctx, width, y) {
+    const margin = 8;
+    const panelHeight = 60;
+    const gap = 5;
+
+    const panelX = margin;
+    const panelWidth = width - margin * 2;
+
+    ctx.save();
+
+    ctx.fillStyle = "#222";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        panelX,
+        y,
+        panelWidth,
+        panelHeight
+    );
+
+    ctx.strokeRect(
+        panelX,
+        y,
+        panelWidth,
+        panelHeight
+    );
+
+    ctx.restore();
+
+    const innerX = panelX + 6;
+    const innerWidth = panelWidth - 12 - gap * 3;
+
+    const playStopWidth = innerWidth * 0.24;
+    const tempoWidth = innerWidth * 0.25;
+    const tuningWidth = innerWidth * 0.36;
+    const viewWidth =
+        innerWidth - playStopWidth - tempoWidth - tuningWidth;
+
+    const buttonY = y + 8;
+    const buttonHeight = 44;
+
+    let x = innerX;
+
+    // PLAY and STOP buttons.
+    const playStopGap = 3;
+    const individualButtonWidth =
+        (playStopWidth - playStopGap) / 2;
+
+    addMusicCanvasButton(
+        ctx,
+        x,
+        buttonY,
+        individualButtonWidth,
+        buttonHeight,
+        "PLAY",
+        playMusicSequence,
+        false,
+        11
+    );
+
+    addMusicCanvasButton(
+        ctx,
+        x + individualButtonWidth + playStopGap,
+        buttonY,
+        individualButtonWidth,
+        buttonHeight,
+        "STOP",
+        stopMusicSequence,
+        false,
+        11
+    );
+
+    x += playStopWidth + gap;
+
+    // Tempo display.
+    ctx.save();
+
+    ctx.fillStyle = "#171717";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        x,
+        buttonY,
+        tempoWidth,
+        buttonHeight
+    );
+
+    ctx.strokeRect(
+        x,
+        buttonY,
+        tempoWidth,
+        buttonHeight
+    );
+
+    const smallWidth = Math.min(22, tempoWidth * 0.2);
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 13px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        `${Math.round(60000 / musicQuarterMs)} BPM`,
+        x + tempoWidth / 2,
+        buttonY + 17
+    );
+
+    ctx.fillStyle = "#b9b79c";
+    ctx.font = "9px Arial";
+
+    ctx.fillText(
+        `${Math.round(musicQuarterMs)} ms / quarter`,
+        x + tempoWidth / 2,
+        buttonY + 33
+    );
+
+    ctx.restore();
+
+    addMusicCanvasButton(
+        ctx,
+        x + 2,
+        buttonY + 8,
+        smallWidth,
+        28,
+        "−",
+        () => changeMusicTempo(-5),
+        false,
+        15
+    );
+
+    addMusicCanvasButton(
+        ctx,
+        x + tempoWidth - smallWidth - 2,
+        buttonY + 8,
+        smallWidth,
+        28,
+        "+",
+        () => changeMusicTempo(5),
+        false,
+        15
+    );
+
+    x += tempoWidth + gap;
+
+    // Tuning sits directly alongside tempo.
+    drawMusicTuningSelector(
+        ctx,
+        x,
+        buttonY,
+        tuningWidth,
+        buttonHeight
+    );
+
+    x += tuningWidth + gap;
+
+    // Notation display.
+    addMusicCanvasButton(
+        ctx,
+        x,
+        buttonY,
+        viewWidth,
+        buttonHeight,
+        musicNotation === "sharps"
+            ? "VIEW SHARPS"
+            : "VIEW FLATS",
+        () => {
+            musicNotation =
+                musicNotation === "sharps"
+                    ? "flats"
+                    : "sharps";
+
+            drawMusicEditor();
+        },
+        false,
+        9
+    );
+}
+
+
+// ========================================================
+// PIANO KEYBOARD
+// ========================================================
+
+function drawMusicKeyboard(ctx, width, keyboardTop, keyboardHeight) {
+    musicWhiteKeys = [];
+    musicBlackKeys = [];
+
+    const whiteCount = 32;
+    const whiteWidth = width / whiteCount;
+    const blackWidth = whiteWidth * 0.62;
+    const blackHeight = keyboardHeight * 0.62;
+
+    let whiteIndex = 0;
+
+    // Draw white keys.
+    for (
+        let midi = MUSIC_FIRST_MIDI;
+        midi <= MUSIC_LAST_MIDI;
+        midi++
+    ) {
+        const pitchClass = midi % 12;
+
+        if (!MUSIC_WHITE_KEYS.includes(pitchClass)) continue;
+
+        const x = whiteIndex * whiteWidth;
+
+        const key = {
+            midi,
+            x,
+            y: keyboardTop,
+            width: whiteWidth,
+            height: keyboardHeight,
+            black: false
+        };
+
+        musicWhiteKeys.push(key);
+
+        ctx.fillStyle =
+            musicHeldMidi === midi ? "#f0dc65" : "#eee";
+
+        ctx.strokeStyle = "#222";
+        ctx.lineWidth = 1;
+
+        ctx.fillRect(
+            x,
+            keyboardTop,
+            whiteWidth,
+            keyboardHeight
+        );
+
+        ctx.strokeRect(
+            x,
+            keyboardTop,
+            whiteWidth,
+            keyboardHeight
+        );
+
+        // Dot indicates notes already entered.
+        if (musicNotes.some(note => note.midi === midi)) {
+            ctx.fillStyle = "#a48d25";
+
+            ctx.beginPath();
+            ctx.arc(
+                x + whiteWidth / 2,
+                keyboardTop + keyboardHeight - 29,
+                3.5,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+
+        // Label each C octave.
+        if (pitchClass === 0) {
+            ctx.fillStyle = "#333";
+
+            ctx.font =
+                `${Math.max(7, Math.min(11, whiteWidth * 0.38))}px Arial`;
+
+            ctx.textAlign = "center";
+
+            ctx.fillText(
+                `C${Math.floor(midi / 12) - 1}`,
+                x + whiteWidth / 2,
+                keyboardTop + keyboardHeight - 7
+            );
+        }
+
+        whiteIndex++;
+    }
+
+    // Draw black keys over white keys.
+    whiteIndex = 0;
+
+    for (
+        let midi = MUSIC_FIRST_MIDI;
+        midi <= MUSIC_LAST_MIDI;
+        midi++
+    ) {
+        const pitchClass = midi % 12;
+
+        if (MUSIC_WHITE_KEYS.includes(pitchClass)) {
+            whiteIndex++;
+            continue;
+        }
+
+        const x = whiteIndex * whiteWidth - blackWidth / 2;
+
+        const key = {
+            midi,
+            x,
+            y: keyboardTop,
+            width: blackWidth,
+            height: blackHeight,
+            black: true
+        };
+
+        musicBlackKeys.push(key);
+
+        ctx.fillStyle =
+            musicHeldMidi === midi ? "#f0dc65" : "#151515";
+
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 1;
+
+        ctx.fillRect(
+            x,
+            keyboardTop,
+            blackWidth,
+            blackHeight
+        );
+
+        ctx.strokeRect(
+            x,
+            keyboardTop,
+            blackWidth,
+            blackHeight
+        );
+
+        if (musicNotes.some(note => note.midi === midi)) {
+            ctx.fillStyle = "#f0dc65";
+
+            ctx.beginPath();
+            ctx.arc(
+                x + blackWidth / 2,
+                keyboardTop + blackHeight - 12,
+                3,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+    }
+}
+
+
+// ========================================================
+// DRAW COMPLETE MUSIC EDITOR
+// ========================================================
+
+function drawMusicEditor() {
+    if (!activeMusicSession) return;
+
+    const width = musicEditorCanvas.clientWidth;
+    const height = musicEditorCanvas.clientHeight;
+
+    if (width <= 0 || height <= 0) return;
+
+    musicCanvasButtons = [];
+
+    musicEditorCtx.clearRect(0, 0, width, height);
+
+    musicEditorCtx.fillStyle = "#101010";
+    musicEditorCtx.fillRect(0, 0, width, height);
+
+    // Note lengths across the top.
+    drawMusicToolbar(musicEditorCtx, width);
+
+    // Piano keyboard at the bottom.
+    const keyboardHeight = Math.min(
+        185,
+        Math.max(90, height * 0.28)
+    );
+
+    const keyboardTop = height - keyboardHeight;
+
+    // Main control bar above the keyboard.
+    const controlsHeight = 60;
+    const controlsY = keyboardTop - controlsHeight - 6;
+
+    // REST and DELETE button dimensions.
+    const restDeleteHeight = 38;
+
+    // Keep the original available score area and staff positioning.
+    const scoreTop = 62;
+    const scoreBottom = controlsY - restDeleteHeight - 13;
+
+    const scoreHeight = Math.max(
+        10,
+        scoreBottom - scoreTop
+    );
+
+    const staffGap = Math.max(
+        3.5,
+        Math.min(9, scoreHeight / 10)
+    );
+
+    const staffGroupHeight = staffGap * 10;
+
+    const staffTop =
+        scoreTop +
+        Math.max(
+            0,
+            (scoreHeight - staffGroupHeight) / 2
+        );
+
+    const bassTop = staffTop + staffGap * 6;
+    const staffBottom = bassTop + staffGap * 4;
+
+    // Position REST and DELETE just below the staff,
+    // allowing room for ledger lines below the bass staff.
+    const restDeleteY = Math.min(
+        staffBottom + staffGap * 2 + 8,
+        controlsY - restDeleteHeight - 6
+    );
+
+    // Treble staff.
+    drawMusicStaff(
+        musicEditorCtx,
+        staffTop,
+        "treble",
+        width,
+        staffGap
+    );
+
+    // Bass staff.
+    drawMusicStaff(
+        musicEditorCtx,
+        bassTop,
+        "bass",
+        width,
+        staffGap
+    );
+
+    // Draw the entered notes.
+    if (musicNotes.length) {
+        const left = 82;
+
+        const availableWidth = Math.max(
+            20,
+            width - left - 18
+        );
+
+        const spacing = availableWidth / musicNotes.length;
+
+        musicNotes.forEach((note, index) => {
+            const x = left + spacing * (index + 0.5);
+
+            drawMusicScoreNote(
+                musicEditorCtx,
+                note,
+                x,
+                staffTop,
+                bassTop,
+                staffGap,
+                index === musicPlayingNoteIndex
+            );
+        });
+
+    } else {
+        musicEditorCtx.fillStyle = "#777";
+        musicEditorCtx.font = "13px Arial";
+        musicEditorCtx.textAlign = "center";
+
+        musicEditorCtx.fillText(
+            "Click the piano keys to enter notes",
+            width / 2,
+            staffBottom + 22
+        );
+    }
+
+    // REST and DELETE directly below the sheet music.
+    drawMusicRestDeleteButtons(
+        musicEditorCtx,
+        width,
+        restDeleteY
+    );
+
+    // PLAY, STOP, TEMPO, TUNING and notation controls.
+    drawMusicControls(
+        musicEditorCtx,
+        width,
+        controlsY
+    );
+
+    // Piano keyboard.
+    drawMusicKeyboard(
+        musicEditorCtx,
+        width,
+        keyboardTop,
+        keyboardHeight
+    );
+}
+
+
+// ========================================================
+// RESIZE
+// ========================================================
+
+function resizeMusicEditorCanvas() {
+    const bounds =
+        musicEditorCanvas.getBoundingClientRect();
+
+    const ratio = window.devicePixelRatio || 1;
+
+    musicEditorCanvas.width = Math.max(
+        1,
+        Math.floor(bounds.width * ratio)
+    );
+
+    musicEditorCanvas.height = Math.max(
+        1,
+        Math.floor(bounds.height * ratio)
+    );
+
+    musicEditorCtx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    drawMusicEditor();
+}
+
+
+// ========================================================
+// POINTER INPUT
+// ========================================================
+
+function getMusicCanvasPosition(event) {
+    const bounds =
+        musicEditorCanvas.getBoundingClientRect();
+
+    return {
+        x: event.clientX - bounds.left,
+        y: event.clientY - bounds.top
+    };
+}
+
+
+function hitMusicButton(point) {
+    return musicCanvasButtons.find(button =>
+        point.x >= button.x &&
+        point.x <= button.x + button.width &&
+        point.y >= button.y &&
+        point.y <= button.y + button.height
+    );
+}
+
+
+function hitMusicKey(point) {
+    // Black keys overlap white keys, so test them first.
+    const black = musicBlackKeys.find(key =>
+        point.x >= key.x &&
+        point.x <= key.x + key.width &&
+        point.y >= key.y &&
+        point.y <= key.y + key.height
+    );
+
+    if (black) return black;
+
+    return musicWhiteKeys.find(key =>
+        point.x >= key.x &&
+        point.x <= key.x + key.width &&
+        point.y >= key.y &&
+        point.y <= key.y + key.height
+    );
+}
+
+
+musicEditorCanvas.addEventListener("pointerdown", event => {
+    if (!activeMusicSession) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    const point = getMusicCanvasPosition(event);
+
+    const button = hitMusicButton(point);
+
+    if (button) {
+        button.action();
+        return;
+    }
+
+    const key = hitMusicKey(point);
+
+    if (!key) return;
+
+    // Stop any sequence currently playing.
+    musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
+
+    if (musicHeldMidi !== null) {
+        releaseMusicKey();
+    }
+
+    musicHeldMidi = key.midi;
+    musicHeldPointer = event.pointerId;
+
+    musicEditorCanvas.setPointerCapture(event.pointerId);
+
+    // Enter the note immediately.
+    addMusicNote(key.midi);
+
+    // Play the key while the pointer remains held.
+    previewMusicKey(key.midi);
+});
+
+
+window.addEventListener("pointerup", event => {
+    if (
+        musicHeldPointer !== null &&
+        event.pointerId === musicHeldPointer
+    ) {
+        releaseMusicKey();
+    }
+});
+
+
+window.addEventListener("pointercancel", event => {
+    if (
+        musicHeldPointer !== null &&
+        event.pointerId === musicHeldPointer
+    ) {
+        releaseMusicKey();
+    }
+});
+
+
+// ========================================================
+// OPEN MUSIC EDITOR
+// ========================================================
+
+function openMusicEditor(item, commitFunction) {
+    if (!item || item.config.mode !== "ASYNC-MUSIC") return;
+
+    activeMusicSession = {
+        item,
+        commitFunction,
+        data: structuredClone(item.config),
+        wasPaused: simulationPaused
+    };
+
+    musicNotes = [];
+
+    musicSelectedLength = "crotchet";
+    musicNotation = "sharps";
+
+    musicQuarterMs = 500;
+    musicTuningIndex = 0;
+
+    musicHeldMidi = null;
+    musicHeldPointer = null;
+    musicPlayingNoteIndex = -1;
+
+    musicPlaybackID++;
+
+    const frequencies = Array.isArray(item.config.frequencies)
+        ? item.config.frequencies
+        : [];
+
+    const beats = Array.isArray(item.config.beats)
+        ? item.config.beats
+        : [];
+
+    // Estimate tempo from imported millisecond durations.
+    musicQuarterMs = musicEstimateTempo(beats);
+
+    // Estimate the likely major/minor key.
+    musicTuningIndex = musicEstimateTuning(
+        frequencies,
+        beats
+    );
+
+    const count = Math.min(
+        frequencies.length,
+        beats.length
+    );
+
+    for (let i = 0; i < count; i++) {
+        const frequency = Number(frequencies[i]);
+        const duration = Number(beats[i]);
+
+        if (
+            !Number.isFinite(frequency) ||
+            !Number.isFinite(duration) ||
+            duration <= 0
+        ) {
+            continue;
+        }
+
+        const rest = frequency <= 0;
+
+        const midi = rest
+            ? null
+            : musicFrequencyToMidi(frequency);
+
+        const length = musicGetLengthFromDuration(duration);
+
+        musicNotes.push({
+            midi,
+            frequency: rest
+                ? 0
+                : musicTuneFrequency(midi),
+            duration: musicGetDuration(length.key),
+            length: length.key,
+            rest
+        });
+    }
+
+    // Stop normal train V/F output while editing.
+    stopDriveOutput();
+
+    simulationPaused = true;
+    previousFrame = performance.now();
+
+    document.querySelector(".app").hidden = true;
+    canvas.hidden = true;
+    document.querySelector(".status-bar").hidden = true;
+
+    displayArea.hidden = true;
+    document.querySelector(".buttons")?.remove();
+
+    musicEditorView.hidden = false;
+
+    requestAnimationFrame(resizeMusicEditorCanvas);
+}
+
+
+// ========================================================
+// CLOSE MUSIC EDITOR AND SAVE
+// ========================================================
+
+function closeMusicEditor() {
+    const session = activeMusicSession;
+
+    if (!session) return;
+
+    musicPlaybackID++;
+    musicPlayingNoteIndex = -1;
+
+    // Stop the preview before returning to the simulator.
+    sendMusicTone(440, 0);
+
+    musicHeldMidi = null;
+    musicHeldPointer = null;
+
+    try {
+        session.data.frequencies =
+            musicNotes.map(note => note.frequency);
+
+        session.data.beats =
+            musicNotes.map(note => note.duration);
+
+        session.item.config = normalisePulsingConfig({
+            ...session.item.config,
+            ...session.data
+        });
+
+        session.item.updateFields();
+        session.commitFunction();
+
+    } catch (error) {
+        console.error("Could not save music editor:", error);
+
+        alert(
+            "Could not save music:\n\n" +
+            (error.message ?? error)
+        );
+
+    } finally {
+        activeMusicSession = null;
+
+        simulationPaused = session.wasPaused;
+        previousFrame = performance.now();
+
+        musicEditorView.hidden = true;
+        document.querySelector(".app").hidden = false;
+        canvas.hidden = false;
+        document.querySelector(".status-bar").hidden = false;
+    }
+}
+
+
+// ========================================================
+// EXIT AND RESIZE
+// ========================================================
+
+musicEditorBack.addEventListener("click", closeMusicEditor);
+
+window.addEventListener("resize", () => {
+    if (!musicEditorView.hidden) {
+        resizeMusicEditorCanvas();
+    }
+});
+
+////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================
+// NEW TRAIN
+// ========================================================
+
+document.getElementById("new").addEventListener("click", () => {
+    setTrainTab("user");
+
+    loadEditor("New Train", {
+        traction: "AC_PWM",
+        audio_mode: "48T",
+
+        wheel_diameter: 0.84,
+        motor_poles: 4,
+
+        gear_ratio_motor_side: 6,
+        gear_ratio_wheel_side: 1,
+
+        max_speed: 120,
+        peak_point: 50,
+
+        decel_cutoff: 1,
+        rolling_resistance: 0.3,
+
+        controls: {
+            acceleration: 2.5,
+            deceleration: 3,
+
+            initial_min_power: 10,
+            initial_max_power: 20,
+
+            peak_min_power: 10,
+            peak_max_power: 100
+        },
+
+        pulsing: [
+            {
+                mode: "ASYNC",
+                min_speed: 0,
+                carrier_frequency: 1500
+            }
+        ]
+    });
+});
+
+
+// ========================================================
+// JSON EXPORT
+// ========================================================
+
+function prepareTrainForSave() {
+    const result = structuredClone(currentTrain);
+
+    delete result.speed_per_motor_hz;
+    delete result.audio;
+
+    result.traction = normaliseTraction(result.traction);
+    result.audio_mode = normaliseAudioMode(audioSelect.value);
+
+    result.wheel_diameter ??= 0.84;
+    result.gear_ratio_motor_side ??= 6;
+    result.gear_ratio_wheel_side ??= 1;
+    result.max_speed ??= 120;
+    result.rolling_resistance ??= 0.3;
+
+    if (result.traction === "DC_RESISTOR") {
+        delete result.motor_poles;
+        delete result.peak_point;
+        delete result.decel_cutoff;
+
+        result.taper_off ??= 1;
+
+        result.controls = normalisePowerControls(
+            result.controls,
+            "DC_RESISTOR"
+        );
+
+    } else {
+        delete result.taper_off;
+
+        result.peak_point ??= 50;
+        result.decel_cutoff ??= 1;
+
+        if (result.traction === "AC_PWM") {
+            result.motor_poles ??= 4;
+        } else {
+            delete result.motor_poles;
+        }
+
+        result.controls = normalisePowerControls(
+            result.controls,
+            result.traction
+        );
+    }
+
+    const pulsing = (
+        Array.isArray(result.pulsing)
+            ? result.pulsing
+            : []
+    ).map(config =>
+        normalisePulsingConfig(config, result)
+    );
+
+    delete result.pulsing;
+    result.pulsing = pulsing;
+
+    return result;
+}
+
+
+// ========================================================
+// SAVE USER TRAIN
+// ========================================================
+
+document.getElementById("save-train").addEventListener("click", () => {
+    let name = trainName.trim();
+
+    const isIncludedName = value =>
+        includedTrains.some(item =>
+            item.toLowerCase() === value.toLowerCase()
+        );
+
+    if (!name || isIncludedName(name)) {
+        name = prompt(
+            "Enter a name for your user train:",
+            name ? `${name} (User)` : "My Train"
+        );
+
+        if (name === null) return;
+
+        name = name.trim();
+    }
+
+    if (!name || isIncludedName(name)) {
+        alert("Please choose a different name from the included trains.");
+        return;
+    }
+
+    const existingIndex = userTrains.findIndex(
+        item => item.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (
+        existingIndex >= 0 &&
+        !confirm(`Replace your saved train "${name}"?`)
+    ) {
+        return;
+    }
+
+    const entry = {
+        name,
+        config: prepareTrainForSave()
+    };
+
+    const updated = [...userTrains];
+
+    if (existingIndex >= 0) {
+        updated[existingIndex] = entry;
+    } else {
+        updated.push(entry);
+    }
+
+    try {
+        localStorage.setItem(
+            USER_TRAINS_KEY,
+            JSON.stringify(updated)
+        );
+
+    } catch (error) {
+        console.error("Could not save user train:", error);
+        alert("Could not save the train in browser storage.");
+        return;
+    }
+
+    userTrains = updated;
+    trainName = name;
+
+    const nameInput = document.getElementById("train-name");
+
+    if (nameInput) {
+        nameInput.value = name;
+    }
+
+    setTrainTab("user");
+    setActiveTrain(name);
+});
+
+
+// ========================================================
+// JSON EDITOR
+// ========================================================
+
+function saveText(text) {
+    document.querySelector(".buttons")?.remove();
+
+    displayArea.hidden = false;
+    displayArea.value = text;
+
+    const buttons = createElement("div", {}, ["buttons"]);
+
+    const copyButton = createElement("button", {
+        type: "button",
+        textContent: "Copy"
+    });
+
+    const closeButton = createElement("button", {
+        type: "button",
+        textContent: "Close"
+    });
+
+    buttons.append(copyButton, closeButton);
+    document.body.appendChild(buttons);
+
+    copyButton.addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(displayArea.value);
+        } catch (error) {
+            console.error("Clipboard write failed:", error);
+            alert("Could not copy. Select the text and copy it manually.");
+        }
+    });
+
+    closeButton.addEventListener("click", () => {
+        displayArea.hidden = true;
+        buttons.remove();
+    });
+
+    return buttons;
+}
+
+
+document.getElementById("save").addEventListener("click", () => {
+    const buttons = saveText(
+        JSON.stringify(prepareTrainForSave(), null, "\t")
+    );
+
+    const loadButton = createElement("button", {
+        type: "button",
+        textContent: "Load JSON"
+    });
+
+    loadButton.addEventListener("click", () => {
+        try {
+            const json = JSON.parse(displayArea.value);
+
+            if (
+                !json ||
+                typeof json !== "object" ||
+                Array.isArray(json)
+            ) {
+                throw new Error("The JSON root must be a train object.");
+            }
+
+            if (
+                json.pulsing != null &&
+                !Array.isArray(json.pulsing)
+            ) {
+                throw new Error("The pulsing property must be an array.");
+            }
+
+            loadEditor("JSON", json);
+
+            displayArea.hidden = true;
+            buttons.remove();
+
+        } catch (error) {
+            alert("Could not load JSON:\n\n" + error.message);
+        }
+    });
+
+    buttons.appendChild(loadButton);
+});
+
+
+// ========================================================
+// DC RESISTOR POWER PROFILE
+// ========================================================
+
+function getResistorPowerFraction(
+    speedKmh,
+    train = currentTrain,
+    throttleValue = throttle,
+    calculatedTaperEndSpeed = null
+) {
+    const notches = (train.pulsing ?? [])
+        .filter(item => item.mode === "NOTCH")
+        .map(item => ({
+            ...item,
+            min_speed: Number(item.min_speed ?? 0)
+        }))
+        .sort((a, b) => a.min_speed - b.min_speed);
+
+    if (!notches.length) return 0;
+
+    const throttlePercent =
+        Math.abs(Number(throttleValue)) * 100;
+
+    if (throttlePercent === 0) return 0;
+
+    const maxSpeed = Number(train.max_speed ?? 120);
+
+    const suppliedTaperEnd =
+        Number(calculatedTaperEndSpeed);
+
+    const finalSpeed =
+        calculatedTaperEndSpeed != null &&
+        Number.isFinite(suppliedTaperEnd)
+            ? suppliedTaperEnd
+            : maxSpeed + REQUIRED_SPEED_MARGIN_KMH;
+
+    if (speedKmh >= finalSpeed) return 0;
+
+    const enteredTaper = Number(train.taper_off ?? 1);
+
+    const taperExponent = Number.isFinite(enteredTaper)
+        ? enteredTaper
+        : 1;
+
+    // Find the highest resistor reached.
+    let reachedIndex = -1;
+
+    for (let i = 0; i < notches.length; i++) {
+        if (speedKmh >= notches[i].min_speed) {
+            reachedIndex = i;
+        } else {
+            break;
+        }
+    }
+
+    if (reachedIndex < 0) return 0;
+
+    // Throttle stages.
+    let stageIndex;
+    let throttleScale;
+
+    if (throttlePercent < 50) {
+        stageIndex = 0;
+        throttleScale = 0.5;
+
+    } else if (throttlePercent <= 90) {
+        stageIndex = reachedIndex;
+        throttleScale = 0.5;
+
+    } else {
+        stageIndex = reachedIndex;
+        throttleScale = 1;
+    }
+
+    const finalIndex = notches.length - 1;
+    const startSpeed = notches[stageIndex].min_speed;
+
+    // R1 = 1/3.
+    // R2 = 2/3.
+    // R3 onwards = full power.
+    const startingPower =
+        Math.min(1, (stageIndex + 1) / 3) *
+        throttleScale;
+
+    const referenceDistance =
+        maxSpeed * 0.10 + 5;
+
+    const thirdStart =
+        notches[Math.min(2, finalIndex)].min_speed;
+
+    const thirdEndpoint =
+        thirdStart + referenceDistance;
+
+    let endpoint;
+
+    // The final notch now reaches the calibrated taper end.
+    if (stageIndex === finalIndex) {
+        endpoint = finalSpeed;
+
+    } else if (stageIndex === 0) {
+        endpoint =
+            startSpeed + referenceDistance / 3;
+
+    } else if (stageIndex === 1) {
+        endpoint =
+            startSpeed + referenceDistance * 2 / 3;
+
+    } else if (stageIndex === 2) {
+        endpoint = thirdEndpoint;
+
+    } else {
+        const stageProgress =
+            (stageIndex - 2) / (finalIndex - 2);
+
+        endpoint =
+            thirdEndpoint +
+            (finalSpeed - thirdEndpoint) * stageProgress;
+    }
+
+    const availableSpeed = endpoint - startSpeed;
+
+    if (availableSpeed <= 0 || speedKmh >= endpoint) {
+        return 0;
+    }
+
+    const progress =
+        (speedKmh - startSpeed) / availableSpeed;
+
+    const remainingPower = Math.pow(
+        1 - progress,
+        taperExponent
+    );
+
+    return startingPower * remainingPower;
+}
+
+
+// ========================================================
+// REMOTE CONTROL FUNCTIONS
+// ========================================================
+
+function VF_control_reset() {
+    stopDriveOutput();
+
+    if (soundStarted) {
+        try {
+            stopSound();
+        } catch (error) {
+            console.warn("Could not stop sound:", error);
+        }
+
+        soundStarted = false;
+    }
+
+    simulationEnabled = false;
+    simulationPaused = false;
+
+    frequency = 0;
+    dcPwmSpeedKmh = 0;
+    dcResistorSpeedKmh = 0;
+
+    power = 0;
+    acceleration = 0;
+    throttle = 0;
+    hill = 1;
+    lastSpeedKmh = 0;
+
+    throttleSlider.value = "0";
+    hillSlider.value = "1";
+    hillValue.textContent = "1.00";
+
+    previousFrame = performance.now();
+
+    globalThis.simulated_speed = 0;
+
+    vfErrorLogged = false;
+
+    refreshPulsingHighlight(0);
+
+    statusText.textContent = "Simulation stopped";
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (!databaseReady) {
+        initialResetRequested = true;
+        pendingDriveName = null;
+    }
+
+    return true;
+}
+
+
+function VF_control_pause() {
+    if (!simulationEnabled) return false;
+    if (simulationPaused) return true;
+
+    simulationPaused = true;
+    previousFrame = performance.now();
+
+    stopDriveOutput();
+
+    if (soundStarted) {
+        try {
+            stopSound();
+        } catch (error) {
+            console.warn("Could not stop sound:", error);
+        }
+
+        soundStarted = false;
+    }
+
+    statusText.textContent =
+        `PAUSED | Speed: ${lastSpeedKmh.toFixed(2)} km/h`;
+
+    return true;
+}
+
+
+function VF_control_resume() {
+    if (!simulationEnabled) return false;
+    if (!simulationPaused) return true;
+
+    simulationPaused = false;
+    previousFrame = performance.now();
+
+    ensureSoundStarted();
+
+    return true;
+}
+
+
+function VF_control_operate(throttle_position, hill_value) {
+    const requestedThrottle = Number(throttle_position);
+    const requestedHill = Number(hill_value);
+
+    if (
+        !Number.isFinite(requestedThrottle) ||
+        !Number.isFinite(requestedHill)
+    ) {
+        return false;
+    }
+
+    throttle = clamp(
+        requestedThrottle,
+        -1,
+        1,
+        0
+    );
+
+    hill = clamp(
+        requestedHill,
+        0,
+        2,
+        1
+    );
+
+    throttleSlider.value = String(throttle);
+    hillSlider.value = String(hill);
+
+    hillValue.textContent = hill.toFixed(2);
+
+    refreshPulsingHighlight(lastSpeedKmh);
+
+    return true;
+}
+
+
+function loadDriveByName(driveName) {
+    const key = String(driveName ?? "")
+        .trim()
+        .toLowerCase();
+
+    if (!key) return false;
+
+    const includedEntry = includedTrainConfigs.get(key);
+
+    if (includedEntry) {
+        setTrainTab("included");
+        loadSelectedTrain(includedEntry.name);
+        return true;
+    }
+
+    const userTrain = userTrains.find(
+        item => item.name.toLowerCase() === key
+    );
+
+    if (userTrain) {
+        setTrainTab("user");
+
+        loadEditor(
+            userTrain.name,
+            structuredClone(userTrain.config)
+        );
+
+        return true;
+    }
+
+    return false;
+}
+
+
+function VF_control_set_drive(driveName) {
+    const name = String(driveName ?? "").trim();
+
+    if (!name) return false;
+
+    // A command may arrive before trains.json has loaded.
+    if (!databaseReady) {
+        pendingDriveName = name;
+        initialResetRequested = false;
+        return true;
+    }
+
+    const loaded = loadDriveByName(name);
+
+    if (!loaded) {
+        console.warn(
+            "VF_control_set_drive: train not found:",
+            name
+        );
+    }
+
+    return loaded;
+}
+
+
+// Expose all remote functions outside this ES module.
+Object.assign(globalThis, {
+    VF_control_set_drive,
+    VF_control_reset,
+    VF_control_pause,
+    VF_control_resume,
+    VF_control_operate
+});
+
+
+// ========================================================
+// EXISTING MOUSE CONTROLS
+// ========================================================
+
+
+function resetSimulationSpeed() {
+    frequency = 0;
+    dcPwmSpeedKmh = 0;
+    dcResistorSpeedKmh = 0;
+
+    power = 0;
+    acceleration = 0;
+    throttle = 0;
+    lastSpeedKmh = 0;
+
+    throttleSlider.value = "0";
+
+    previousFrame = performance.now();
+
+    globalThis.simulated_speed = 0;
+
+    refreshPulsingHighlight(0);
+}
+
+resetButton.addEventListener("click", resetSimulationSpeed);
+
+
+throttleSlider.addEventListener("input", () => {
+    throttle = Number(throttleSlider.value);
+    refreshPulsingHighlight(lastSpeedKmh);
+});
+
+throttleSlider.addEventListener("change", () => {
+    throttleSlider.value = "0";
+    throttle = 0;
+
+    refreshPulsingHighlight(lastSpeedKmh);
+});
+
+hillSlider.addEventListener("input", () => {
+    hill = clamp(hillSlider.value, 0, 2, 1);
+    hillValue.textContent = hill.toFixed(2);
+});
+
+
+// ========================================================
+// AUDIO
+// ========================================================
+
+function applyAudioMode(mode) {
+    mode = normaliseAudioMode(mode);
+
+    currentTrain.audio_mode = mode;
+    audioSelect.value = mode;
+
+    setSoundOptions({
+        sampleRate: 48000,
+        singlePhase: mode === "48S"
+    });
+}
+
+
+async function ensureSoundStarted() {
+    if (
+        soundStarted ||
+        !simulationEnabled ||
+        (simulationPaused && !activeMusicSession)
+    ) {
+        return;
+    }
+
+    try {
+        const updateFunction = await startSound();
+
+        // The simulation might have been stopped while
+        // startSound() was awaiting the audio context.
+        if (!simulationEnabled || (simulationPaused && !activeMusicSession)) {
+            stopSound();
+            return;
+        }
+soundUpdateFunction = updateFunction;
+setSoundUpdateFunction(updateFunction);
+        soundStarted = true;
+
+    } catch (error) {
+        console.error("Could not start sound:", error);
+    }
+}
+
+
+async function restartSound() {
+    if (soundStarted) {
+        stopSound();
+    }
+
+    soundStarted = false;
+
+    await ensureSoundStarted();
+}
+
+
+audioSelect.addEventListener("change", () => {
+    applyAudioMode(audioSelect.value);
+    restartSound();
+});
+
+
+// Only start sound after a user gesture when the simulation
+// is actually running and not paused.
+window.addEventListener("pointerdown", () => {
+    ensureSoundStarted();
+});
+
+setSoundOptions({ useInterpolation: true });
+
+
+// ========================================================
+// SIMULATION CANVAS
+// ========================================================
+
+setCanvas(canvas, ctx);
+
+setRenderOptions({
+    renderSinglePhase: true,
+    waveHeight: 0.4,
+    phase1Position: 0.5,
+    sampleRate: 20000,
+    samplesPerPixel: 4,
+    phase1Colour: "#f0dc65"
+});
+
+
+// ========================================================
+// MAIN SIMULATION LOOP
+// ========================================================
+
+function renderDCResistorVisualisation(power) {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    if (width <= 0 || height <= 0) return;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    ctx.clearRect(0, 0, width, height);
+
+    const level = clamp(power, 0, 1, 0);
+
+    // Keep the line slightly inside the canvas.
+    const padding = height * 0.1;
+
+    // 100% = top, 50% = middle, 0% = bottom.
+    const y = padding +
+        (height - padding * 2) * (1 - level);
+
+    ctx.beginPath();
+    ctx.strokeStyle = "#00d9ff";
+    ctx.lineWidth = 2;
+
+    ctx.moveTo(0, y);
+    ctx.lineTo(width, y);
+
+    ctx.stroke();
+}
+function renderDCPWMVisualisation(duty, carrierFrequency) {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    if (width <= 0 || height <= 0) return;
+
+    canvas.width = width;
+    canvas.height = height;
+
+    ctx.clearRect(0, 0, width, height);
+
+    const dutyCycle = clamp(duty, 0, 1, 0);
+
+    const highY = height * 0.25;
+    const lowY = height * 0.75;
+
+    ctx.strokeStyle = "#00d9ff";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+
+    // 0%: continuously low.
+    if (dutyCycle <= 0) {
+        ctx.moveTo(0, lowY);
+        ctx.lineTo(width, lowY);
+
+    // 100%: continuously high.
+    } else if (dutyCycle >= 1) {
+        ctx.moveTo(0, highY);
+        ctx.lineTo(width, highY);
+
+    } else {
+        // Match the existing render.js time scale:
+        // 20,000 samples per second, 4 samples per pixel.
+        const visibleSeconds = width * 4 / 20000;
+
+        const frequency = Math.max(
+            1,
+            Number(carrierFrequency) || 400
+        );
+
+        const cycles = Math.max(
+            1,
+            Math.round(frequency * visibleSeconds)
+        );
+
+        const period = width / cycles;
+
+        ctx.moveTo(0, lowY);
+
+        for (let i = 0; i < cycles; i++) {
+            const start = i * period;
+            const end = (i + 1) * period;
+            const highEnd = start + period * dutyCycle;
+
+            ctx.lineTo(start, lowY);
+            ctx.lineTo(start, highY);
+            ctx.lineTo(highEnd, highY);
+            ctx.lineTo(highEnd, lowY);
+            ctx.lineTo(end, lowY);
+        }
+    }
+
+    ctx.stroke();
+}
+
+
+
+function loop() {
+    const now = performance.now();
+
+
+    // ----------------------------------------------------
+    // Simulation disabled.
+    // ----------------------------------------------------
+
+    if (!simulationEnabled) {
+        previousFrame = now;
+
+        lastSpeedKmh = 0;
+        globalThis.simulated_speed = 0;
+
+        statusText.textContent = "Simulation stopped";
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        requestAnimationFrame(loop);
+        return;
+    }
+
+
+    // ----------------------------------------------------
+    // Simulation paused.
+    // ----------------------------------------------------
+
+    if (simulationPaused) {
+        previousFrame = now;
+
+        globalThis.simulated_speed = lastSpeedKmh;
+
+        statusText.textContent =
+            `PAUSED | Speed: ${lastSpeedKmh.toFixed(2)} km/h`;
+
+        requestAnimationFrame(loop);
+        return;
+    }
+
+
+    // ----------------------------------------------------
+    // Physics time step.
+    // ----------------------------------------------------
+
+    const deltaTime = Math.max(0, now - previousFrame);
+    previousFrame = now;
+
+    // Limit each physics update to 100 milliseconds.
+    const simulationDeltaTime = Math.min(deltaTime, 100);
+    const elapsedSeconds = simulationDeltaTime / 1000;
+
+    throttle = Number(throttleSlider.value);
+
+    const traction = normaliseTraction(currentTrain.traction);
+    const controls = currentTrain.controls ?? {};
+
+    const accel = Number(controls.acceleration ?? 2.5);
+    const decel = Number(controls.deceleration ?? 3);
+
+    // The actual speed limit is always stated max speed + 6.
+    const physicsMaxSpeed = effectiveMaxSpeed;
+
+    let speedKmh = 0;
+    let vfData = null;
+    let dcPwmPulsingFrequency = 0;
+
+    acceleration = 0;
+
+
+    // ====================================================
+    // DC RESISTOR
+    // ====================================================
+
+    if (traction === "DC_RESISTOR") {
+
+        speedKmh = dcResistorSpeedKmh;
+
+        if (throttle > 0) {
+            power = getResistorPowerFraction(
+                speedKmh,
+                currentTrain,
+                throttle,
+                taperEndSpeed
+            );
+
+            acceleration = accel * power;
+
+        } else if (throttle < 0) {
+            power = 0;
+            acceleration = -decel;
+
+        } else {
+            power = 0;
+            acceleration = 0;
+        }
+
+        // Apply the hill-adjusted resistance after the
+        // existing traction/braking calculation.
+        acceleration -= getRollingResistanceAcceleration(
+            speedKmh,
+            currentTrain,
+            hill
+        );
+
+        dcResistorSpeedKmh +=
+            acceleration * elapsedSeconds;
+
+        dcResistorSpeedKmh = clamp(
+            dcResistorSpeedKmh,
+            0,
+            physicsMaxSpeed,
+            0
+        );
+
+        speedKmh = dcResistorSpeedKmh;
+
+
+    // ====================================================
+    // AC PWM
+    // ====================================================
+
+    } else if (traction === "AC_PWM") {
+
+        const speedPerMotorHz =
+            calculateSpeedPerMotorHz(currentTrain);
+
+        if (
+            !Number.isFinite(speedPerMotorHz) ||
+            speedPerMotorHz <= 0
+        ) {
+            lastSpeedKmh = 0;
+            globalThis.simulated_speed = 0;
+
+            statusText.textContent =
+                "Frequency: — Hz | Pulsing: — Hz | Power: 0% | " +
+                "Speed: 0.00 km/h | Acceleration: 0.00 km/h/s | " +
+                "Mode: Invalid AC gear ratio";
+
+            requestAnimationFrame(loop);
+            return;
+        }
+
+        speedKmh = frequency / speedPerMotorHz;
+
+        const peakPoint =
+            Number(currentTrain.peak_point ?? 50);
+
+        let accelerationFactor = 1;
+
+        if (speedKmh > peakPoint) {
+            accelerationFactor =
+                taperEndSpeed > peakPoint
+                    ? clamp(
+                        (taperEndSpeed - speedKmh) /
+                        (taperEndSpeed - peakPoint),
+                        0,
+                        1,
+                        0
+                    )
+                    : 0;
+        }
+
+        if (throttle > 0) {
+            acceleration =
+                accelerationFactor *
+                accel *
+                hill *
+                throttle;
+
+        } else if (throttle < 0) {
+            // Existing braking formula retained unchanged.
+            acceleration = -(
+                (decel - accel) +
+                (accel * (2 - hill))
+            ) * Math.abs(throttle);
+        }
+
+        // Apply rolling/wind resistance after the existing
+        // acceleration/braking formula.
+        acceleration -= getRollingResistanceAcceleration(
+            speedKmh,
+            currentTrain,
+            hill
+        );
+
+        power = getPWMpowerFraction(
+            speedKmh,
+            throttle,
+            currentTrain
+        );
+
+        if (
+            throttle < 0 &&
+            speedKmh < Number(currentTrain.decel_cutoff ?? 1)
+        ) {
+            power = 0;
+        }
+
+        frequency +=
+            elapsedSeconds *
+            acceleration *
+            speedPerMotorHz;
+
+        frequency = clamp(
+            frequency,
+            0,
+            physicsMaxSpeed * speedPerMotorHz,
+            0
+        );
+
+        speedKmh = frequency / speedPerMotorHz;
+
+        try {
+            commandVF(
+                frequency,
+                power,
+                simulationDeltaTime
+            );
+
+            vfData = getVFData();
+
+        } catch (error) {
+            if (!vfErrorLogged) {
+                console.warn("AC PWM V/F output error:", error);
+                vfErrorLogged = true;
+            }
+        }
+
+
+    // ====================================================
+    // DC PWM
+    // ====================================================
+
+    } else if (traction === "DC_PWM") {
+
+        speedKmh = dcPwmSpeedKmh;
+
+        const peakPoint =
+            Number(currentTrain.peak_point ?? 50);
+
+        let accelerationFactor = 1;
+
+        if (speedKmh > peakPoint) {
+            accelerationFactor =
+                taperEndSpeed > peakPoint
+                    ? clamp(
+                        (taperEndSpeed - speedKmh) /
+                        (taperEndSpeed - peakPoint),
+                        0,
+                        1,
+                        0
+                    )
+                    : 0;
+        }
+
+        if (throttle > 0) {
+            acceleration =
+                accelerationFactor *
+                accel *
+                hill *
+                throttle;
+
+        } else if (throttle < 0) {
+            // Existing braking formula retained unchanged.
+            acceleration = -(
+                (decel - accel) +
+                (accel * (2 - hill))
+            ) * Math.abs(throttle);
+        }
+
+        // Apply rolling/wind resistance.
+        acceleration -= getRollingResistanceAcceleration(
+            speedKmh,
+            currentTrain,
+            hill
+        );
+
+        power = getPWMpowerFraction(
+            speedKmh,
+            throttle,
+            currentTrain
+        );
+
+        if (
+            throttle < 0 &&
+            speedKmh < Number(currentTrain.decel_cutoff ?? 1)
+        ) {
+            power = 0;
+        }
+
+        dcPwmSpeedKmh +=
+            acceleration * elapsedSeconds;
+
+        dcPwmSpeedKmh = clamp(
+            dcPwmSpeedKmh,
+            0,
+            physicsMaxSpeed,
+            0
+        );
+
+        speedKmh = dcPwmSpeedKmh;
+
+        // Select the carrier frequency for the current speed.
+        dcPwmPulsingFrequency = getActiveDCPWMCarrier(
+            speedKmh,
+            currentTrain
+        );
+
+const dcMotorFrequency = calculateDCMotorRotationHz(
+    speedKmh,
+    currentTrain
+);
+
+if (soundStarted && soundUpdateFunction) {
+    soundUpdateFunction({
+        mode: "DC-PWM",
+        frequency: dcMotorFrequency,
+        carrier_frequency: dcPwmPulsingFrequency,
+        pulses: 1,
+        power: power
+    }, simulationDeltaTime);
+}
+    }
+
+// Send a silent signal through the existing audio engine.
+// The existing distortionFactor stage supplies the sound
+// for both DC traction modes.
+if (
+    traction === "DC_RESISTOR" &&
+    soundStarted &&
+    soundUpdateFunction
+) {
+    soundUpdateFunction({
+        mode: "ASYNC",
+        frequency: calculateDCMotorRotationHz(speedKmh, currentTrain),
+        carrier_frequency: 400,
+        pulses: 1,
+        power: 0
+    }, simulationDeltaTime);
+
+}
+//globalThis.current_motor_frequency = traction === "AC_PWM" ? frequency : calculateDCMotorRotationHz(speedKmh, currentTrain);
+    // ====================================================
+    // BOTTOM STATUS STRING
+    // ====================================================
+
+    lastSpeedKmh = speedKmh;
+
+    // Public speed value for other scripts.
+    globalThis.simulated_speed = speedKmh;
+
+    // Show zero braking acceleration once stopped.
+    const displayAcceleration =
+        speedKmh <= 0 && acceleration < 0
+            ? 0
+            : acceleration;
+
+    const vfMotorFrequency = vfData?.currentFrequency;
+    const vfPulsingFrequency = vfData?.carrierFrequency;
+    const vfPower = vfData?.currentPower;
+
+    const displayFrequency = traction === "AC_PWM"
+        ? (
+            Number.isFinite(Number(vfMotorFrequency))
+                ? Number(vfMotorFrequency).toFixed(2)
+                : frequency.toFixed(2)
+        )
+        : "—";
+
+    const displayPulsingFrequency =
+        traction === "DC_PWM"
+            ? dcPwmPulsingFrequency.toFixed(0)
+            : traction === "DC_RESISTOR" ||
+              !Number.isFinite(Number(vfPulsingFrequency))
+                ? "—"
+                : Number(vfPulsingFrequency).toFixed(0);
+
+    const displayPower =
+        traction === "DC_RESISTOR" || traction === "DC_PWM"
+            ? power
+            : (
+                Number.isFinite(Number(vfPower))
+                    ? Number(vfPower)
+                    : power
+            );
+
+    let displayMode;
+
+    if (traction === "DC_RESISTOR") {
+        displayMode = "DC RESISTOR";
+
+    } else if (traction === "DC_PWM") {
+        displayMode = "PWM";
+
+    } else {
+        displayMode = vfData?.pulsingMode ?? "—";
+    }
+
+    statusText.textContent =
+        `Frequency: ${displayFrequency} Hz` +
+        ` | Pulsing: ${displayPulsingFrequency} Hz` +
+        ` | Power: ${Math.floor(Number(displayPower) * 100)}%` +
+        ` | Speed: ${speedKmh.toFixed(2)} km/h` +
+        ` | Acceleration: ${displayAcceleration.toFixed(2)} km/h/s` +
+        ` | Mode: ${displayMode}`;
+
+    refreshPulsingHighlight(speedKmh);
+
+    if (traction === "DC_RESISTOR") {
+    renderDCResistorVisualisation(power);
+
+} else if (traction === "DC_PWM") {
+    renderDCPWMVisualisation(
+        power,
+        dcPwmPulsingFrequency
+    );
+
+} else {
+    renderVisualisations();
+}
+
+    requestAnimationFrame(loop);
+}
+
+
+// ========================================================
+// LOAD INCLUDED TRAINS
+// ========================================================
+
+async function initialise() {
+    try {
+        const response = await fetch("./trains.json");
+
+        if (!response.ok) {
+            throw new Error(
+                `Could not load trains.json (${response.status}).`
+            );
+        }
+
+        const trainData = await response.json();
+
+        if (
+            !trainData ||
+            typeof trainData !== "object" ||
+            Array.isArray(trainData)
+        ) {
+            throw new Error(
+                "trains.json must contain a train object."
+            );
+        }
+
+        await setupDatabase(trainData);
+
+        includedTrainConfigs = new Map(
+            Object.entries(trainData).map(([name, config]) => [
+                name.toLowerCase(),
+                { name, config }
+            ])
+        );
+
+        includedTrains = getAvailableTrains();
+
+        if (!includedTrains.length) {
+            throw new Error(
+                "No trains were found in trains.json."
+            );
+        }
+
+        databaseReady = true;
+
+        renderTrainList();
+        setTrainTab("included");
+
+        const preferred = "Kiepe Croydon tram (50 mph)";
+
+        const selected = includedTrains.find(
+            name => name.toLowerCase() === preferred.toLowerCase()
+        ) ?? includedTrains[0];
+
+        // Honour a remote drive command received before
+        // the database finished loading.
+        const requestedDrive = pendingDriveName;
+        pendingDriveName = null;
+
+        if (requestedDrive) {
+            const loaded = loadDriveByName(requestedDrive);
+
+            if (!loaded) {
+                console.warn(
+                    "Requested initial drive was not found:",
+                    requestedDrive
+                );
+
+                if (!initialResetRequested) {
+                    loadSelectedTrain(selected);
+                }
+            }
+
+        } else if (!initialResetRequested) {
+            loadSelectedTrain(selected);
+
+        } else {
+            simulationEnabled = false;
+            statusText.textContent = "Simulation stopped";
+        }
+
+        if (!animationStarted) {
+            animationStarted = true;
+            previousFrame = performance.now();
+            requestAnimationFrame(loop);
+        }
+
+    } catch (error) {
+        console.error("Database initialisation failed:", error);
+
+        trainListElement.textContent = "Could not load trains.";
+
+        alert(
+            "Could not initialise the train database:\n\n" +
+            (error.message ?? error)
+        );
+    }
+}
+
+
+// ========================================================
+// LOAD A SELECTED TRAIN
+// ========================================================
+
+function loadSelectedTrain(name) {
+    if (!name) return;
+
+    const entry = includedTrainConfigs.get(
+        name.toLowerCase()
+    );
+
+    if (!entry?.config) {
+        console.error("Could not find train configuration:", name);
+        return;
+    }
+
+    loadEditor(
+        entry.name,
+        structuredClone(entry.config)
+    );
+}
+
+
+// ========================================================
+// START INITIALISATION
+// ========================================================
+
+// Expose the promise so external code can wait for the
+// database and initial train list to become ready.
+globalThis.VF_control_ready = initialise();
+
+
+</script>
+</body>
+</html>

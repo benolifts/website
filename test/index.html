@@ -1,0 +1,3249 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>VF Train Sim</title><style>
+
+
+#cv,#vfcanvas{left:0;position:absolute}#controls,#cv,#overlay,#route-menu,#status,#vfcanvas{position:absolute}#overlay,#sstatus,#vfcanvas{pointer-events:none}#simulator,body,html{width:100%;height:100%}#overlay,#vfcanvas{top:80vh;display:block;width:100%;height:20vh;z-index:2}#controls,#status{left:12px}#sstatus,#status{background:rgba(0,0,0,.75);color:#fff}#route-menu,#routeFile,#sstatus{display:none}#route-menu,#sstatus,.menu-back{box-sizing:border-box}.menu-brand,.menu-tile{min-width:0}.developer-label,.menu-brand-subtitle,.menu-step{text-transform:uppercase}body,html{margin:0;overflow:hidden;background:#000;color:#fff;font-family:Arial,sans-serif}#simulator{position:relative}#cv{top:0;display:block;width:100vw;height:80vh;z-index:1}#vfcanvas{right:auto}#controls{z-index:3;top:12px;display:flex;gap:8px;align-items:center}button{padding:8px 12px;cursor:pointer;font:inherit}button:disabled{cursor:wait}#status{z-index:4;bottom:12px;padding:8px 10px;font-size:13px}#sstatus,.VF-Train_Sim-splash-ready-content{left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;position:absolute}#sstatus{z-index:9999;max-width:90vw;padding:18px 28px;font-size:clamp(16px,5vw,16px);font-weight:900;line-height:1.2}.VF-Train_Sim-splash-ready-content{gap:12px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:16px;width:min(720px,calc(100vw - 40px))}.VF-Train_Sim-splash-ready-title{font-size:38px;color:#fff;font-size:clamp(38px,6vw,64px);font-weight:900;letter-spacing:4px;text-transform:uppercase;text-shadow:0 0 20px rgba(0,229,255,.8)}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start{font-size:20px;position:relative;left:auto;top:auto;transform:none;min-width:210px;padding:15px 34px}.VF-Train_Sim-splash-ready-instruction{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px;margin-bottom:8px}.VF-Train_Sim-splash-ready-actions{display:flex;flex-direction:column;align-items:center;gap:14px}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start:hover{transform:scale(1.08)}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start:active{transform:translateY(3px) scale(1.02)}#slider{width:800px}#route-menu{z-index:10;inset:0;overflow:auto;padding:clamp(16px,3vw,38px);color:#f5f7fb;background-image:url("z.jpg");background-repeat:repeat;background-position:top left;background-size:auto}#route-menu.is-open{display:flex}.menu-shell{width:min(1180px,100%);min-height:100%;margin:0 auto;display:flex;flex-direction:column}.menu-header{display:flex;align-items:center;gap:15px;padding:5px 0 22px;border-bottom:1px solid rgba(255,255,255,.12)}.sim-logo{flex:0 0 52px;width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);border-radius:15px;background:linear-gradient(145deg,#334d6c,#17283d);color:#fff;font-size:17px;font-weight:800;letter-spacing:-1px;box-shadow:0 8px 25px rgba(0,0,0,.25)}.menu-brand-title{margin:0;font-size:clamp(18px,2vw,23px);font-weight:750;letter-spacing:.08em}.menu-brand-subtitle{margin-top:4px;color:#9baabd;font-size:12px;letter-spacing:.12em}.menu-main{flex:1;display:flex;flex-direction:column;padding:clamp(22px,4vh,42px) 0 24px}.menu-topline{min-height:32px;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:13px}.menu-step{color:#9eacc0;font-size:11px;font-weight:700;letter-spacing:.16em}.menu-back{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;line-height:1;height:70px;border:2.5px solid rgba(255,255,255,.18);border-radius:20px;padding:0 27.5px;color:#dce5ef;background:rgba(255,255,255,.055);font-size:30px}.menu-back:hover,.menu-secondary:hover{background:rgba(255,255,255,.12)}.menu-back-arrow{display:inline-block;position:relative;top:-4px}.menu-title{margin:0;color:#fff;font-size:clamp(26px,4vw,39px);line-height:1.12;font-weight:750;letter-spacing:-.035em}.menu-description{max-width:700px;margin:10px 0 26px;color:#9eacbd;font-size:14px;line-height:1.55}.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,195px);gap:17px;align-content:start}.menu-tile{border:1px solid rgba(255,255,255,.13);border-radius:13px;padding:10px;overflow:hidden;text-align:left;color:#f4f7fb;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform 150ms,border-color 150ms,background 150ms,box-shadow 150ms;-webkit-user-select:none;user-select:none}.menu-tile:focus-visible,.menu-tile:hover{transform:translateY(-3px);border-color:rgba(129,184,255,.78);background:linear-gradient(145deg,rgba(89,139,197,.24),rgba(255,255,255,.055));box-shadow:0 13px 28px rgba(0,0,0,.28);outline:0}.menu-tile-image{width:100%;height:135px;display:block;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#293c53,#172432 60%,#30465c)}.menu-tile-image img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;-webkit-user-select:none;user-select:none}.menu-image-placeholder{width:100%;height:100%;display:grid;place-items:center;color:rgba(235,244,255,.46);font-size:10px;font-weight:700;letter-spacing:.18em;background:linear-gradient(140deg,transparent 30%,rgba(255,255,255,.055) 30% 31%,transparent 31%),linear-gradient(35deg,rgba(9,18,29,.12),rgba(121,158,194,.13))}.menu-tile-name{display:block;padding:12px 4px 3px;font-size:15px;font-weight:700;line-height:1.3}.menu-tile-detail{display:block;padding:2px 4px 5px;color:#9eacbd;font-size:12px;line-height:1.4}.scenario-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:900px}.scenario-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 18px;border:1px solid rgba(255,255,255,.14);border-radius:9px;text-align:left;color:#f3f6fb;background:rgba(38,63,91,.4);transition:border-color 140ms,background 140ms,transform 140ms}.scenario-button:focus-visible,.scenario-button:hover{border-color:rgba(129,184,255,.78);background:rgba(255,255,255,.4);transform:translateX(3px);outline:0}.scenario-name{display:block;font-size:15px;font-weight:700}.scenario-description{display:block;margin-top:4px;color:#9eacbd;font-size:12px;font-weight:400}.scenario-arrow{flex:0 0 auto;color:#91b7e3;font-size:20px}.scenario-meta{display:flex;align-items:center;gap:14px;flex:0 0 auto}.scenario-top-rated{color:#d8bd78;font-size:11px;font-weight:600;white-space:nowrap;opacity:.9}.weather-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;max-width:1000px}.weather-grid .menu-tile-image{height:clamp(150px,24vh,245px)}.weather-grid .menu-tile-name{font-size:16px}.menu-action-area{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}.menu-primary{min-width:170px;border:1px solid #8bb9ea;border-radius:8px;padding:12px 19px;color:#071321;background:linear-gradient(135deg,#b6d9ff,#79aee5);font-size:13px;font-weight:800;letter-spacing:.025em;box-shadow:0 7px 22px rgba(61,125,191,.18)}.coach-panel,.menu-secondary{background:rgba(255,255,255,.055)}.menu-primary:hover{background:#d0e6ff}.menu-secondary{border:1px solid rgba(255,255,255,.17);border-radius:8px;padding:11px 16px;color:#dce5ef;font-size:13px}.coach-panel{width:min(490px,100%);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:13px}.coach-label{color:#aab8c9;font-size:18px}.coach-number{margin-top:6px;font-size:45px;line-height:1;font-weight:750}.coach-note{min-height:16px;margin-top:9px;color:#91bce9;font-size:12px}.coach-controls{display:flex;align-items:center;gap:12px}.coach-stepper{width:44px;height:44px;border:1px solid rgba(255,255,255,.2);border-radius:9px;color:#fff;background:rgba(255,255,255,.08);font-size:23px}.coach-stepper:hover:not(:disabled){background:rgba(255,255,255,.16)}.coach-stepper:disabled{opacity:.35;cursor:not-allowed}.menu-summary{max-width:650px;padding:17px 19px;border:1px solid rgba(255,255,255,.13);border-radius:10px;color:#c3cfdd;background:rgba(255,255,255,.045);font-size:13px;line-height:1.7}.menu-summary strong{color:#fff}.developer-tools{margin-top:auto;padding-top:34px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;color:#748296;font-size:10px}.developer-label{margin-right:4px;font-size:10px;font-weight:700;letter-spacing:.1em}.developer-button{border:1px solid rgba(255,255,255,.18);border-radius:5px;padding:4px 7px;color:#aab7c8;background:rgba(0,0,0,.18);font-size:10px}.developer-button:hover:not(:disabled){border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.09)}.developer-button:disabled{opacity:.3;cursor:not-allowed}.menu-empty{max-width:700px;padding:18px;border:1px dashed rgba(255,255,255,.2);border-radius:9px;color:#aab8c8;font-size:13px}@media (max-width:700px){#route-menu{padding:15px}.menu-header{gap:11px;padding-bottom:16px}.sim-logo{flex-basis:44px;width:44px;height:44px;border-radius:12px}.menu-main{padding-top:23px}.menu-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.menu-tile{padding:7px}.menu-tile-image{height:105px}.weather-grid{gap:8px}.weather-grid .menu-tile-image{height:125px}.weather-grid .menu-tile-name{font-size:12px}.weather-grid .menu-tile-detail{font-size:10px}.coach-panel{padding:16px}#slider{width:min(42vw,300px)}}@media (max-width:420px){.weather-grid{grid-template-columns:1fr}.weather-grid .menu-tile-image{height:105px}.weather-grid .menu-tile{display:grid;grid-template-columns:105px 1fr;align-items:center;gap:9px}.weather-grid .menu-tile-name{padding:4px}.weather-grid .menu-tile-detail{grid-column:2;padding:0 4px 4px}}.VF-Train_Sim-main-menu-box,.VF-Train_Sim-story-menu-box{flex-direction:column;display:flex;box-sizing:border-box}.VF-Train_Sim-main-menu-box{align-items:stretch;gap:14px;width:min(380px,calc(100vw - 40px))}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start{position:relative;left:auto;top:auto;transform:none;width:100%;min-width:0;padding:12px 20px}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start:hover{transform:scale(1.04)}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start:active,.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back:active{transform:scale(.98)}.scenario-list.scenario-list-tall{grid-auto-rows:96px}.scenario-list.scenario-list-tall.scenario-list-two-columns{grid-template-rows:repeat(var(--scenario-list-rows),96px)}.scenario-list.scenario-list-tall>.scenario-button{height:96px;min-height:96px}.VF-Train_Sim-story-menu-box{align-items:stretch;gap:12px;width:min(560px,calc(100vw - 40px));max-height:calc(100vh - 40px);overflow:hidden}.VF-Train_Sim-story-menu-box .VF-Train_Sim-loading-title{margin:0;text-align:center}.VF-Train_Sim-story-instruction{color:#fff;font-size:13px;font-weight:600;letter-spacing:.5px;text-align:center;text-transform:none}.VF-Train_Sim-story-list{display:flex;flex-direction:column;gap:8px;width:100%;min-height:0;max-height:52vh;padding:2px 5px 2px 2px;box-sizing:border-box;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}.VF-Train_Sim-story-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;flex:0 0 auto;padding:10px 14px;border:1px solid rgba(255,255,255,.2);border-radius:7px;color:#fff;background:rgba(0,229,255,.1);font-size:14px;font-weight:800;letter-spacing:.3px;text-align:left;text-transform:none;cursor:pointer;transition:background 160ms,border-color 160ms,transform 160ms}.VF-Train_Sim-story-button:hover{background:rgba(0,229,255,.25);border-color:#00e5ff;transform:translateX(3px)}.VF-Train_Sim-story-button:focus-visible{outline:#ffffff solid 2px;outline-offset:3px}.VF-Train_Sim-story-arrow{flex:0 0 auto;color:#00e5ff;font-size:21px}.VF-Train_Sim-story-empty{padding:14px;border:1px dashed rgba(255,255,255,.25);border-radius:7px;color:#c4d0df;font-size:13px;font-weight:600;text-align:center;text-transform:none}.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back{position:relative;left:auto;top:auto;transform:none;width:100%;min-width:0;flex:0 0 auto;padding:11px 20px;font-size:15px;letter-spacing:2px}.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back:hover{transform:scale(1.03)}.VF-Train_Sim-story-error{color:#ff8da5;font-size:12px;font-weight:700;text-align:center;text-transform:none}@media (max-width:600px){.VF-Train_Sim-story-menu-box{width:calc(100vw - 30px);max-height:calc(100vh - 30px);padding:16px 18px}.VF-Train_Sim-story-list{max-height:50vh}.VF-Train_Sim-story-button{min-height:42px;padding:9px 11px;font-size:13px}}.scenario-list{display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:44px}.scenario-description,.scenario-name{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}.scenario-list.scenario-list-two-columns{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--scenario-list-rows),44px);grid-auto-flow:column}.scenario-button{box-sizing:border-box;height:44px;min-height:44px;overflow:hidden}.scenario-button>span:first-child{flex:1 1 auto;min-width:0}.scenario-name{-webkit-line-clamp:1}.scenario-description{-webkit-line-clamp:2}
+
+
+
+
+
+
+
+
+</style><script src="zippy.js"></script><script src="completed.js"></script><script src="routes.js"></script><script src="trains.js"></script><script src="stories.js"></script><script src="t.js"></script></head><body>
+    <div id="simulator">
+        <canvas id="cv"></canvas>
+        <canvas id="overlay"></canvas>
+
+
+
+        <div id="status"></div>
+        <div id="sstatus"></div>
+        <!-- The menu is an independent HTML overlay, not part of the WebGL renderer. -->
+        <div id="route-menu" aria-live="polite">
+            <div class="menu-shell" id="route-menu-content"></div>
+        </div>
+    </div>
+
+    <script>
+
+
+
+    "use strict";
+
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+var developer_train = "Bombardier low floor tram";  // for testing only
+var developer_livery = "Green"
+
+
+//var developer_train = "Bombardier low floor tram";
+//var developer_livery = "Green"
+
+var developer_vf = "kiepe tram (50 mph)";
+var developer_coaches = 3;
+var developer_quick_access = ["1.zip", "ham.zip", "bak.zip", "ash.zip"];
+
+var super_developer_mode = true
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var sstatusElement = document.getElementById("sstatus");
+var statusElement = document.getElementById("status");
+
+function setStatus(message) {
+    statusElement.textContent = message;
+
+    return new Promise(function (resolve) {
+        requestAnimationFrame(function () {
+            requestAnimationFrame(resolve);
+        });
+    });
+}
+var status_time = Date.now();
+var status_inuse = false;
+function setStatuss(message) {
+status_inuse = true;
+sstatusElement.style.display = 'block';
+    status_time = Date.now();
+    sstatusElement.textContent = message;
+}
+function setStatusss(message) {
+
+function swapPosition(str) {
+if (flip_out){
+    // First: normal position swaps
+    if (str.includes("In front")) {
+        str = str.replace("In front", "Behind");
+    } else if (str.includes("Behind")) {
+        str = str.replace("Behind", "In front");
+    } else if (str.includes("front")) {
+        str = str.replace("front", "rear");
+    } else if (str.includes("rear")) {
+        str = str.replace("rear", "front");
+    }
+
+    // Second: View swaps on the resulting string
+    if (str.includes("View 5")) {
+        str = str.replace("View 5", "View 7");
+    } else if (str.includes("View 7")) {
+        str = str.replace("View 7", "View 5");
+    }
+}
+    return str;
+}
+
+
+setStatuss(swapPosition(message))
+}
+
+setStatus("Loading simulator...");
+
+
+
+// ============================================================
+// SIMULATOR CONFIGURATION
+// ============================================================
+
+var DEBUG_GL_UPLOADS = false;
+var textureCount = 8;
+var misc_textureCount = 8;
+
+// Gentle anticipation of the destination tangent at a merge.
+var MERGE_APPROACH_DISTANCE = 0;   // Metres before the merge
+var MERGE_APPROACH_STRENGTH = 0.50; // 12% maximum tangent influence
+
+var pointsThinWidth = 0.3
+// Track switch detection tolerances, in metres.
+const xswitchtrigger = 0.01;
+const yswitchtrigger = 0.01;
+
+// ============================================================
+// ROUTE CONFIGURATION
+// ============================================================
+
+var pos = 0;
+var current_track = 0;
+var pos_npc = 0;
+var current_track_npc = 0;
+var accel_npc = 0;
+var speed_npc = 0;
+var upper_speed_limit_npc = 0;
+var lower_speed_limit_npc = 0;
+var allow_points_change = false;
+var points_speed_limit = 25;
+var flip_out = false;
+var boat_mode = false;
+var current_route_items_detailed =[];
+var current_route_items_routing = [];
+var current_route_items_routing_npc = [];
+var current_speed_limits = [];
+var a2d_map_of_track = [];
+var a2d_map_of_stations = [];
+var fps = 1000;
+var the_time = Date.now();
+var chicken1; var chicken2; var chicken3; var chicken4; var chicken5; var chicken6; var chicken7; var chicken8; var chicken9; var chicken0;
+var chicken11; var chicken12; var chicken13; var chicken14; var chicken15; var chicken16; var chicken17; var chicken18; var chicken19; var chicken10;
+var chicken21; var chicken22; var chicken23; var chicken24; var chicken25; var chicken26; var chicken27; var chicken28; var chicken29; var chicken20;
+var chicken31; var chicken32; var chicken33; var chicken34; var chicken35; var chicken36; var chicken37; var chicken38; var chicken39; var chicken30;
+var chicken41; var chicken42; var chicken43; var chicken44; var chicken45; var chicken46; var chicken47; var chicken48; var chicken49; var chicken40;
+var chicken51; var chicken52; var chicken53; var chicken54; var chicken55; var chicken56; var chicken57; var chicken58; var chicken59; var chicken50;
+var chicken61; var chicken62; var chicken63; var chicken64; var chicken65; var chicken66; var chicken67; var chicken68; var chicken69; var chicken60;
+var chicken71; var chicken72; var chicken73; var chicken74; var chicken75; var chicken76; var chicken77; var chicken78; var chicken79; var chicken70;
+var chicken81; var chicken82; var chicken83; var chicken84; var chicken85; var chicken86; var chicken87; var chicken88; var chicken89; var chicken80;
+var chicken91; var chicken92; var chicken93; var chicken94; var chicken95; var chicken96; var chicken97; var chicken98; var chicken99; var chicken90;
+
+
+
+// The filename of the currently loaded route.
+var currentRoute = null;
+
+// The complete route object currently selected.
+var activeRoute = null;
+
+// Global track gauge, set from the selected route.
+var TRACK_GAUGE;
+var is_night = false;
+
+// todo
+// selectedWeather.id gives the weater of either "clear-after-snowfall", "light-snow", "heavy-snowstorm", "clear-dry", "wet-rain", "foggy"
+
+
+
+var DRAW_AHEAD = 600; // Simulated distance viewed
+var DRAW_BEHIND = 600; // Simulated distance viewed behind
+var lock_mouse = true;
+var prefer_sound = 0;
+var prefer_units = 0;
+var use_metric_pre = true;
+var use_metric = true;
+var selectedStory = null;
+
+// ============================================================
+// HTML ELEMENTS
+// ============================================================
+
+var canvas = document.getElementById("cv");
+var overlay = document.getElementById("overlay");
+
+
+var routeMenuElement = document.getElementById("route-menu");
+var routeMenuContent = document.getElementById("route-menu-content");
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Initialise your global variables
+
+
+
+// Pointer lock state
+document.addEventListener("pointerlockchange", function () {
+    if (document.pointerLockElement !== null) {
+
+    } else {
+
+        pauseRenderLoop();
+        showRouteReadySplash(true);
+    }
+});
+document.addEventListener("mousemove", function (event) {
+    if (!document.pointerLockElement) return;
+    lookx += (event.movementX / 800);
+    looky += (event.movementY / 800);
+});
+
+var speed = 0;    ///////////////////////////////////////////////////////  TODO this to be controlled by xav's sim
+// ============================================================
+// MENU STATE
+// ============================================================
+
+// These are the filenames used by the developer quick-access
+// buttons. Each filename is matched against route.fileName
+// in the loaded routes array.
+
+
+var cameraReverseView = false;
+var temppoints = false
+document.addEventListener("keyup", function(event) {
+    if (event.key === "ArrowLeft")  cameraArrowKeys.left = false;
+    if (event.key === "ArrowRight") cameraArrowKeys.right = false;
+    if (event.key === "ArrowUp")    cameraArrowKeys.up = false;
+    if (event.key === "ArrowDown")  cameraArrowKeys.down = false;
+    if ((event.key === "v") && (super_developer_mode))  cameraArrowKeys.space = false;
+    if ((event.key === "b") && (super_developer_mode))  cameraArrowKeys.b = false;
+    if ((event.key === "n") && (super_developer_mode))  cameraArrowKeys.n = false;
+    if ((event.key === ".") && (super_developer_mode))  cameraArrowKeys.dot = false;
+    if ((event.key === ",") && (super_developer_mode))  cameraArrowKeys.commar = false;
+
+});
+document.addEventListener("keydown", function (event) {
+    if (!route || !routeMesh) return;
+    // 1. Existing Escape Key
+    if(renderLoopRunning && activeRoute){
+
+var temp_reverser = reverser;if (flip_out){if (temp_reverser == 0){temp_reverser = -1}}
+
+        if (!lock_mouse) {
+        if (event.key === "ArrowLeft") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            cameraArrowKeys.left = true;
+            return;
+        }else if (event.key === "ArrowRight") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            cameraArrowKeys.right = true;
+            return;
+        }else if (event.key === "ArrowUp") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            cameraArrowKeys.up = true;
+            return;
+        }else if (event.key === "ArrowDown") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            cameraArrowKeys.down = true;
+            return;
+        }else if (event.key === "v") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.space = true}
+            return;
+        }else if (event.key === "b") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.b = true}
+            return;
+        }else if (event.key === "n") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.n = true}
+            return;
+        }else if (event.key === ".") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.dot = true}
+            return;
+        }else if (event.key === ",") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.commar = true}
+            return;
+        }else if (event.key === "m") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){crashed = false;crashedtext = ""}
+            return;
+        }
+
+
+
+
+    }if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        pauseRenderLoop();
+        showRouteReadySplash(true);
+        return;
+    }else if (event.key === "1") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+        if(flip_out){cameraReverseView = true;camera_view = 0}else{cameraReverseView = false;camera_view = 1};
+
+        camera_subview = 0;
+        setStatuss("View 1 - Front cab");
+        return;
+
+        }else if (event.key === "2") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+
+cameraReverseView = (temp_reverser == -1);
+        if (camera_view != 2) {
+            camera_subview = temp_reverser == -1 ? 2 : 0;
+        }else{
+            camera_subview++;
+            if (camera_subview > 3){camera_subview = 0}
+        }
+
+        camera_view = 2;
+
+        if (camera_subview === 0) {
+            setStatusss("View 2 [1/4] - Heads out front left");
+        }else if (camera_subview === 1){
+            setStatusss("View 2 [2/4] - Heads out front right");
+        }else if (camera_subview === 2){
+            setStatusss("View 2 [3/4] - Heads out rear left");
+        }else if (camera_subview === 3){
+            setStatusss("View 2 [4/4] - Heads out rear right");
+        }
+
+        return;
+    }else if (event.key === "3") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        lookx = 0;
+        looky = 0;
+
+        if (camera_view !== 3) {
+            camera_subview = temp_reverser == -1 ? 2 : 0;
+            cameraReverseView = (temp_reverser == -1);
+        }else{
+            camera_subview++;
+            if (camera_subview > 2) {
+                camera_subview = 0;
+            }
+        }
+
+        camera_view = 3;
+
+        if (camera_subview === 0) {
+            setStatusss("View 3 [1/3] - Left front coach");
+        }else if (camera_subview === 1){
+            setStatuss("View 3 [2/3] - Left middle coach");
+        }else if (camera_subview === 2){
+            setStatusss("View 3 [3/3] - Left rear coach");
+        }
+
+        return;
+
+    }else if (event.key === "4") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        lookx = 0;
+        looky = 0;
+
+        if (camera_view !== 4) {
+            camera_subview = temp_reverser == -1 ? 2 : 0;
+            cameraReverseView = (temp_reverser == -1);
+        }else{
+            camera_subview++;
+            if (camera_subview > 2) {
+                camera_subview = 0;
+            }
+        }
+
+        camera_view = 4;
+
+        if (camera_subview === 0) {
+            setStatusss("View 4 [1/3] - Right front coach");
+        }else if (camera_subview === 1){
+            setStatuss("View 4 [2/3] - Right middle coach");
+        }else if (camera_subview === 2){
+            setStatusss("View 4 [3/3] - Right rear coach");
+        }
+
+        return;
+    }else if (((event.key === "5") && (!flip_out)) || ((event.key === "7") && (flip_out))){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+        cameraReverseView = true;
+        if (camera_view != 5){camera_subview = 0}else{camera_subview++}
+        if (camera_subview > 4){camera_subview = 0}
+        camera_view = 5;
+
+        if (camera_subview === 0) {
+            setStatusss("View 5 [1/5] - In front of train");
+        }else if (camera_subview === 1){
+            setStatusss("View 5 [2/5] - In front of train, left");
+        }else if (camera_subview === 2){
+            setStatusss("View 5 [3/5] - In front of train, right");
+        }else if (camera_subview === 3){
+            setStatusss("View 5 [4/5] - In front of train, low");
+        }else if (camera_subview === 4){
+            setStatusss("View 5 [5/5] - In front of train, high");
+        }
+        return;
+
+    }else if (event.key === "6") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+        cameraReverseView = (temp_reverser == -1);
+        if (camera_view != 6){camera_subview = 0}else{camera_subview++}
+        if (camera_subview > 1){camera_subview = 0}
+        camera_view = 6;
+
+        if (camera_subview === 0) {
+            setStatusss("View 6 [1/2] - Above front");
+        }else if (camera_subview === 1){
+            setStatusss("View 6 [2/2] - Above rear");
+        }
+        return;
+
+    }else if (((event.key === "7") && (!flip_out)) || ((event.key === "5") && (flip_out))){
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+        cameraReverseView = false;
+        if (camera_view != 7){camera_subview = 0}else{camera_subview++}
+        if (camera_subview > 4){camera_subview = 0}
+        camera_view = 7;
+
+        if (camera_subview === 0) {
+            setStatusss("View 7 [1/5] - Behind train");
+        }else if (camera_subview === 1){
+            setStatusss("View 7 [2/5] - Behind train, left");
+        }else if (camera_subview === 2){
+            setStatusss("View 7 [3/5] - Behind train, right");
+        }else if (camera_subview === 3){
+            setStatusss("View 7 [4/5] - Behind train, low");
+        }else if (camera_subview === 4){
+            setStatusss("View 7 [5/5] - Behind train, high");
+        }
+        return;
+
+    }else if (event.key === "8") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+        camera_view = 8;
+        camera_subview = 0;
+        setStatuss("View 8 - Passing view (not implemented)");
+        return;
+
+    }else if (event.key === "9") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+        camera_view = 9;
+        camera_subview = 0;
+        setStatuss("View 9 - Passenger view (not implemented)");
+        return;
+
+    }else if (event.key === "0") {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        lookx = 0;
+        looky = 0;
+
+        if(flip_out){cameraReverseView = false;camera_view = 1}else{cameraReverseView = true;camera_view = 0};
+        camera_subview = 0;
+        setStatuss("View 0 - Rear cab");
+
+        return;
+    }else{
+        if (speed <= 0.1) {
+            if (((event.key.toLowerCase() === "q") && (!flip_out)) || ((event.key.toLowerCase() === "e") && (flip_out))){
+                if (left_doors_mode == 0){left_doors_mode = 1}else if (left_doors_mode == 2){left_doors_mode = (0 - (the_time + (door_alarm*1000)))}else if (left_doors_mode < 0){left_doors_mode = 2}else if (left_doors_mode == 4){left_doors_mode = 1}
+            }else if (((event.key.toLowerCase() === "q") && (flip_out)) || ((event.key.toLowerCase() === "e") && (!flip_out))){
+                if (right_doors_mode == 0){right_doors_mode = 1}else if (right_doors_mode == 2){right_doors_mode = (0 - (the_time + (door_alarm*1000)))}else if (right_doors_mode < 0){right_doors_mode = 2}else if (right_doors_mode == 4){right_doors_mode = 1}
+            } else if (event.key.toLowerCase() === "w") {
+                // Increment reverser, capping it at a maximum of 1
+                if (flip_out){reverser--}else{reverser++}if (reverser>1){reverser=1}if (reverser<-1){reverser=-1}
+            } else if (event.key.toLowerCase() === "s") {
+                if (flip_out){reverser++}else{reverser--}if (reverser>1){reverser=1}if (reverser<-1){reverser=-1}
+            } else if (reverser == 1){
+                if(event.key.toLowerCase() === "p") {
+                    changepoints(pos, 1);
+
+                } else if (event.key.toLowerCase() === "o") {
+                    changepoints(pos, 2);
+
+                } else if (event.key.toLowerCase() === "i") {
+                    changepoints(pos, 3);
+
+                } else if (event.key.toLowerCase() === "u") {
+                    changepoints(pos, 4);
+
+                }
+            }else if (reverser == -1){
+
+                if(event.key.toLowerCase() === "p") {
+                    changepoints(pos-(adjusted_train_length), -1);
+
+                } else if (event.key.toLowerCase() === "o") {
+                    changepoints(pos-(adjusted_train_length), -2);
+
+                } else if (event.key.toLowerCase() === "i") {
+                    changepoints(pos-(adjusted_train_length), -3);
+
+                } else if (event.key.toLowerCase() === "u") {
+                    changepoints(pos-(adjusted_train_length), -4);
+
+                }
+
+            }
+        }
+    }
+
+    }
+}, true);
+
+function changepoints(pos, next_number) {
+    var q = -1;
+
+    if (next_number > 0) {
+        for (var i = 0; i < current_route_items_detailed.length; i++) {
+            if (current_route_items_detailed[i][1] <= pos) {
+                q = i;
+            } else {
+                break;
+            }
+        }
+    } else if (next_number < 0) {
+        q = current_route_items_detailed.length;
+
+        for (var i = 0; i < current_route_items_detailed.length; i++) {
+            if (current_route_items_detailed[i][1] >= pos) {
+                q = i;
+                break;
+            }
+        }
+    } else {
+        return;
+    }
+
+    q += next_number;
+
+    if (q < 0 || q >= current_route_items_detailed.length) return;
+
+    if (
+        current_route_items_detailed[q][0] !== "facingpoints" &&
+        current_route_items_detailed[q][0] !== "nonfacingpoints" &&
+        current_route_items_detailed[q][0] !== "conflictingpoints"
+    ) return;
+
+    var id = current_route_items_detailed[q][4];
+
+    if (!Number.isInteger(id) || !trackSwitches[id]) return;
+
+    trackSwitches[id][4] = !trackSwitches[id][4];
+
+    updatepoints();
+    populateCurrentRouteItems();
+}
+
+
+
+
+
+// SOUND
+function start_sound() {}
+function stop_sound() {
+
+
+stopRouteAudio()
+}
+
+
+
+// ============================================================
+// STAGE 5 — TRAIN SELECTION
+// ============================================================
+
+function stage_5_menu() {
+    var selectedRoute = getSelectedRoute();
+
+    var preferredTrains = getMenuTrainEntries(false);
+
+    // If none of the route's preferred trains exist in the
+    // trains database, automatically show every available train.
+    if (!showAllTrains && preferredTrains.length === 0) {
+        showAllTrains = true;
+        trainPreferenceNotFound = true;
+    }
+
+    var trains = getMenuTrainEntries(showAllTrains);
+
+    var html = getMenuHeader(
+        "STAGE 5 OF 8",
+        "Choose a train",
+        "Select a train for this scenario.",
+        true
+    );
+
+
+
+    // Keep this message visible even after automatically
+    // switching to the full train list.
+    if (trainPreferenceNotFound) {
+        html +=
+            '<div class="menu-empty" style="margin-bottom:14px;">' +
+                'None of this route\'s preferred trains could be found ' +
+                'in the trains database. Showing all available trains.' +
+            '</div>';
+    }
+
+    if (trains.length) {
+        html += '<div class="scenario-list">';
+
+        html += trains.map(function (train) {
+            return (
+                '<button type="button" ' +
+                    'class="scenario-button" ' +
+                    'data-menu-action="choose-train" ' +
+                    'data-train-name="' +
+                        escapeHTML(train.name) +
+                    '">' +
+
+                    '<span>' +
+                        '<span class="scenario-name">' +
+                            escapeHTML(train.name) +
+                        '</span>' +
+
+                        (
+                            train.description
+                                ? '<span class="scenario-description">' +
+                                    escapeHTML(train.description) +
+                                  '</span>'
+                                : ''
+                        ) +
+                    '</span>' +
+
+                    '<span class="scenario-arrow">›</span>' +
+                '</button>'
+            );
+        }).join("");
+
+        html += '</div>';
+    } else {
+        html +=
+            '<div class="menu-empty">' +
+                'No trains were found in the trains database.' +
+            '</div>';
+    }
+
+    // Only show this button when the preferred list was found
+    // and the user has not already requested all trains.
+    if (!showAllTrains) {
+        html +=
+            '<div class="menu-action-area">' +
+                '<button type="button" ' +
+                    'class="menu-secondary" ' +
+                    'data-menu-action="show-all-trains">' +
+                    'Show all trains' +
+                '</button>' +
+            '</div>';
+    }
+
+    return html;
+}
+
+// ============================================================
+// STAGE 6 — LIVERY SELECTION
+// ============================================================
+
+function stage_6_menu() {
+    var liveries = getTrainLiveryEntries(selectedTrainData);
+
+    var html = getMenuHeader(
+        "STAGE 6 OF 8",
+        "Choose a livery",
+        "Select one of the liveries available for this train.",
+        true
+    );
+
+
+
+    if (liveries.length) {
+        html += '<div class="scenario-list">';
+
+        html += liveries.map(function (livery) {
+            return (
+                '<button type="button" ' +
+                    'class="scenario-button" ' +
+                    'data-menu-action="choose-livery" ' +
+                    'data-livery="' +
+                        escapeHTML(livery) +
+                    '">' +
+
+                    '<span>' +
+                        '<span class="scenario-name">' +
+                            escapeHTML(livery) +
+                        '</span>' +
+                    '</span>' +
+
+                    '<span class="scenario-arrow">›</span>' +
+                '</button>'
+            );
+        }).join("");
+
+        html += '</div>';
+    } else {
+        html +=
+            '<div class="menu-empty">' +
+                'No liveries have been configured for this train. ' +
+                'Check the train\'s preferedLivery entry in trains.js.' +
+            '</div>';
+    }
+
+    // There is deliberately no Continue button.
+    // Clicking a livery advances to menu 7.
+
+    if (menuMessage) {
+        html +=
+            '<div class="menu-empty" style="margin-top:14px;">' +
+                escapeHTML(menuMessage) +
+            '</div>';
+    }
+
+    return html;
+}
+
+
+// ============================================================
+// STAGE 7 — COACH COUNT
+// ============================================================
+
+function stage_7_menu() {
+    var selectedRoute = getSelectedRoute();
+
+    var routePreferredCount =
+        selectedRoute &&
+        selectedRoute.preferredCoaches != null &&
+        selectedRoute.preferredCoaches !== ""
+            ? clampCoachCount(selectedRoute.preferredCoaches)
+            : null;
+
+    var trainPreferredCount =
+        selectedTrainData &&
+        selectedTrainData.preferedNumberOfCoaches != null &&
+        selectedTrainData.preferedNumberOfCoaches !== ""
+            ? clampCoachCount(
+                selectedTrainData.preferedNumberOfCoaches
+            )
+            : null;
+
+    var notes = [];
+
+    if (
+        routePreferredCount !== null &&
+        selectedCoachCount === routePreferredCount
+    ) {
+        notes.push(
+            "This is the route's preferred number of coaches"
+        );
+    }
+
+    if (
+        trainPreferredCount !== null &&
+        selectedCoachCount === trainPreferredCount
+    ) {
+        notes.push(
+            "This is the train's preferred number of coaches"
+        );
+    }
+
+    if (selectedCoachCount === 1) {
+        notes.push("Railbus mode!");
+    }
+
+    var noteText = notes.join(" · ");
+
+    function formatCoachCount(count) {
+        if (count === null) return "Not specified";
+
+        return count + (
+            count === 1 ? " coach" : " coaches"
+        );
+    }
+
+    var routeCoachText =
+        formatCoachCount(routePreferredCount);
+
+    var trainCoachText =
+        formatCoachCount(trainPreferredCount);
+
+    var html = getMenuHeader(
+        "STAGE 7 OF 8",
+        "How many coaches?",
+        "Choose how long you want the train to be",
+        true
+    );
+
+    // Keep the existing coach selection layout.
+    html +=
+        '<div class="coach-panel">' +
+            '<div>' +
+                '<div class="coach-label">Number of coaches</div>' +
+                '<div class="coach-number">' +
+                    selectedCoachCount +
+                '</div>' +
+                '<div class="coach-note">' +
+                    escapeHTML(noteText) +
+                '</div>' +
+            '</div>' +
+
+            '<div class="coach-controls">' +
+                '<button type="button" ' +
+                    'class="coach-stepper" ' +
+                    'data-menu-action="coach-minus"' +
+                    (
+                        selectedCoachCount <= 1
+                            ? ' disabled'
+                            : ''
+                    ) +
+                    ' aria-label="Decrease coaches">−</button>' +
+
+                '<button type="button" ' +
+                    'class="coach-stepper" ' +
+                    'data-menu-action="coach-plus"' +
+                    (
+                        selectedCoachCount >= 20
+                            ? ' disabled'
+                            : ''
+                    ) +
+                    ' aria-label="Increase coaches">+</button>' +
+            '</div>' +
+        '</div>';
+
+    // Show both preferences underneath the coach selector.
+    html +=
+        '<div class="menu-summary" style="margin-top:12px;">' +
+            '<div><strong>Route preferred:</strong> ' +
+                escapeHTML(routeCoachText) +
+            '</div>' +
+
+            '<div><strong>Train preferred:</strong> ' +
+                escapeHTML(trainCoachText) +
+            '</div>' +
+        '</div>';
+
+    html +=
+        '<div class="menu-action-area">' +
+            '<button type="button" ' +
+                'class="menu-primary" ' +
+                'data-menu-action="continue-vf-drive">' +
+                'Continue →' +
+            '</button>' +
+        '</div>';
+
+    return html;
+}
+
+// ============================================================
+// STAGE 8 — VF DRIVE SELECTION
+// ============================================================
+
+function stage_8_menu() {
+    // Load vf/trains.json if it has not already been loaded.
+    loadMenuVFDatabase();
+
+    var selectedRoute = getSelectedRoute();
+
+    var weather = selectedWeather ||
+        (
+            selectedRoute
+                ? defaultWeatherForRoute(selectedRoute)
+                : null
+        );
+
+    var html = getMenuHeader(
+        "STAGE 8 OF 8",
+        "Choose a VF drive",
+        "Select a VF drive for the selected train.",
+        true
+    );
+
+
+
+    // --------------------------------------------------------
+    // VF DRIVE LIST
+    // --------------------------------------------------------
+
+    if (!vfTrainDatabase) {
+        if (vfTrainDatabaseError) {
+            html +=
+                '<div class="menu-empty">' +
+                    'There was a problem loading the VF drive database. ' +
+                    escapeHTML(vfTrainDatabaseError) +
+                '</div>' +
+
+                '<div class="menu-action-area">' +
+                    '<button type="button" ' +
+                        'class="menu-secondary" ' +
+                        'data-menu-action="retry-vf-database">' +
+                        'Retry loading VF drives' +
+                    '</button>' +
+                '</div>';
+        } else {
+            html +=
+                '<div class="menu-empty">' +
+                    'Loading VF drives...' +
+                '</div>';
+        }
+    } else {
+
+        // Check whether any preferred VF drives exist.
+        // If none do, automatically switch to all VF drives.
+        var preferredVFDrives = getMenuVFDriveNames(false);
+
+        if (
+            !showAllVFDrives &&
+            preferredVFDrives.length === 0
+        ) {
+            showAllVFDrives = true;
+            vfPreferenceNotFound = true;
+        }
+
+        var vfDrives = getMenuVFDriveNames(showAllVFDrives);
+
+        // Keep this message visible after switching to all drives.
+        if (vfPreferenceNotFound) {
+            html +=
+                '<div class="menu-empty" style="margin-bottom:14px;">' +
+                    'None of this train\'s preferred VF drives could be ' +
+                    'found in vf/trains.json. Showing all available VF drives.' +
+                '</div>';
+        }
+
+        if (vfDrives.length) {
+            html += '<div class="scenario-list">';
+
+            html += vfDrives.map(function (vfName) {
+                return (
+                    '<button type="button" ' +
+                        'class="scenario-button" ' +
+                        'data-menu-action="choose-vf-drive" ' +
+                        'data-vf-name="' +
+                            escapeHTML(vfName) +
+                        '">' +
+
+                        '<span>' +
+                            '<span class="scenario-name">' +
+                                escapeHTML(vfName) +
+                            '</span>' +
+                        '</span>' +
+
+                        '<span class="scenario-arrow">›</span>' +
+                    '</button>'
+                );
+            }).join("");
+
+            html += '</div>';
+        } else {
+            html +=
+                '<div class="menu-empty">' +
+                    'No VF drives were found in vf/trains.json.' +
+                '</div>';
+        }
+
+        // Only show this button if the full list has not
+        // already been displayed.
+        if (!showAllVFDrives) {
+            html +=
+                '<div class="menu-action-area">' +
+                    '<button type="button" ' +
+                        'class="menu-secondary" ' +
+                        'data-menu-action="show-all-vf-drives">' +
+                        'Show all VF drives' +
+                    '</button>' +
+                '</div>';
+        }
+    }
+
+    // --------------------------------------------------------
+    // SAVED VF DRIVES
+    // --------------------------------------------------------
+
+// --------------------------------------------------------
+// SAVED USER VF DRIVES
+// --------------------------------------------------------
+
+if (!showSavedVFDrives) {
+    html +=
+        '<div class="menu-action-area">' +
+            '<button type="button" ' +
+                'class="menu-secondary" ' +
+                'data-menu-action="show-saved-vf-drives">' +
+                'Use your saved VF drives from the VF sim' +
+            '</button>' +
+        '</div>';
+}
+
+if (showSavedVFDrives) {
+    var savedVFDrives = getSavedUserVFDrives();
+
+    html +=
+        '<div class="menu-summary" style="margin-top:12px;">' +
+            '<div><strong>Your saved VF drives</strong></div>';
+
+    if (savedVFDrives.length) {
+        html += '<div class="scenario-list" style="margin-top:12px;">';
+
+        html += savedVFDrives.map(function (drive) {
+            return (
+                '<button type="button" ' +
+                    'class="scenario-button" ' +
+                    'data-menu-action="choose-saved-vf-drive" ' +
+                    'data-vf-name="' +
+                        escapeHTML(drive.name) +
+                    '">' +
+
+                    '<span>' +
+                        '<span class="scenario-name">' +
+                            escapeHTML(drive.name) +
+                        '</span>' +
+
+                    '</span>' +
+
+                    '<span class="scenario-arrow">›</span>' +
+                '</button>'
+            );
+        }).join("");
+
+        html += '</div>';
+    } else {
+        html +=
+            '<div class="menu-empty" style="margin-top:12px;">' +
+                'You do not have any saved VF drives.' +
+            '</div>';
+    }
+
+    html +=
+
+        '</div><br /><br /><br />';
+}
+
+    // There is deliberately no Skip or Start button here.
+    // Selecting a VF drive starts the simulator.
+
+    if (menuMessage) {
+        html +=
+            '<div class="menu-empty" style="margin-top:14px;">' +
+                escapeHTML(menuMessage) +
+            '</div>';
+    }
+
+    return html;
+}
+
+// ============================================================
+// MENU 100 — STORY SELECTION
+// ============================================================
+
+// ============================================================
+// MENU 100 — STORY SELECTION
+//
+// Uses the Menu 0 splash screen and background.
+// Does NOT use the normal route-selection menu layout.
+// ============================================================
+
+function stage_100_menu() {
+
+    var storyList =
+        typeof stories !== "undefined" && Array.isArray(stories)
+            ? stories
+            : [];
+
+
+    // Use exactly the same background image as Menu 0.
+    var image = getSplashImageFromZip(1);
+
+    var imageMarkup = image
+        ? '<img class="VF-Train_Sim-splash-background" src="' +
+            escapeHTML(image) +
+            '" alt="" aria-hidden="true">'
+        : '<div class="VF-Train_Sim-splash-background-fallback" aria-hidden="true"></div>';
+
+
+    // --------------------------------------------------------
+    // STORY BUTTONS
+    // --------------------------------------------------------
+
+    var storyButtons = "";
+
+    if (storyList.length) {
+
+        storyButtons = storyList.map(function (story, index) {
+
+            return (
+                '<button type="button" ' +
+                    'class="VF-Train_Sim-story-button" ' +
+                    'data-menu-action="choose-story" ' +
+                    'data-story-index="' + index + '">' +
+
+                    escapeHTML(
+                        story.name || "Untitled story"
+                    ) +
+
+                    '<span class="VF-Train_Sim-story-arrow">›</span>' +
+
+                '</button>'
+            );
+
+        }).join("");
+
+    } else {
+
+        storyButtons =
+            '<div class="VF-Train_Sim-story-empty">' +
+                'No stories have been configured.' +
+            '</div>';
+    }
+
+
+    // --------------------------------------------------------
+    // COMPLETE STORY SPLASH SCREEN
+    // --------------------------------------------------------
+
+    var html =
+
+        '<div class="VF-Train_Sim-splash-screen VF-Train_Sim-splash-initial VF-Train_Sim-story-splash">' +
+
+            imageMarkup +
+
+            '<div class="VF-Train_Sim-loading-message VF-Train_Sim-story-menu-box">' +
+
+                '<div class="VF-Train_Sim-loading-title">' +
+                    'STORY MODE' +
+                '</div>' +
+
+                '<div class="VF-Train_Sim-story-instruction">' +
+                    'Choose a story' +
+                '</div>' +
+
+                '<div class="VF-Train_Sim-story-list">' +
+                    storyButtons +
+                '</div>' +
+
+                '<br /><button type="button" ' +
+                    'class="VF-Train_Sim-splash-start VF-Train_Sim-story-back" ' +
+                    'data-menu-action="back">' +
+                    'Back' +
+                '</button>' +
+
+                (
+                    menuMessage
+                        ? '<div class="VF-Train_Sim-story-error">' +
+                            escapeHTML(menuMessage) +
+                          '</div>'
+                        : ''
+                ) +
+
+            '</div>' +
+
+        '</div>';
+
+
+    return html;
+}
+
+
+// ALL MENU BUTTON ACTIONS
+
+
+
+var pointsscreenmode = false;
+function handleRouteMenuButtonClick(button) {
+    if (!button || button.disabled || !routeMenuContent.contains(button) || !routeMenuElement.classList.contains("is-open")) return;
+
+    var action = button.getAttribute("data-menu-action");
+    if (!action) return;
+
+    switch (action) {
+        case "start-initial-menu":
+            if (menuStage !== 0) return;
+            menuMessage = "";
+            renderRouteMenu(1);
+            break;
+
+        case "developer-launch": {
+            if (menuStage !== 0) return;
+            var filename = button.getAttribute("data-route-filename");
+            current_train = developer_train;
+            current_livery = developer_livery;
+            current_vf = developer_vf;
+            coaches=developer_coaches;
+            launchDeveloperRoute(filename);
+            break;
+        }
+case "menu-story-mode":
+    if (menuStage !== 0) return;
+
+    menuMessage = "";
+    renderRouteMenu(100);
+    break;
+
+
+case "menu-free-play":
+    if (menuStage !== 0) return;
+
+    menuMessage = "";
+    renderRouteMenu(1);
+    break;
+
+
+case "menu-vf-drive":
+    if (menuStage !== 0) return;
+
+    window.location.href = "vf/throttle-sim.html";
+    break;
+
+
+case "choose-story": {
+    if (menuStage !== 100) return;
+
+    var storyIndex = Number(
+        button.getAttribute("data-story-index")
+    );
+
+    var storyList =
+        typeof stories !== "undefined" && Array.isArray(stories)
+            ? stories
+            : [];
+
+    var story = storyList[storyIndex];
+
+    if (!story || !story.fileName) return;
+
+    launchDeveloperRoute(story.fileName, story);
+    break;
+}
+case "choose-saved-vf-drive": {
+    if (menuStage !== 8) return;
+
+    var vfName = button.getAttribute("data-vf-name");
+
+    // Confirm that this drive still exists in local storage.
+    var savedDrive = getSavedUserVFDrives().find(
+        function (drive) {
+            return drive.name === vfName;
+        }
+    );
+
+    if (!savedDrive) return;
+
+    globalThis.current_vf = savedDrive.name;
+
+    showSavedVFDrives = false;
+    menuMessage = "";
+
+    // Selecting a saved VF drive starts the simulator.
+    launchSelectedMenuRoute();
+    break;
+}
+        case "back":
+            switch (menuStage) {
+                case 1: renderRouteMenu(0); break;
+                case 100: renderRouteMenu(0); break;
+                case 2: renderRouteMenu(1); break;
+                case 3: renderRouteMenu(2); break;
+                case 4: renderRouteMenu(3); break;
+                case 5: renderRouteMenu(4); break;
+                case 6: renderRouteMenu(5); break;
+                case 7: renderRouteMenu(6); break;
+                case 8: renderRouteMenu(7); break;
+            }
+            break;
+
+        case "choose-category":
+        selectedStory = null;
+            if (menuStage !== 1) return;
+            selectedCategory = button.getAttribute("data-category");
+            selectedSubcategory = null;
+            selectedRouteIndex = null;
+            renderRouteMenu(2);
+            break;
+
+        case "open-vf-editor":
+            if (menuStage !== 1) return;
+            window.location.href = "vf/throttle-sim.html";
+            break;
+
+        case "choose-subcategory":
+            if (menuStage !== 2) return;
+            selectedSubcategory = button.getAttribute("data-subcategory");
+            renderRouteMenu(3);
+            break;
+
+        case "choose-scenario":
+            if (menuStage !== 3) return;
+            chooseScenario(Number(button.getAttribute("data-route-index")));
+            break;
+
+
+        // ----------------------------------------------------
+        // WEATHER -> TRAIN SELECTION
+        // ----------------------------------------------------
+
+        case "choose-weather": {
+            if (menuStage !== 4) return;
+
+            var weather = getWeatherOptions(
+                getSelectedRoute()
+            ).find(function (item) {
+                return item.id ===
+                    button.getAttribute("data-weather-id");
+            });
+
+            if (!weather) return;
+
+            selectedWeather = weather;
+
+            // Start a fresh train selection for this route.
+            selectedTrainData = null;
+
+
+showAllTrains = false;
+showAllVFDrives = false;
+showSavedVFDrives = false;
+
+trainPreferenceNotFound = false;
+vfPreferenceNotFound = false;
+
+
+            menuMessage = "";
+
+            renderRouteMenu(5);
+            break;
+        }
+
+
+        // ----------------------------------------------------
+        // SHOW ALL TRAINS
+        // ----------------------------------------------------
+
+        case "show-all-trains":
+            if (menuStage !== 5) return;
+
+            showAllTrains = true;
+            renderRouteMenu(5);
+            break;
+
+
+        // ----------------------------------------------------
+        // SELECT TRAIN
+        // ----------------------------------------------------
+
+        case "choose-train": {
+            if (menuStage !== 5) return;
+
+            var trainName =
+                button.getAttribute("data-train-name");
+
+            var train = getTrainDatabaseList().find(
+                function (item) {
+                    return item &&
+                        typeof item.name === "string" &&
+                        item.name.trim().toLowerCase() ===
+                            String(trainName).trim().toLowerCase();
+                }
+            );
+
+            if (!train) return;
+
+            selectedTrainData = train;
+
+            globalThis.current_train = train.name;
+            globalThis.current_livery = "";
+            globalThis.current_vf = "";
+
+            showAllVFDrives = false;
+            showSavedVFDrives = false;
+
+            menuMessage = "";
+
+            renderRouteMenu(6);
+            break;
+        }
+
+
+        // ----------------------------------------------------
+        // SELECT LIVERY
+        // ----------------------------------------------------
+
+        case "choose-livery": {
+            if (menuStage !== 6) return;
+
+            var livery =
+                button.getAttribute("data-livery");
+
+            // Only accept a livery belonging to the selected train.
+            if (
+                !getTrainLiveryEntries(selectedTrainData)
+                    .includes(livery)
+            ) {
+                return;
+            }
+
+            globalThis.current_livery = livery;
+
+            menuMessage = "";
+
+            // Choosing the livery automatically advances to menu 7.
+            renderRouteMenu(7);
+            break;
+        }
+
+
+        // ----------------------------------------------------
+        // COACH COUNT
+        // ----------------------------------------------------
+
+        case "coach-minus":
+            if (menuStage !== 7) return;
+
+            selectedCoachCount = clampCoachCount(
+                selectedCoachCount - 1
+            );
+
+            renderRouteMenu(7);
+            break;
+
+
+        case "coach-plus":
+            if (menuStage !== 7) return;
+
+            selectedCoachCount = clampCoachCount(
+                selectedCoachCount + 1
+            );
+
+            renderRouteMenu(7);
+            break;
+
+
+        case "continue-vf-drive":
+            if (menuStage !== 7) return;
+showAllVFDrives = false;
+showSavedVFDrives = false;
+vfPreferenceNotFound = false;
+            renderRouteMenu(8);
+            break;
+
+
+        // ----------------------------------------------------
+        // SHOW ALL VF DRIVES
+        // ----------------------------------------------------
+
+        case "show-all-vf-drives":
+            if (menuStage !== 8) return;
+
+            showAllVFDrives = true;
+            renderRouteMenu(8);
+            break;
+
+
+        // ----------------------------------------------------
+        // SAVED VF DRIVES BOX
+        // ----------------------------------------------------
+
+        case "show-saved-vf-drives":
+            if (menuStage !== 8) return;
+
+            showSavedVFDrives = true;
+            renderRouteMenu(8);
+            break;
+
+
+        case "close-saved-vf-drives":
+            if (menuStage !== 8) return;
+
+            showSavedVFDrives = false;
+            renderRouteMenu(8);
+            break;
+
+
+        // ----------------------------------------------------
+        // RETRY VF DATABASE LOAD
+        // ----------------------------------------------------
+
+        case "retry-vf-database":
+            if (menuStage !== 8) return;
+
+            vfTrainDatabase = null;
+            vfTrainDatabasePromise = null;
+            vfTrainDatabaseError = "";
+
+            renderRouteMenu(8);
+            break;
+
+
+        // ----------------------------------------------------
+        // SELECT VF DRIVE
+        // ----------------------------------------------------
+
+        case "choose-vf-drive": {
+            if (menuStage !== 8 || !vfTrainDatabase) return;
+
+            var vfName =
+                button.getAttribute("data-vf-name");
+
+            if (
+                !vfName ||
+                !Object.prototype.hasOwnProperty.call(
+                    vfTrainDatabase,
+                    vfName
+                )
+            ) {
+                return;
+            }
+
+            globalThis.current_vf = vfName;
+
+            showSavedVFDrives = false;
+            menuMessage = "";
+
+            // Menu 8 is the final selection.
+            // Choosing a VF drive starts the selected route.
+            launchSelectedMenuRoute();
+            break;
+        }
+
+
+        // ----------------------------------------------------
+        // START WITHOUT SELECTING A VF DRIVE
+        // ----------------------------------------------------
+
+        case "start-menu-route":
+            if (menuStage !== 8) return;
+
+            launchSelectedMenuRoute();
+            break;
+
+
+
+
+
+
+
+        case "resume-simulation":
+            routeMenuElement.classList.remove("is-open");
+            routeMenuElement.classList.remove("VF-Train_Sim-splash-mode");
+            routeMenuElement.style.display = "none";
+
+            statusElement.style.display = "block";
+            if (lock_mouse){document.body.requestPointerLock()};
+            startRenderLoop();
+            break;
+
+        case "route-settings":
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-camera-mouse":
+            lock_mouse = true;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-camera-keyboard":
+            lock_mouse = false;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-sound-0":
+            prefer_sound = 0;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-sound-1":
+            prefer_sound = 1;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-sound-2":
+            prefer_sound = 2;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-units-0":
+            prefer_units = 0;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-units-1":
+            prefer_units = 1;
+            showRouteSettingsSplash();
+            break;
+
+        case "settings-units-2":
+            prefer_units = 2;
+            showRouteSettingsSplash();
+            break;
+
+
+
+
+        case "settings-back":    // todo set vf to single or 3 phase here
+            use_metric = use_metric_pre;
+            if (prefer_units == 1){use_metric = true}
+            if (prefer_units == 2){use_metric = false}
+            saveRouteSettingsToCookie();
+            showRouteReadySplash(routeReadyIsPaused);
+            break;
+
+        case "quit-simulation":
+            stopRenderLoop();
+            break;
+
+
+
+
+
+
+
+
+            case "route-points": {
+
+    updatepoints();
+    populateCurrentRouteItems();
+set_bogie_positions();
+    pointsscreenmode = true;
+    showRoutePointsSplash();
+
+    var pointsCanvas = routeMenuContent.querySelector("#VF-Train_Sim-points-canvas");
+
+    pointsCanvas.addEventListener("wheel", pointsMapWheel, { passive: false });
+    pointsCanvas.addEventListener("pointerdown", pointsMapPointerDown);
+    pointsCanvas.addEventListener("pointermove", pointsMapPointerMove);
+    pointsCanvas.addEventListener("pointerup", pointsMapPointerUp);
+    pointsCanvas.addEventListener("pointercancel", pointsMapPointerCancel);
+    pointsCanvas.addEventListener("click", pointsMapClick);
+
+    routeMenuContent.querySelector("#VF-Train_Sim-points-zoom-in").addEventListener("click", pointsMapZoomIn);
+    routeMenuContent.querySelector("#VF-Train_Sim-points-zoom-out").addEventListener("click", pointsMapZoomOut);
+    routeMenuContent.querySelector("#VF-Train_Sim-points-to-scale").addEventListener("click", pointsMapToScale);
+    routeMenuContent.querySelector("#VF-Train_Sim-points-enhanced").addEventListener("click", pointsMapEnhanced);
+    routeMenuContent.querySelector("#VF-Train_Sim-points-reset").addEventListener("click", pointsMapResetZoom);
+
+    window.addEventListener("resize", pointsMapResize);
+
+    break;
+}
+
+case "points-back": {
+    pointsscreenmode = false;
+
+    var pointsCanvas = routeMenuContent.querySelector("#VF-Train_Sim-points-canvas");
+
+    if (pointsCanvas) {
+        pointsCanvas.removeEventListener("wheel", pointsMapWheel);
+        pointsCanvas.removeEventListener("pointerdown", pointsMapPointerDown);
+        pointsCanvas.removeEventListener("pointermove", pointsMapPointerMove);
+        pointsCanvas.removeEventListener("pointerup", pointsMapPointerUp);
+        pointsCanvas.removeEventListener("pointercancel", pointsMapPointerCancel);
+        pointsCanvas.removeEventListener("click", pointsMapClick);
+    }
+
+    var zoomInButton = routeMenuContent.querySelector("#VF-Train_Sim-points-zoom-in");
+    var zoomOutButton = routeMenuContent.querySelector("#VF-Train_Sim-points-zoom-out");
+    var toScaleButton = routeMenuContent.querySelector("#VF-Train_Sim-points-to-scale");
+    var enhancedButton = routeMenuContent.querySelector("#VF-Train_Sim-points-enhanced");
+    var resetButton = routeMenuContent.querySelector("#VF-Train_Sim-points-reset");
+
+    if (zoomInButton) zoomInButton.removeEventListener("click", pointsMapZoomIn);
+    if (zoomOutButton) zoomOutButton.removeEventListener("click", pointsMapZoomOut);
+    if (toScaleButton) toScaleButton.removeEventListener("click", pointsMapToScale);
+    if (enhancedButton) enhancedButton.removeEventListener("click", pointsMapEnhanced);
+    if (resetButton) resetButton.removeEventListener("click", pointsMapResetZoom);
+
+    window.removeEventListener("resize", pointsMapResize);
+
+    updatepoints();
+    populateCurrentRouteItems();
+
+    showRouteReadySplash(routeReadyIsPaused);
+    break;
+}
+
+
+
+
+
+
+
+    }
+}
+
+
+
+
+
+
+
+function saveRouteSettingsToCookie() {
+    try {
+        var settings = {
+            DRAW_AHEAD: Number(DRAW_AHEAD),
+            lock_mouse: lock_mouse === true,
+            prefer_sound: prefer_sound,
+            prefer_units: prefer_units
+        };
+
+        document.cookie =
+            "vf_train_sim_settings=" +
+            encodeURIComponent(JSON.stringify(settings)) +
+            "; max-age=31536000; path=/; SameSite=Lax";
+    } catch (error) {
+        // Cookie saving is optional; leave the current settings in use.
+    }
+}
+
+function loadRouteSettingsFromCookie() {
+    try {
+        var cookieValue = null;
+
+        document.cookie.split(";").some(function (cookie) {
+            var separator = cookie.indexOf("=");
+            if (separator === -1) return false;
+
+            var name = cookie.slice(0, separator).trim();
+
+            if (name === "vf_train_sim_settings") {
+                cookieValue = cookie.slice(separator + 1).trim();
+                return true;
+            }
+
+            return false;
+        });
+
+        if (cookieValue === null) return;
+
+        var settings = JSON.parse(decodeURIComponent(cookieValue));
+
+        if (
+            typeof settings.DRAW_AHEAD === "number" &&
+            Number.isFinite(settings.DRAW_AHEAD)
+        ) {
+            DRAW_AHEAD = settings.DRAW_AHEAD;
+        }
+
+        if (typeof settings.lock_mouse === "boolean") {
+            lock_mouse = settings.lock_mouse;
+        }
+        if (typeof settings.prefer_sound === "number") {
+            prefer_sound = settings.prefer_sound;
+        }
+        if (typeof settings.prefer_units === "number") {
+            prefer_units = settings.prefer_units;
+        }
+
+
+
+
+    } catch (error) {
+        // Invalid or unavailable cookies leave the default settings unchanged.
+    }
+}
+
+
+
+
+
+function showRouteSettingsSplash() {
+    var splashImage = getSplashImageFromZip(2);
+
+    var imageMarkup = splashImage
+        ? '<img class="VF-Train_Sim-splash-background" src="' + escapeHTML(splashImage) + '" alt="" aria-hidden="true">'
+        : '<div class="VF-Train_Sim-splash-background-fallback" aria-hidden="true"></div>';
+
+    var viewingDistance = Math.round(Number(DRAW_AHEAD));
+
+    if (!Number.isFinite(viewingDistance)) {
+        viewingDistance = 200;
+    }
+
+    // Keep the slider value within its permitted range.
+    viewingDistance = Math.max(200, Math.min(2000, viewingDistance));
+    DRAW_AHEAD = viewingDistance;
+
+    var mouseSelected = lock_mouse === true;
+    var keyboardSelected = lock_mouse === false;
+var sound_0_selected = prefer_sound == 0;
+var sound_1_selected = prefer_sound == 1;
+var sound_2_selected = prefer_sound == 2;
+var units_0_selected = prefer_units == 0;
+var units_1_selected = prefer_units == 1;
+var units_2_selected = prefer_units == 2;
+
+
+
+
+
+
+    var mouseStyle = mouseSelected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+    var keyboardStyle = keyboardSelected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+
+    var sound_0_selected_style = sound_0_selected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+    var sound_1_selected_style = sound_1_selected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+    var sound_2_selected_style = sound_2_selected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+    var units_0_selected_style = units_0_selected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+    var units_1_selected_style = units_1_selected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+    var units_2_selected_style = units_2_selected
+        ? "background:#315f91;color:#fff;border:2px solid #79baff;"
+        : "background:transparent;color:inherit;border:2px solid #888;";
+
+
+
+
+
+    routeMenuContent.innerHTML =
+        '<div class="VF-Train_Sim-splash-screen VF-Train_Sim-splash-ready">' +
+            imageMarkup +
+
+            '<div class="VF-Train_Sim-splash-ready-box">' +
+
+                '<div class="VF-Train_Sim-splash-ready-title">Settings</div>' +
+
+                '<div class="VF-Train_Sim-settings-content" style="text-align:left;">' +
+
+                    // Viewing distance
+                    '<div class="VF-Train_Sim-setting" style="margin-bottom:28px;">' +
+                        '<label for="VF-Train_Sim-viewing-distance" style="display:block;margin-bottom:12px;">' +
+                            'Viewing distance: ' + viewingDistance + 'm' +
+                        '</label>' +
+
+                        '<input ' +
+                            'type="range" ' +
+                            'id="VF-Train_Sim-viewing-distance" ' +
+                            'min="200" ' +
+                            'max="2000" ' +
+                            'step="1" ' +
+                            'value="' + viewingDistance + '" ' +
+                            'style="width:100%;display:block;margin:0;">' +
+                    '</div>' +
+
+                    // Camera control
+                    '<div class="VF-Train_Sim-setting">' +
+                        '<div style="margin-bottom:12px;">Control camera with:</div>' +
+
+                        '<div class="VF-Train_Sim-settings-camera-options" style="display:flex;gap:8px;">' +
+
+                            '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-camera-mouse" ' +///
+                                'aria-pressed="' + mouseSelected + '" ' +
+                                'style="' + mouseStyle + '">' +
+                                'Mouse' +
+                            '</button>' +
+
+                            '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-camera-keyboard" ' +
+                                'aria-pressed="' + keyboardSelected + '" ' +
+                                'style="' + keyboardStyle + '">' +
+                                'Keyboard' +
+                            '</button>' +
+
+                        '</div>' +
+                    '</div>' +
+
+
+                    // Sound control
+                    '<br /><div class="VF-Train_Sim-setting">' +
+                        '<div style="margin-bottom:12px;">VF sound generation setting:</div>' +
+
+                        '<div class="VF-Train_Sim-settings-camera-options" style="display:flex;gap:8px;">' +
+
+                            '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-sound-0" ' +
+                                'aria-pressed="' + sound_0_selected + '" ' +
+                                'style="' + sound_0_selected_style + '">' +
+                                'Use trains prefered sound' +
+                            '</button>' +
+
+                            '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-sound-1" ' +
+                                'aria-pressed="' + sound_1_selected + '" ' +
+                                'style="' + sound_1_selected_style + '">' +
+                                'Single phase' +
+                            '</button>' +
+
+                             '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-sound-2" ' +
+                                'aria-pressed="' + sound_2_selected + '" ' +
+                                'style="' + sound_2_selected_style + '">' +
+                                '3 phase' +
+                            '</button>' +
+
+                        '</div>' +
+                    '</div>' +
+
+
+
+                    // Sound control
+                    '<br /><div class="VF-Train_Sim-setting">' +
+                        '<div style="margin-bottom:12px;">Speed units:</div>' +
+
+                        '<div class="VF-Train_Sim-settings-camera-options" style="display:flex;gap:8px;">' +
+
+                            '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-units-0" ' +
+                                'aria-pressed="' + units_0_selected + '" ' +
+                                'style="' + units_0_selected_style + '">' +
+                                'Use route units' +
+                            '</button>' +
+
+                            '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-units-1" ' +
+                                'aria-pressed="' + units_1_selected + '" ' +
+                                'style="' + units_1_selected_style + '">' +
+                                'KMH' +
+                            '</button>' +
+
+                             '<button ' +
+                                'type="button" ' +
+                                'class="VF-Train_Sim-settings-option" ' +
+                                'data-menu-action="settings-units-2" ' +
+                                'aria-pressed="' + units_2_selected + '" ' +
+                                'style="' + units_2_selected_style + '">' +
+                                'MPH' +
+                            '</button>' +
+
+                        '</div>' +
+                    '</div>' +
+
+
+
+
+
+
+
+                '</div>' +
+
+                '<button type="button" class="VF-Train_Sim-splash-start" data-menu-action="settings-back">' +
+                    'Back' +
+                '</button>' +
+
+            '</div>' +
+        '</div>';
+
+    // Update DRAW_AHEAD and the displayed label as the slider moves.
+    var viewingDistanceSlider = routeMenuContent.querySelector(
+        "#VF-Train_Sim-viewing-distance"
+    );
+
+    var viewingDistanceLabel = routeMenuContent.querySelector(
+        'label[for="VF-Train_Sim-viewing-distance"]'
+    );
+
+    viewingDistanceSlider.addEventListener("input", function () {
+        DRAW_AHEAD = Math.round(Number(viewingDistanceSlider.value));
+
+        viewingDistanceLabel.textContent =
+            "Viewing distance: " + DRAW_AHEAD + "m";
+    });
+
+    // Attach the existing menu button handler.
+    routeMenuContent.querySelectorAll("button[data-menu-action]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            handleRouteMenuButtonClick(button);
+        });
+    });
+
+    routeMenuElement.classList.add("is-open");
+    routeMenuElement.classList.add("VF-Train_Sim-splash-mode");
+    routeMenuElement.style.display = "flex";
+
+
+    statusElement.style.display = "none";
+}
+
+
+
+
+
+
+var overlay;
+var ctx;
+
+////////////////////////////
+
+var little_canvas_show_track_numbers = true;
+
+function little_canvas() {
+    var items = current_route_items_detailed;
+    var w = overlay.width, h = overlay.height;
+    var forward = (reverser) === 1, reverse = (reverser) === -1;
+    var direction = forward ? 1 : reverse ? -1 : 0;
+    var i, item, d, minD = Infinity, maxD = -Infinity, upcoming = [];
+    var p = pos;
+
+
+    var coachCount = (coaches);
+    var coachLength = (coachlength);
+
+
+    var trainLength = train_length;
+    var routePosition = reverse ? p - trainLength : p;
+
+    ctx.clearRect(0, 0, w, h);
+
+    for (i = 0; i < items.length; i++) {
+        item = items[i];
+        if (!Array.isArray(item)) continue;
+        d = Number(item[1]);
+        if (!Number.isFinite(d)) continue;
+        if (d < minD) minD = d;
+        if (d > maxD) maxD = d;
+    }
+
+    var startBuffer = Infinity, endBuffer = -Infinity;
+
+    for (i = 0; i < items.length; i++) {
+        item = items[i];
+        if (!Array.isArray(item) || item[0] !== 'buffer') continue;
+        d = Number(item[1]);
+        if (!Number.isFinite(d)) continue;
+        if (Math.abs(d - minD) < 0.01) startBuffer = d;
+        if (Math.abs(d - maxD) < 0.01) endBuffer = d;
+    }
+
+    // The global crash record persists; diagramCrashed is recalculated each frame.
+    var diagramCrashed = false;
+
+
+
+
+
+if (forward) {
+    if (pos > (items[items.length - 1][1])) {
+        crashed = true;
+        crashedtext = 'Crashed into buffer';
+        diagramCrashed = true;
+    }
+} else if (reverse) {
+    if (pos - train_length < (items[0][1])) {
+        crashed = true;
+        crashedtext = 'Crashed into buffer';
+        diagramCrashed = true;
+    }
+}
+
+    var panelX = w * 0.8, panelW = w * 0.2;
+
+    if (Number(reverser) === 0) {
+        ctx.fillStyle = '#101925';
+        ctx.fillRect(panelX, 0, panelW, h);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '12px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Reverser is in neutral', panelX + panelW / 2, h / 2);
+
+        if (diagramCrashed) {
+            ctx.fillStyle = 'rgba(0,0,0,0.85)';
+            ctx.fillRect(panelX + 3, h * 0.40, panelW - 6, h * 0.20);
+            ctx.fillStyle = '#ff3030';
+            ctx.font = '900 ' + Math.min(38, panelW * 0.18) + 'px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('CRASHED!', panelX + panelW / 2, h * 0.5);
+        }
+
+        return;
+    }
+
+    if (!forward && !reverse) return;
+
+    for (
+        i = forward ? 0 : items.length - 1;
+        forward ? i < items.length && upcoming.length < 4 : i >= 0 && upcoming.length < 4;
+        forward ? i++ : i--
+    ) {
+        item = items[i];
+        if (!Array.isArray(item)) continue;
+
+        d = Number(item[1]);
+        if (!Number.isFinite(d) || (forward ? d < routePosition : d > routePosition)) continue;
+
+        if (item[0] === 'buffer') {
+            if (forward && Math.abs(d - minD) < 0.01) continue;
+            if (reverse && Math.abs(d - maxD) < 0.01) continue;
+        }
+
+        if (
+            item[0] === 'facingpoints' ||
+            item[0] === 'nonfacingpoints' ||
+            item[0] === 'conflictingpoints' ||
+            item[0] === 'handover' ||
+            item[0] === 'buffer'
+        ) {
+            upcoming.push({ data: item, index: i });
+        }
+    }
+
+    var slot = h / 5;
+    var size = Math.min(68, panelW * 0.48, slot * 0.94);
+    var cx = panelX + panelW * 0.50;
+    var x1 = cx - size / 2, x2 = cx + size / 2;
+    var keyX = panelX + panelW * 0.85;
+    var keySize = Math.min(25, slot * 0.57);
+    var warningX = x2 + (keyX - keySize / 2 - x2) / 2;
+    var keys = ['p', 'o', 'i', 'u'], keyNo = 0;
+
+    ctx.fillStyle = '#101925';
+    ctx.fillRect(panelX, 0, panelW, h);
+
+    var trainY = forward ? slot * 4.65 : slot * 0.28;
+    ctx.fillStyle = '#26394e';
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 1.5;
+    ctx.fillRect(cx - 7, trainY - 11, 14, 22);
+    ctx.strokeRect(cx - 7, trainY - 11, 14, 22);
+    ctx.fillStyle = '#cbd8e7';
+    ctx.fillRect(cx - 4, trainY - 6, 8, 4);
+    ctx.fillRect(cx - 4, trainY + 2, 8, 3);
+
+    for (i = 0; i < upcoming.length; i++) {
+        item = upcoming[i].data;
+        var index = upcoming[i].index, type = item[0];
+        d = Number(item[1]);
+
+        var y = forward ? slot * (3.9 - i * 1.05) : slot * (1.2 + i * 0.9);
+        var top = y - size / 2, bottom = y + size / 2;
+        var warningItem = type === 'conflictingpoints' || type === 'buffer';
+
+        ctx.fillStyle = warningItem ? '#77400b' : '#000000';
+        ctx.fillRect(x1, top, size, size);
+        ctx.strokeStyle = warningItem ? '#f0a33a' : '#9aacc1';
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(x1, top, size, size);
+
+        ctx.fillStyle = '#e3eaf3';
+        ctx.font = '700 11px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(Math.round(Math.abs(d - routePosition)) + 'm', panelX + 3, y);
+
+        if (
+            type === 'facingpoints' ||
+            type === 'nonfacingpoints' ||
+            type === 'conflictingpoints'
+        ) {
+            var track = Number(item[2]);
+            var prevTrack = index > 0 && Array.isArray(items[index - 1])
+                ? Number(items[index - 1][2])
+                : track;
+            var nextTrack = index + 1 < items.length && Array.isArray(items[index + 1])
+                ? Number(items[index + 1][2])
+                : track;
+
+            if (!Number.isFinite(prevTrack)) prevTrack = track;
+            if (!Number.isFinite(nextTrack)) nextTrack = track;
+
+            var incoming = forward ? prevTrack : nextTrack;
+            var otherExit = forward ? nextTrack : prevTrack;
+            var split = forward
+                ? type === 'facingpoints'
+                : type === 'nonfacingpoints';
+
+            var branchLeft = item[5] === true;
+            if (reverse) branchLeft = !branchLeft;
+
+            var bx = cx + (branchLeft ? -1 : 1) * size * 0.31;
+            var startY = forward ? bottom - 8 : top + 8;
+            var endY = forward ? top + 8 : bottom - 8;
+            var nodeY = split
+                ? startY + (endY - startY) * 0.36
+                : startY + (endY - startY) * 0.64;
+
+            var conflict = type === 'conflictingpoints';
+            var branchActive = incoming !== track;
+            var branchTrack, straightTrack;
+
+            if (split) {
+                straightTrack = branchActive ? otherExit : track;
+                branchTrack = branchActive ? track : otherExit;
+            } else {
+                straightTrack = branchActive ? otherExit : incoming;
+                branchTrack = branchActive ? incoming : otherExit;
+            }
+
+            ctx.beginPath();
+
+            if (split) {
+                if (conflict) {
+                    ctx.moveTo(cx, startY);
+                    ctx.lineTo(cx, nodeY);
+                    ctx.lineTo(branchActive ? bx : cx, endY);
+                } else if (branchActive) {
+                    ctx.moveTo(cx, nodeY);
+                    ctx.lineTo(cx, endY);
+                } else {
+                    ctx.moveTo(cx, nodeY);
+                    ctx.lineTo(bx, endY);
+                }
+            } else {
+                if (conflict) {
+                    ctx.moveTo(branchActive ? bx : cx, startY);
+                    ctx.lineTo(cx, nodeY);
+                    ctx.lineTo(cx, endY);
+                } else if (branchActive) {
+                    ctx.moveTo(cx, startY);
+                    ctx.lineTo(cx, nodeY);
+                } else {
+                    ctx.moveTo(bx, startY);
+                    ctx.lineTo(cx, nodeY);
+                }
+            }
+
+            ctx.strokeStyle = '#858585';
+            ctx.lineWidth = 3.2;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            ctx.beginPath();
+
+            if (split) {
+                if (conflict) {
+                    ctx.moveTo(cx, nodeY);
+                    ctx.lineTo(branchActive ? cx : bx, endY);
+                } else {
+                    ctx.moveTo(cx, startY);
+                    ctx.lineTo(cx, nodeY);
+                    ctx.lineTo(branchActive ? bx : cx, endY);
+                }
+            } else {
+                if (conflict) {
+                    ctx.moveTo(branchActive ? cx : bx, startY);
+                    ctx.lineTo(cx, nodeY);
+                } else {
+                    ctx.moveTo(branchActive ? bx : cx, startY);
+                    ctx.lineTo(cx, nodeY);
+                    ctx.lineTo(cx, endY);
+                }
+            }
+
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3.2;
+            ctx.stroke();
+
+            if (little_canvas_show_track_numbers) {
+                ctx.fillStyle = '#ff777b';
+                ctx.font = '700 7px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                if (split) {
+                    ctx.fillText(String(incoming), cx, startY);
+                    ctx.fillText(String(straightTrack), cx, endY);
+                    ctx.fillText(String(branchTrack), bx, endY);
+                } else {
+                    ctx.fillText(String(straightTrack), cx, startY);
+                    ctx.fillText(String(branchTrack), bx, startY);
+                    ctx.fillText(String(track), cx, endY);
+                }
+            }
+
+            // Green number is the original trackSwitches array index.
+            ctx.fillStyle = '#65e3a0';
+            ctx.font = '700 9px sans-serif';
+            ctx.textAlign = branchLeft ? 'right' : 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(
+                item[4] === null || item[4] === undefined ? '?' : String(item[4]),
+                branchLeft ? x2 - 3 : x1 + 3,
+                y
+            );
+
+            // Dashed connector and computer-style keycap.
+            ctx.beginPath();
+            ctx.setLineDash([3, 3]);
+            ctx.moveTo(x2 + 3, y);
+            ctx.lineTo(keyX - keySize / 2 - 3, y);
+            ctx.strokeStyle = '#b5c3d4';
+            ctx.lineWidth = 1.3;
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            ctx.fillStyle = '#536478';
+            ctx.fillRect(keyX - keySize / 2, y - keySize / 2 + 2, keySize, keySize);
+            ctx.fillStyle = '#e9eef5';
+            ctx.fillRect(keyX - keySize / 2, y - keySize / 2, keySize, keySize - 2);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(keyX - keySize / 2, y - keySize / 2, keySize, keySize - 2);
+
+            ctx.beginPath();
+            ctx.moveTo(keyX - keySize / 2 + 3, y - keySize / 2 + 2);
+            ctx.lineTo(keyX + keySize / 2 - 3, y - keySize / 2 + 2);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            ctx.fillStyle = '#172333';
+            ctx.font = '800 13px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(keys[keyNo], keyX, y);
+            keyNo++;
+
+        } else if (type === 'handover') {
+            ctx.beginPath();
+            ctx.moveTo(cx, top + 3);
+            ctx.lineTo(cx, bottom - 3);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            if (little_canvas_show_track_numbers) {
+                ctx.fillStyle = '#ff777b';
+                ctx.font = '700 8px sans-serif';
+                ctx.textBaseline = 'middle';
+                ctx.textAlign = 'center';
+                ctx.fillText(String(item[2]), cx, top + 7);
+                ctx.fillText(String(item[3]), cx, bottom - 7);
+            }
+
+        } else if (type === 'buffer') {
+            var barY = forward ? top + size * 0.27 : bottom - size * 0.27;
+
+            ctx.beginPath();
+            ctx.moveTo(cx, forward ? bottom - 3 : top + 3);
+            ctx.lineTo(cx, barY);
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+
+            ctx.beginPath();
+            ctx.moveTo(x1 + 4, barY);
+            ctx.lineTo(x2 - 4, barY);
+            ctx.strokeStyle = '#f04f52';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            if (little_canvas_show_track_numbers) {
+                ctx.fillStyle = '#ff777b';
+                ctx.font = '700 8px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(String(item[2]), cx, forward ? bottom - 7 : top + 7);
+            }
+        }
+
+        if (warningItem) {
+            var ts = Math.min(42, panelW * 0.14, slot * 0.75);
+
+            ctx.beginPath();
+            ctx.moveTo(warningX, y - ts);
+            ctx.lineTo(warningX - ts, y + ts * 0.85);
+            ctx.lineTo(warningX + ts, y + ts * 0.85);
+            ctx.closePath();
+            ctx.fillStyle = '#ffff00';
+            ctx.fill();
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            ctx.fillStyle = '#30200a';
+            ctx.font = '900 ' + Math.max(16, ts * 0.95) + 'px sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('!', warningX, y + 2);
+        }
+    }
+
+    if (diagramCrashed) {
+        ctx.fillStyle = 'rgba(0,0,0,0.85)';
+        ctx.fillRect(panelX + 3, h * 0.40, panelW - 6, h * 0.20);
+        ctx.fillStyle = '#ff3030';
+        ctx.font = '900 ' + Math.min(38, panelW * 0.18) + 'px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('CRASHED!', panelX + panelW / 2, h * 0.5);
+    }
+}
+
+function make_default_values(){
+
+left_doors = 0;
+right_doors = 0;
+left_doors_mode = 0;
+right_doors_mode = 0;
+pos = 0;
+current_track = 0;
+pos_npc = 0;
+current_track_npc = 0;
+accel_npc = 0;
+speed_npc = 0;
+upper_speed_limit_npc = 0;
+lower_speed_limit_npc = 0;
+allow_points_change = false;
+points_speed_limit = 25;
+flip_out = false;
+boat_mode = false;
+
+ chicken1 = null; chicken2 = null;chicken3 = null;chicken4 = null;chicken5 = null;chicken6 = null;chicken7 = null;chicken8 = null;chicken9 = null;chicken0;
+ chicken11 = null;chicken12 = null;chicken13 = null;chicken14 = null;chicken15 = null;chicken16 = null;chicken17 = null;chicken18 = null;chicken19 = null;chicken10 = null;
+ chicken21 = null;chicken22 = null;chicken23 = null;chicken24 = null;chicken25 = null;chicken26 = null;chicken27 = null;chicken28 = null;chicken29 = null;chicken20 = null;
+ chicken31 = null;chicken32 = null;chicken33 = null;chicken34 = null;chicken35 = null;chicken36 = null;chicken37 = null;chicken38 = null;chicken39 = null;chicken30 = null;
+ chicken41 = null;chicken42 = null;chicken43 = null;chicken44 = null;chicken45 = null;chicken46 = null;chicken47 = null;chicken48 = null;chicken49 = null;chicken40 = null;
+ chicken51 = null;chicken52 = null;chicken53 = null;chicken54 = null;chicken55 = null;chicken56 = null;chicken57 = null;chicken58 = null;chicken59 = null;chicken50 = null;
+ chicken61 = null;chicken62 = null;chicken63 = null;chicken64 = null;chicken65 = null;chicken66 = null;chicken67 = null;chicken68 = null;chicken69 = null;chicken60 = null;
+ chicken71 = null;chicken72 = null;chicken73 = null;chicken74 = null;chicken75 = null;chicken76 = null;chicken77 = null;chicken78 = null;chicken79 = null;chicken70 = null;
+ chicken81 = null;chicken82 = null;chicken83 = null;chicken84 = null;chicken85 = null;chicken86 = null;chicken87 = null;chicken88 = null;chicken89 = null;chicken80 = null;
+ chicken91 = null;chicken92 = null;chicken93 = null;chicken94 = null;chicken95 = null;chicken96 = null;chicken97 = null;chicken98 = null;chicken99 = null;chicken90 = null;
+
+current_route_items_detailed =[];
+current_route_items_routing = [];
+current_route_items_routing_npc = [];
+current_speed_limits = [];
+a2d_map_of_track = [];
+a2d_map_of_stations = [];
+setup_new_train(current_train,current_livery);
+lookx = 0;
+looky = 0;
+cameraArrowKeys = {
+    left: false,
+    right: false,
+    up: false,
+    down: false,
+    space: false,
+    b: false,
+    n: false,
+    dot: false,
+    commar: false
+};
+}
+
+
+
+
+function startRenderLoop() {
+
+    start_sound();
+
+    if (renderLoopRunning) {
+        return;
+    }
+
+    // Initialise all point display states before the first frame.
+    updatepoints();populateCurrentRouteItems();
+
+    renderLoopRunning = true;
+
+    renderAnimationFrameId =
+        requestAnimationFrame(render);
+}
+
+
+
+
+function pauseRenderLoop(){renderLoopRunning=!1,null!==renderAnimationFrameId&&(cancelAnimationFrame(renderAnimationFrameId),renderAnimationFrameId=null),stop_sound()}function stopRenderLoop(){renderLoopRunning=!1,null!==renderAnimationFrameId&&(cancelAnimationFrame(renderAnimationFrameId),renderAnimationFrameId=null),stop_sound();var e=!!gl;try{e&&gl.isContextLost()&&(e=!1)}catch(t){e=!1}function t(t,n){if(e)try{n()}catch(e){console.warn(t,e)}}function n(e,n){e&&t(n||"Could not delete a WebGL buffer:",function(){gl.deleteBuffer(e)})}function a(e,n){e&&t(n||"Could not delete a WebGL vertex array:",function(){gl.deleteVertexArray(e)})}function r(e,n){e&&t(n||"Could not delete a WebGL texture:",function(){gl.deleteTexture(e)})}if(t("Could not reset WebGL state:",function(){gl.bindVertexArray(null),gl.bindBuffer(gl.ARRAY_BUFFER,null),gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,null),gl.useProgram(null),gl.bindFramebuffer(gl.FRAMEBUFFER,null),gl.bindRenderbuffer(gl.RENDERBUFFER,null),gl.depthMask(!0),gl.disable(gl.BLEND),gl.disable(gl.CULL_FACE);
+for(var e=gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS),t=0;t<e;t++)gl.activeTexture(gl.TEXTURE0+t),gl.bindTexture(gl.TEXTURE_2D,null);gl.activeTexture(gl.TEXTURE0)}),routeMesh&&Array.isArray(routeMesh.zones)){for(var o of routeMesh.zones)o&&(a(o.vao,"Could not delete a route-zone VAO:"),n(o.buffer,"Could not delete a route-zone buffer:"),o.vao=null,o.buffer=null,o.segmentFirst=null,o.segmentCount=null);routeMesh.zones.length=0}if(Array.isArray(route_objects))for(var i of route_objects)if(i){var s=i[4];if(s&&Array.isArray(s.meshes)){for(var u of s.meshes)if(u){for(var l of(a(u.objectVao,"Could not delete an object-mesh VAO:"),u.objectVao=null,["positionBuffer","normalBuffer","uvBuffer","indexBuffer"]))n(u[l],"Could not delete object-mesh buffer "+l+":"),u[l]=null;delete u._positions,delete u._normals,delete u._uvs,delete u._indices,u.texture=null,u.nightTexture=null,u.indexCount=0,u.vertexCount=0}s.meshes.length=0}i[3]=!1,i[4]=null}if(Array.isArray(route_textures))for(var c of route_textures)if(c){var d=c[3];if(r(c[5],"Could not delete a route texture:"),d&&"function"==typeof d.close)try{d.close()}catch(e){console.warn("Could not close a decoded route image:",e)}c[2]=!1,c[3]=null,c[4]=!1,c[5]=null}objectProgram&&t("Could not delete the object shader program:",function(){gl.deleteProgram(objectProgram)}),objectProgram=null,objectLocations=null,route=null,routeMesh=null,route_textures=[],route_objects=[],route_texture_errors=[],route_object_errors=[],object_linup=[],use_track_texture=[],route_zip=null,activeRoute=null,currentRoute=null,ctx.clearRect(0,0,overlay.width,overlay.height),t("Could not clear the WebGL canvas:",function(){gl.clearColor(.47,.63,.74,1),gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT)}),statusElement.textContent="No route loaded.",console.log("Route unloaded. Route GPU resources released; ZIP cache preserved."),setTimeout(function(){main_menu("developer"===routeLaunchSource?0:3)},100)}
+
+
+
+
+var routeLaunchSource="menu",menuStage=0,routeReadyIsPaused=!1,selectedCategory=null,selectedSubcategory=null,selectedRouteIndex=null,selectedWeather=null,selectedCoachCount=4,coachCountForCurrentLaunch=null,menuMessage="",splashStylesInstalled=!1;function installSplashStyles(){if(!splashStylesInstalled)if(document.getElementById("VF-Train_Sim-splash-styles"))splashStylesInstalled=!0;else{var e=document.createElement("style");e.id="VF-Train_Sim-splash-styles",e.textContent="\n\n\n\n .VF-Train_Sim-loading-message {\n text-align: center;\n}\n\n.VF-Train_Sim-loading-title {\n font-size: 38px;\n font-weight: 900;\n letter-spacing: 4px;\n margin-bottom: 18px;\n}\n\n.VF-Train_Sim-loading-details {\n font-size: 13px;\n line-height: 1.8;\n text-align: left;\n}\n\n\n\n #route-menu.VF-Train_Sim-splash-mode {\n position: fixed !important;\n inset: 0 !important;\n width: 100vw !important;\n height: 100vh !important;\n max-width: none !important;\n max-height: none !important;\n margin: 0 !important;\n padding: 0 !important;\n overflow: hidden !important;\n display: flex;\n align-items: stretch !important;\n justify-content: stretch !important;\n background: #050816 !important;\n z-index: 10000 !important;\n }\n\n #route-menu.VF-Train_Sim-splash-mode #route-menu-content {\n position: relative !important;\n width: 100% !important;\n height: 100% !important;\n max-width: none !important;\n max-height: none !important;\n margin: 0 !important;\n padding: 0 !important;\n overflow: hidden !important;\n }\n\n .VF-Train_Sim-splash-screen {\n position: fixed;\n inset: 0;\n width: 100vw;\n height: 100vh;\n overflow: hidden;\n background: #050816;\n color: #ffffff;\n font-family: Arial, Helvetica, sans-serif;\n }\n\n .VF-Train_Sim-splash-background {\n position: absolute;\n inset: 0;\n display: block;\n width: 100%;\n height: 100%;\n object-fit: fill;\n z-index: 0;\n }\n\n .VF-Train_Sim-splash-background-fallback {\n position: absolute;\n inset: 0;\n background:\n radial-gradient(circle at 50% 45%, #183b59 0%, transparent 55%),\n linear-gradient(135deg, #050816, #101d38 55%, #090b1c);\n z-index: 0;\n }\n\n .VF-Train_Sim-splash-start {\n position: absolute;\n left: 50%;\n top: 80%;\n transform: translate(-50%, -50%);\n z-index: 3;\n\n min-width: 210px;\n padding: 19px 48px;\n\n border: 3px solid #ffffff;\n border-radius: 12px;\n\n background: linear-gradient(135deg, #00e5ff, #6941ff);\n color: #07111f;\n\n font-size: 25px;\n font-weight: 900;\n letter-spacing: 5px;\n text-transform: uppercase;\n\n cursor: pointer;\n\n box-shadow:\n 0 0 12px rgba(0, 229, 255, 0.9),\n 0 0 28px rgba(105, 65, 255, 0.85),\n 0 8px 0 rgba(0, 0, 0, 0.45);\n\n transition:\n background 180ms ease,\n color 180ms ease,\n box-shadow 180ms ease,\n transform 180ms ease,\n border-color 180ms ease;\n }\n\n .VF-Train_Sim-splash-start:hover {\n background: linear-gradient(135deg, #ff2bd6, #ff8a00);\n color: #ffffff;\n border-color: #ffffff;\n\n box-shadow:\n 0 0 16px rgba(255, 43, 214, 1),\n 0 0 36px rgba(255, 138, 0, 0.9),\n 0 8px 0 rgba(0, 0, 0, 0.45);\n\n transform: translate(-50%, -50%) scale(1.08);\n }\n\n .VF-Train_Sim-splash-start:active {\n transform: translate(-50%, -46%) scale(1.02);\n box-shadow:\n 0 0 12px rgba(255, 43, 214, 0.8),\n 0 3px 0 rgba(0, 0, 0, 0.45);\n }\n\n .VF-Train_Sim-splash-start:focus-visible,\n .VF-Train_Sim-splash-developer-button:focus-visible {\n outline: 3px solid #ffffff;\n outline-offset: 5px;\n }\n\n .VF-Train_Sim-splash-developer-tools {\n position: absolute;\n left: 24px;\n bottom: 24px;\n z-index: 4;\n\n display: flex;\n flex-wrap: wrap;\n align-items: center;\n gap: 9px;\n\n max-width: calc(100vw - 48px);\n padding: 2px 5px;\n\n border: 1px solid rgba(0, 229, 255, 0.65);\n border-radius: 10px;\n\n background: rgba(3, 10, 24, 0.82);\n box-shadow: 0 0 18px rgba(0, 229, 255, 0.25);\n\n backdrop-filter: blur(8px);\n }\n\n .VF-Train_Sim-splash-developer-label {\n width: 100%;\n color: #00e5ff;\n font-size: 11px;\n font-weight: 900;\n letter-spacing: 2px;\n text-transform: uppercase;\n }\n\n .VF-Train_Sim-splash-developer-button {\n padding: 8px 12px;\n\n border: 1px solid #00e5ff;\n border-radius: 6px;\n\n background: rgba(0, 229, 255, 0.1);\n color: #ffffff;\n\n font-size: 12px;\n\
+font-weight: 800;\n letter-spacing: 0.5px;\n\n cursor: pointer;\n\n transition:\n background 160ms ease,\n color 160ms ease,\n border-color 160ms ease,\n transform 160ms ease;\n }\n\n .VF-Train_Sim-splash-developer-button:hover{\n background: #00e5ff;\n border-color: #ffffff;\n color: #06101c;\n transform: translateY(-2px);\n }\n\n .VF-Train_Sim-splash-error {\n position: absolute;\n left: 50%;\n bottom: 110px;\n z-index: 5;\n\n width: min(650px, calc(100vw - 40px));\n padding: 12px 16px;\n\n transform: translateX(-50%);\n\n border: 1px solid #ff6688;\n border-radius: 8px;\n\n background: rgba(60, 5, 22, 0.9);\n color: #ffffff;\n\n text-align: center;\n font-size: 13px;\n }\n\n .VF-Train_Sim-loading-message {\n position: absolute;\n left: 50%;\n top: 50%;\n z-index: 3;\n\n transform: translate(-50%, -50%);\n\n padding: 16px 28px;\n\n border: 2px solid #00e5ff;\n border-radius: 10px;\n\n background: rgba(3, 10, 24, 0.85);\n color: #ffffff;\n\n font-size: 18px;\n\font-weight: 900;\n letter-spacing: 3px;\n text-align: center;\n text-transform: uppercase;\n\n box-shadow:\n 0 0 16px rgba(0, 229, 255, 0.7),\n 0 0 30px rgba(105, 65, 255, 0.5);\n }\n\n\n .VF-Train_Sim-splash-ready-box {\n position: absolute;\n left: 50%;\n top: 50%;\n z-index: 3;\n\n transform: translate(-50%, -50%);\n\n display: flex;\n flex-direction: column;\n align-items: center;\n gap: 14px;\n\n width: min(380px, calc(100vw - 40px));\n padding: 24px 28px;\n\n border: 2px solid #00e5ff;\n border-radius: 10px;\n\n background: rgba(3, 10, 24, 0.85);\n box-shadow:\n 0 0 16px rgba(0, 229, 255, 0.7),\n 0 0 30px rgba(105, 65, 255, 0.5);\n }\n\n .VF-Train_Sim-splash-ready-box .VF-Train_Sim-splash-start {\n position: relative;\n left: auto;\n top: auto;\n transform: none;\n\n width: 100%;\n min-width: 0;\n padding: 12px 20px;\n }\n\n .VF-Train_Sim-splash-ready-box .VF-Train_Sim-splash-start:hover {\n transform: scale(1.04);\n }\n\n .VF-Train_Sim-splash-ready-box .VF-Train_Sim-splash-start:active {\n transform: scale(0.98);\n }\n\n .VF-Train_Sim-splash-ready-title {\n color: #ffffff;\n font-size: 32px;\n font-weight: 900;\n letter-spacing: 3px;\n text-transform: uppercase;\n text-align: center;\n }\n\n .VF-Train_Sim-splash-ready-instruction {\n color: #ffffff;\n font-size: 13px;\n text-align: center;\n margin-bottom: 6px;\n }\n\n\n @media (max-width: 600px) {\n\n .VF-Train_Sim-splash-start {\n min-width: 180px;\n\
+padding: 16px 30px;\n font-size: 20px;\n top: 50%;\n }\n\n .VF-Train_Sim-splash-developer-tools {\n left: 12px;\n bottom: 12px;\n max-width: calc(100vw - 24px);\n padding: 9px;\n }\n\n .VF-Train_Sim-splash-developer-button {\n padding: 7px 9px;\n font-size: 11px;\n }\n\n .VF-Train_Sim-loading-message {\n width: calc(100vw - 40px);\n box-sizing: border-box;\n font-size: 14px;\n letter-spacing: 2px;\n }\n }\n ",document.head.appendChild(e),splashStylesInstalled=!0}}var menuImageUrlCache=Object.create(null),WEATHER_IMAGES={};
+function getMenuImageFilename(e){var t=String(e||"").trim().toLowerCase().replace(/\s+/g,"_");return t?"icons/"+t+".jpg":""}function getZipImageUrl(e,t){if(!textureZipFiles)return"";if(!e)return"";if(menuImageUrlCache[e])return menuImageUrlCache[e];var n=textureZipFiles[e];if(!n)return console.warn("Image not found in ZIP:",e),"";var a=new Blob([n],{type:t||"image/jpeg"}),r=URL.createObjectURL(a);return menuImageUrlCache[e]=r,r}function getSplashImageFromZip(e){return getZipImageUrl("splash/splash"+e+".jpg","image/jpeg")}function getMenuImageFromZip(e){var t=getMenuImageFilename(e);return t?getZipImageUrl(t,"image/jpeg"):""}function getCategoryImage(e){return getMenuImageFromZip(e)}function getWeatherImage(e,t){var n={"clear-dry":"dry","wet-rain":"wet",foggy:"fog","clear-after-snowfall":"drysnow","light-snow":"snow","heavy-snowstorm":"snowstorm"}[e];if(!n)return"";var a=getSelectedRoute();return getMenuImageFromZip(n+(a&&!0===a.nighttime?"_night":""))}function escapeHTML(e){return String(null==e?"":e).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/\"/g,"&quot;").replace(/'/g,"&#39;")}function clampCoachCount(e){var t=Number(e);return Number.isFinite(t)||(t=1),Math.max(1,Math.min(20,Math.round(t)))}function getRouteList(){return"undefined"!=typeof routes&&Array.isArray(routes)?routes:[]}function compareMenuNames(e,t){return String(e||"").localeCompare(String(t||""),void 0,{sensitivity:"base",numeric:!0})}function getUniqueRouteValues(e,t){var n=[];return getRouteList().forEach(function(a){if(a&&(!t||t(a))){var r=a[e];null!=r&&""!==String(r).trim()&&(r=String(r),n.includes(r)||n.push(r))}}),n.sort(compareMenuNames)}function findRouteIndexByFilename(e){var t=String(e||"").trim().replace(/\\/g,"/").replace(/^content\//i,"").toLowerCase();return t?getRouteList().findIndex(function(e){return!(!e||"string"!=typeof e.fileName)&&e.fileName.trim().replace(/\\/g,"/").replace(/^content\//i,"").toLowerCase()===t}):-1}function getSelectedRoute() {
+    if (selectedStory) {
+        return selectedStory;
+    }
+
+    var routeList = getRouteList();
+
+    return Number.isInteger(selectedRouteIndex)
+        ? routeList[selectedRouteIndex] || null
+        : null;
+}function getWeatherOptions(e){return e&&!0===e.snowing?[{id:"clear-after-snowfall",label:"Clear after snowfall",detail:"Snow on the ground, clear conditions"},{id:"light-snow",label:"Light snow",detail:"Gentle snowfall"},{id:"heavy-snowstorm",label:"Heavy snowstorm",detail:"Severe winter weather"}]:[{id:"clear-dry",label:"Clear and dry",detail:"Bright, dry conditions"},{id:"wet-rain",label:"Wet and raining",detail:"Rain and wet conditions"},{id:"foggy",label:"Foggy",detail:"Reduced visibility"}]}function defaultWeatherForRoute(e){return getWeatherOptions(e)[0]}function makeMenuImage(e,t){return e?'<img draggable="false" src="'+escapeHTML(e)+'" alt="'+escapeHTML(t)+'" loading="lazy">':'<div class="menu-image-placeholder">IMAGE PLACEHOLDER</div>'}
+
+
+function getSplashMarkup(e, t) {
+    var image = getSplashImageFromZip(e ? 2 : 1);
+
+    var imageMarkup = image
+        ? '<img class="VF-Train_Sim-splash-background" src="' +
+            escapeHTML(image) +
+            '" alt="" aria-hidden="true">'
+        : '<div class="VF-Train_Sim-splash-background-fallback" aria-hidden="true"></div>';
+
+    // Loading screen.
+    if (e) {
+        var trainLength = adjusted_train_length;
+
+        return (
+            '<div class="VF-Train_Sim-splash-screen VF-Train_Sim-splash-loading">' +
+                imageMarkup +
+
+                '<div class="VF-Train_Sim-loading-message">' +
+                    '<div class="VF-Train_Sim-loading-title">LOADING</div>' +
+
+                    '<div class="VF-Train_Sim-loading-details">' +
+                        '<div>Route: ' +
+                            escapeHTML(activeRoute.subcategory || "Unknown") +
+                        '</div>' +
+
+                        '<div>Scenario: ' +
+                            escapeHTML(activeRoute.name || "Unknown") +
+                        '</div>' +
+
+                        '<div>Train: ' +
+                            escapeHTML(current_train || "unknown") +
+                        '</div>' +
+
+                        '<div>VF Drive: ' +
+                            escapeHTML(current_vf || "unknown") +
+                        '</div>' +
+
+                        '<div>Weather: ' +
+                            escapeHTML(selectedWeather.label || "unknown") +
+                        '</div>' +
+
+                        '<div>Coaches: ' + coaches + '</div>' +
+                        '<div>Coach length: ' + coachlength + ' meters</div>' +
+                        '<div>Train length: ' + trainLength + ' meters</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>'
+        );
+    }
+
+    // Main menu.
+    return (
+        '<div class="VF-Train_Sim-splash-screen VF-Train_Sim-splash-initial">' +
+            imageMarkup +
+
+            '<div class="VF-Train_Sim-loading-message VF-Train_Sim-main-menu-box">' +
+                '<div class="VF-Train_Sim-splash-ready-title">' +
+                    'VF Train Sim' +
+                '</div>' +
+
+                '<div class="VF-Train_Sim-splash-ready-instruction">' +
+                    'Choose how you want to play.' +
+                '</div>' +
+
+                '<button type="button" class="VF-Train_Sim-splash-start" ' +
+                    'data-menu-action="menu-story-mode">' +
+                    'Story Mode' +
+                '</button>' +
+
+                '<button type="button" class="VF-Train_Sim-splash-start" ' +
+                    'data-menu-action="menu-free-play">' +
+                    'Free Play' +
+                '</button>' +
+
+                '<button type="button" class="VF-Train_Sim-splash-start" ' +
+                    'data-menu-action="menu-vf-drive">' +
+                    'VF Drive' +
+                '</button>' +
+            '</div>' +
+
+            getDeveloperButtonsMarkup() +
+
+            (
+                menuMessage
+                    ? '<div class="VF-Train_Sim-splash-error">' +
+                        escapeHTML(menuMessage) +
+                      '</div>'
+                    : ''
+            ) +
+        '</div>'
+    );
+}
+
+
+
+
+
+function getRouteReadyMarkup(e){var t=getSplashImageFromZip(2);return'<div class="VF-Train_Sim-splash-screen VF-Train_Sim-splash-ready">'+(t?'<img class="VF-Train_Sim-splash-background" src="'+escapeHTML(t)+'" alt="" aria-hidden="true">':'<div class="VF-Train_Sim-splash-background-fallback" aria-hidden="true"></div>')+'<div class="VF-Train_Sim-splash-ready-box"><div class="VF-Train_Sim-splash-ready-title">'+(e?"Paused":"Ready!")+'</div><div class="VF-Train_Sim-splash-ready-instruction">Press Esc at any time to return to this screen.</div><button type="button" class="VF-Train_Sim-splash-start" data-menu-action="resume-simulation">'+(e?"Resume":"Start")+'</button><button type="button" class="VF-Train_Sim-splash-start" data-menu-action="route-points">Points</button><button type="button" class="VF-Train_Sim-splash-start" data-menu-action="route-settings">Settings</button><button type="button" class="VF-Train_Sim-splash-start" data-menu-action="quit-simulation">Quit</button></div></div>'}function getDeveloperButtonsMarkup(){return'<div class="VF-Train_Sim-splash-developer-tools">'+developer_quick_access.map(function(e){var t=findRouteIndexByFilename(e),n=(t>=0&&getRouteList()[t],escapeHTML(e));return'<button type="button" class="VF-Train_Sim-splash-developer-button" data-menu-action="developer-launch" data-route-filename="'+escapeHTML(e)+'"title="Load developer route '+escapeHTML(e)+'">'+n+"</button>"}).join("")+"</div>"}function getMenuHeader(e,t,n,a){return'<header class="menu-header"><div class="sim-logo" aria-label="VF-Train_Sim simulator logo">GO</div><div class="menu-brand"><div class="menu-brand-title">Welcome to VF Train Sim</div><div class="menu-brand-subtitle">Route selection</div></div></header><main class="menu-main"><div class="menu-topline"><span class="menu-step">'+
+escapeHTML(e)+"</span>"+(a?'<button type="button" class="menu-back" data-menu-action="back"><span class="menu-back-arrow">←</span> Back</button>':"")+'</div><h1 class="menu-title">'+escapeHTML(t)+"</h1>"+(n?'<p class="menu-description">'+escapeHTML(n)+"</p>":"")}
+
+
+
+function updateScenarioListColumns() {
+    routeMenuContent.querySelectorAll(".scenario-list").forEach(function (list) {
+        var buttonCount = Array.from(list.children).filter(function (child) {
+            return child.classList.contains("scenario-button");
+        }).length;
+
+        if (buttonCount > 9) {
+            list.classList.add("scenario-list-two-columns");
+
+            list.style.setProperty(
+                "--scenario-list-rows",
+                Math.ceil(buttonCount / 2)
+            );
+        } else {
+            list.classList.remove("scenario-list-two-columns");
+            list.style.removeProperty("--scenario-list-rows");
+        }
+    });
+}
+
+
+
+
+
+function renderRouteMenu(e){menuStage=e,installSplashStyles();var t="";if(0===e)t=getSplashMarkup(!1);else if(1===e){var n=getUniqueRouteValues("category");t=getMenuHeader("STAGE 1 OF 8","Choose a route category","Select the type of railway you want to explore.",!0),n.length?t+='<div class="menu-grid">'+n.map(function(e){return'<button type="button" class="menu-tile" data-menu-action="choose-category" data-category="'+escapeHTML(e)+'"><span class="menu-tile-image">'+makeMenuImage(getCategoryImage(e),e)+'</span><span class="menu-tile-name">'+escapeHTML(e)+'</span><span class="menu-tile-detail">Browse routes</span></button>'}).join("")+"</div>":t+='<div class="menu-empty">No route categories were found. Check that routes.js loads a valid routes array.</div>';}else if(2===e){var a=getUniqueRouteValues("subcategory",function(e){return String(e.category||"")===String(selectedCategory||"")}).map(function(e){var t=getRouteList().some(function(t){return t&&String(t.category||"")===String(selectedCategory||"")&&String(t.subcategory||"")===String(e||"")&&!0===t.topRated});return{name:e,topRated:t}}),r=a.filter(function(e){return e.topRated}).sort(function(e,t){return compareMenuNames(e.name,t.name)}),o=a.filter(function(e){return!e.topRated}).sort(function(e,t){return compareMenuNames(e.name,t.name)});function i(e){return'<div class="menu-grid">'+e.map(function(e){var t=e.name;return'<button type="button" class="menu-tile" data-menu-action="choose-subcategory" data-subcategory="'+escapeHTML(t)+'"><span class="menu-tile-image">'+makeMenuImage(getCategoryImage(t)||getCategoryImage(selectedCategory),t)+'</span><span class="menu-tile-name">'+escapeHTML(t)+'</span><span class="menu-tile-detail">View available scenarios</span></button>'}).join("")+"</div>"}t=getMenuHeader("STAGE 2 OF 8","Choose a route",selectedCategory||"Select a route group.",!0),r.length&&(t+='<h2 class="menu-section-title">Top Rated routes...</h2>',t+=i(r)),o.length&&(t+='<h2 class="menu-section-title">Other routes...</h2>',t+=i(o)),a.length||(t+='<div class="menu-empty">No subcategories were found for this category.</div>')}else if(3===e){var s=getRouteList().map(function(e,t){return{route:e,index:t}}).filter(function(e){return e.route&&String(e.route.category||"")===String(selectedCategory||"")&&String(e.route.subcategory||"")===String(selectedSubcategory||"")}),u=s.filter(function(e){return!0===e.route.topRated}).sort(function(e,t){return compareMenuNames(e.route.name||e.route.fileName||"Unnamed scenario",t.route.name||t.route.fileName||"Unnamed scenario")}),
+
+
+
+
+l=s.filter(function(e){return!0!==e.route.topRated}).sort(function(e,t){return compareMenuNames(e.route.name||e.route.fileName||"Unnamed scenario",t.route.name||t.route.fileName||"Unnamed scenario")});function c(e,t){return'<div class="scenario-list scenario-list-tall">'+e.map(function(e){var n=e.route;return'<button type="button" class="scenario-button" data-menu-action="choose-scenario" data-route-index="'+e.index+'"><span><span class="scenario-name">'+escapeHTML(n.name||n.fileName||"Unnamed scenario")+"</span>"+(n.description?'<span class="scenario-description">'+escapeHTML(n.description)+"</span>":"")+'</span><span class="scenario-meta">'+(t?'<span class="scenario-top-rated">★ Top rated</span>':"")+'<span class="scenario-arrow">›</span></span></button>'}).join("")+"</div>"}t=getMenuHeader("STAGE 3 OF 8","Choose a scenario",(selectedCategory||"")+" / "+(selectedSubcategory||""),!0),u.length&&(t+=c(u,!0)),l.length&&(t+=c(l,!1)),s.length||(t+='<div class="menu-empty">No scenarios were found in this subcategory.</div>')}else if(4===e){var d=getSelectedRoute(),m=d?getWeatherOptions(d):[];t=getMenuHeader("STAGE 4 OF 8","Choose the weather",d?d.name||"Selected scenario":"Choose the conditions for this run.",!0),t+='<div class="weather-grid">'+m.map(function(e){return'<button type="button" class="menu-tile" data-menu-action="choose-weather" data-weather-id="'+escapeHTML(e.id)+'"><span class="menu-tile-image">'+makeMenuImage(getWeatherImage(e.id,e.label),e.label)+'</span><span class="menu-tile-name">'+escapeHTML(e.label+(!0===getSelectedRoute()?.nighttime?" (nighttime)":""))+'</span><span class="menu-tile-detail">'+escapeHTML(e.detail)+"</span></button>"}).join("")+"</div>"}else if(5===e)t=stage_5_menu();else if(6===e)t=stage_6_menu();else if(7===e)t=stage_7_menu();else if(8===e)t=stage_8_menu();else if(100===e)t=stage_100_menu();0!==e&&(t+="</main></div>"),routeMenuContent.innerHTML=t,updateScenarioListColumns(),routeMenuContent.querySelectorAll("button[data-menu-action]").forEach(function(button){button.addEventListener("click",function(){handleRouteMenuButtonClick(button)})}),0===e?routeMenuElement.classList.add("VF-Train_Sim-splash-mode"):routeMenuElement.classList.remove("VF-Train_Sim-splash-mode"),routeMenuElement.classList.add("is-open"),routeMenuElement.style.display="flex",statusElement.style.display="none"}function main_menu(e){setStatus("Welcome"),"function"==typeof resize&&resize(),menuMessage="",renderRouteMenu(Number.isInteger(e)?e:0)}function showLoadingSplash(e){installSplashStyles();var t=e?"Loading "+e+"...":"Loading route...";routeMenuContent.innerHTML=getSplashMarkup(!0,t),routeMenuElement.classList.add("is-open"),routeMenuElement.classList.add("VF-Train_Sim-splash-mode"),routeMenuElement.style.display="flex",statusElement.style.display="none"}function showRouteReadySplash(e){routeReadyIsPaused=!!e,installSplashStyles(),routeMenuContent.innerHTML=getRouteReadyMarkup(e),routeMenuContent.querySelectorAll("button[data-menu-action]").forEach(function(button){button.addEventListener("click",function(){handleRouteMenuButtonClick(button)})}),routeMenuElement.classList.add("is-open"),routeMenuElement.classList.add("VF-Train_Sim-splash-mode"),routeMenuElement.style.display="flex",statusElement.style.display="none"}function finishLoadingSplash(){routeMenuElement.classList.remove("is-open"),routeMenuElement.classList.remove("VF-Train_Sim-splash-mode"),routeMenuElement.style.display="none",statusElement.style.display="block"}function closeRouteMenuForLaunch(){routeMenuElement.classList.remove("is-open"),routeMenuElement.classList.remove("VF-Train_Sim-splash-mode"),routeMenuElement.style.display="none",statusElement.style.display="block"}function chooseScenario(e){selectedStory = null;var t=getRouteList();if(Number.isInteger(e)&&t[e]){selectedRouteIndex=e;var n=t[e];selectedCategory=String(n.category||""),selectedSubcategory=String(n.subcategory||""),selectedCoachCount=clampCoachCount(n.preferredCoaches||1),selectedWeather=defaultWeatherForRoute(n),menuMessage="",renderRouteMenu(4)}}function makeWeatherSelection(e,t){return{id:t.id,label:t.label,snowingRoute:!(!e||!0!==e.snowing)}}async function launchSelectedMenuRoute(){var e=getSelectedRoute();if(!e)return menuMessage="The selected route could not be found.",
+void renderRouteMenu(8);if(routeLaunchSource="menu",coaches=clampCoachCount(selectedCoachCount),coachCountForCurrentLaunch=coaches,globalThis.routeWeatherSelection=makeWeatherSelection(e,selectedWeather||defaultWeatherForRoute(e)),closeRouteMenuForLaunch(),statusElement.textContent="Loading route: "+(e.name||e.fileName||"scenario")+"...",await start_sim(selectedRouteIndex),!activeRoute){var t=statusElement.textContent;main_menu(7),menuMessage=t,renderRouteMenu(7)}}
+
+async function launchDeveloperRoute(filename, story) {
+    var routeIndex = findRouteIndexByFilename(filename);
+
+    var routeData = story
+        ? story
+        : routeIndex >= 0
+            ? getRouteList()[routeIndex]
+            : null;
+
+    if (!routeData || !routeData.fileName) {
+        menuMessage = story
+            ? "The story does not have a valid filename."
+            : 'Developer shortcut "' + filename +
+                '" could not be found in the loaded route JSON.';
+
+        console.error(menuMessage);
+
+        renderRouteMenu(story ? 100 : 0);
+        return;
+    }
+
+    // Stories supply the developer settings.
+    if (story) {
+        if (story.developer_train != null) {
+            developer_train = story.developer_train;
+        }
+
+        if (story.developer_vf != null) {
+            developer_vf = story.developer_vf;
+        }
+
+        if (story.developer_livery != null) {
+            developer_livery = story.developer_livery;
+        }
+
+        if (story.developer_coaches != null) {
+            developer_coaches = story.developer_coaches;
+        }
+    }
+
+    // Use the story itself as the selected route configuration.
+    selectedStory = story || null;
+
+    routeLaunchSource = "developer";
+
+    selectedRouteIndex = routeIndex;
+
+    selectedCategory = String(routeData.category || "");
+    selectedSubcategory = String(routeData.subcategory || "");
+
+    selectedCoachCount = story
+        ? clampCoachCount(developer_coaches)
+        : clampCoachCount(routeData.preferredCoaches || 1);
+
+    selectedWeather = defaultWeatherForRoute(routeData);
+
+    // Set the same variables used by developer quick-access.
+    current_train = developer_train;
+    current_livery = developer_livery;
+    current_vf = developer_vf;
+
+    coaches = clampCoachCount(developer_coaches);
+    coachCountForCurrentLaunch = coaches;
+
+    globalThis.routeWeatherSelection =
+        makeWeatherSelection(routeData, selectedWeather);
+
+    closeRouteMenuForLaunch();
+
+    statusElement.textContent =
+        story
+            ? "Story: loading " + (routeData.name || filename) + "..."
+            : "Developer shortcut: loading " +
+                (routeData.name || filename) + "...";
+
+    // Pass the story object through so its scripts and settings
+    // are used by the simulator.
+    await start_sim(routeIndex, story || null);
+
+    if (!activeRoute) {
+        var errorMessage = statusElement.textContent;
+        var returnStage = story ? 100 : 0;
+
+        main_menu(returnStage);
+        menuMessage = errorMessage;
+        renderRouteMenu(returnStage);
+    }
+}
+var first_run=!1;
+
+
+// ============================================================
+// TRAIN, LIVERY AND VF MENU STATE
+// ============================================================
+
+var selectedTrainData = null;
+
+var showAllTrains = false;
+var showAllVFDrives = false;
+var showSavedVFDrives = false;
+var trainPreferenceNotFound = false;
+var vfPreferenceNotFound = false;
+
+
+// These are the shared global selections used by the simulator.
+globalThis.current_train = globalThis.current_train || "";
+globalThis.current_livery = globalThis.current_livery || "";
+globalThis.current_vf = globalThis.current_vf || "";
+
+// ============================================================
+// TEMPORARY VF DATABASE REFERENCE
+// ============================================================
+
+// TODO: This currently loads vf/trains.json directly.
+// Later, replace this fetch/cache with the shared database
+// reference exposed by the other VF JavaScript file.
+
+var vfTrainDatabase = null;
+var vfTrainDatabasePromise = null;
+var vfTrainDatabaseError = "";
+
+
+// ============================================================
+// TRAIN DATABASE HELPERS
+// ============================================================
+
+function getTrainDatabaseList() {
+    return typeof list_of_trains !== "undefined" &&
+        Array.isArray(list_of_trains)
+            ? list_of_trains
+            : [];
+}
+
+
+function getMenuTrainEntries(includeAll) {
+    var trains = getTrainDatabaseList().filter(function (train) {
+        return train &&
+            typeof train.name === "string" &&
+            train.name.trim() !== "";
+    });
+
+    // Initially, only show trains listed by the selected route.
+    if (!includeAll) {
+        var selectedRoute = getSelectedRoute();
+
+        var preferredNames =
+            selectedRoute &&
+            Array.isArray(selectedRoute.preferredTrains)
+                ? selectedRoute.preferredTrains
+                : [];
+
+        var preferredSet = new Set(
+            preferredNames.map(function (name) {
+                return String(name).trim().toLowerCase();
+            })
+        );
+
+        // A preferred train is only shown if it exists
+        // in list_of_trains.
+        trains = trains.filter(function (train) {
+            return preferredSet.has(
+                train.name.trim().toLowerCase()
+            );
+        });
+    }
+
+    // Remove duplicate train names.
+    var seen = new Set();
+
+    trains = trains.filter(function (train) {
+        var key = train.name.trim().toLowerCase();
+
+        if (seen.has(key)) return false;
+
+        seen.add(key);
+        return true;
+    });
+
+    // Alphabetical order, ignoring capitalisation.
+    return trains.sort(function (a, b) {
+        return compareMenuNames(a.name, b.name);
+    });
+}
+
+
+// ============================================================
+// LIVERY DATABASE HELPERS
+// ============================================================
+
+function getTrainLiveryEntries(train) {
+    if (!train) return [];
+
+    // Use the field from your supplied trains database.
+    var liveries = train.preferedLivery;
+
+    // Also accept "liveries" if you decide to rename the
+    // database field in the future.
+    if (liveries == null && Array.isArray(train.liveries)) {
+        liveries = train.liveries;
+    }
+
+    if (!Array.isArray(liveries)) {
+        liveries = liveries ? [liveries] : [];
+    }
+
+    var seen = new Set();
+
+    return liveries.filter(function (livery) {
+        if (
+            typeof livery !== "string" ||
+            livery.trim() === ""
+        ) {
+            return false;
+        }
+
+        var key = livery.trim().toLowerCase();
+
+        if (seen.has(key)) return false;
+
+        seen.add(key);
+        return true;
+    });
+}
+
+
+// ============================================================
+// VF DRIVE DATABASE HELPERS
+// ============================================================
+
+function getMenuVFDriveNames(showAll) {
+    if (
+        !vfTrainDatabase ||
+        typeof vfTrainDatabase !== "object"
+    ) {
+        return [];
+    }
+
+    // The VF drive names are the top-level JSON keys.
+    var databaseNames = Object.keys(vfTrainDatabase);
+
+    if (showAll) {
+        return databaseNames.sort(compareMenuNames);
+    }
+
+    var preferredNames =
+        selectedTrainData &&
+        selectedTrainData.preferedVF != null
+            ? selectedTrainData.preferedVF
+            : [];
+
+    if (!Array.isArray(preferredNames)) {
+        preferredNames = [preferredNames];
+    }
+
+    var preferredSet = new Set(
+        preferredNames.map(function (name) {
+            return String(name).trim().toLowerCase();
+        })
+    );
+
+    // Only return preferred drives that actually exist
+    // in vf/trains.json.
+    return databaseNames.filter(function (name) {
+        return preferredSet.has(name.trim().toLowerCase());
+    }).sort(compareMenuNames);
+}
+
+// ============================================================
+// SAVED USER VF DRIVES — LOCAL STORAGE
+// ============================================================
+
+var USER_VF_STORAGE_KEY = "vf-simulator-user-trains-v1";
+
+function getSavedUserVFDrives() {
+    try {
+        var stored = localStorage.getItem(USER_VF_STORAGE_KEY);
+
+        if (!stored) return [];
+
+        var savedDrives = JSON.parse(stored);
+
+        if (!Array.isArray(savedDrives)) return [];
+
+        var seen = new Set();
+
+        return savedDrives
+            .filter(function (drive) {
+                return drive &&
+                    typeof drive.name === "string" &&
+                    drive.name.trim() !== "" &&
+                    drive.config &&
+                    typeof drive.config === "object" &&
+                    !Array.isArray(drive.config);
+            })
+            .filter(function (drive) {
+                var key = drive.name.trim().toLowerCase();
+
+                if (seen.has(key)) return false;
+
+                seen.add(key);
+                return true;
+            })
+            .sort(function (a, b) {
+                return compareMenuNames(a.name, b.name);
+            });
+
+    } catch (error) {
+        console.error("Could not read saved VF drives:", error);
+        return [];
+    }
+}
+
+
+
+
+
+// ============================================================
+// TEMPORARY VF DATABASE LOADER
+// ============================================================
+
+// TODO: Replace this loader with the shared VF database
+// reference from the other JavaScript file when available.
+
+function loadMenuVFDatabase() {
+    if (vfTrainDatabase || vfTrainDatabasePromise) {
+        return;
+    }
+
+    vfTrainDatabaseError = "";
+
+    vfTrainDatabasePromise = fetch("vf/trains.json")
+        .then(function (response) {
+            if (!response.ok) {
+                throw new Error(
+                    "Could not load vf/trains.json: " +
+                    response.status
+                );
+            }
+
+            return response.json();
+        })
+        .then(function (database) {
+            if (
+                !database ||
+                typeof database !== "object" ||
+                Array.isArray(database)
+            ) {
+                throw new Error(
+                    "Invalid VF trains database."
+                );
+            }
+
+            vfTrainDatabase = database;
+        })
+        .catch(function (error) {
+            vfTrainDatabaseError =
+                error.message || String(error);
+        })
+        .then(function () {
+            // Refresh the menu when loading finishes,
+            // but only if the user is still on menu 8.
+            if (menuStage === 8) {
+                renderRouteMenu(8);
+            }
+        });
+}
+
+
+
+
+var first_run = false;
+
+async function installRoute(e) {
+
+    first_run = true;
+
+    route = e;
+
+    prepareRouteMesh(route);
+
+    // Train configuration is already complete.
+    // Route and route mesh are now installed.
+    // GPU context and misc textures are already available.
+        await loadTrainBodyTextures();
+
+    Load_train_components();
+    Load_train_components();
+
+
+
+    updateStatus();
+
+    if (routeLaunchSource === "developer") {
+        startRenderLoop();
+        finishLoadingSplash();
+    } else {
+        showRouteReadySplash(false);
+    }
+}
+
+
+
+
+async function start_sim(e, routeOverride) {
+    try {
+        if (
+            typeof routes === "undefined" ||
+            !Array.isArray(routes)
+        ) {
+            throw new Error("Routes array could not be found.");
+        }
+
+        if (routeOverride) {
+            if (
+                typeof routeOverride.fileName !== "string" ||
+                routeOverride.fileName.length === 0
+            ) {
+                throw new Error("Story has no valid filename.");
+            }
+
+            activeRoute = routeOverride;
+        } else {
+            if (
+                !Number.isInteger(e) ||
+                e < 0 ||
+                e >= routes.length
+            ) {
+                throw new Error("Invalid route number: " + e);
+            }
+
+            activeRoute = routes[e];
+        }
+
+        if (!activeRoute) {
+            throw new Error("Route could not be found.");
+        }
+
+        currentRoute = activeRoute.fileName;
+
+        TRACK_GAUGE = Number(activeRoute.gauge) / 1e3;
+        is_night = activeRoute.nighttime;
+        use_metric_pre = activeRoute.use_metric;
+
+        use_metric = use_metric_pre;
+
+        if (prefer_units == 1) {
+            use_metric = true;
+        }
+
+        if (prefer_units == 2) {
+            use_metric = false;
+        }
+
+        make_default_values();
+
+showLoadingSplash(
+    activeRoute.name ||
+    activeRoute.fileName ||
+    "Loading route"
+);
+
+// ========================================================
+// LOAD AUDIO FOR THIS ROUTE OR STORY
+//
+// If numberOfOpus is not defined, this does nothing.
+//
+// If the audio ZIP is already cached, it is reused.
+// ========================================================
+
+await loadRouteAudio(activeRoute);
+
+
+var beforeStartupPromise;
+
+        if (
+            activeRoute.scripts &&
+            typeof activeRoute.scripts.beforeStartup === "function"
+        ) {
+            beforeStartupPromise =
+                activeRoute.scripts.beforeStartup();
+        }
+
+
+
+        await beforeStartupPromise;
+
+        if (coachCountForCurrentLaunch !== null) {
+            coaches = coachCountForCurrentLaunch;
+            globalThis.coaches = coachCountForCurrentLaunch;
+            coachCountForCurrentLaunch = null;
+        }
+
+        var routePath = "content/" + currentRoute;
+
+        await installRoute(await loadRoute(routePath));
+if(flip_out){cameraReverseView = true;camera_view = 0}else{cameraReverseView = false;camera_view = 1};
+    } catch (error) {
+    console.error(error);
+
+    // Stop and disconnect audio from a failed route launch.
+    clearCurrentRouteAudio();
+
+    finishLoadingSplash();
+
+        statusElement.textContent =
+            "Could not load route: " + error.message;
+
+        activeRoute = null;
+        currentRoute = null;
+
+    }
+}
+
+
+var textureImages=[],outerTrackTextureImages=[],trackTextures=[],loadedCount=0,outerLoadedCount=0,failed=!1,textureZipFiles=null;
+
+
+
+
+
+
+
+
+var misc_0,misc_1,misc_2,misc_3,misc_4,misc_5,misc_6,misc_7,miscTextureImages=[];
+
+function failStartup(e){!failed&&(failed=!0,setStatus("Startup failed: "+e),console.error(e))}
+
+function loadTextureImages(e){if(!failed){try{textureZipFiles=fflate.unzipSync(new Uint8Array(e))}catch(e){return void failStartup("Could not extract texture ZIP: "+(e.message||String(e)))}for(var t=[],n=0;n<textureCount;n++)!function(e){var n="textures/"+e+".bmp",a=textureZipFiles[n];if(a){var r=createImageBitmap(new Blob([a],{type:"image/bmp"})).then(function(t){textureImages[e]=t,loadedCount++});t.push(r)}else t.push(Promise.reject(Error("Texture not found in ZIP: "+n)))}(n);Promise.all(t).then(function(){failed||loadOuterTrackTextureImages()}).catch(function(e){failStartup(e.message||String(e))})}}
+
+function loadOuterTrackTextureImages(){if(!failed){for(var e=[],t=0;t<textureCount;t++)!function(t){var n="textures/"+t+"a.bmp",a=textureZipFiles[n];if(a){var r=createImageBitmap(new Blob([a],{type:"image/bmp"})).then(function(e){outerTrackTextureImages[t]=e,outerLoadedCount++});e.push(r)}else e.push(Promise.reject(Error("Texture not found in ZIP: "+n)))}(t);Promise.all(e).then(function(){failed||loadMiscTextureImages()}).catch(function(e){failStartup(e.message||String(e))})}}
+
+function loadMiscTextureImages(){if(!failed){for(var e=[],t=0;t<misc_textureCount;t++)!function(t){var n="misc/"+t+".bmp",a=textureZipFiles[n];if(a){var r=createImageBitmap(new Blob([a],{type:"image/bmp"})).then(function(e){miscTextureImages[t]=e});e.push(r)}else e.push(Promise.reject(Error("Texture not found in ZIP: "+n)))}(t);Promise.all(e).then(function(){failed||startGPU()}).catch(function(e){failStartup(e.message||String(e))})}}
+
+function startGPU(){if(!failed){var e=canvas.getContext("webgl2",{alpha:!1,antialias:!0,depth:!0,stencil:!1,premultipliedAlpha:!1,preserveDrawingBuffer:!1});if(!e)return void failStartup("WebGL2 is not supported by this browser.");window.simulatorGL=e,window.trackTextures=trackTextures,e.pixelStorei(e.UNPACK_FLIP_Y_WEBGL,!0);for(var t=0;t<textureCount;t++){var n=e.createTexture();if(!n)return void failStartup("Could not create GPU texture "+t+".");if(e.bindTexture(e.TEXTURE_2D,n),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.REPEAT),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.REPEAT),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,e.RGBA,e.UNSIGNED_BYTE,textureImages[t]),e.generateMipmap(e.TEXTURE_2D),DEBUG_GL_UPLOADS){var a=e.getError();if(a!==e.NO_ERROR)return void failStartup("Texture upload failed for texture "+t+". WebGL error: "+a)}trackTextures.push(n)}for(var r=0;r<textureCount;r++){var o=e.createTexture();if(!o)return void failStartup("Could not create outer trackbed GPU texture "+r+".");if(e.bindTexture(e.TEXTURE_2D,o),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.REPEAT),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.REPEAT),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,e.RGBA,e.UNSIGNED_BYTE,outerTrackTextureImages[r]),e.generateMipmap(e.TEXTURE_2D),DEBUG_GL_UPLOADS){var i=e.getError();if(i!==e.NO_ERROR)return void failStartup("Outer trackbed texture upload failed for texture "+r+". WebGL error: "+i)}trackTextures.push(o)}for(var s=0;s<misc_textureCount;s++){var c=e.createTexture();if(!c)return void failStartup("Could not create GPU texture misc_"+s+".");if(e.bindTexture(e.TEXTURE_2D,c),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MIN_FILTER,e.LINEAR_MIPMAP_LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_MAG_FILTER,e.LINEAR),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_S,e.REPEAT),e.texParameteri(e.TEXTURE_2D,e.TEXTURE_WRAP_T,e.REPEAT),e.texImage2D(e.TEXTURE_2D,0,e.RGBA,e.RGBA,e.UNSIGNED_BYTE,miscTextureImages[s]),e.generateMipmap(e.TEXTURE_2D),DEBUG_GL_UPLOADS){var d=e.getError();if(d!==e.NO_ERROR)return void failStartup("Misc texture upload failed for misc_"+s+". WebGL error: "+d)}window["misc_"+s]=c}if(e.bindTexture(e.TEXTURE_2D,null),e.finish(),e.isContextLost())return void failStartup("WebGL context was lost during startup.");loadSimulatorCode()}}
+
+function loadSimulatorCode(){if(!failed){var e=document.createElement("script");e.src="code.js",e.onload=function(){if(!failed){if("function"!=typeof window.initSimulator)return void failStartup("code.js must define window.initSimulator().");try{window.initSimulator()}catch(e){failStartup(e.message||String(e))}}},e.onerror=function(){failStartup("Could not load code.js.")},document.body.appendChild(e)}}
+
+fetch("textures.zip",{cache:"no-cache"}).then(function(e){if(!e.ok)throw Error("Could not download texture ZIP: "+e.status+" "+e.statusText);return e.arrayBuffer()}).then(function(e){loadTextureImages(e)}).catch(function(e){failStartup(e.message||String(e))});
+
+
+
+
+loadRouteSettingsFromCookie();
+    </script>
+</body>
+</html>

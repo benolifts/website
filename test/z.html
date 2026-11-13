@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BVE Object Merger</title>
+<style>:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;padding:22px;background:#17191c;color:#f1f3f5;font:15px/1.45 Arial,sans-serif}main{max-width:1200px;margin:auto}h1{margin:0 0 8px;font-size:25px}p{color:#c4c9ce}label{display:block;margin:14px 0 6px;font-weight:700}input[type=text],textarea{width:100%;border:1px solid #525960;border-radius:5px;background:#0e1012;color:#f1f3f5;padding:10px;font:13px/1.45 Consolas,"Courier New",monospace}input[type=text]{min-height:40px}textarea{min-height:35vh;resize:vertical;white-space:pre}.hint{margin:5px 0 0;font-size:13px;color:#aeb5bc}.buttons{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}button{border:1px solid #68717a;border-radius:5px;padding:10px 15px;color:#fff;background:#303840;cursor:pointer;font-weight:700}button:hover{background:#414b55}button:disabled{opacity:.55;cursor:wait}#status{margin:12px 0;padding:10px;border:1px solid #3b454d;border-radius:5px;background:#20262b;white-space:pre-wrap;overflow-wrap:anywhere}
+
+
+
+
+
+.selection-overlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(0,0,0,.82)}
+.selection-overlay[hidden]{display:none!important}
+.selection-panel{width:min(100%,1050px);max-height:calc(100vh - 40px);display:flex;flex-direction:column;background:#20262b;border:1px solid #68717a;border-radius:8px;padding:20px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.selection-panel h2{margin:0 0 8px;font-size:22px}
+.selection-description{margin:0 0 15px;color:#c4c9ce}
+.selection-toolbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:15px}
+.selection-list{flex:1;min-height:100px;overflow-y:auto;border:1px solid #3b454d;border-radius:5px;background:#14181b}
+.selection-row{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:18px;padding:11px 12px;border-bottom:1px solid #303840}
+.selection-row:last-child{border-bottom:0}
+.selection-row-name{margin-bottom:3px;color:#dce3e9;font-weight:700;font-size:13px}
+.selection-row-path{color:#aebdcc;font:13px/1.4 Consolas,"Courier New",monospace;overflow-wrap:anywhere}
+.selection-options{display:flex;align-items:center;gap:15px;white-space:nowrap}
+.selection-options label{display:flex;align-items:center;gap:5px;margin:0;font-weight:400;cursor:pointer}
+.selection-options input{cursor:pointer}
+.selection-empty{padding:20px;color:#aeb5bc;text-align:center}
+.selection-footer{display:flex;justify-content:flex-end;margin-top:15px}
+@media(max-width:700px){.selection-panel{padding:14px}.selection-row{grid-template-columns:1fr;gap:8px}.selection-options{justify-content:flex-start}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style></head><body><main>
+<h1>BVE Object Merger</h1><p>Parses legacy BVE4 comma-separated track commands and semicolon-separated parameters, then checks declared non-rail structures by command type and index. Ambiguous left/right commands retain all matching variants to avoid dropping valid objects. Nested dependencies are included recursively; missing object files are logged and skipped. Unique textures are fetched as binary data and packaged with the merged text in a ZIP.</p>
+<label for="routeUrl">BVE route CSV file path</label><input id="routeUrl" type="text" value="bve/xsouth/route/birmingham_cross-city_south_bve4/highdetail/day/test.csv"><p class="hint">Run this page from the same web server that serves the route and texture files.</p>
+<label for="objectRoot">BVE Object folder URL</label><input id="objectRoot" type="text" value="" placeholder="Auto-detected from /Route/ as /Object/"><p class="hint">Leave blank to infer the sibling Object folder. Otherwise enter the Object folder URL, including its trailing slash.</p>
+<p class="hint">Texture source paths are resolved using the original BVE object-path rules and converted to lowercase before fetching. The ZIP contains a.txt, unique downloaded textures, and 0.bmp as texture ID 0 for missing textures.</p>
+<div class="buttons"><button id="mergeButton">Convert and download</button><button id="mergeButtona">Convert and download (debug)</button><button id="copyButton">Copy output</button><button id="saveButton">Save merged file</button></div><div id="status" role="status">Ready.</div>
+<label for="output">Merged output</label><textarea id="output" spellcheck="false" placeholder="Merged output appears here..."></textarea>
+<label for="unusedLog">Unused structure objects and fetch log</label><textarea id="unusedLog" spellcheck="false" style="min-height:20vh" placeholder="Unused declarations and missing files will be listed here..."></textarea>
+</main>
+<div id="selectionOverlay" class="selection-overlay" hidden>
+    <section class="selection-panel" role="dialog" aria-modal="true" aria-labelledby="selectionTitle">
+        <h2 id="selectionTitle">Structure selection</h2>
+        <p id="selectionDescription" class="selection-description"></p>
+
+        <div class="selection-toolbar">
+            <button type="button" id="includeAllStructures">Include all</button>
+            <button type="button" id="excludeAllStructures">Exclude all</button>
+            <button type="button" id="autoIncludeStructures">Auto include</button>
+        </div>
+
+        <div id="selectionList" class="selection-list"></div>
+
+        <div class="selection-footer">
+            <button type="button" id="continueStructures">Continue</button>
+        </div>
+    </section>
+</div>
+
+
+<script src="zippy.js"></script>
+<script>
+"use strict";
+const MARK="@@@",MAX_FILES=5000;
+
+//
+//
+//     IMPORTANT - THIS CONTROLS THE MINIFY AND THE OMMISIONS
+//
+//
+
+
+//     LIST OF COMMANDS TO EXCLUDE
+const ROUTE_OMITTED_FUNCTIONS = ["timetable"];
+
+
+//     LIST OF OBJECT COMMANDS TO MINIFY
+const OBJECT_LINE_FILTERS=[["AddVertex","a"],["AddFace2","b"],["AddFace","c"],["LoadTexture","d"],["TranslateAll","k"],["Translate","e"],["CreateMeshBuilder","f"],["SetDecalTransparentColor","g"],["SetColor","h"],["GenerateNormals","i"],["SetTextureCoordinates","j"]];
+
+
+//     LIST OF ROUTE COMMANDS TO MINIFY  TODO
+const ROUTE_LINE_FILTERS=[["Freeobj","A"]];
+
+
+
+
+
+
+
+var nameReduction = false;const $=id=>document.getElementById(id),mergeButton=$('mergeButton'),mergeButtona=$('mergeButtona'),routeInput=$('routeUrl'),objectRootInput=$('objectRoot'),output=$('output'),statusBox=$('status'),unusedLog=$('unusedLog');
+const TYPES=['FreeObj','Ground','WallL','WallR','DikeL','DikeR','FormL','FormR','FormCL','FormCR','RoofL','RoofR','RoofCL','RoofCR','CrackL','CrackR','Beacon','Pole','Signal','Section','Limit','Transponder','Buffer','Bright'];
+const SUPPORTED=new Set(['csv','b3d','x','animated']);
+let textureIds=new Map(),texturePaths=[];
+function status(s){statusBox.textContent=s}
+function slash(s){return s.replace(/\\/g,'/')}
+function cleanBom(s){return s.replace(/^\uFEFF/,'')}
+function cleanSpacing(text){return text.replace(/  /g,' ').replace(/, /g,',')}
+function extOf(url){let m=new URL(url).pathname.match(/\.([^.\/]+)$/);return m?m[1].toLowerCase():''}
+function cacheBust(url) {var u = new URL(url, document.baseURI);u.searchParams.set('_nocache', Date.now() + '-' + Math.floor(Math.random() * 1000000000));return u.href;}
+function ensureDir(v,b){let u=new URL(v,b);if(!u.pathname.endsWith('/'))u.pathname+='/';return u.href}
+function inferRoot(route){let u=new URL(route),m=u.pathname.match(/^(.*\/)(?:route)(\/.*)?$/i);if(!m)throw Error('Cannot infer Object folder from route URL; enter it manually.');u.pathname=m[1]+'Object/';u.search='';u.hash='';return u.href}
+function decodedPath(url){try{return decodeURIComponent(new URL(url).pathname)}catch(_){return new URL(url).pathname}}
+function relativeName(url,root){let p=decodedPath(url),b=decodedPath(ensureDir(root,document.baseURI));return slash(p.startsWith(b)?p.slice(b.length):p.replace(/^\/+/,''))}
+
+async function fetchText(url) {
+    url = cacheBust(underscorePathSpaces(url.toLowerCase()));
+    let r = await fetch(url, { credentials: 'same-origin', cache: 'no-store' });
+    if (!r.ok) throw Error('HTTP ' + r.status + ' while fetching ' + url);
+    return cleanBom(await r.text());
+}
+
+
+
+
+function stripSemicolonComment(line) {
+    let quote = '';
+
+    for (let i = 0; i < line.length; i++) {
+        const c = line[i];
+
+        // Preserve semicolons inside quoted strings.
+        if (quote) {
+            if (c === '\\' && i + 1 < line.length) {
+                i++;
+                continue;
+            }
+
+            if (c === quote) quote = '';
+            continue;
+        }
+
+        if (c === '"' || c === "'") {
+            quote = c;
+            continue;
+        }
+
+        // Everything after an unquoted semicolon is a comment.
+        if (c === ';') {
+            return line.slice(0, i).trimEnd();
+        }
+    }
+
+    return line;
+}
+
+
+
+
+
+function cleanB3DToCsv(s) {
+
+    const commandMap = {
+        vertex: 'AddVertex',
+        face: 'AddFace',
+        face2: 'AddFace2',
+        cube: 'Cube',
+        cylinder: 'Cylinder',
+        translate: 'Translate',
+        translateall: 'TranslateAll',
+        scale: 'Scale',
+        scaleall: 'ScaleAll',
+        rotate: 'Rotate',
+        rotateall: 'RotateAll',
+        shear: 'Shear',
+        shearall: 'ShearAll',
+        mirror: 'Mirror',
+        mirrorall: 'MirrorAll',
+        color: 'SetColor',
+        colorall: 'SetColorAll',
+        emissivecolor: 'SetEmissiveColor',
+        emissivecolorall: 'SetEmissiveColorAll',
+        blendmode: 'SetBlendMode',
+        wrapmode: 'SetWrapMode',
+        load: 'LoadTexture',
+        transparent: 'SetDecalTransparentColor',
+        crossfading: 'EnableCrossfading',
+        coordinates: 'SetTextureCoordinates'
+    };
+
+    // Specifies which arguments are numbers.
+    // All positions start counting from zero.
+    const numberFields = {
+        vertex: { float: [0, 1, 2, 3, 4, 5] },
+        face: { integerAll: true },
+        face2: { integerAll: true },
+        cube: { float: [0, 1, 2] },
+        cylinder: { integer: [0], float: [1, 2, 3] },
+
+        translate: { float: [0, 1, 2] },
+        translateall: { float: [0, 1, 2] },
+        scale: { float: [0, 1, 2] },
+        scaleall: { float: [0, 1, 2] },
+        rotate: { float: [0, 1, 2, 3] },
+        rotateall: { float: [0, 1, 2, 3] },
+        shear: { float: [0, 1, 2, 3, 4, 5, 6] },
+        shearall: { float: [0, 1, 2, 3, 4, 5, 6] },
+
+        mirror: { integer: [0, 1, 2] },
+        mirrorall: { integer: [0, 1, 2] },
+
+        color: { integer: [0, 1, 2, 3] },
+        colorall: { integer: [0, 1, 2, 3] },
+        emissivecolor: { integer: [0, 1, 2] },
+        emissivecolorall: { integer: [0, 1, 2] },
+
+        blendmode: { integer: [1] },
+        transparent: { integer: [0, 1, 2] },
+
+        coordinates: { integer: [0], float: [1, 2] }
+    };
+
+    // Reproduce B3D's Loose number interpretation.
+    function normaliseNumber(value, type) {
+
+        const original = String(value);
+
+        if (original.trim() === '') return original;
+
+        let candidate = original.replace(/\s+/g, '');
+
+        const pattern = type === 'integer'
+            ? /^-?\d+$/
+            : /^-?(?:\d+(?:\.\d*)?|\.\d+)$/;
+
+        while (candidate.length > 0) {
+
+            if (
+                pattern.test(candidate) &&
+                Number.isFinite(Number(candidate))
+            ) {
+                return candidate;
+            }
+
+            // B3D Loose parsing removes invalid characters
+            // from the end until a valid number is found.
+            candidate = candidate.slice(0, -1);
+        }
+
+        // Never guess if no valid number can be established.
+        return null;
+    }
+
+    const result = [];
+    const warnings = [];
+    const repairs = [];
+
+    const lines = cleanBom(String(s)).split(/\r?\n/);
+
+    for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
+
+        const line = stripSemicolonComment(lines[lineIndex]).trim();
+
+        if (!line) continue;
+
+        if (/^\[MeshBuilder\]$/i.test(line)) {
+            result.push('CreateMeshBuilder');
+            continue;
+        }
+
+        if (/^\[Texture\]$/i.test(line)) {
+            continue;
+        }
+
+        // B3D documents the Texture command as ignored.
+        if (/^Texture(?:\s|,|$)/i.test(line)) {
+            continue;
+        }
+
+        const match = line.match(
+            /^([A-Za-z][A-Za-z0-9]*)(?:\s+|,\s*)([\s\S]*)$/
+        );
+
+        if (!match) {
+            result.push(line);
+            continue;
+        }
+
+        const oldCommand = match[1].toLowerCase();
+        const newCommand = commandMap[oldCommand];
+
+        if (!newCommand) {
+            result.push(line);
+            continue;
+        }
+
+        const args = match[2].split(',');
+        const spec = numberFields[oldCommand];
+
+        if (spec) {
+
+            const positions = [];
+
+            if (spec.integerAll) {
+                for (let i = 0; i < args.length; i++) {
+                    positions.push([i, 'integer']);
+                }
+            } else {
+                for (const i of (spec.integer || [])) {
+                    positions.push([i, 'integer']);
+                }
+
+                for (const i of (spec.float || [])) {
+                    positions.push([i, 'float']);
+                }
+            }
+
+            for (const [position, type] of positions) {
+
+                if (position >= args.length) continue;
+
+                const original = args[position];
+                const converted = normaliseNumber(original, type);
+
+                if (converted === null) {
+                    warnings.push(
+                        'Unresolved ' + oldCommand +
+                        ' number on B3D line ' + (lineIndex + 1) +
+                        ': ' + original
+                    );
+                    continue;
+                }
+
+                if (converted !== original.trim()) {
+                    repairs.push(
+                        'B3D line ' + (lineIndex + 1) +
+                        ': ' + original.trim() +
+                        ' became ' + converted
+                    );
+
+                    args[position] = converted;
+                }
+            }
+        }
+
+        const convertedArgs = args.join(',');
+
+        result.push(
+            convertedArgs !== ''
+                ? newCommand + ',' + convertedArgs
+                : newCommand
+        );
+    }
+
+    if (repairs.length) {
+        console.info(
+            'B3D numbers normalised using Loose parsing:',
+            repairs
+        );
+    }
+
+    if (warnings.length) {
+        console.warn(
+            'B3D numbers needing manual attention:',
+            warnings
+        );
+    }
+
+    return result.join('\n');
+}
+
+
+
+
+
+function cleanCsv(s) {
+    const warnings = [];
+    const lines = cleanBom(s).split(/\r?\n/);
+    const result = [];
+
+    function isNumber(value) {
+        value = String(value).trim();
+
+        return /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i.test(value)
+            && Number.isFinite(Number(value));
+    }
+
+    for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+
+        // Remove semicolon comments.
+        const commentIndex = line.indexOf(';');
+
+        if (commentIndex >= 0) {
+            line = line.slice(0, commentIndex);
+        }
+
+        line = line.trim();
+
+        if (!line) continue;
+        // Convert only B3D commands whose names differ from CSV commands.
+const b3dAliases = {
+    vertex: 'AddVertex',
+    face: 'AddFace',
+    face2: 'AddFace2',
+
+    color: 'SetColor',
+    colorall: 'SetColorAll',
+    emissivecolor: 'SetEmissiveColor',
+    emissivecolorall: 'SetEmissiveColorAll',
+
+    blendmode: 'SetBlendMode',
+    wrapmode: 'SetWrapMode',
+
+    load: 'LoadTexture',
+    transparent: 'SetDecalTransparentColor',
+    crossfading: 'EnableCrossfading',
+    coordinates: 'SetTextureCoordinates'
+};
+
+const b3dMatch = line.match(/^([A-Za-z][A-Za-z0-9]*)(?=$|[\s,])/);
+
+if (b3dMatch) {
+    const replacement = b3dAliases[b3dMatch[1].toLowerCase()];
+
+    if (replacement) {
+        let remainder = line.slice(b3dMatch[1].length);
+
+        // B3D permits a space between the command and arguments.
+        // CSV requires a comma.
+        if (/^\s*,/.test(remainder)) {
+            remainder = remainder.replace(/^\s+/, '');
+        } else if (/^\s+/.test(remainder)) {
+            remainder = remainder.replace(/^\s+/, ',');
+        }
+
+        line = replacement + remainder;
+    }
+}
+
+// Repair spaces between a numeric sign and its value.
+if (/^AddVertex\s*,/i.test(line)) {
+    line = line.replace(/(^|,)\s*([+-])\s+(?=\d)/g, '$1$2');
+}
+        // Repair the two known malformed numbers.
+        line = line.replace(
+            /^(AddVertex\s*,\s*)0\.7\.5(?=\s*,)/i,
+            '$10.75'
+        );
+
+        line = line.replace(
+            /^(SetTextureCoordinates\s*,\s*\d+\s*,\s*\d+\s*,\s*)0\.0\.10\s*$/i,
+            '$10.10'
+        );
+
+        // Special handling for AddVertex.
+        if (/^AddVertex\s*,/i.test(line)) {
+            const fields = line.split(',');
+            const args = fields.slice(1).map(v => v.trim());
+
+            const repairedArgs = [];
+            let repaired = false;
+
+            // AddVertex supports six numeric arguments:
+            // X, Y, Z, NormalX, NormalY, NormalZ.
+            for (let j = 0; j < args.length; j++) {
+                const value = args[j];
+
+                if (repairedArgs.length < 6 && value !== '') {
+                    const tokens = value.split(/\s+/);
+                    const slotsLeft = 6 - repairedArgs.length;
+
+                    if (
+                        tokens.length > 1 &&
+                        tokens.length <= slotsLeft &&
+                        tokens.every(isNumber)
+                    ) {
+                        repairedArgs.push(...tokens);
+                        repaired = true;
+                        continue;
+                    }
+                }
+
+                repairedArgs.push(value);
+            }
+
+            if (repaired) {
+                line = fields[0].trim() + ',' + repairedArgs.join(',');
+
+                warnings.push(
+                    'Repaired missing AddVertex separator on line ' +
+                    (i + 1) + ': ' + line
+                );
+            }
+
+
+        }
+        const numericMatch = line.match(
+    /^(\s*)(AddVertex|SetTextureCoordinates)(\s*,)(.*)$/i
+);
+
+if (numericMatch) {
+    const command = numericMatch[2].toLowerCase();
+    const fields = numericMatch[4].split(',');
+
+    // AddVertex: X, Y, Z, NormalX, NormalY, NormalZ.
+    // SetTextureCoordinates: VertexIndex, U, V.
+    const fieldCount = command === 'addvertex' ? 6 : 3;
+
+    for (let i = 0; i < fieldCount && i < fields.length; i++) {
+        const field = fields[i];
+        const trimmed = field.trim();
+
+        let corrected = trimmed;
+
+        // A lone decimal point is treated as zero.
+        if (trimmed === '.') {
+            corrected = '0';
+        }
+
+        // Repair duplicated or misplaced decimal points.
+        // Keep the first decimal point and remove subsequent ones.
+        else if (/^[+-]?[0-9.]+$/.test(trimmed)) {
+            const firstDot = trimmed.indexOf('.');
+
+            if (firstDot >= 0) {
+                corrected =
+                    trimmed.slice(0, firstDot + 1) +
+                    trimmed.slice(firstDot + 1).replace(/\./g, '');
+            }
+
+            // Only accept the repair if it produces a valid number.
+            if (!Number.isFinite(Number(corrected))) {
+                corrected = trimmed;
+            }
+        }
+
+        if (corrected !== trimmed) {
+            console.warn(
+                '[CSV numeric repair]',
+                command,
+                trimmed,
+                '->',
+                corrected
+            );
+
+            const leading = (field.match(/^\s*/) || [''])[0];
+            const trailing = (field.match(/\s*$/) || [''])[0];
+
+            fields[i] = leading + corrected + trailing;
+        }
+    }
+
+    line =
+        numericMatch[1] +
+        numericMatch[2] +
+        numericMatch[3] +
+        fields.join(',');
+}
+// Validate AddVertex coordinates AFTER numeric repairs.
+if (/^AddVertex\s*,/i.test(line)) {
+    const coordinates = line.split(',').slice(1, 7);
+
+    for (let j = 0; j < 3; j++) {
+        const value = (coordinates[j] ?? '').trim();
+
+        if (value !== '' && !isNumber(value)) {
+            warnings.push(
+                'Unresolved AddVertex coordinate on line ' +
+                (i + 1) + ': ' + line
+            );
+        }
+    }
+}
+        // Validate SetTextureCoordinates numeric values.
+        if (/^SetTextureCoordinates\s*,/i.test(line)) {
+            const values = line.split(',').slice(1);
+
+            for (let j = 0; j < values.length; j++) {
+                const value = values[j].trim();
+
+                if (value !== '' && !isNumber(value)) {
+                    warnings.push(
+                        'Unresolved SetTextureCoordinates value on line ' +
+                        (i + 1) + ': ' + line
+                    );
+                }
+            }
+        }
+
+        result.push(line);
+    }
+
+    if (warnings.length) {
+        console.warn('BVE CSV processing:', warnings);
+    }
+
+    return result.join('\n');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function applyPrefixFilters(text,filters){return text.split(/\r?\n/).map(line=>{for(const pair of filters){if(!Array.isArray(pair)||pair.length<2||typeof pair[0]!=="string"||!pair[0])continue;const prefix=pair[0];if(line.slice(0,prefix.length).toLowerCase()===prefix.toLowerCase()){return String(pair[1])+line.slice(prefix.length)}}return line}).join('\n')}
+function applyRouteCommandFilters(text,filters){return text.split(/\r?\n/).map(line=>{for(const pair of filters){if(!Array.isArray(pair)||pair.length<2||typeof pair[0]!=="string"||!pair[0])continue;const oldName=pair[0].replace(/^\./,''),newName=String(pair[1]).replace(/^\./,'');const escaped=oldName.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');const re=new RegExp('(^|,)(\\s*\\.?)'+escaped+'(?=\\s|;|\\(|,|$)','gi');line=line.replace(re,(_match,separator,prefix)=>separator+prefix+newName)}return line}).join('\n')}
+function removeBlankAndCommentLines(text){return text.split(/\r?\n/).map(line=>line.trim()).filter(line=>line!==""&&!line.startsWith(";")).join("\n")}
+function cleanX(s){let o='',i=0,q=false;while(i<s.length){let c=s[i],n=s[i+1];if(q){o+=c;if(c==='\\'&&i+1<s.length){o+=s[i+1];i+=2;continue}if(c==='"')q=false;i++;continue}if(c==='"'){q=true;o+=c;i++;continue}if(c==='/'&&n==='/'){while(i<s.length&&s[i]!=='\n')i++;if(i<s.length)o+='\n';continue}if(c==='/'&&n==='*'){i+=2;while(i<s.length&&!(s[i]==='*'&&s[i+1]==='/')){if(s[i]==='\n')o+='\n';i++}if(i<s.length)i+=2;continue}o+=c;i++}return o.split(/\r?\n/).map(l=>l.trim()).filter(Boolean).join('\n')}
+
+
+
+
+function cleanObject(s, e) {
+    if (e === 'x') {
+        return cleanX(s);
+    }
+
+    if (e === 'b3d') {
+        s = cleanB3DToCsv(s);
+    }
+
+    return cleanCsv(s);
+}
+
+
+
+function parseDefinitions(routeText, routeUrl, root) {
+    const out = [];
+    const seen = new Set();
+    let inside = false;
+
+    for (const raw of cleanBom(routeText).split(/\r?\n/)) {
+        const line = stripSemicolonComment(raw).trim();
+
+        if (/^With\s+Structure\b/i.test(line)) {
+            inside = true;
+            continue;
+        }
+
+        if (/^With\s+/i.test(line)) {
+            inside = false;
+            continue;
+        }
+
+        let match;
+        let type;
+        let index;
+        let file;
+
+        if (
+            inside &&
+            (match = line.match(
+                /^\.([A-Za-z][A-Za-z0-9]*)\s*\(\s*(\d+)\s*\)\s*(?:=\s*)?(.+?)\s*$/
+            ))
+        ) {
+            type = match[1];
+            index = match[2];
+            file = match[3];
+
+        } else if (
+            (match = line.match(
+                /^Structure\.([A-Za-z][A-Za-z0-9]*)\s*\(\s*(\d+)\s*\)\s*=\s*(.*?)\s*$/i
+            ))
+        ) {
+            type = match[1];
+            index = match[2];
+            file = match[3];
+
+        } else {
+            continue;
+        }
+
+        if (!file) continue;
+
+        file = file.trim().replace(/^['"]|['"]$/g, '');
+
+        const extensionMatch = file.match(/\.([^.\/\\?#]+)(?:[?#].*)?$/);
+
+        if (
+            !extensionMatch ||
+            !SUPPORTED.has(extensionMatch[1].toLowerCase())
+        ) {
+            continue;
+        }
+
+        const lowerType = type.toLowerCase();
+        const key = lowerType + '(' + index + ')';
+
+        if (seen.has(key)) continue;
+
+        seen.add(key);
+
+        out.push({
+            type: lowerType,
+            index,
+            key,
+            file,
+            url: new URL(
+                slash(file).replace(/^\/+/, ''),
+                ensureDir(root, routeUrl)
+            ).href
+        });
+    }
+
+    return out;
+}
+
+function chooseStructureDefinitions(type, items) {
+    return new Promise(resolve => {
+
+        const overlay = $('selectionOverlay');
+        const title = $('selectionTitle');
+        const description = $('selectionDescription');
+        const list = $('selectionList');
+
+        const includeAllButton = $('includeAllStructures');
+        const excludeAllButton = $('excludeAllStructures');
+        const autoIncludeButton = $('autoIncludeStructures');
+        const continueButton = $('continueStructures');
+
+        const pageMain = document.querySelector('main');
+        const previousOverflow = document.body.style.overflow;
+
+        // All entries are included by default.
+        const choices = new Map(
+            items.map(item => [item.key, true])
+        );
+
+        function drawList() {
+            list.replaceChildren();
+
+            if (items.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'selection-empty';
+                empty.textContent = 'No .' + type + ' definitions found.';
+                list.appendChild(empty);
+                return;
+            }
+
+            items.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'selection-row';
+
+                const details = document.createElement('div');
+
+                const name = document.createElement('div');
+                name.className = 'selection-row-name';
+                name.textContent = '.' + type + '(' + item.index + ')';
+
+                const path = document.createElement('div');
+                path.className = 'selection-row-path';
+                path.textContent = item.file;
+
+                details.appendChild(name);
+                details.appendChild(path);
+
+                const options = document.createElement('div');
+                options.className = 'selection-options';
+
+                const groupName = 'structure-selection-' +
+                    type.toLowerCase() + '-' + index;
+
+                const includeLabel = document.createElement('label');
+                const includeRadio = document.createElement('input');
+
+                includeRadio.type = 'radio';
+                includeRadio.name = groupName;
+                includeRadio.value = 'include';
+                includeRadio.checked = choices.get(item.key) === true;
+
+                includeRadio.addEventListener('change', () => {
+                    if (includeRadio.checked) {
+                        choices.set(item.key, true);
+                    }
+                });
+
+                includeLabel.appendChild(includeRadio);
+                includeLabel.appendChild(
+                    document.createTextNode('Include')
+                );
+
+                const excludeLabel = document.createElement('label');
+                const excludeRadio = document.createElement('input');
+
+                excludeRadio.type = 'radio';
+                excludeRadio.name = groupName;
+                excludeRadio.value = 'exclude';
+                excludeRadio.checked = choices.get(item.key) === false;
+
+                excludeRadio.addEventListener('change', () => {
+                    if (excludeRadio.checked) {
+                        choices.set(item.key, false);
+                    }
+                });
+
+                excludeLabel.appendChild(excludeRadio);
+                excludeLabel.appendChild(
+                    document.createTextNode('Exclude')
+                );
+
+                options.appendChild(includeLabel);
+                options.appendChild(excludeLabel);
+
+                row.appendChild(details);
+                row.appendChild(options);
+
+                list.appendChild(row);
+            });
+        }
+
+        function setAll(included) {
+            for (const item of items) {
+                choices.set(item.key, included);
+            }
+
+            drawList();
+        }
+
+        function autoInclude() {
+            for (const item of items) {
+                const excluded = /(rail|track)/i.test(item.file);
+                choices.set(item.key, !excluded);
+            }
+
+            drawList();
+        }
+
+        function finish() {
+            overlay.hidden = true;
+            pageMain.inert = false;
+            document.body.style.overflow = previousOverflow;
+
+            includeAllButton.onclick = null;
+            excludeAllButton.onclick = null;
+            autoIncludeButton.onclick = null;
+            continueButton.onclick = null;
+
+            resolve(
+                items.filter(item => choices.get(item.key) === true)
+            );
+        }
+
+        title.textContent = type + ' structure selection';
+
+        description.textContent =
+            'Choose which .' + type +
+            ' definitions to include. All are included by default. ' +
+            'You can change each selection individually.';
+
+        includeAllButton.onclick = () => setAll(true);
+        excludeAllButton.onclick = () => setAll(false);
+        autoIncludeButton.onclick = autoInclude;
+        continueButton.onclick = finish;
+
+        drawList();
+
+        // Disable the page behind the selection overlay.
+        pageMain.inert = true;
+        document.body.style.overflow = 'hidden';
+
+        overlay.hidden = false;
+        continueButton.focus();
+    });
+}
+
+function parseTrackUsage(routeText){const uses=new Set();let block='';const family={freeobj:['freeobj'],ground:['ground'],wall:['walll','wallr'],dike:['dikel','diker'],crack:['crackl','crackr'],form:['forml','formr','formcl','formcr'],roof:['roofl','roofr','roofcl','roofcr']};const known=new Set([...TYPES.map(t=>t.toLowerCase()),'wall','dike','crack','form','roof']);for(const raw of cleanBom(routeText).split(/\r?\n/)){const row=raw.trim(),wm=row.match(/^With\s+([A-Za-z]+)/i);if(wm){block=wm[1].toLowerCase();continue}if(block!=='track')continue;const comma=row.indexOf(',');if(comma<0)continue;for(let token of row.slice(comma+1).split(',')){token=token.trim();if(!token||token.startsWith(';'))continue;const m=token.match(/^\.?([A-Za-z][A-Za-z0-9]*)\s+(.+?)\s*$/);if(!m)continue;const command=m[1].toLowerCase();if(!known.has(command))continue;const args=m[2].split(';').map(v=>v.trim());if(!/^\d+$/.test(args[0]||''))continue;const index=String(Number(args[0]));let types=family[command]||[command];if(command==='form'){const side=(args[1]||'').toUpperCase();if(side==='L')types=['forml'];else if(side==='R')types=['formr'];else if(side==='CL')types=['formcl'];else if(side==='CR')types=['formcr']}if(command==='roof'){const side=(args[1]||'').toUpperCase();if(side==='L')types=['roofl'];else if(side==='R')types=['roofr'];else if(side==='CL')types=['roofcl'];else if(side==='CR')types=['roofcr']}for(const type of types)uses.add(type+'('+index+')')}}return uses}
+function parseDependencies(text,currentUrl){let refs=[],section='';for(let raw of cleanBom(text).split(/\r?\n/)){let l=raw.trim(),sm=l.match(/^\[([^\]]+)\]/);if(sm){section=sm[1].trim().toLowerCase();continue}if(section==='include'){let m=l.match(/^(?:\d+\s*=\s*)?["']?([^"'=]+?\.(?:csv|b3d|x|animated))["']?\s*$/i);if(m)refs.push(m[1].trim());continue}if(section==='states'){let m=l.match(/^\s*["']?([^,"'=]+?\.(?:csv|b3d|x|animated))["']?(?:\s*,|$)/i);if(m)refs.push(m[1].trim())}}let seen=new Set();return refs.map(n=>new URL(slash(n),currentUrl).href).filter(u=>!seen.has(u)&&seen.add(u))}
+
+function normTexture(ref,objUrl,root){let s=String(ref==null?'':ref).trim().replace(/^['"]|['"]$/g,'').replace(/\\/g,'/').toLowerCase();let objPath=String(objUrl).replace(/\\/g,'/').replace(/[?#].*$/,'');let marker=objPath.toLowerCase().indexOf('/bve/');if(marker<0)return s;let bveRoot=objPath.slice(marker);bveRoot=bveRoot.slice(0,bveRoot.indexOf('/',5)+1);let relative=objPath.slice(marker+bveRoot.length);relative=relative.slice(0,relative.lastIndexOf('/')+1);let parts=(relative+s).split('/');let resolved=[];for(let part of parts){if(!part||part==='.')continue;if(part==='..')resolved.pop();else resolved.push(part)}return (bveRoot+resolved.join('/')).toLowerCase()}
+function getTextureToken(ref,objUrl,root){const p=normTexture(ref,objUrl,root);if(textureIds.has(p))return textureIds.get(p).token;const sourceIndex=texturePaths.length;const leaf=p.slice(p.lastIndexOf('/')+1).split(/[?#]/,1)[0];const extMatch=leaf.match(/\.([^.]+)$/);const extension=extMatch?extMatch[1].toLowerCase():'';const entry={sourceIndex,path:p,extension,token:'@@@BVE_TEXTURE_'+sourceIndex+'@@@',found:false,data:null,error:'',finalId:0,filename:'0.bmp'};textureIds.set(p,entry);texturePaths.push(entry);return entry.token}
+
+
+function rewriteTextures(text, ext, url, root) {
+
+    if (ext === 'x') {
+        return text.replace(
+            /(TextureFilename\s*\{\s*")[^"]+("\s*;)/gi,
+            (whole, a, b) =>
+                a + getTextureToken(
+                    whole.slice(a.length, -b.length),
+                    url,
+                    root
+                ) + b
+        );
+    }
+
+    return text.split(/\r?\n/).map(line => {
+
+        // Handle CSV LoadTexture commands, including converted B3D.
+        const loadMatch = line.match(
+            /^(\s*LoadTexture\s*,)(.*)$/i
+        );
+
+        if (loadMatch) {
+
+            const args = loadMatch[2].split(',');
+
+            // Daytime and optional nighttime textures.
+            for (let i = 0; i < Math.min(2, args.length); i++) {
+
+                const path = args[i].trim();
+
+                if (!path) continue;
+
+                args[i] = getTextureToken(path, url, root);
+            }
+
+            return loadMatch[1] + args.join(',');
+        }
+
+        // Retain support for the existing d / dEx syntax.
+        return line.replace(
+            /^(\s*d(?:Ex)?\s*(?:\([^)]*\))?\s*[,=]\s*)("?)([^",]+)("?)(.*)$/i,
+            (_whole, prefix, q1, path, q2, tail) =>
+                prefix + q1 +
+                getTextureToken(path.trim(), url, root) +
+                q2 + tail
+        );
+
+    }).join('\n');
+}
+
+
+
+
+function createNullBmp(){const width=16,height=16,rowSize=Math.ceil((width*3)/4)*4,pixelBytes=rowSize*height;const bmp=new Uint8Array(54+pixelBytes),view=new DataView(bmp.buffer);bmp[0]=0x42;bmp[1]=0x4d;view.setUint32(2,bmp.length,true);view.setUint32(10,54,true);view.setUint32(14,40,true);view.setInt32(18,width,true);view.setInt32(22,height,true);view.setUint16(26,1,true);view.setUint16(28,24,true);view.setUint32(30,0,true);view.setUint32(34,pixelBytes,true);view.setInt32(38,2835,true);view.setInt32(42,2835,true);for(let y=0;y<height;y++)for(let x=0;x<width;x++){const offset=54+(height-1-y)*rowSize+x*3;const magenta=((Math.floor(x/4)+Math.floor(y/4))%2)===0;bmp[offset]=magenta?255:0;bmp[offset+1]=0;bmp[offset+2]=magenta?255:0}return bmp}
+async function fetchTexturesAsBinary(missingTextures){let nextIndex=0,completed=0;const workerCount=Math.min(8,texturePaths.length);async function worker(){while(true){const i=nextIndex++;if(i>=texturePaths.length)return;const texture=texturePaths[i];try{if(!texture.path)throw Error('Empty texture path');const relativeTexturePath=texture.path.replace(/^\/+/,'').toLowerCase();
+
+const textureUrl=underscorePathSpaces(new URL(relativeTexturePath,document.baseURI).href);
+const response=await fetch(cacheBust(textureUrl),{credentials:'same-origin',cache:'no-store'});
+
+
+
+
+
+if(!response.ok)throw Error('HTTP '+response.status);texture.data=new Uint8Array(await response.arrayBuffer());texture.found=true}catch(e){texture.found=false;texture.data=null;texture.error=e&&e.message?e.message:String(e);missingTextures.push(texture.path+' ['+texture.error+']')}completed++;status('Downloading textures: '+completed+'/'+texturePaths.length+'\nCompleted binary downloads; preparing the ZIP...')}}if(workerCount)await Promise.all(Array.from({length:workerCount},()=>worker()));let nextOutputId=1;for(const texture of texturePaths){if(texture.found){texture.finalId=nextOutputId++;texture.filename=String(texture.finalId)+(texture.extension?'.'+texture.extension:'')}else{texture.finalId=0;texture.filename='0.bmp'}}}
+function textureHeader(){const rows=['0.bmp'];for(const texture of texturePaths){if(texture.found)rows.push(texture.filename)}return rows.join('\n')}
+function finaliseTextureReferences(objects){for(const object of objects){object.content=object.content.replace(/@@@BVE_TEXTURE_(\d+)@@@/g,(_match,indexText)=>{const texture=texturePaths[Number(indexText)];return String(texture&&texture.found?texture.finalId:0)})}}
+
+
+
+function indexObjectReferences(text) {
+    const lines = String(text).split(/\r\n|\n|\r/);
+
+    function normalizeObjectPath(path) {
+        const raw = String(path ?? '')
+            .replace(/\\/g, '/')
+            .trim();
+
+        const absolute = raw.startsWith('/');
+        const parts = [];
+
+        for (const part of raw.split('/')) {
+            if (!part || part === '.') continue;
+
+            if (part === '..') {
+                if (parts.length && parts[parts.length - 1] !== '..') {
+                    parts.pop();
+                } else if (!absolute) {
+                    parts.push('..');
+                }
+            } else {
+                parts.push(part);
+            }
+        }
+
+        return (absolute ? '/' : '') +
+            parts.join('/').toLowerCase();
+    }
+
+    const pathToIndex = new Map();
+    const markerIndices = new Map();
+
+    let objectIndex = 0;
+
+    // Build the mapping using the physical order of object markers.
+    for (let i = 0; i < lines.length; i++) {
+        const marker = lines[i].match(
+            /^\s*@@@([cx])(?:\s+(.*?))?\s*$/i
+        );
+
+        if (!marker) continue;
+
+        const filename = marker[2] || '';
+        const normalized = normalizeObjectPath(filename);
+
+        markerIndices.set(i, objectIndex);
+
+        if (normalized && !pathToIndex.has(normalized)) {
+            pathToIndex.set(normalized, objectIndex);
+        }
+
+        objectIndex++;
+    }
+
+    if (objectIndex === 0) return text;
+
+    let inRoute = false;
+    let inStructure = false;
+
+    return lines.map((line, lineIndex) => {
+
+        // Rewrite each object marker to its actual route_objects position.
+        const marker = line.match(
+            /^(\s*@@@)([cx])(?:\s+(.*?))?\s*$/i
+        );
+
+        if (marker) {
+            return marker[1] +
+                marker[2].toLowerCase() +
+                ' ' +
+                markerIndices.get(lineIndex);
+        }
+
+        // Detect the beginning of the route section.
+        if (/^\s*@@@Z\s*$/i.test(line)) {
+            inRoute = true;
+            inStructure = false;
+            return line;
+        }
+
+        if (!inRoute) return line;
+
+        // Track the BVE structure-definition section.
+        if (/^\s*With\s+Structure\s*$/i.test(line)) {
+            inStructure = true;
+            return line;
+        }
+
+        if (/^\s*With\s+(?:Track|Train|Cycle)\s*$/i.test(line)) {
+            inStructure = false;
+            return line;
+        }
+
+        if (!inStructure) return line;
+
+        // Match both legacy structure definitions and .Load definitions.
+        const definition = line.match(
+            /^(\s*\.\w+\([^)]*\)(?:\s*\.Load)?\s+)(.*)$/i
+        );
+
+        if (!definition) return line;
+
+        let referenceText = definition[2];
+
+        // Keep any trailing semicolon comment separate from the filename.
+        const commentPosition = referenceText.indexOf(';');
+
+        const comment = commentPosition >= 0
+            ? referenceText.slice(commentPosition).trimStart()
+            : '';
+
+        let filename = commentPosition >= 0
+            ? referenceText.slice(0, commentPosition).trim()
+            : referenceText.trim();
+
+        // Allow quoted filenames.
+        if (
+            filename.length >= 2 &&
+            (
+                (filename.startsWith('"') && filename.endsWith('"')) ||
+                (filename.startsWith("'") && filename.endsWith("'"))
+            )
+        ) {
+            filename = filename.slice(1, -1);
+        }
+
+        const normalized = normalizeObjectPath(filename);
+        const index = pathToIndex.get(normalized);
+
+        // Leave unresolved references unchanged rather than guessing.
+        if (index === undefined) return line;
+
+        return definition[1] +
+            index +
+            (comment ? ' ' + comment : '');
+    }).join('\n');
+}
+
+
+
+function downloadBlob(blob,filename){const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
+function buildAndDownloadZip(){const zipLib=window.fflate;if(!zipLib||typeof zipLib.zipSync!=='function'||typeof zipLib.strToU8!=='function')throw Error('The fflate library did not load. Check your connection to the CDN and run the merge again.');const files=Object.create(null);files['0.bmp']=createNullBmp();for(const texture of texturePaths){if(texture.found&&texture.data){files[texture.filename]=texture.data}}files['a.txt']=zipLib.strToU8(output.value);const zipped=zipLib.zipSync(files,{level:6});downloadBlob(new Blob([zipped],{type:'application/zip'}),'merged-bve-textures.zip');return {downloaded:texturePaths.filter(t=>t.found).length,entries:Object.keys(files).length}}
+
+
+function underscorePathSpaces(url) {
+    const u = new URL(url, document.baseURI);
+    u.pathname = u.pathname.replace(/%20/gi, '_');
+    return u.href;
+}
+
+// Route output removes only blank lines and lines whose trimmed content starts with ';'.
+// Do not split commands on commas or treat semicolons inside a line as comments.
+
+function routePayload(text, excludedStructureKeys = new Set()) {
+    const lines = String(text ?? "")
+        .replace(/^\uFEFF/, "")
+        .split(/\r?\n/);
+
+    const output = [];
+    let insideStructure = false;
+
+    // Recognise numeric positions, including colon-separated notation.
+    const isTrackPosition = value =>
+        /^(?:\d+(?:\.\d*)?|\.\d+)(?::(?:\d+(?:\.\d*)?|\.\d+))*$/.test(value);
+
+    // Escape omission names so they are treated as literal command names.
+    const escapeRegex = value =>
+        value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+    for (const rawLine of lines) {
+        const line = rawLine.trim();
+
+        // Discard blank lines and full-line comments.
+        if (!line || line.startsWith(";")) continue;
+
+        // Commas separate expressions; semicolons inside expressions
+        // separate arguments and must not be removed.
+        const expressions = line
+            .split(",")
+            .map(expression => expression.trim())
+            .filter(expression =>
+                expression !== "" && !expression.startsWith(";")
+            );
+
+        if (expressions.length === 0) continue;
+
+        const kept = [];
+
+        for (const expression of expressions) {
+
+            // Track the active With namespace.
+            const withMatch = expression.match(/^With\s+([A-Za-z]+)/i);
+
+            if (withMatch) {
+                insideStructure =
+                    withMatch[1].toLowerCase() === "structure";
+
+                kept.push(expression);
+                continue;
+            }
+
+            // Identify a definition inside With Structure.
+            let definitionMatch = null;
+
+            if (insideStructure) {
+                definitionMatch = expression.match(
+                    /^\s*\.([A-Za-z][A-Za-z0-9]*)\s*\(\s*(\d+)\s*\)\s*(?:=\s*)?(.+?)\s*$/
+                );
+            }
+
+            // Also support fully qualified Structure.Type(index) = file
+            // definitions, without matching ordinary With Track commands.
+            if (!definitionMatch) {
+                definitionMatch = expression.match(
+                    /^\s*Structure\.([A-Za-z][A-Za-z0-9]*)\s*\(\s*(\d+)\s*\)\s*=\s*(.+?)\s*$/i
+                );
+            }
+
+            // Remove only definitions explicitly excluded by the user.
+            if (definitionMatch) {
+                const key =
+                    definitionMatch[1].toLowerCase() +
+                    '(' + definitionMatch[2] + ')';
+
+                if (excludedStructureKeys.has(key)) {
+                    continue;
+                }
+            }
+
+            // Apply the global omission list to this expression only.
+            const commandHead = expression.split(";")[0].trim();
+
+            const omitted = ROUTE_OMITTED_FUNCTIONS.some(name => {
+                const commandName = String(name).trim();
+                if (!commandName) return false;
+
+                const pattern = new RegExp(
+                    `(?:^|\\.)${escapeRegex(commandName)}\\b`,
+                    "i"
+                );
+
+                return pattern.test(commandHead);
+            });
+
+            if (omitted) continue;
+
+            // Keep every other active expression unchanged.
+            kept.push(expression);
+        }
+
+        if (kept.length === 0) continue;
+
+        // Discard rows that have only a track position remaining.
+        if (kept.length === 1 && isTrackPosition(kept[0])) {
+            continue;
+        }
+
+        output.push(kept.join(", "));
+    }
+
+    return output.join("\n");
+}
+
+
+
+
+
+async function merge() {
+    mergeButton.disabled = true;
+    mergeButtona.disabled = true;
+
+    output.value = '';
+    unusedLog.value = '';
+    textureIds.clear();
+    texturePaths = [];
+
+    let routeUrl, root, routeTail = '';
+    let objects = [];
+    let missing = [];
+    let errors = [];
+    let missingTextures = [];
+    let unused = [];
+    let visited = new Set();
+    let queue = [];
+    let defs = [];
+    let selected = [];
+
+    function render() {
+        const head = textureHeader();
+
+        const body = objects
+            .map(o =>
+                MARK +
+                (o.ext === 'x' ? 'x' : 'c') +
+                ' ' +
+                o.filename.replace(/\//g, '\\') +
+                '\n' +
+                o.content
+            )
+            .join('\n');
+
+        const finishedText = cleanSpacing(
+            (head ? head + '\n' : '') +
+            body +
+            (body ? '\n' : '') +
+            MARK + 'Z\n' +
+            routeTail
+        );
+
+        // Index object filenames before displaying or creating the ZIP.
+        output.value = nameReduction
+            ? indexObjectReferences(finishedText)
+            : finishedText;
+    }
+
+    try {
+        if (
+            !window.fflate ||
+            typeof window.fflate.zipSync !== 'function'
+        ) {
+            throw Error(
+                'The fflate library did not load. Check your connection to the CDN before merging.'
+            );
+        }
+
+        routeUrl = new URL(
+            routeInput.value.trim(),
+            document.baseURI
+        ).href;
+
+        root = objectRootInput.value.trim()
+            ? ensureDir(objectRootInput.value.trim(), routeUrl)
+            : inferRoot(routeUrl);
+
+        objectRootInput.value = objectRootInput.value.trim();
+        objectRootInput.placeholder = root;
+
+        status(
+            'Fetching route...\n' +
+            routeUrl +
+            '\nObject folder: ' +
+            root
+        );
+
+        // Fetch the route first.
+        let route = await fetchText(routeUrl);
+
+        // Pre-scan all supported structure definitions.
+        status('Scanning route structure definitions...');
+
+        defs = parseDefinitions(route, routeUrl, root);
+
+        if (!defs.length) {
+            throw Error('No supported structure declarations found.');
+        }
+
+        // Separate Rail and FreeObj definitions.
+        const railDefs = defs.filter(
+            item => item.type === 'rail'
+        );
+
+        const freeObjDefs = defs.filter(
+            item => item.type === 'freeobj'
+        );
+
+        // STAGE 1: Rail selection.
+        const includedRails = await chooseStructureDefinitions(
+            'Rail',
+            railDefs
+        );
+
+        // STAGE 2: FreeObj selection.
+        const includedFreeObjs = await chooseStructureDefinitions(
+            'FreeObj',
+            freeObjDefs
+        );
+
+        // Build a set of all selected Rail and FreeObj definitions.
+        const includedKeys = new Set(
+            [...includedRails, ...includedFreeObjs].map(
+                item => item.key
+            )
+        );
+
+        // Only Rail and FreeObj definitions are user-selectable.
+        const selectableKeys = new Set(
+            [...railDefs, ...freeObjDefs].map(
+                item => item.key
+            )
+        );
+
+        // Record the Rail and FreeObj definitions excluded by the user.
+        unused = defs.filter(
+            item =>
+                selectableKeys.has(item.key) &&
+                !includedKeys.has(item.key)
+        );
+
+        const excludedDefinitionKeys = new Set(
+            unused.map(item => item.key)
+        );
+
+        // Include all other structure types automatically.
+        selected = defs.filter(
+            item => !excludedDefinitionKeys.has(item.key)
+        );
+
+        // Remove excluded definitions from the final route text.
+        routeTail = routePayload(
+            route,
+            excludedDefinitionKeys
+        );
+
+        // Only now start loading structure objects.
+        queue.push(...selected);
+
+        while (queue.length) {
+            let item = queue.shift();
+            let url = item.url;
+
+            if (visited.has(url)) continue;
+
+            visited.add(url);
+
+            if (visited.size > MAX_FILES) {
+                throw Error(
+                    'Safety limit reached: ' + MAX_FILES + ' files.'
+                );
+            }
+
+            let ext = extOf(url);
+
+            if (!SUPPORTED.has(ext)) continue;
+
+            status(
+                'Processing ' + visited.size +
+                '\nPending: ' + queue.length +
+                '\nStructure definitions selected: ' + selected.length +
+                '\nFiles included: ' + objects.length +
+                '\n' + url
+            );
+
+            let raw;
+
+            try {
+                raw = await fetchText(url);
+
+            } catch (e) {
+                let msg = e.message || String(e);
+
+                (/HTTP 404\b/.test(msg) ? missing : errors).push(msg);
+
+                continue;
+            }
+
+            if (
+                ext === 'animated' ||
+                (
+                    ext === 'csv' &&
+                    /^\s*\[(?:Include|States)\]\s*$/im.test(raw)
+                )
+            ) {
+                for (let dep of parseDependencies(raw, url)) {
+                    if (!visited.has(dep)) {
+                        queue.push({ url: dep });
+                    }
+                }
+            }
+
+            let cleaned = cleanObject(raw, ext);
+
+            let content;
+
+            if (ext === 'b3d') {
+
+                // First convert B3D commands and process its texture filenames.
+                content = rewriteTextures(cleaned, ext, url, root);
+
+                // Then shorten the converted CSV commands.
+                content = applyPrefixFilters(
+                    content,
+                    OBJECT_LINE_FILTERS
+                );
+
+            } else {
+
+                // Leave existing CSV and X processing unchanged.
+                if (ext === 'csv' || ext === 'x') {
+                    cleaned = applyPrefixFilters(
+                        cleaned,
+                        OBJECT_LINE_FILTERS
+                    );
+                }
+
+                content = rewriteTextures(
+                    cleaned,
+                    ext,
+                    url,
+                    root
+                );
+            }
+
+            objects.push({
+                url,
+                ext,
+                filename: relativeName(url, root),
+                content
+            });
+        }
+
+        status(
+            'Downloading ' +
+            texturePaths.length +
+            ' unique texture path(s) as binary data...'
+        );
+
+        await fetchTexturesAsBinary(missingTextures);
+
+        finaliseTextureReferences(objects);
+
+        // Put the completed final text on screen before saving
+        // that exact text as a.txt in the ZIP.
+        render();
+
+        let zipResult = null;
+        let zipError = '';
+
+        try {
+            zipResult = buildAndDownloadZip();
+
+        } catch (e) {
+            zipError = e && e.message
+                ? e.message
+                : String(e);
+        }
+
+        let summary =
+            'Finished.\n' +
+            'Structure definitions found: ' + defs.length + '\n' +
+            'Structure definitions included: ' + selected.length + '\n' +
+            'Structure definitions excluded by selection: ' + unused.length + '\n' +
+            'Files included (including dependencies): ' + objects.length + '\n' +
+            'Unique texture paths: ' + texturePaths.length + '\n' +
+            'Textures downloaded: ' +
+            texturePaths.filter(t => t.found).length + '\n' +
+            'Missing textures redirected to ID 0 (0.bmp): ' +
+            missingTextures.length + '\n' +
+            'Route appended after ' + MARK + 'Z.\n';
+
+        if (zipResult) {
+            summary +=
+                'ZIP download requested: merged-bve-textures.zip\n' +
+                'ZIP entries: ' +
+                zipResult.entries +
+                ' (including a.txt and 0.bmp).\n';
+        }
+
+        if (zipError) {
+            summary +=
+                '\nZIP creation/download error: ' +
+                zipError +
+                '\n';
+        }
+
+        if (missing.length) {
+            summary +=
+                '\nMissing object files (404; skipped): ' +
+                missing.length +
+                '\n' +
+                missing.join('\n');
+        }
+
+        if (errors.length) {
+            summary +=
+                '\nOther object fetch errors: ' +
+                errors.length +
+                '\n' +
+                errors.join('\n');
+        }
+
+        if (missingTextures.length) {
+            summary +=
+                '\nMissing textures (redirected to ID 0 / 0.bmp): ' +
+                missingTextures.length +
+                '\n' +
+                missingTextures.join('\n');
+        }
+
+        status(summary);
+
+        // Keep the selection exclusions and existing fetch logs.
+        unusedLog.value =
+
+            (missing.length
+                ? '\n\nMISSING OBJECT FILES (404)\n' +
+                  missing.join('\n')
+                : '') +
+            (errors.length
+                ? '\n\nOTHER OBJECT FETCH ERRORS\n' +
+                  errors.join('\n')
+                : '') +
+            (missingTextures.length
+                ? '\n\nMISSING TEXTURES (redirected to ID 0 / 0.bmp)\n' +
+                  missingTextures.join('\n')
+                : '');
+
+    } catch (e) {
+        status(
+            'Merge stopped: ' +
+            (e.message || String(e)) +
+            '\nFiles included before stop: ' +
+            objects.length
+        );
+
+        output.value = '';
+
+    } finally {
+        mergeButton.disabled = false;
+        mergeButtona.disabled = false;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+mergeButton.addEventListener('click', () => {
+    nameReduction = true;
+    merge();
+});
+
+mergeButtona.addEventListener('click', () => {
+    nameReduction = false;
+    merge();
+});
+
+$('copyButton').addEventListener('click',async()=>{if(!output.value){status('There is no output to copy.');return}try{await navigator.clipboard.writeText(output.value);status('Output copied.')}catch(_){output.focus();output.select();status(document.execCommand('copy')?'Output copied.':'Clipboard blocked; copy manually.')}});
+$('saveButton').addEventListener('click',()=>{if(!output.value){status('There is no output to save.');return}let b=new Blob([output.value],{type:'text/plain;charset=utf-8'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='merged-bve-objects.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),1000);status('Save requested: merged-bve-objects.txt')});
+</script></body></html>

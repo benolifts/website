@@ -1,0 +1,966 @@
+{
+
+
+
+"Hitachi High Speed (140 mph)": {
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"wheel_diameter": 0.9,
+	"motor_poles": 4,
+	"gear_ratio_motor_side": 5,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 225,
+	"peak_point": 65,
+	"decel_cutoff": 0.3,
+	"rolling_resistance": 0.3,
+	"controls": {
+		"acceleration": 4.6,
+		"deceleration": 5.6,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 25,
+		"peak_max_power": 100
+	},
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 700
+		},
+		{
+			"mode": "ASYNC-SWEEP",
+			"min_speed": 40,
+			"min_carrier_frequency": 700,
+			"max_carrier_frequency": 1150
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 80,
+			"pulses": 3
+		}
+	]
+},
+
+
+	"Coldplay VF": {
+	"wheel_diameter": 0.8,
+	"gear_ratio_motor_side": 3,
+	"gear_ratio_wheel_side": 1,
+	"motor_poles": 4,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"max_speed": 70,
+	"rolling_resistance": 0.3,
+	"peak_point": 40,
+	"decel_cutoff": 0.3,
+	"controls": {
+		"acceleration": 2.2,
+		"deceleration": 3.5,
+		"initial_min_power": 3,
+		"initial_max_power": 16,
+		"peak_min_power": 15,
+		"peak_max_power": 80
+	},
+	"pulsing": [
+				{
+			"mode": "ASYNC-SWEEP",
+			"min_speed": 0,
+			"min_carrier_frequency": 300,
+			"max_carrier_frequency": 628
+		},
+		{
+			"mode": "ASYNC-MUSIC",
+			"min_motor_frequency": 1,
+			"frequencies": [
+				628.610816579407,
+				465.63764191067185,
+				392.8817603621294,
+				628.610816579407,
+				465.63764191067185,
+				392.8817603621294,
+				628.610816579407,
+				465.63764191067185,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				523.8423471495058,
+				419.07387771960464,
+				349.2282314330039,
+				523.8423471495058,
+				419.07387771960464,
+				349.2282314330039,
+				523.8423471495058,
+				419.07387771960464,
+				628.610816579407,
+				465.63764191067185,
+				392.8817603621294,
+				628.610816579407,
+				465.63764191067185,
+				392.8817603621294,
+				628.610816579407,
+				465.63764191067185,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				349.2282314330039,
+				558.7651702928063,
+				465.63764191067185,
+				523.8423471495058,
+				419.07387771960464,
+				349.2282314330039,
+				523.8423471495058,
+				419.07387771960464,
+				349.2282314330039,
+				523.8423471495058,
+				419.07387771960464,
+				838.1477554392093,
+				785.7635207242588,
+				628.610816579407,
+				838.1477554392093,
+				785.7635207242588,
+				628.610816579407,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				523.8423471495058,
+				838.1477554392093,
+				785.7635207242588,
+				523.8423471495058,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				628.610816579407,
+				838.1477554392093,
+				785.7635207242588,
+				628.610816579407,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				558.7651702928063,
+				838.1477554392093,
+				785.7635207242588,
+				838.1477554392093,
+				785.7635207242588,
+				523.8423471495058,
+				838.1477554392093,
+				785.7635207242588,
+				523.8423471495058
+			],
+			"beats": [
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222,
+				222
+			]
+		}
+	]
+},
+
+	"1996 Stock": {
+	"wheel_diameter": 0.74,
+	"gear_ratio_motor_side": 5.8,
+	"gear_ratio_wheel_side": 1,
+	"motor_poles": 4,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"max_speed": 100,
+	"rolling_resistance": 0.3,
+	"peak_point": 20,
+	"decel_cutoff": 1,
+	"controls": {
+		"acceleration": 4,
+		"deceleration": 5,
+		"initial_min_power": 20,
+		"initial_max_power": 30,
+		"peak_min_power": 40,
+		"peak_max_power": 100
+	},
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 300
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 4.5,
+			"pulses": 21
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 7.3,
+			"pulses": 15
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 12.5,
+			"pulses": 11
+		},
+		{
+			"mode": "SHE-PWM",
+			"min_speed": 26,
+			"pulses": 5
+		}
+	]
+},
+	"Kiepe Croydon tram (50 mph)": {
+	"wheel_diameter": 0.6,
+	"gear_ratio_motor_side": 7.25,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 80,
+	"peak_point": 18,
+	"controls": {
+		"acceleration": 4.6,
+		"deceleration": 5.5,
+		"initial_max_power": 20,
+		"initial_min_power": 10,
+		"peak_min_power": 35,
+		"peak_max_power": 100
+	},
+	"rolling_resistance": 0.3,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"decel_cutoff": 0.3,
+	"motor_poles": 4,
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 600
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 6,
+			"pulses": 15
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 8.5,
+			"pulses": 9
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 14.5,
+			"pulses": 7
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 26,
+			"pulses": 5
+		}
+	]
+},
+	"kiepe express tram (60 mph)": {
+	"wheel_diameter": 0.62,
+	"gear_ratio_motor_side": 6.3,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 100,
+	"peak_point": 22,
+	"controls": {
+		"acceleration": 4.6,
+		"deceleration": 5.5,
+		"initial_max_power": 20,
+		"initial_min_power": 10,
+		"peak_min_power": 35,
+		"peak_max_power": 100
+	},
+	"rolling_resistance": 0.3,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"decel_cutoff": 0.3,
+	"motor_poles": 4,
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 550
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 6.8,
+			"pulses": 15
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 9.5,
+			"pulses": 9
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 16,
+			"pulses": 7
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 30,
+			"pulses": 5
+		}
+	]
+},
+	"AnsaldoBreda Metro (56 mph)": {
+	"wheel_diameter": 0.71,
+	"gear_ratio_motor_side": 6.5,
+	"gear_ratio_wheel_side": 1,
+	"controls": {
+		"acceleration": 4.6,
+		"deceleration": 5.6,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 25,
+		"peak_max_power": 100
+	},
+	"max_speed": 90,
+	"peak_point": 40,
+	"rolling_resistance": 0.3,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"decel_cutoff": 0.3,
+	"motor_poles": 4,
+	"pulsing": [
+		{
+			"mode": "ASYNC-SWEEP",
+			"min_speed": 0,
+			"min_carrier_frequency": 550,
+			"max_carrier_frequency": 1500
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 5,
+			"carrier_frequency": 1500
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 19.1,
+			"pulses": 23
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 21.4,
+			"pulses": 21
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 24.6,
+			"pulses": 19
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 28.7,
+			"pulses": 17
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 33.3,
+			"pulses": 15
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 41,
+			"pulses": 13
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 50,
+			"pulses": 9
+		}
+	]
+},
+	"AnsaldoBreda tram (43 mph)": {
+	"wheel_diameter": 0.6,
+	"gear_ratio_motor_side": 6.5,
+	"gear_ratio_wheel_side": 1,
+	"controls": {
+		"acceleration": 4.6,
+		"deceleration": 5.6,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 25,
+		"peak_max_power": 100
+	},
+	"max_speed": 70,
+	"peak_point": 30,
+	"rolling_resistance": 0.3,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"decel_cutoff": 0.3,
+	"motor_poles": 4,
+	"pulsing": [
+		{
+			"mode": "ASYNC-SWEEP",
+			"min_speed": 0,
+			"min_carrier_frequency": 500,
+			"max_carrier_frequency": 1500
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 4,
+			"carrier_frequency": 1500
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 13.3,
+			"pulses": 27
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 14.8,
+			"pulses": 25
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 16.7,
+			"pulses": 23
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 18.8,
+			"pulses": 21
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 21.3,
+			"pulses": 19
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 23.8,
+			"pulses": 17
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 28,
+			"pulses": 15
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 34.8,
+			"pulses": 13
+		}
+	]
+},
+"Class 465/2 GEC VF":{
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"wheel_diameter": 0.84,
+	"motor_poles": 4,
+	"gear_ratio_motor_side": 6,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 120,
+	"peak_point": 50,
+	"decel_cutoff": 1,
+	"rolling_resistance": 0.3,
+	"controls": {
+		"accelleration": 3.4,
+		"decelleration": 4.4,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 10,
+		"peak_max_power": 100
+	},
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 600
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 15,
+			"pulses": 13
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 18,
+			"pulses": 11
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 24,
+			"pulses": 7
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 43,
+			"pulses": 3
+		}
+	]
+},
+	"taurus":{
+	"wheel_diameter": 1.11,
+	"gear_ratio_motor_side": 6,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 160,
+	"peak_point": 50,
+	"controls": {
+		"acceleration": 3,
+		"deceleration": 5,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 25,
+		"peak_max_power": 100
+	},
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"rolling_resistance": 0.3,
+	"decel_cutoff": 0.3,
+	"motor_poles": 4,
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 146
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 0.7,
+			"carrier_frequency": 165
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 0.9,
+			"carrier_frequency": 174
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 1.1,
+			"carrier_frequency": 197
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 1.3,
+			"carrier_frequency": 222
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 1.5,
+			"carrier_frequency": 247
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 1.7,
+			"carrier_frequency": 262
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 1.9,
+			"carrier_frequency": 294
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.1,
+			"carrier_frequency": 330
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.3,
+			"carrier_frequency": 350
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.5,
+			"carrier_frequency": 392
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.7,
+			"carrier_frequency": 440
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 2.9,
+			"carrier_frequency": 493
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 3.1,
+			"carrier_frequency": 523
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 3.3,
+			"carrier_frequency": 590
+		},
+		{
+			"mode": "ASYNC",
+			"min_speed": 3.5,
+			"carrier_frequency": 600
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 19.5,
+			"pulses": 15
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 21.7,
+			"pulses": 13
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 24.6,
+			"pulses": 11
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 29.6,
+			"pulses": 9
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 35.9,
+			"pulses": 7
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 46.4,
+			"pulses": 5
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 55,
+			"pulses": 3
+		}
+	]
+},
+	"Siemens Desiro (100mph)": {
+	"wheel_diameter": 0.84,
+	"gear_ratio_motor_side": 4.5,
+	"gear_ratio_wheel_side": 1,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"max_speed": 160,
+	"rolling_resistance": 0.3,
+	"peak_point": 50,
+	"decel_cutoff": 0.3,
+	"motor_poles": 4,
+	"controls": {
+		"acceleration": 3.2,
+		"deceleration": 4.2,
+		"initial_min_power": 10,
+		"initial_max_power": 20,
+		"peak_min_power": 40,
+		"peak_max_power": 100
+	},
+	"pulsing": [
+		{
+			"mode": "ASYNC-OSCILLATING",
+			"oscillation_mode": "SAW-RISING",
+			"min_speed": 0,
+			"oscillation_frequency": 7,
+			"min_carrier_frequency": 900,
+			"max_carrier_frequency": 1000
+		},
+		{
+			"mode": "ASYNC-OSCILLATING",
+			"oscillation_mode": "SAW-RISING",
+			"min_speed": 35,
+			"oscillation_frequency": 6.5,
+			"min_carrier_frequency": 1400,
+			"max_carrier_frequency": 1600
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 70,
+			"pulses": 9
+		}
+	]
+},
+	"Hamburg Br 474": {
+	"wheel_diameter": 0.82,
+	"gear_ratio_motor_side": 3,
+	"gear_ratio_wheel_side": 1,
+	"motor_poles": 8,
+	"traction": "AC_PWM",
+	"audio_mode": "48T",
+	"max_speed": 100,
+	"rolling_resistance": 0.3,
+	"peak_point": 15,
+	"decel_cutoff": 0.3,
+	"controls": {
+		"acceleration": 4,
+		"deceleration": 5.5,
+		"initial_min_power": 15,
+		"initial_max_power": 25,
+		"peak_min_power": 25,
+		"peak_max_power": 70
+	},
+	"pulsing": [
+		{
+			"mode": "ASYNC",
+			"min_speed": 0,
+			"carrier_frequency": 400
+		},
+		{
+			"mode": "ASYNC-OSCILLATING",
+			"oscillation_mode": "RANDOM",
+			"min_speed": 14,
+			"min_carrier_frequency": 400,
+			"max_carrier_frequency": 500
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 35,
+			"pulses": 5
+		},
+		{
+			"mode": "SYNC",
+			"min_speed": 45,
+			"pulses": 3
+		}
+	]
+},
+	"Class 319 DC PWM": {
+	"wheel_diameter": 1,
+	"gear_ratio_motor_side": 3.6,
+	"gear_ratio_wheel_side": 1,
+	"controls": {
+		"acceleration": 3,
+		"deceleration": 5,
+		"initial_min_power": 3,
+		"initial_max_power": 20,
+		"peak_min_power": 3,
+		"peak_max_power": 100
+	},
+	"traction": "DC_PWM",
+	"audio_mode": "48T",
+	"max_speed": 160,
+	"rolling_resistance": 0.3,
+	"peak_point": 30,
+	"decel_cutoff": 160,
+	"pulsing": [
+		{
+			"mode": "PWM",
+			"min_speed": 0,
+			"carrier_frequency": 150
+		},
+		{
+			"mode": "PWM",
+			"min_speed": 0.3,
+			"carrier_frequency": 300
+		}
+	]
+},
+
+
+	"Soviet ER-2":{
+	"wheel_diameter": 0.58,
+	"gear_ratio_motor_side": 7.25,
+	"gear_ratio_wheel_side": 1,
+	"max_speed": 100,
+	"controls": {
+		"acceleration": 3.8,
+		"deceleration": 5
+	},
+	"rolling_resistance": 0.3,
+	"traction": "DC_RESISTOR",
+	"audio_mode": "48T",
+	"taper_off": 4,
+	"pulsing": [
+		{
+			"mode": "NOTCH",
+			"min_speed": 0
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 0.5
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 2
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 5
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 9
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 16
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 32
+		}
+	]
+}
+
+
+}
