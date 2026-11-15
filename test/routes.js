@@ -1,4 +1,11 @@
 
+//to change the side of a station, such as when using other track, update these.  Put inside onFirstFrame()
+
+//route.stations[0].doorSide = "left";
+//route.stations[0].stopSide = "left";
+//refresh_waiting_passenger_platforms();
+
+
 const routes = [
 
     ////////////////////////////////////////////////////////////
@@ -22,18 +29,22 @@ const routes = [
             beforeStartup() {
                 // Track configuration
 
-                globalThis.pos = 7980;  // start position
+                //globalThis.pos = 7980;  // start position
                 //globalThis.current_track = 2;  // which track to start on
 
 
-               // globalThis.pos = 10;  // start position
+                globalThis.pos = 10;  // start position
                 globalThis.current_track = 0;  // which track to start on
+
+
+
+
                 globalThis.starttrack = 0;  // start track
                 globalThis.block_length = 25;  // track block ength
                 globalThis.driving_on_track = 0; // The track the user drives on. If it needs changing mid route use the route_eval to dynamically change;
                 globalThis.allow_points_change = true;  // Allow the user to change points
                 globalThis.points_speed_limit = 25;  // The speed limit when going over points when not on main route
-                globalThis.flip_out = true;  // The train runs in reverse as default
+                globalThis.flip_out = false;  // The train runs in reverse as default
 
                 ///// NPC TRAIN SETTINGS
                 globalThis.pos_npc = 7980;  // start position of npc train
@@ -61,7 +72,7 @@ const routes = [
                 globalThis.TRACK_GRADIENT_SCALE = 0.2; // How much should the route have terrain
                 globalThis.curveMultiplier = 1.3; // How tight should the curves be
 
-               // globalThis.TRACK_GRADIENT_SCALE = 20; // How much should the route have terrain
+                //globalThis.TRACK_GRADIENT_SCALE = 20; // How much should the route have terrain
                 //globalThis.curveMultiplier = 1.3; // How tight should the curves be
 
 
@@ -94,7 +105,8 @@ const routes = [
 
                 // Gameplay
                 globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-                globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+                globalThis.freeroamX = 6; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 1; // platform height
                 globalThis.stationprogression = 0; // What is the next station to stop at
                 globalThis.signalprogression = 0; // Which signal should be red to stop the train
                 globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -111,6 +123,7 @@ const routes = [
                 globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
                 globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
                 globalThis.weather_brightness_threshhold = 200;
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
             },
 
             onFirstFrame() {
@@ -201,7 +214,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -218,6 +232,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
 
         onFirstFrame() {
@@ -302,7 +317,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -319,6 +335,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -398,7 +415,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -415,6 +433,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -494,7 +513,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -511,6 +531,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -590,7 +611,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -607,6 +629,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -686,7 +709,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -703,6 +727,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -782,7 +807,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -799,6 +825,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -878,7 +905,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -895,6 +923,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -974,7 +1003,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -991,6 +1021,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1070,7 +1101,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1087,6 +1119,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1166,7 +1199,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1183,6 +1217,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1262,7 +1297,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1279,6 +1315,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1358,7 +1395,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1375,6 +1413,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1454,7 +1493,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1471,6 +1511,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1550,7 +1591,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1567,6 +1609,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
         onFirstFrame() {},
         onEveryFrame(deltaTime) {
@@ -1652,7 +1695,8 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Gameplay
             globalThis.stopaccuracy = 10; // Difficulty of the gameplay when stopping at station
-            globalThis.freeroamX = 10; // When in freeroam mode how far can the player walk away from the train
+            globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
+        globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
             globalThis.signalprogression = 0; // Which signal should be red to stop the train
             globalThis.stationsignals = []; // This saves what is the next signal after a station
@@ -1669,6 +1713,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.full_brightness = 200; // Any brightness above this sould be treated as full (0 - 255)
             globalThis.min_brightness = 85; // Lowest brightness (0 - 255)
             globalThis.weather_brightness_threshhold = 200;  // when brightness falls below this stop the weather, as it is assumed the train is in tunnel
+                globalThis.route_contains_translucent_textured_faces = false;  // set to true if there is a textured surface that is translucent
         },
 
         onFirstFrame() {

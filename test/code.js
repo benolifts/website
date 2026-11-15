@@ -6209,7 +6209,7 @@ function parseEvents(txt) {
         // Default freeroam is one whole train length before the stop point.
         station.freeroamstart = Math.max(
             0,
-            stopPoint - coachCount * coachLengthMeters
+            stopPoint - train_length
         );
 
         station.freeroamend = stopPoint;
@@ -12785,6 +12785,14 @@ function compileObjectShader(type, source) {
     return shader;
 }
 
+
+
+
+
+
+
+
+
 function ensureObjectRenderer() {
     if (objectProgram) return;
 
@@ -12795,10 +12803,17 @@ function ensureObjectRenderer() {
     in vec3 aNormal;
     in vec2 aTexCoord;
 
+    // Per-instance attributes, used for scenery batching.
+    in vec3 aInstancePosition;
+    in vec3 aInstanceRotation;
+
+    // Existing transforms, retained for the train renderer.
     uniform vec3 uModelPosition;
     uniform float uYaw;
     uniform float uPitch;
     uniform float uRoll;
+
+    uniform bool uUseInstancing;
 
     uniform vec3 uCameraPosition;
     uniform vec3 uForward;
@@ -12812,9 +12827,9 @@ function ensureObjectRenderer() {
     out vec2 vTexCoord;
     out vec3 vNormal;
 
-    vec3 rotateModel(vec3 p) {
-        float cr = cos(uRoll);
-        float sr = sin(uRoll);
+    vec3 rotateModel(vec3 p, float yaw, float pitch, float roll) {
+        float cr = cos(roll);
+        float sr = sin(roll);
 
         p = vec3(
             cr * p.x - sr * p.y,
@@ -12822,8 +12837,8 @@ function ensureObjectRenderer() {
             p.z
         );
 
-        float cp = cos(uPitch);
-        float sp = sin(uPitch);
+        float cp = cos(pitch);
+        float sp = sin(pitch);
 
         p = vec3(
             p.x,
@@ -12831,8 +12846,8 @@ function ensureObjectRenderer() {
             sp * p.y + cp * p.z
         );
 
-        float cy = cos(uYaw);
-        float sy = sin(uYaw);
+        float cy = cos(yaw);
+        float sy = sin(yaw);
 
         p = vec3(
             cy * p.x + sy * p.z,
@@ -12844,7 +12859,37 @@ function ensureObjectRenderer() {
     }
 
     void main() {
-        vec3 worldPosition = uModelPosition + rotateModel(aPosition);
+        vec3 modelPosition = uModelPosition;
+
+        float modelYaw = uYaw;
+        float modelPitch = uPitch;
+        float modelRoll = uRoll;
+
+        // Use instance data for scenery, otherwise use
+        // the original uniforms for the train.
+        if (uUseInstancing) {
+            modelPosition = aInstancePosition;
+
+            modelYaw = aInstanceRotation.x;
+            modelPitch = aInstanceRotation.y;
+            modelRoll = aInstanceRotation.z;
+        }
+
+        vec3 rotation = vec3(
+            modelYaw,
+            modelPitch,
+            modelRoll
+        );
+
+        vec3 worldPosition =
+        modelPosition +
+        rotateModel(
+            aPosition,
+            rotation.x,
+            rotation.y,
+            rotation.z
+        );
+
         vec3 delta = worldPosition - uCameraPosition;
 
         float forward = dot(delta, uForward);
@@ -12869,7 +12914,15 @@ function ensureObjectRenderer() {
         );
 
         vTexCoord = aTexCoord;
-        vNormal = normalize(rotateModel(aNormal));
+
+        vNormal = normalize(
+            rotateModel(
+                aNormal,
+                rotation.x,
+                rotation.y,
+                rotation.z
+            )
+        );
     }
     `;
 
@@ -12890,7 +12943,6 @@ function ensureObjectRenderer() {
     uniform int uAlphaPass;
 
     out vec4 outColour;
-
 
     void main() {
         vec2 uv = vTexCoord;
@@ -12915,17 +12967,12 @@ function ensureObjectRenderer() {
 
         vec4 colour = texel * uColour;
 
-        // Fully transparent pixels must never write colour or depth.
         if (colour.a <= 0.001) discard;
 
-        // Pass 0: draw only opaque pixels and write their depth.
         if (uAlphaPass == 0) {
             if (colour.a < 0.999) discard;
             colour.a = 1.0;
-        }
-        // Pass 1: draw only semi-transparent pixels.
-        // They will blend with the already-rendered scenery.
-        else {
+        } else {
             if (colour.a >= 0.999) discard;
         }
 
@@ -12939,7 +12986,6 @@ function ensureObjectRenderer() {
 
         outColour = vec4(colour.rgb * light, colour.a);
     }
-
     `;
 
     var vertexShader = compileObjectShader(
@@ -12981,12 +13027,32 @@ function ensureObjectRenderer() {
         throw new Error('Object shader link failed: ' + message);
     }
 
+    var newInstanceBuffer = gl.createBuffer();
+
+    if (!newInstanceBuffer) {
+        gl.deleteProgram(newProgram);
+        throw new Error('Could not create object instance buffer.');
+    }
+
     objectProgram = newProgram;
+    objectInstanceBuffer = newInstanceBuffer;
 
     objectLocations = {
         aPosition: gl.getAttribLocation(objectProgram, 'aPosition'),
         aNormal: gl.getAttribLocation(objectProgram, 'aNormal'),
         aTexCoord: gl.getAttribLocation(objectProgram, 'aTexCoord'),
+
+        aInstancePosition: gl.getAttribLocation(
+            objectProgram, 'aInstancePosition'
+        ),
+
+        aInstanceRotation: gl.getAttribLocation(
+            objectProgram, 'aInstanceRotation'
+        ),
+
+        uUseInstancing: gl.getUniformLocation(
+            objectProgram, 'uUseInstancing'
+        ),
 
         uModelPosition: gl.getUniformLocation(
             objectProgram, 'uModelPosition'
@@ -13021,7 +13087,6 @@ function ensureObjectRenderer() {
         ),
 
         uRepeatS: gl.getUniformLocation(objectProgram, 'uRepeatS'),
-
         uRepeatT: gl.getUniformLocation(objectProgram, 'uRepeatT'),
 
         uAlphaPass: gl.getUniformLocation(objectProgram, 'uAlphaPass')
@@ -13033,7 +13098,104 @@ function ensureObjectRenderer() {
 
 
 
+
+
+
+
+
+
+
+
+var objectInstanceData = new Float32Array(0);
+
+var objectInstanceBuffer = null;
+
+
+
+function ensureObjectMeshVao(mesh) {
+
+    if (!mesh.objectVao) {
+
+        mesh.objectVao = gl.createVertexArray();
+
+        if (!mesh.objectVao) {
+            throw new Error('Could not create a model vertex array.');
+        }
+
+        gl.bindVertexArray(mesh.objectVao);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, mesh.positionBuffer);
+        gl.enableVertexAttribArray(objectLocations.aPosition);
+        gl.vertexAttribPointer(
+            objectLocations.aPosition,
+            3, gl.FLOAT, false, 0, 0
+        );
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, mesh.normalBuffer);
+        gl.enableVertexAttribArray(objectLocations.aNormal);
+        gl.vertexAttribPointer(
+            objectLocations.aNormal,
+            3, gl.FLOAT, false, 0, 0
+        );
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, mesh.uvBuffer);
+        gl.enableVertexAttribArray(objectLocations.aTexCoord);
+        gl.vertexAttribPointer(
+            objectLocations.aTexCoord,
+            2, gl.FLOAT, false, 0, 0
+        );
+
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, mesh.indexBuffer);
+
+        gl.bindVertexArray(null);
+    }
+
+    // Configure the instance attributes once per mesh.
+    if (!mesh.objectInstanceAttributes) {
+
+        gl.bindVertexArray(mesh.objectVao);
+
+        gl.bindBuffer(gl.ARRAY_BUFFER, objectInstanceBuffer);
+
+        gl.enableVertexAttribArray(
+            objectLocations.aInstancePosition
+        );
+
+        gl.vertexAttribPointer(
+            objectLocations.aInstancePosition,
+            3, gl.FLOAT, false, 24, 0
+        );
+
+        gl.vertexAttribDivisor(
+            objectLocations.aInstancePosition,
+            1
+        );
+
+        gl.enableVertexAttribArray(
+            objectLocations.aInstanceRotation
+        );
+
+        gl.vertexAttribPointer(
+            objectLocations.aInstanceRotation,
+            3, gl.FLOAT, false, 24, 12
+        );
+
+        gl.vertexAttribDivisor(
+            objectLocations.aInstanceRotation,
+            1
+        );
+
+        gl.bindVertexArray(null);
+
+        mesh.objectInstanceAttributes = true;
+    }
+}
+
+
+
+
 function drawRouteObjects(pos, startDistance, endDistance, cam, basis) {
+
     var placements = route["3dobject"];
 
     if (!Array.isArray(placements) || placements.length === 0) {
@@ -13042,9 +13204,7 @@ function drawRouteObjects(pos, startDistance, endDistance, cam, basis) {
 
     ensureObjectRenderer();
 
-    var oldBlend = gl.isEnabled(gl.BLEND);
-    var oldCull = gl.isEnabled(gl.CULL_FACE);
-    var oldDepthMask = gl.getParameter(gl.DEPTH_WRITEMASK);
+    profileMark("a1");
 
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
@@ -13063,6 +13223,8 @@ function drawRouteObjects(pos, startDistance, endDistance, cam, basis) {
         objectLocations.uForward,
         basis.fx, basis.fy, basis.fz
     );
+
+    profileMark("a3");
 
     gl.uniform3f(
         objectLocations.uRight,
@@ -13088,6 +13250,8 @@ function drawRouteObjects(pos, startDistance, endDistance, cam, basis) {
 
     gl.uniform1i(objectLocations.uTexture, 0);
 
+    gl.uniform1i(objectLocations.uUseInstancing, 0);
+
     function objectCameraDepth(p) {
         return (
             ((Number(p.x) || 0) - cam.x) * basis.fx +
@@ -13095,293 +13259,456 @@ function drawRouteObjects(pos, startDistance, endDistance, cam, basis) {
         );
     }
 
-    // Draw farther objects before nearer objects.
-    var orderedPlacements = placements.slice();
+    var modelBatches = new Map();
+    var transparentPlacements = [];
 
-    orderedPlacements.sort(function (a, b) {
-        return objectCameraDepth(b) - objectCameraDepth(a);
-    });
+    profileMark("a5");
 
-    try {
-        // Pass 0 draws opaque pixels.
-        // Pass 1 draws semi-transparent pixels.
-        for (var alphaPass = 0; alphaPass < 2; alphaPass++) {
-            gl.depthMask(alphaPass === 0);
+    // Collect visible objects into batches by model.
+    for (var placement of placements) {
 
-            gl.uniform1i(
-                objectLocations.uAlphaPass,
-                alphaPass
-            );
+        if (
+            Number.isFinite(placement.distance) &&
+            (
+                placement.distance < startDistance ||
+                placement.distance > endDistance
+            )
+        ) {
+            continue;
+        }
 
-            for (var placement of orderedPlacements) {
+        var modelIndex = Number(placement.modelIndex);
 
-                // Only draw objects in the camera's route-distance range.
-                if (
-                    Number.isFinite(placement.distance) &&
-                    (
-                        placement.distance < startDistance ||
-                        placement.distance > endDistance
-                    )
-                ) {
-                    continue;
+        if (
+            !Number.isInteger(modelIndex) ||
+            modelIndex < 0
+        ) {
+            continue;
+        }
+
+        var entry = route_objects[modelIndex];
+
+        if (
+            !entry ||
+            entry[3] !== true ||
+            !entry[4] ||
+            !Array.isArray(entry[4].meshes)
+        ) {
+            continue;
+        }
+
+        var modelMeshes = entry[4].meshes;
+
+        var batch = modelBatches.get(modelIndex);
+
+        if (!batch) {
+            batch = {
+                entry: entry,
+                placements: []
+            };
+
+            modelBatches.set(modelIndex, batch);
+        }
+
+        batch.placements.push(placement);
+
+        // Only sort placements that actually need the
+        // transparent pass.
+        var needsTransparentPass = false;
+
+        for (var mesh of modelMeshes) {
+
+            if (
+                !mesh.positionBuffer ||
+                !mesh.normalBuffer ||
+                !mesh.uvBuffer ||
+                !mesh.indexBuffer ||
+                mesh.indexCount <= 0
+            ) {
+                continue;
+            }
+
+            if (mesh.texture) {
+
+                if (route_contains_translucent_textured_faces) {
+                    needsTransparentPass = true;
                 }
 
-                var modelIndex = Number(placement.modelIndex);
+            } else {
 
-                if (
-                    !Number.isInteger(modelIndex) ||
-                    modelIndex < 0
-                ) {
-                    continue;
-                }
+                var meshAlpha = mesh.colour
+                ? mesh.colour[3]
+                : 1;
 
-                var entry = route_objects[modelIndex];
-
-                if (
-                    !entry ||
-                    entry[3] !== true ||
-                    !entry[4] ||
-                    !Array.isArray(entry[4].meshes)
-                ) {
-                    continue;
-                }
-
-                var modelMeshes = entry[4].meshes;
-
-                // Set all model transforms for this route object.
-                gl.uniform3f(
-                    objectLocations.uModelPosition,
-                    Number(placement.x) || 0,
-                             Number(placement.y) || 0,
-                             Number(placement.z) || 0
-                );
-
-                gl.uniform1f(
-                    objectLocations.uYaw,
-                    Number(placement.yaw) || 0
-                );
-
-                gl.uniform1f(
-                    objectLocations.uPitch,
-                    Number(placement.pitch) || 0
-                );
-
-                gl.uniform1f(
-                    objectLocations.uRoll,
-                    Number(placement.roll) || 0
-                );
-
-                for (var mesh of modelMeshes) {
-                    if (
-                        !mesh.positionBuffer ||
-                        !mesh.normalBuffer ||
-                        !mesh.uvBuffer ||
-                        !mesh.indexBuffer ||
-                        mesh.indexCount <= 0
-                    ) {
-                        continue;
-                    }
-
-                    // Create a VAO once for each uploaded model mesh.
-                    if (!mesh.objectVao) {
-                        mesh.objectVao = gl.createVertexArray();
-
-                        if (!mesh.objectVao) {
-                            throw new Error(
-                                'Could not create a model vertex array.'
-                            );
-                        }
-
-                        gl.bindVertexArray(mesh.objectVao);
-
-                        gl.bindBuffer(
-                            gl.ARRAY_BUFFER,
-                            mesh.positionBuffer
-                        );
-
-                        gl.enableVertexAttribArray(
-                            objectLocations.aPosition
-                        );
-
-                        gl.vertexAttribPointer(
-                            objectLocations.aPosition,
-                            3, gl.FLOAT, false, 0, 0
-                        );
-
-                        gl.bindBuffer(
-                            gl.ARRAY_BUFFER,
-                            mesh.normalBuffer
-                        );
-
-                        gl.enableVertexAttribArray(
-                            objectLocations.aNormal
-                        );
-
-                        gl.vertexAttribPointer(
-                            objectLocations.aNormal,
-                            3, gl.FLOAT, false, 0, 0
-                        );
-
-                        gl.bindBuffer(
-                            gl.ARRAY_BUFFER,
-                            mesh.uvBuffer
-                        );
-
-                        gl.enableVertexAttribArray(
-                            objectLocations.aTexCoord
-                        );
-
-                        gl.vertexAttribPointer(
-                            objectLocations.aTexCoord,
-                            2, gl.FLOAT, false, 0, 0
-                        );
-
-                        gl.bindBuffer(
-                            gl.ELEMENT_ARRAY_BUFFER,
-                            mesh.indexBuffer
-                        );
-
-                        gl.bindVertexArray(null);
-                    }
-
-                    // Set this mesh's texture and material.
-                    gl.activeTexture(gl.TEXTURE0);
-
-                    gl.bindTexture(
-                        gl.TEXTURE_2D,
-                        mesh.texture
-                    );
-
-                    gl.uniform1i(
-                        objectLocations.uHasTexture,
-                        mesh.texture ? 1 : 0
-                    );
-
-                    gl.uniform4fv(
-                        objectLocations.uColour,
-                        mesh.colour || [1, 1, 1, 1]
-                    );
-
-                    var transparentColor = mesh.transparentColor;
-
-                    gl.uniform1i(
-                        objectLocations.uUseTransparentColor,
-                        transparentColor ? 1 : 0
-                    );
-
-                    gl.uniform3fv(
-                        objectLocations.uTransparentColor,
-                        transparentColor || [0, 0, 0]
-                    );
-
-                    gl.uniform1i(
-                        objectLocations.uRepeatS,
-                        mesh.repeatS ? 1 : 0
-                    );
-
-                    gl.uniform1i(
-                        objectLocations.uRepeatT,
-                        mesh.repeatT ? 1 : 0
-                    );
-
-                    gl.bindVertexArray(mesh.objectVao);
-
-                    gl.drawElements(
-                        gl.TRIANGLES,
-                        mesh.indexCount,
-                        mesh.indexType,
-                        0
-                    );
+                if (meshAlpha < 0.999) {
+                    needsTransparentPass = true;
                 }
             }
         }
 
+        if (needsTransparentPass) {
+            transparentPlacements.push(placement);
+        }
+    }
+
+    profileMark("before object sort");
+
+    transparentPlacements.sort(function (a, b) {
+        return objectCameraDepth(b) - objectCameraDepth(a);
+    });
+
+    profileMark("after object sort");
+
+    try {
+
+        // ====================================================
+        // PASS 0: OPAQUE OBJECTS - INSTANCED
+        // ====================================================
+
+        profileMark("before opaque");
+
+        gl.depthMask(true);
+
+        gl.uniform1i(objectLocations.uAlphaPass, 0);
+        gl.uniform1i(objectLocations.uUseInstancing, 1);
+
+        for (var batch of modelBatches.values()) {
+
+            var batchPlacements = batch.placements;
+            var instanceCount = batchPlacements.length;
+            var requiredFloats = instanceCount * 6;
+
+            // Reuse the CPU-side transform array.
+            if (objectInstanceData.length < requiredFloats) {
+
+                objectInstanceData = new Float32Array(
+                    Math.max(requiredFloats, objectInstanceData.length * 2, 96)
+                );
+            }
+
+            var offset = 0;
+
+            for (var placement of batchPlacements) {
+
+                objectInstanceData[offset++] = Number(placement.x) || 0;
+                objectInstanceData[offset++] = Number(placement.y) || 0;
+                objectInstanceData[offset++] = Number(placement.z) || 0;
+
+                objectInstanceData[offset++] = Number(placement.yaw) || 0;
+                objectInstanceData[offset++] = Number(placement.pitch) || 0;
+                objectInstanceData[offset++] = Number(placement.roll) || 0;
+            }
+
+            // Upload all transforms for this model together.
+            gl.bindBuffer(gl.ARRAY_BUFFER, objectInstanceBuffer);
+
+            gl.bufferData(
+                gl.ARRAY_BUFFER,
+                objectInstanceData.subarray(0, requiredFloats),
+                          gl.DYNAMIC_DRAW
+            );
+
+            for (var mesh of batch.entry[4].meshes) {
+
+                if (
+                    !mesh.positionBuffer ||
+                    !mesh.normalBuffer ||
+                    !mesh.uvBuffer ||
+                    !mesh.indexBuffer ||
+                    mesh.indexCount <= 0
+                ) {
+                    continue;
+                }
+
+                // Untextured translucent meshes belong in pass 1.
+                if (!mesh.texture) {
+
+                    var meshAlpha = mesh.colour
+                    ? mesh.colour[3]
+                    : 1;
+
+                    if (meshAlpha < 0.999) {
+                        continue;
+                    }
+                }
+
+                ensureObjectMeshVao(mesh);
+
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, mesh.texture);
+
+                gl.uniform1i(
+                    objectLocations.uHasTexture,
+                    mesh.texture ? 1 : 0
+                );
+
+                gl.uniform4fv(
+                    objectLocations.uColour,
+                    mesh.colour || [1, 1, 1, 1]
+                );
+
+                var transparentColor = mesh.transparentColor;
+
+                gl.uniform1i(
+                    objectLocations.uUseTransparentColor,
+                    transparentColor ? 1 : 0
+                );
+
+                gl.uniform3fv(
+                    objectLocations.uTransparentColor,
+                    transparentColor || [0, 0, 0]
+                );
+
+                gl.uniform1i(
+                    objectLocations.uRepeatS,
+                    mesh.repeatS ? 1 : 0
+                );
+
+                gl.uniform1i(
+                    objectLocations.uRepeatT,
+                    mesh.repeatT ? 1 : 0
+                );
+
+                gl.bindVertexArray(mesh.objectVao);
+
+                // One draw call for all copies of this mesh.
+                gl.drawElementsInstanced(
+                    gl.TRIANGLES,
+                    mesh.indexCount,
+                    mesh.indexType,
+                    0,
+                    instanceCount
+                );
+            }
+        }
+
+        profileMark("opaque draw pass");
+
+        // ====================================================
+        // PASS 1: TRANSPARENT OBJECTS - ORIGINAL SORTED METHOD
+        // ====================================================
+
+        profileMark("before transparent");
+
+        gl.depthMask(false);
+
+        gl.uniform1i(objectLocations.uAlphaPass, 1);
+        gl.uniform1i(objectLocations.uUseInstancing, 0);
+
+        for (var placement of transparentPlacements) {
+
+            var modelIndex = Number(placement.modelIndex);
+            var entry = route_objects[modelIndex];
+
+            if (
+                !entry ||
+                entry[3] !== true ||
+                !entry[4] ||
+                !Array.isArray(entry[4].meshes)
+            ) {
+                continue;
+            }
+
+            gl.uniform3f(
+                objectLocations.uModelPosition,
+                Number(placement.x) || 0,
+                         Number(placement.y) || 0,
+                         Number(placement.z) || 0
+            );
+
+            gl.uniform1f(
+                objectLocations.uYaw,
+                Number(placement.yaw) || 0
+            );
+
+            gl.uniform1f(
+                objectLocations.uPitch,
+                Number(placement.pitch) || 0
+            );
+
+            gl.uniform1f(
+                objectLocations.uRoll,
+                Number(placement.roll) || 0
+            );
+
+            for (var mesh of entry[4].meshes) {
+
+                if (
+                    !mesh.positionBuffer ||
+                    !mesh.normalBuffer ||
+                    !mesh.uvBuffer ||
+                    !mesh.indexBuffer ||
+                    mesh.indexCount <= 0
+                ) {
+                    continue;
+                }
+
+                // Skip opaque untextured meshes.
+                if (!mesh.texture) {
+
+                    var meshAlpha = mesh.colour
+                    ? mesh.colour[3]
+                    : 1;
+
+                    if (meshAlpha >= 0.999) {
+                        continue;
+                    }
+                }
+
+                // Skip textured meshes when there are no
+                // translucent textured faces on this route.
+                if (
+                    mesh.texture &&
+                    !route_contains_translucent_textured_faces
+                ) {
+                    continue;
+                }
+
+                ensureObjectMeshVao(mesh);
+
+                gl.activeTexture(gl.TEXTURE0);
+                gl.bindTexture(gl.TEXTURE_2D, mesh.texture);
+
+                gl.uniform1i(
+                    objectLocations.uHasTexture,
+                    mesh.texture ? 1 : 0
+                );
+
+                gl.uniform4fv(
+                    objectLocations.uColour,
+                    mesh.colour || [1, 1, 1, 1]
+                );
+
+                var transparentColor = mesh.transparentColor;
+
+                gl.uniform1i(
+                    objectLocations.uUseTransparentColor,
+                    transparentColor ? 1 : 0
+                );
+
+                gl.uniform3fv(
+                    objectLocations.uTransparentColor,
+                    transparentColor || [0, 0, 0]
+                );
+
+                gl.uniform1i(
+                    objectLocations.uRepeatS,
+                    mesh.repeatS ? 1 : 0
+                );
+
+                gl.uniform1i(
+                    objectLocations.uRepeatT,
+                    mesh.repeatT ? 1 : 0
+                );
+
+                gl.bindVertexArray(mesh.objectVao);
+
+                gl.drawElements(
+                    gl.TRIANGLES,
+                    mesh.indexCount,
+                    mesh.indexType,
+                    0
+                );
+            }
+        }
+
+        profileMark("transparent draw pass");
+
     } finally {
+
+        profileMark("a8");
+
         gl.bindVertexArray(null);
 
-        // Restore the previous depth-writing state.
-        gl.depthMask(oldDepthMask);
+        gl.depthMask(true);
 
-        // ----------------------------------------------------
-        // RESET THE SHARED OBJECT SHADER
-        //
-        // The train body also uses objectProgram.
-        // Do not leave the last scenery object's transforms
-        // or material settings for the train renderer to inherit.
-        // ----------------------------------------------------
+        // Restore the shared shader to the original
+        // non-instanced mode required by the train renderer.
+        gl.uniform1i(objectLocations.uUseInstancing, 0);
 
         gl.uniform3f(
             objectLocations.uModelPosition,
             0, 0, 0
         );
 
-        gl.uniform1f(
-            objectLocations.uYaw,
-            0
-        );
+        gl.uniform1f(objectLocations.uYaw, 0);
+        gl.uniform1f(objectLocations.uPitch, 0);
+        gl.uniform1f(objectLocations.uRoll, 0);
 
-        gl.uniform1f(
-            objectLocations.uPitch,
-            0
-        );
-
-        gl.uniform1f(
-            objectLocations.uRoll,
-            0
-        );
-
-        gl.uniform1i(
-            objectLocations.uAlphaPass,
-            0
-        );
-
-        gl.uniform1i(
-            objectLocations.uHasTexture,
-            0
-        );
+        gl.uniform1i(objectLocations.uAlphaPass, 0);
+        gl.uniform1i(objectLocations.uHasTexture, 0);
 
         gl.uniform4f(
             objectLocations.uColour,
             1, 1, 1, 1
         );
 
-        gl.uniform1i(
-            objectLocations.uUseTransparentColor,
-            0
-        );
+        gl.uniform1i(objectLocations.uUseTransparentColor, 0);
 
         gl.uniform3f(
             objectLocations.uTransparentColor,
             0, 0, 0
         );
 
-        gl.uniform1i(
-            objectLocations.uRepeatS,
-            0
-        );
+        gl.uniform1i(objectLocations.uRepeatS, 0);
+        gl.uniform1i(objectLocations.uRepeatT, 0);
 
-        gl.uniform1i(
-            objectLocations.uRepeatT,
-            0
-        );
+        profileMark("a9");
 
-        // Restore the previous blending state.
-        if (oldBlend) {
-            gl.enable(gl.BLEND);
-        } else {
-            gl.disable(gl.BLEND);
-        }
-
-        // Restore the previous culling state.
-        // This preserves the existing two-sided setting
-        // whenever culling was disabled before this function.
-        if (oldCull) {
-            gl.enable(gl.CULL_FACE);
-        } else {
-            gl.disable(gl.CULL_FACE);
-        }
+        gl.disable(gl.BLEND);
+        gl.disable(gl.CULL_FACE);
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

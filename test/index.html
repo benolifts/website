@@ -45,10 +45,14 @@ var developer_train = "Bombardier low floor tram";  // for testing only
 var developer_livery = "Green"
 
 
-//var developer_train = "Bombardier low floor tram";
-//var developer_livery = "Green"
+//var developer_train = "UK Class 323";
+//var developer_livery = "Regional_Railways"
+
+//var developer_train = "UK Class 395";
+//var developer_livery = "Blue"
 
 var developer_vf = "kiepe tram (50 mph)";
+
 var developer_coaches = 3;
 var developer_quick_access = ["1.zip", "ham.zip", "bak.zip", "ash.zip"];
 
@@ -153,6 +157,8 @@ var allow_points_change = false;
 var points_speed_limit = 25;
 var flip_out = false;
 var boat_mode = false;
+var allow_number_keys = false;
+var allow_driving_keys = false;
 var current_route_items_detailed =[];
 var current_route_items_routing = [];
 var current_route_items_routing_npc = [];
@@ -334,7 +340,7 @@ var temp_reverser = reverser;if (flip_out){if (temp_reverser == 0){temp_reverser
         pauseRenderLoop();
         showRouteReadySplash(true);
         return;
-    }else if (event.key === "1") {
+    }else if ((event.key === "1") && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -345,7 +351,7 @@ var temp_reverser = reverser;if (flip_out){if (temp_reverser == 0){temp_reverser
         setStatuss("View 1 - Front cab");
         return;
 
-        }else if (event.key === "2") {
+        }else if ((event.key === "2")  && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -372,7 +378,7 @@ cameraReverseView = (temp_reverser == -1);
         }
 
         return;
-    }else if (event.key === "3") {
+    }else if ((event.key === "3")  && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -401,7 +407,7 @@ cameraReverseView = (temp_reverser == -1);
 
         return;
 
-    }else if (event.key === "4") {
+    }else if ((event.key === "4")  && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
 
@@ -429,7 +435,7 @@ cameraReverseView = (temp_reverser == -1);
         }
 
         return;
-    }else if (((event.key === "5") && (!flip_out)) || ((event.key === "7") && (flip_out))){
+    }else if ((((event.key === "5") && (!flip_out)) || ((event.key === "7") && (flip_out))) && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -452,7 +458,7 @@ cameraReverseView = (temp_reverser == -1);
         }
         return;
 
-    }else if (event.key === "6") {
+    }else if ((event.key === "6")  && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -469,7 +475,7 @@ cameraReverseView = (temp_reverser == -1);
         }
         return;
 
-    }else if (((event.key === "7") && (!flip_out)) || ((event.key === "5") && (flip_out))){
+    }else if ((((event.key === "7") && (!flip_out)) || ((event.key === "5") && (flip_out))) && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -492,7 +498,7 @@ cameraReverseView = (temp_reverser == -1);
         }
         return;
 
-    }else if (event.key === "8") {
+    }else if ((event.key === "8")  && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -502,7 +508,7 @@ cameraReverseView = (temp_reverser == -1);
         setStatuss("View 8 - Passing view (not implemented)");
         return;
 
-    }else if (event.key === "9") {
+    }else if ((event.key === "9") && allow_number_keys) {
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -512,7 +518,7 @@ cameraReverseView = (temp_reverser == -1);
         setStatuss("View 9 - Passenger view (not implemented)");
         return;
 
-    }else if (event.key === "0") {
+    }else if ((event.key === "0")  && allow_number_keys){
         event.preventDefault();
         event.stopImmediatePropagation();
         lookx = 0;
@@ -524,17 +530,17 @@ cameraReverseView = (temp_reverser == -1);
 
         return;
     }else{
-        if (speed <= 0.1) {
+        if (speed <= 0.1){
             if (((event.key.toLowerCase() === "q") && (!flip_out)) || ((event.key.toLowerCase() === "e") && (flip_out))){
-                if (left_doors_mode == 0){left_doors_mode = 1}else if (left_doors_mode == 2){left_doors_mode = (0 - (the_time + (door_alarm*1000)))}else if (left_doors_mode < 0){left_doors_mode = 2}else if (left_doors_mode == 4){left_doors_mode = 1}
-            }else if (((event.key.toLowerCase() === "q") && (flip_out)) || ((event.key.toLowerCase() === "e") && (!flip_out))){
-                if (right_doors_mode == 0){right_doors_mode = 1}else if (right_doors_mode == 2){right_doors_mode = (0 - (the_time + (door_alarm*1000)))}else if (right_doors_mode < 0){right_doors_mode = 2}else if (right_doors_mode == 4){right_doors_mode = 1}
-            } else if (event.key.toLowerCase() === "w") {
+                if (left_doors_mode == 0){if (boat_mode){left_doors_mode = 2}else{left_doors_mode = 1}}else if (left_doors_mode == 2){if(passengersfinished()){if (boat_mode){left_doors_mode = 0}else{left_doors_mode = (0 - (the_time + (door_alarm*1000)))}}}else if (left_doors_mode < 0){left_doors_mode = 2}else if (left_doors_mode == 4){left_doors_mode = 1}
+            }else if (((event.key.toLowerCase() === "q") && (flip_out)) || ((event.key.toLowerCase() === "e") && (!flip_out)) && (!boat_mode)){
+                if (right_doors_mode == 0){right_doors_mode = 1}else if (right_doors_mode == 2){if(passengersfinished()){right_doors_mode = (0 - (the_time + (door_alarm*1000)))}}else if (right_doors_mode < 0){right_doors_mode = 2}else if (right_doors_mode == 4){right_doors_mode = 1}
+            } else if ((event.key.toLowerCase() === "w") && allow_driving_keys) {
                 // Increment reverser, capping it at a maximum of 1
                 if (flip_out){reverser--}else{reverser++}if (reverser>1){reverser=1}if (reverser<-1){reverser=-1}
-            } else if (event.key.toLowerCase() === "s") {
+            } else if ((event.key.toLowerCase() === "s") && allow_driving_keys) {
                 if (flip_out){reverser++}else{reverser--}if (reverser>1){reverser=1}if (reverser<-1){reverser=-1}
-            } else if (reverser == 1){
+            } else if ((reverser == 1) && allow_points_change && allow_driving_keys){
                 if(event.key.toLowerCase() === "p") {
                     changepoints(pos, 1);
 
@@ -548,7 +554,7 @@ cameraReverseView = (temp_reverser == -1);
                     changepoints(pos, 4);
 
                 }
-            }else if (reverser == -1){
+            }else if ((reverser == -1) && allow_points_change){
 
                 if(event.key.toLowerCase() === "p") {
                     changepoints(pos-(adjusted_train_length), -1);
@@ -613,6 +619,7 @@ function changepoints(pos, next_number) {
 
     updatepoints();
     populateCurrentRouteItems();
+    refresh_waiting_passenger_platforms();
 }
 
 
@@ -2488,6 +2495,9 @@ allow_points_change = false;
 points_speed_limit = 25;
 flip_out = false;
 boat_mode = false;
+allow_number_keys = true;
+allow_driving_keys = true;
+
 
  chicken1 = null; chicken2 = null;chicken3 = null;chicken4 = null;chicken5 = null;chicken6 = null;chicken7 = null;chicken8 = null;chicken9 = null;chicken0;
  chicken11 = null;chicken12 = null;chicken13 = null;chicken14 = null;chicken15 = null;chicken16 = null;chicken17 = null;chicken18 = null;chicken19 = null;chicken10 = null;
