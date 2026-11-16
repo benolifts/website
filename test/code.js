@@ -36,7 +36,7 @@ var use_track_texture = [];
 
 
 var statusElement = document.getElementById('status');
-overlay = document.getElementById('overlay');
+var controls_canvas = document.getElementById('controls_canvas');
 
 
 
@@ -48,11 +48,9 @@ if (!trackTextures || trackTextures.length !== textureCount * 2) {
     throw new Error('Track textures were not loaded correctly.');
 }
 
-ctx = overlay.getContext('2d');
 
-if (!ctx) {
-    throw new Error('Could not initialise the overlay canvas.');
-}
+
+
 
 var route = null;
 var routeMesh = null;
@@ -77,8 +75,8 @@ in vec3 aColour;
 
 uniform vec2 uResolution;
 uniform float uTanHalfFov;
-uniform float uNear;
-uniform float uFar;
+const float uNear = 0.01;
+const float uFar = 2000.0;
 uniform vec3 uCameraPosition;
 uniform vec3 uForward;
 uniform vec3 uRight;
@@ -217,8 +215,8 @@ gl.vertexAttribPointer(aColour, 3, gl.FLOAT, false, BYTES_PER_VERTEX, 24);
 
 var uResolution = gl.getUniformLocation(program, 'uResolution');
 var uTanHalfFov = gl.getUniformLocation(program, 'uTanHalfFov');
-var uNear = gl.getUniformLocation(program, 'uNear');
-var uFar = gl.getUniformLocation(program, 'uFar');
+
+
 var uCameraPosition = gl.getUniformLocation(program, 'uCameraPosition');
 var uForward = gl.getUniformLocation(program, 'uForward');
 var uRight = gl.getUniformLocation(program, 'uRight');
@@ -265,7 +263,7 @@ function resize() {
     }
 
     sizeCanvas(canvas);
-    sizeCanvas(overlay);
+    sizeCanvas(controls_canvas);
 
     gl.viewport(0, 0, canvas.width, canvas.height);
 
@@ -5204,6 +5202,9 @@ function populateCurrentRouteItems() {
         routeEnd: routeEnd,
         routeLimit: routeLimit
     };
+
+
+
 }
 
 
@@ -7516,6 +7517,16 @@ function buildGeometry(events) {
         // ------------------------------------------------------------
 
         if (isFreeObject) {
+
+
+
+
+
+
+
+
+
+
             var rotationBlockLength = getConfiguredBlockLength();
 
             var blockStart =
@@ -7525,13 +7536,165 @@ function buildGeometry(events) {
             var blockEnd =
             blockStart + rotationBlockLength;
 
+            // The main route heading at the precise object position.
+            // addModel() adds this heading back to objectYaw.
             var localHeading =
             sampleGeometryAt(distance).heading;
 
-            var blockHeading = averageTrackHeading(
-                blockStart,
-                blockEnd
-            );
+            var blockHeading;
+
+            // ------------------------------------------------------------
+            // RAIL INDEX 0
+            //
+            // Preserve the existing, working calculation exactly.
+            // This prevents changes to FreeObjects already aligned
+            // correctly with the main route.
+            // ------------------------------------------------------------
+
+            if (Number(railIndex) === 0) {
+
+                blockHeading = averageTrackHeading(
+                    blockStart,
+                    blockEnd
+                );
+
+            } else {
+
+                // --------------------------------------------------------
+                // SECONDARY RAILS
+                //
+                // Calculate the heading from the actual world positions
+                // of the selected rail over the same route block.
+                //
+                // Do not use the main route heading for these objects.
+                // --------------------------------------------------------
+
+                var railHeadingStep = Number(TRACK_DRAW_STEP);
+
+                if (
+                    !Number.isFinite(railHeadingStep) ||
+                    railHeadingStep <= 0
+                ) {
+                    railHeadingStep = 1;
+                }
+
+                var railHeadingDistances = [];
+
+                for (
+                    var railHeadingDistance = blockStart;
+                    railHeadingDistance < blockEnd;
+                    railHeadingDistance += railHeadingStep
+                ) {
+                    railHeadingDistances.push(
+                        railHeadingDistance
+                    );
+                }
+
+                // Include the block end and exact object position.
+                // A secondary rail may begin or end part-way through
+                // the block.
+                railHeadingDistances.push(blockEnd);
+                railHeadingDistances.push(distance);
+
+                railHeadingDistances.sort(
+                    (a, b) => a - b
+                );
+
+                var railHeadingSin = 0;
+                var railHeadingCos = 0;
+                var railHeadingDistanceTotal = 0;
+
+                var previousRailPoint = null;
+
+                for (
+                    var railSampleDistance of railHeadingDistances
+                ) {
+
+                    var railSamplePoint = getRailWorldPoint(
+                        railIndex,
+                        railSampleDistance
+                    );
+
+                    // Do not calculate a direction across a gap
+                    // where this rail does not exist.
+                    if (!railSamplePoint) {
+                        previousRailPoint = null;
+                        continue;
+                    }
+
+                    if (previousRailPoint) {
+
+                        var railDx =
+                        railSamplePoint.x -
+                        previousRailPoint.x;
+
+                        var railDz =
+                        railSamplePoint.z -
+                        previousRailPoint.z;
+
+                        var railSegmentLength = Math.hypot(
+                            railDx,
+                            railDz
+                        );
+
+                        if (railSegmentLength > 1e-9) {
+
+                            var railSegmentHeading = Math.atan2(
+                                railDx,
+                                railDz
+                            );
+
+                            // Weight each heading by the actual
+                            // horizontal distance travelled.
+                            railHeadingSin +=
+                            Math.sin(railSegmentHeading) *
+                            railSegmentLength;
+
+                            railHeadingCos +=
+                            Math.cos(railSegmentHeading) *
+                            railSegmentLength;
+
+                            railHeadingDistanceTotal +=
+                            railSegmentLength;
+                        }
+                    }
+
+                    previousRailPoint = railSamplePoint;
+                }
+
+                // --------------------------------------------------------
+                // USE THE SECONDARY RAIL HEADING
+                // --------------------------------------------------------
+
+                if (
+                    railHeadingDistanceTotal > 1e-9 &&
+                    Math.hypot(
+                        railHeadingSin,
+                        railHeadingCos
+                    ) > 1e-12
+                ) {
+
+                    blockHeading = Math.atan2(
+                        railHeadingSin,
+                        railHeadingCos
+                    );
+
+                } else {
+
+                    // Safe fallback: retain the previous behaviour
+                    // if there is insufficient secondary rail geometry.
+                    blockHeading = averageTrackHeading(
+                        blockStart,
+                        blockEnd
+                    );
+                }
+            }
+
+            // ------------------------------------------------------------
+            // CONVERT BLOCK HEADING TO A CORRECTION
+            //
+            // Keep the existing angle wrapping and degree conversion.
+            // ------------------------------------------------------------
 
             var freeObjHeadingCorrection =
             blockHeading - localHeading;
@@ -7547,6 +7710,11 @@ function buildGeometry(events) {
             objectYaw +=
             freeObjHeadingCorrection * 180 / Math.PI;
 
+            // ------------------------------------------------------------
+            // EXISTING FREEOBJECT PITCH BEHAVIOUR
+            // Leave this unchanged.
+            // ------------------------------------------------------------
+
             pitchFollowsTrack =
             typeof freeobj_follow_pitch !== "undefined" &&
             freeobj_follow_pitch === true;
@@ -7557,6 +7725,54 @@ function buildGeometry(events) {
                 maxDistance,
                 distance + TRACK_DRAW_STEP
             );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // ------------------------------------------------------------
             // WALLS, DIKES, FORMS, ROOFS AND GROUND
@@ -10743,7 +10959,7 @@ function sampleAt(distance, includeRails = true) {
 
 
 
-/* CAMERA AND OVERLAY */
+
 
 function cameraBasis(cam) {
     var sh = Math.sin(cam.heading);
@@ -12821,8 +13037,8 @@ function ensureObjectRenderer() {
 
     uniform vec2 uResolution;
     uniform float uTanHalfFov;
-    uniform float uNear;
-    uniform float uFar;
+    const float uNear = 0.01;
+    const float uFar = 2000.0;
 
     out vec2 vTexCoord;
     out vec3 vNormal;
@@ -13071,8 +13287,7 @@ function ensureObjectRenderer() {
         uTanHalfFov: gl.getUniformLocation(
             objectProgram, 'uTanHalfFov'
         ),
-        uNear: gl.getUniformLocation(objectProgram, 'uNear'),
-        uFar: gl.getUniformLocation(objectProgram, 'uFar'),
+
 
         uTexture: gl.getUniformLocation(objectProgram, 'uTexture'),
         uHasTexture: gl.getUniformLocation(objectProgram, 'uHasTexture'),
@@ -13241,12 +13456,9 @@ function drawRouteObjects(pos, startDistance, endDistance, cam, basis) {
         Math.tan(FOV_DEG * Math.PI / 360)
     );
 
-    gl.uniform1f(objectLocations.uNear, NEAR);
 
-    gl.uniform1f(
-        objectLocations.uFar,
-        DRAW_AHEAD + DRAW_BEHIND + 500
-    );
+
+
 
     gl.uniform1i(objectLocations.uTexture, 0);
 
@@ -13732,9 +13944,8 @@ function updateStatus() {
     var nearestFree = stations.reduce((best, s) => { var start = Number(s.freeroamstart); var end = Number(s.freeroamend); if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) return best; var boundary = d < start ? start : d > end ? end : d - start <= end - d ? start : end; var gap = Math.abs(boundary - d); return !best || gap < best.gap ? { boundary: boundary, gap: gap } : best; }, null);
 
 
-    var line1 = ('Pos ' + Math.floor(d) + ' | Next: ' + (nextStation ? nextStation.name + ' @ ' + Math.floor(nextStation.stopDistance) + ' (' + Math.floor(nextStation.stopDistance - d) + ')' + (nextStation.stopSide ? ' on ' + nextStation.stopSide : '') : 'none') + ' | nearest: ' + (nearestStation ? nearestStation.name + ' @ ' + Math.floor(nearestStation.stopDistance) + ' (' + Math.floor(nearestStation.stopDistance - d) + ')' + (nearestStation.stopSide ? ' on ' + nearestStation.stopSide : '') : 'none'))
-
-    var line2 = ('Limit: ' + (currentLimit ? Math.floor(currentLimit.speed) + ' @ ' + Math.floor(currentLimit.distance) + ' (' + Math.floor(currentLimit.distance - d) + ')' : 'none') + ', Next: ' + (upcomingLimits[0] ? Math.floor(upcomingLimits[0].speed) + ' @ ' + Math.floor(upcomingLimits[0].distance) + ' (' + Math.floor(upcomingLimits[0].distance - d) + ')' : 'none') + ', after: ' + (upcomingLimits[1] ? Math.floor(upcomingLimits[1].speed) + ' @ ' + Math.floor(upcomingLimits[1].distance) + ' (' + Math.floor(upcomingLimits[1].distance - d) + ')' : 'none'))
+    var line1 = ('Pos ' + Math.floor(d))
+    var line2 = ('')
 
 
 
@@ -13805,7 +14016,7 @@ function updateStatus() {
     ' y:' + round1D(statusSample.rails[5]?.y ?? '-') + ')';
 
 
-    statusElement.innerHTML = (line1 + '<br>' + line2 + '<br>' + line3 + '<br>' + line4 + '<br>' + fps)
+    statusElement.innerHTML = (line1 + '<br>' + line3 + '<br>' + line4 + '<br>' + fps)
 }
 
 

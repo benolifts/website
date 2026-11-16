@@ -2736,7 +2736,7 @@ function set_bogie_positions() {
         // CALCULATE ROUTE DISTANCES OF EVERY BOGIE
         // --------------------------------------------------------
 
-        profileMark("before distance integration");
+
 
         var distances = getDistancesBehindTrain(
             position,
@@ -2745,7 +2745,7 @@ function set_bogie_positions() {
             frontRail
         );
 
-        profileMark("after distance integration");
+
 
         var trainBogies = [];
         var trainAngles = [];
@@ -4669,7 +4669,7 @@ function set_bogie_positions() {
 
 
 function refresh_waiting_passenger_platforms() {
-    console.log(8)
+        populateSpeedLimits();
 
 
     if (
@@ -16282,12 +16282,7 @@ function draw_train_components(startDistance, endDistance, cam, basis) {
         Math.tan(FOV_DEG * Math.PI / 360)
     );
 
-    gl.uniform1f(objectLocations.uNear, NEAR);
 
-    gl.uniform1f(
-        objectLocations.uFar,
-        DRAW_AHEAD + DRAW_BEHIND + 500
-    );
 
     gl.uniform1i(objectLocations.uTexture, 0);
 

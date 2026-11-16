@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>VF Train Sim</title><style>
 
 
-#cv,#vfcanvas{left:0;position:absolute}#controls,#cv,#overlay,#route-menu,#status,#vfcanvas{position:absolute}#overlay,#sstatus,#vfcanvas{pointer-events:none}#simulator,body,html{width:100%;height:100%}#overlay,#vfcanvas{top:80vh;display:block;width:100%;height:20vh;z-index:2}#controls,#status{left:12px}#sstatus,#status{background:rgba(0,0,0,.75);color:#fff}#route-menu,#routeFile,#sstatus{display:none}#route-menu,#sstatus,.menu-back{box-sizing:border-box}.menu-brand,.menu-tile{min-width:0}.developer-label,.menu-brand-subtitle,.menu-step{text-transform:uppercase}body,html{margin:0;overflow:hidden;background:#000;color:#fff;font-family:Arial,sans-serif}#simulator{position:relative}#cv{top:0;display:block;width:100vw;height:80vh;z-index:1}#vfcanvas{right:auto}#controls{z-index:3;top:12px;display:flex;gap:8px;align-items:center}button{padding:8px 12px;cursor:pointer;font:inherit}button:disabled{cursor:wait}#status{z-index:4;bottom:12px;padding:8px 10px;font-size:13px}#sstatus,.VF-Train_Sim-splash-ready-content{left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;position:absolute}#sstatus{z-index:9999;max-width:90vw;padding:18px 28px;font-size:clamp(16px,5vw,16px);font-weight:900;line-height:1.2}.VF-Train_Sim-splash-ready-content{gap:12px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:16px;width:min(720px,calc(100vw - 40px))}.VF-Train_Sim-splash-ready-title{font-size:38px;color:#fff;font-size:clamp(38px,6vw,64px);font-weight:900;letter-spacing:4px;text-transform:uppercase;text-shadow:0 0 20px rgba(0,229,255,.8)}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start{font-size:20px;position:relative;left:auto;top:auto;transform:none;min-width:210px;padding:15px 34px}.VF-Train_Sim-splash-ready-instruction{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px;margin-bottom:8px}.VF-Train_Sim-splash-ready-actions{display:flex;flex-direction:column;align-items:center;gap:14px}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start:hover{transform:scale(1.08)}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start:active{transform:translateY(3px) scale(1.02)}#slider{width:800px}#route-menu{z-index:10;inset:0;overflow:auto;padding:clamp(16px,3vw,38px);color:#f5f7fb;background-image:url("z.jpg");background-repeat:repeat;background-position:top left;background-size:auto}#route-menu.is-open{display:flex}.menu-shell{width:min(1180px,100%);min-height:100%;margin:0 auto;display:flex;flex-direction:column}.menu-header{display:flex;align-items:center;gap:15px;padding:5px 0 22px;border-bottom:1px solid rgba(255,255,255,.12)}.sim-logo{flex:0 0 52px;width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);border-radius:15px;background:linear-gradient(145deg,#334d6c,#17283d);color:#fff;font-size:17px;font-weight:800;letter-spacing:-1px;box-shadow:0 8px 25px rgba(0,0,0,.25)}.menu-brand-title{margin:0;font-size:clamp(18px,2vw,23px);font-weight:750;letter-spacing:.08em}.menu-brand-subtitle{margin-top:4px;color:#9baabd;font-size:12px;letter-spacing:.12em}.menu-main{flex:1;display:flex;flex-direction:column;padding:clamp(22px,4vh,42px) 0 24px}.menu-topline{min-height:32px;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:13px}.menu-step{color:#9eacc0;font-size:11px;font-weight:700;letter-spacing:.16em}.menu-back{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;line-height:1;height:70px;border:2.5px solid rgba(255,255,255,.18);border-radius:20px;padding:0 27.5px;color:#dce5ef;background:rgba(255,255,255,.055);font-size:30px}.menu-back:hover,.menu-secondary:hover{background:rgba(255,255,255,.12)}.menu-back-arrow{display:inline-block;position:relative;top:-4px}.menu-title{margin:0;color:#fff;font-size:clamp(26px,4vw,39px);line-height:1.12;font-weight:750;letter-spacing:-.035em}.menu-description{max-width:700px;margin:10px 0 26px;color:#9eacbd;font-size:14px;line-height:1.55}.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,195px);gap:17px;align-content:start}.menu-tile{border:1px solid rgba(255,255,255,.13);border-radius:13px;padding:10px;overflow:hidden;text-align:left;color:#f4f7fb;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform 150ms,border-color 150ms,background 150ms,box-shadow 150ms;-webkit-user-select:none;user-select:none}.menu-tile:focus-visible,.menu-tile:hover{transform:translateY(-3px);border-color:rgba(129,184,255,.78);background:linear-gradient(145deg,rgba(89,139,197,.24),rgba(255,255,255,.055));box-shadow:0 13px 28px rgba(0,0,0,.28);outline:0}.menu-tile-image{width:100%;height:135px;display:block;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#293c53,#172432 60%,#30465c)}.menu-tile-image img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;-webkit-user-select:none;user-select:none}.menu-image-placeholder{width:100%;height:100%;display:grid;place-items:center;color:rgba(235,244,255,.46);font-size:10px;font-weight:700;letter-spacing:.18em;background:linear-gradient(140deg,transparent 30%,rgba(255,255,255,.055) 30% 31%,transparent 31%),linear-gradient(35deg,rgba(9,18,29,.12),rgba(121,158,194,.13))}.menu-tile-name{display:block;padding:12px 4px 3px;font-size:15px;font-weight:700;line-height:1.3}.menu-tile-detail{display:block;padding:2px 4px 5px;color:#9eacbd;font-size:12px;line-height:1.4}.scenario-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:900px}.scenario-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 18px;border:1px solid rgba(255,255,255,.14);border-radius:9px;text-align:left;color:#f3f6fb;background:rgba(38,63,91,.4);transition:border-color 140ms,background 140ms,transform 140ms}.scenario-button:focus-visible,.scenario-button:hover{border-color:rgba(129,184,255,.78);background:rgba(255,255,255,.4);transform:translateX(3px);outline:0}.scenario-name{display:block;font-size:15px;font-weight:700}.scenario-description{display:block;margin-top:4px;color:#9eacbd;font-size:12px;font-weight:400}.scenario-arrow{flex:0 0 auto;color:#91b7e3;font-size:20px}.scenario-meta{display:flex;align-items:center;gap:14px;flex:0 0 auto}.scenario-top-rated{color:#d8bd78;font-size:11px;font-weight:600;white-space:nowrap;opacity:.9}.weather-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;max-width:1000px}.weather-grid .menu-tile-image{height:clamp(150px,24vh,245px)}.weather-grid .menu-tile-name{font-size:16px}.menu-action-area{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}.menu-primary{min-width:170px;border:1px solid #8bb9ea;border-radius:8px;padding:12px 19px;color:#071321;background:linear-gradient(135deg,#b6d9ff,#79aee5);font-size:13px;font-weight:800;letter-spacing:.025em;box-shadow:0 7px 22px rgba(61,125,191,.18)}.coach-panel,.menu-secondary{background:rgba(255,255,255,.055)}.menu-primary:hover{background:#d0e6ff}.menu-secondary{border:1px solid rgba(255,255,255,.17);border-radius:8px;padding:11px 16px;color:#dce5ef;font-size:13px}.coach-panel{width:min(490px,100%);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:13px}.coach-label{color:#aab8c9;font-size:18px}.coach-number{margin-top:6px;font-size:45px;line-height:1;font-weight:750}.coach-note{min-height:16px;margin-top:9px;color:#91bce9;font-size:12px}.coach-controls{display:flex;align-items:center;gap:12px}.coach-stepper{width:44px;height:44px;border:1px solid rgba(255,255,255,.2);border-radius:9px;color:#fff;background:rgba(255,255,255,.08);font-size:23px}.coach-stepper:hover:not(:disabled){background:rgba(255,255,255,.16)}.coach-stepper:disabled{opacity:.35;cursor:not-allowed}.menu-summary{max-width:650px;padding:17px 19px;border:1px solid rgba(255,255,255,.13);border-radius:10px;color:#c3cfdd;background:rgba(255,255,255,.045);font-size:13px;line-height:1.7}.menu-summary strong{color:#fff}.developer-tools{margin-top:auto;padding-top:34px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;color:#748296;font-size:10px}.developer-label{margin-right:4px;font-size:10px;font-weight:700;letter-spacing:.1em}.developer-button{border:1px solid rgba(255,255,255,.18);border-radius:5px;padding:4px 7px;color:#aab7c8;background:rgba(0,0,0,.18);font-size:10px}.developer-button:hover:not(:disabled){border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.09)}.developer-button:disabled{opacity:.3;cursor:not-allowed}.menu-empty{max-width:700px;padding:18px;border:1px dashed rgba(255,255,255,.2);border-radius:9px;color:#aab8c8;font-size:13px}@media (max-width:700px){#route-menu{padding:15px}.menu-header{gap:11px;padding-bottom:16px}.sim-logo{flex-basis:44px;width:44px;height:44px;border-radius:12px}.menu-main{padding-top:23px}.menu-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.menu-tile{padding:7px}.menu-tile-image{height:105px}.weather-grid{gap:8px}.weather-grid .menu-tile-image{height:125px}.weather-grid .menu-tile-name{font-size:12px}.weather-grid .menu-tile-detail{font-size:10px}.coach-panel{padding:16px}#slider{width:min(42vw,300px)}}@media (max-width:420px){.weather-grid{grid-template-columns:1fr}.weather-grid .menu-tile-image{height:105px}.weather-grid .menu-tile{display:grid;grid-template-columns:105px 1fr;align-items:center;gap:9px}.weather-grid .menu-tile-name{padding:4px}.weather-grid .menu-tile-detail{grid-column:2;padding:0 4px 4px}}.VF-Train_Sim-main-menu-box,.VF-Train_Sim-story-menu-box{flex-direction:column;display:flex;box-sizing:border-box}.VF-Train_Sim-main-menu-box{align-items:stretch;gap:14px;width:min(380px,calc(100vw - 40px))}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start{position:relative;left:auto;top:auto;transform:none;width:100%;min-width:0;padding:12px 20px}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start:hover{transform:scale(1.04)}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start:active,.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back:active{transform:scale(.98)}.scenario-list.scenario-list-tall{grid-auto-rows:96px}.scenario-list.scenario-list-tall.scenario-list-two-columns{grid-template-rows:repeat(var(--scenario-list-rows),96px)}.scenario-list.scenario-list-tall>.scenario-button{height:96px;min-height:96px}.VF-Train_Sim-story-menu-box{align-items:stretch;gap:12px;width:min(560px,calc(100vw - 40px));max-height:calc(100vh - 40px);overflow:hidden}.VF-Train_Sim-story-menu-box .VF-Train_Sim-loading-title{margin:0;text-align:center}.VF-Train_Sim-story-instruction{color:#fff;font-size:13px;font-weight:600;letter-spacing:.5px;text-align:center;text-transform:none}.VF-Train_Sim-story-list{display:flex;flex-direction:column;gap:8px;width:100%;min-height:0;max-height:52vh;padding:2px 5px 2px 2px;box-sizing:border-box;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}.VF-Train_Sim-story-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;flex:0 0 auto;padding:10px 14px;border:1px solid rgba(255,255,255,.2);border-radius:7px;color:#fff;background:rgba(0,229,255,.1);font-size:14px;font-weight:800;letter-spacing:.3px;text-align:left;text-transform:none;cursor:pointer;transition:background 160ms,border-color 160ms,transform 160ms}.VF-Train_Sim-story-button:hover{background:rgba(0,229,255,.25);border-color:#00e5ff;transform:translateX(3px)}.VF-Train_Sim-story-button:focus-visible{outline:#ffffff solid 2px;outline-offset:3px}.VF-Train_Sim-story-arrow{flex:0 0 auto;color:#00e5ff;font-size:21px}.VF-Train_Sim-story-empty{padding:14px;border:1px dashed rgba(255,255,255,.25);border-radius:7px;color:#c4d0df;font-size:13px;font-weight:600;text-align:center;text-transform:none}.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back{position:relative;left:auto;top:auto;transform:none;width:100%;min-width:0;flex:0 0 auto;padding:11px 20px;font-size:15px;letter-spacing:2px}.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back:hover{transform:scale(1.03)}.VF-Train_Sim-story-error{color:#ff8da5;font-size:12px;font-weight:700;text-align:center;text-transform:none}@media (max-width:600px){.VF-Train_Sim-story-menu-box{width:calc(100vw - 30px);max-height:calc(100vh - 30px);padding:16px 18px}.VF-Train_Sim-story-list{max-height:50vh}.VF-Train_Sim-story-button{min-height:42px;padding:9px 11px;font-size:13px}}.scenario-list{display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:44px}.scenario-description,.scenario-name{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}.scenario-list.scenario-list-two-columns{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--scenario-list-rows),44px);grid-auto-flow:column}.scenario-button{box-sizing:border-box;height:44px;min-height:44px;overflow:hidden}.scenario-button>span:first-child{flex:1 1 auto;min-width:0}.scenario-name{-webkit-line-clamp:1}.scenario-description{-webkit-line-clamp:2}
+#cv,#vfcanvas{left:0;position:absolute}#controls,#cv,#controls_canvas,#route-menu,#status,#vfcanvas{position:absolute}#controls_canvas,#sstatus,#vfcanvas{pointer-events:none}#simulator,body,html{width:100%;height:100%}#controls_canvas,#vfcanvas{top:80vh;display:block;width:100%;height:20vh;z-index:2}#controls,#status{left:12px}#sstatus,#status{background:rgba(0,0,0,.75);color:#fff}#route-menu,#routeFile,#sstatus{display:none}#route-menu,#sstatus,.menu-back{box-sizing:border-box}.menu-brand,.menu-tile{min-width:0}.developer-label,.menu-brand-subtitle,.menu-step{text-transform:uppercase}body,html{margin:0;overflow:hidden;background:#000;color:#fff;font-family:Arial,sans-serif}#simulator{position:relative}#cv{top:0;display:block;width:100vw;height:80vh;z-index:1}#vfcanvas{right:auto}#controls{z-index:3;top:12px;display:flex;gap:8px;align-items:center}button{padding:8px 12px;cursor:pointer;font:inherit}button:disabled{cursor:wait}#status{z-index:4;bottom:12px;padding:8px 10px;font-size:13px}#sstatus,.VF-Train_Sim-splash-ready-content{left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;position:absolute}#sstatus{z-index:9999;max-width:90vw;padding:18px 28px;font-size:clamp(16px,5vw,16px);font-weight:900;line-height:1.2}.VF-Train_Sim-splash-ready-content{gap:12px;z-index:3;display:flex;flex-direction:column;align-items:center;gap:16px;width:min(720px,calc(100vw - 40px))}.VF-Train_Sim-splash-ready-title{font-size:38px;color:#fff;font-size:clamp(38px,6vw,64px);font-weight:900;letter-spacing:4px;text-transform:uppercase;text-shadow:0 0 20px rgba(0,229,255,.8)}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start{font-size:20px;position:relative;left:auto;top:auto;transform:none;min-width:210px;padding:15px 34px}.VF-Train_Sim-splash-ready-instruction{color:#fff;font-size:14px;font-weight:600;letter-spacing:.5px;margin-bottom:8px}.VF-Train_Sim-splash-ready-actions{display:flex;flex-direction:column;align-items:center;gap:14px}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start:hover{transform:scale(1.08)}.VF-Train_Sim-splash-ready-actions .VF-Train_Sim-splash-start:active{transform:translateY(3px) scale(1.02)}#slider{width:800px}#route-menu{z-index:10;inset:0;overflow:auto;padding:clamp(16px,3vw,38px);color:#f5f7fb;background-image:url("z.jpg");background-repeat:repeat;background-position:top left;background-size:auto}#route-menu.is-open{display:flex}.menu-shell{width:min(1180px,100%);min-height:100%;margin:0 auto;display:flex;flex-direction:column}.menu-header{display:flex;align-items:center;gap:15px;padding:5px 0 22px;border-bottom:1px solid rgba(255,255,255,.12)}.sim-logo{flex:0 0 52px;width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.24);border-radius:15px;background:linear-gradient(145deg,#334d6c,#17283d);color:#fff;font-size:17px;font-weight:800;letter-spacing:-1px;box-shadow:0 8px 25px rgba(0,0,0,.25)}.menu-brand-title{margin:0;font-size:clamp(18px,2vw,23px);font-weight:750;letter-spacing:.08em}.menu-brand-subtitle{margin-top:4px;color:#9baabd;font-size:12px;letter-spacing:.12em}.menu-main{flex:1;display:flex;flex-direction:column;padding:clamp(22px,4vh,42px) 0 24px}.menu-topline{min-height:32px;display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:13px}.menu-step{color:#9eacc0;font-size:11px;font-weight:700;letter-spacing:.16em}.menu-back{display:inline-flex;align-items:center;justify-content:center;vertical-align:middle;line-height:1;height:70px;border:2.5px solid rgba(255,255,255,.18);border-radius:20px;padding:0 27.5px;color:#dce5ef;background:rgba(255,255,255,.055);font-size:30px}.menu-back:hover,.menu-secondary:hover{background:rgba(255,255,255,.12)}.menu-back-arrow{display:inline-block;position:relative;top:-4px}.menu-title{margin:0;color:#fff;font-size:clamp(26px,4vw,39px);line-height:1.12;font-weight:750;letter-spacing:-.035em}.menu-description{max-width:700px;margin:10px 0 26px;color:#9eacbd;font-size:14px;line-height:1.55}.menu-grid{display:grid;grid-template-columns:repeat(auto-fill,195px);gap:17px;align-content:start}.menu-tile{border:1px solid rgba(255,255,255,.13);border-radius:13px;padding:10px;overflow:hidden;text-align:left;color:#f4f7fb;background:linear-gradient(145deg,rgba(255,255,255,.085),rgba(255,255,255,.025));box-shadow:0 8px 24px rgba(0,0,0,.12);transition:transform 150ms,border-color 150ms,background 150ms,box-shadow 150ms;-webkit-user-select:none;user-select:none}.menu-tile:focus-visible,.menu-tile:hover{transform:translateY(-3px);border-color:rgba(129,184,255,.78);background:linear-gradient(145deg,rgba(89,139,197,.24),rgba(255,255,255,.055));box-shadow:0 13px 28px rgba(0,0,0,.28);outline:0}.menu-tile-image{width:100%;height:135px;display:block;overflow:hidden;border-radius:8px;background:linear-gradient(135deg,#293c53,#172432 60%,#30465c)}.menu-tile-image img{display:block;width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none;-webkit-user-select:none;user-select:none}.menu-image-placeholder{width:100%;height:100%;display:grid;place-items:center;color:rgba(235,244,255,.46);font-size:10px;font-weight:700;letter-spacing:.18em;background:linear-gradient(140deg,transparent 30%,rgba(255,255,255,.055) 30% 31%,transparent 31%),linear-gradient(35deg,rgba(9,18,29,.12),rgba(121,158,194,.13))}.menu-tile-name{display:block;padding:12px 4px 3px;font-size:15px;font-weight:700;line-height:1.3}.menu-tile-detail{display:block;padding:2px 4px 5px;color:#9eacbd;font-size:12px;line-height:1.4}.scenario-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:900px}.scenario-button{width:100%;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:15px 18px;border:1px solid rgba(255,255,255,.14);border-radius:9px;text-align:left;color:#f3f6fb;background:rgba(38,63,91,.4);transition:border-color 140ms,background 140ms,transform 140ms}.scenario-button:focus-visible,.scenario-button:hover{border-color:rgba(129,184,255,.78);background:rgba(255,255,255,.4);transform:translateX(3px);outline:0}.scenario-name{display:block;font-size:15px;font-weight:700}.scenario-description{display:block;margin-top:4px;color:#9eacbd;font-size:12px;font-weight:400}.scenario-arrow{flex:0 0 auto;color:#91b7e3;font-size:20px}.scenario-meta{display:flex;align-items:center;gap:14px;flex:0 0 auto}.scenario-top-rated{color:#d8bd78;font-size:11px;font-weight:600;white-space:nowrap;opacity:.9}.weather-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;max-width:1000px}.weather-grid .menu-tile-image{height:clamp(150px,24vh,245px)}.weather-grid .menu-tile-name{font-size:16px}.menu-action-area{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:24px}.menu-primary{min-width:170px;border:1px solid #8bb9ea;border-radius:8px;padding:12px 19px;color:#071321;background:linear-gradient(135deg,#b6d9ff,#79aee5);font-size:13px;font-weight:800;letter-spacing:.025em;box-shadow:0 7px 22px rgba(61,125,191,.18)}.coach-panel,.menu-secondary{background:rgba(255,255,255,.055)}.menu-primary:hover{background:#d0e6ff}.menu-secondary{border:1px solid rgba(255,255,255,.17);border-radius:8px;padding:11px 16px;color:#dce5ef;font-size:13px}.coach-panel{width:min(490px,100%);display:flex;align-items:center;justify-content:space-between;gap:16px;padding:22px;border:1px solid rgba(255,255,255,.14);border-radius:13px}.coach-label{color:#aab8c9;font-size:18px}.coach-number{margin-top:6px;font-size:45px;line-height:1;font-weight:750}.coach-note{min-height:16px;margin-top:9px;color:#91bce9;font-size:12px}.coach-controls{display:flex;align-items:center;gap:12px}.coach-stepper{width:44px;height:44px;border:1px solid rgba(255,255,255,.2);border-radius:9px;color:#fff;background:rgba(255,255,255,.08);font-size:23px}.coach-stepper:hover:not(:disabled){background:rgba(255,255,255,.16)}.coach-stepper:disabled{opacity:.35;cursor:not-allowed}.menu-summary{max-width:650px;padding:17px 19px;border:1px solid rgba(255,255,255,.13);border-radius:10px;color:#c3cfdd;background:rgba(255,255,255,.045);font-size:13px;line-height:1.7}.menu-summary strong{color:#fff}.developer-tools{margin-top:auto;padding-top:34px;display:flex;flex-wrap:wrap;align-items:center;gap:7px;color:#748296;font-size:10px}.developer-label{margin-right:4px;font-size:10px;font-weight:700;letter-spacing:.1em}.developer-button{border:1px solid rgba(255,255,255,.18);border-radius:5px;padding:4px 7px;color:#aab7c8;background:rgba(0,0,0,.18);font-size:10px}.developer-button:hover:not(:disabled){border-color:rgba(255,255,255,.4);color:#fff;background:rgba(255,255,255,.09)}.developer-button:disabled{opacity:.3;cursor:not-allowed}.menu-empty{max-width:700px;padding:18px;border:1px dashed rgba(255,255,255,.2);border-radius:9px;color:#aab8c8;font-size:13px}@media (max-width:700px){#route-menu{padding:15px}.menu-header{gap:11px;padding-bottom:16px}.sim-logo{flex-basis:44px;width:44px;height:44px;border-radius:12px}.menu-main{padding-top:23px}.menu-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.menu-tile{padding:7px}.menu-tile-image{height:105px}.weather-grid{gap:8px}.weather-grid .menu-tile-image{height:125px}.weather-grid .menu-tile-name{font-size:12px}.weather-grid .menu-tile-detail{font-size:10px}.coach-panel{padding:16px}#slider{width:min(42vw,300px)}}@media (max-width:420px){.weather-grid{grid-template-columns:1fr}.weather-grid .menu-tile-image{height:105px}.weather-grid .menu-tile{display:grid;grid-template-columns:105px 1fr;align-items:center;gap:9px}.weather-grid .menu-tile-name{padding:4px}.weather-grid .menu-tile-detail{grid-column:2;padding:0 4px 4px}}.VF-Train_Sim-main-menu-box,.VF-Train_Sim-story-menu-box{flex-direction:column;display:flex;box-sizing:border-box}.VF-Train_Sim-main-menu-box{align-items:stretch;gap:14px;width:min(380px,calc(100vw - 40px))}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start{position:relative;left:auto;top:auto;transform:none;width:100%;min-width:0;padding:12px 20px}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start:hover{transform:scale(1.04)}.VF-Train_Sim-main-menu-box .VF-Train_Sim-splash-start:active,.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back:active{transform:scale(.98)}.scenario-list.scenario-list-tall{grid-auto-rows:96px}.scenario-list.scenario-list-tall.scenario-list-two-columns{grid-template-rows:repeat(var(--scenario-list-rows),96px)}.scenario-list.scenario-list-tall>.scenario-button{height:96px;min-height:96px}.VF-Train_Sim-story-menu-box{align-items:stretch;gap:12px;width:min(560px,calc(100vw - 40px));max-height:calc(100vh - 40px);overflow:hidden}.VF-Train_Sim-story-menu-box .VF-Train_Sim-loading-title{margin:0;text-align:center}.VF-Train_Sim-story-instruction{color:#fff;font-size:13px;font-weight:600;letter-spacing:.5px;text-align:center;text-transform:none}.VF-Train_Sim-story-list{display:flex;flex-direction:column;gap:8px;width:100%;min-height:0;max-height:52vh;padding:2px 5px 2px 2px;box-sizing:border-box;overflow-x:hidden;overflow-y:auto;overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}.VF-Train_Sim-story-button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;min-height:44px;flex:0 0 auto;padding:10px 14px;border:1px solid rgba(255,255,255,.2);border-radius:7px;color:#fff;background:rgba(0,229,255,.1);font-size:14px;font-weight:800;letter-spacing:.3px;text-align:left;text-transform:none;cursor:pointer;transition:background 160ms,border-color 160ms,transform 160ms}.VF-Train_Sim-story-button:hover{background:rgba(0,229,255,.25);border-color:#00e5ff;transform:translateX(3px)}.VF-Train_Sim-story-button:focus-visible{outline:#ffffff solid 2px;outline-offset:3px}.VF-Train_Sim-story-arrow{flex:0 0 auto;color:#00e5ff;font-size:21px}.VF-Train_Sim-story-empty{padding:14px;border:1px dashed rgba(255,255,255,.25);border-radius:7px;color:#c4d0df;font-size:13px;font-weight:600;text-align:center;text-transform:none}.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back{position:relative;left:auto;top:auto;transform:none;width:100%;min-width:0;flex:0 0 auto;padding:11px 20px;font-size:15px;letter-spacing:2px}.VF-Train_Sim-story-menu-box .VF-Train_Sim-story-back:hover{transform:scale(1.03)}.VF-Train_Sim-story-error{color:#ff8da5;font-size:12px;font-weight:700;text-align:center;text-transform:none}@media (max-width:600px){.VF-Train_Sim-story-menu-box{width:calc(100vw - 30px);max-height:calc(100vh - 30px);padding:16px 18px}.VF-Train_Sim-story-list{max-height:50vh}.VF-Train_Sim-story-button{min-height:42px;padding:9px 11px;font-size:13px}}.scenario-list{display:grid;grid-template-columns:minmax(0,1fr);grid-auto-rows:44px}.scenario-description,.scenario-name{display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}.scenario-list.scenario-list-two-columns{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(var(--scenario-list-rows),44px);grid-auto-flow:column}.scenario-button{box-sizing:border-box;height:44px;min-height:44px;overflow:hidden}.scenario-button>span:first-child{flex:1 1 auto;min-width:0}.scenario-name{-webkit-line-clamp:1}.scenario-description{-webkit-line-clamp:2}
 
 
 
@@ -14,13 +14,13 @@
 </style><script src="zippy.js"></script><script src="completed.js"></script><script src="routes.js"></script><script src="trains.js"></script><script src="stories.js"></script><script src="t.js"></script></head><body>
     <div id="simulator">
         <canvas id="cv"></canvas>
-        <canvas id="overlay"></canvas>
+        <canvas id="controls_canvas"></canvas>
 
 
 
         <div id="status"></div>
         <div id="sstatus"></div>
-        <!-- The menu is an independent HTML overlay, not part of the WebGL renderer. -->
+
         <div id="route-menu" aria-live="polite">
             <div class="menu-shell" id="route-menu-content"></div>
         </div>
@@ -196,7 +196,7 @@ var is_night = false;
 
 
 var DRAW_AHEAD = 600; // Simulated distance viewed
-var DRAW_BEHIND = 600; // Simulated distance viewed behind
+
 var lock_mouse = true;
 var prefer_sound = 0;
 var prefer_units = 0;
@@ -209,8 +209,8 @@ var selectedStory = null;
 // ============================================================
 
 var canvas = document.getElementById("cv");
-var overlay = document.getElementById("overlay");
-
+var controls_canvas = document.getElementById("controls_canvas");
+var ctx_controls_canvas = controls_canvas.getContext('2d');
 
 var routeMenuElement = document.getElementById("route-menu");
 var routeMenuContent = document.getElementById("route-menu-content");
@@ -247,7 +247,7 @@ document.addEventListener("mousemove", function (event) {
     looky += (event.movementY / 800);
 });
 
-var speed = 0;    ///////////////////////////////////////////////////////  TODO this to be controlled by xav's sim
+var current_speed = 0;    ///////////////////////////////////////////////////////  TODO this to be controlled by xav's sim
 // ============================================================
 // MENU STATE
 // ============================================================
@@ -264,6 +264,16 @@ document.addEventListener("keyup", function(event) {
     if (event.key === "ArrowRight") cameraArrowKeys.right = false;
     if (event.key === "ArrowUp")    cameraArrowKeys.up = false;
     if (event.key === "ArrowDown")  cameraArrowKeys.down = false;
+    if (event.key.toLowerCase() === "a")  key_a = false;
+    if (event.key.toLowerCase() === "d")  key_d = false;
+
+
+
+
+
+
+
+
     if ((event.key === "v") && (super_developer_mode))  cameraArrowKeys.space = false;
     if ((event.key === "b") && (super_developer_mode))  cameraArrowKeys.b = false;
     if ((event.key === "n") && (super_developer_mode))  cameraArrowKeys.n = false;
@@ -274,11 +284,11 @@ document.addEventListener("keyup", function(event) {
 document.addEventListener("keydown", function (event) {
     if (!route || !routeMesh) return;
     // 1. Existing Escape Key
-    if(renderLoopRunning && activeRoute){
+    if(renderLoopRunning && activeRoute && !event.repeat){
 
 var temp_reverser = reverser;if (flip_out){if (temp_reverser == 0){temp_reverser = -1}}
 
-        if (!lock_mouse) {
+        if ((!lock_mouse) || (camera_view == 8)){
         if (event.key === "ArrowLeft") {
             event.preventDefault();
             event.stopImmediatePropagation();
@@ -299,65 +309,71 @@ var temp_reverser = reverser;if (flip_out){if (temp_reverser == 0){temp_reverser
             event.stopImmediatePropagation();
             cameraArrowKeys.down = true;
             return;
-        }else if (event.key === "v") {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (super_developer_mode){cameraArrowKeys.space = true}
-            return;
-        }else if (event.key === "b") {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (super_developer_mode){cameraArrowKeys.b = true}
-            return;
-        }else if (event.key === "n") {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (super_developer_mode){cameraArrowKeys.n = true}
-            return;
-        }else if (event.key === ".") {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (super_developer_mode){cameraArrowKeys.dot = true}
-            return;
-        }else if (event.key === ",") {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (super_developer_mode){cameraArrowKeys.commar = true}
-            return;
-        }else if (event.key === "m") {
-            event.preventDefault();
-            event.stopImmediatePropagation();
-            if (super_developer_mode){crashed = false;crashedtext = ""}
-            return;
         }
 
 
 
 
-    }if (event.key === "Escape") {
+    }
+
+
+
+
+
+    if (event.key === "Escape") {
         event.preventDefault();
         event.stopImmediatePropagation();
         pauseRenderLoop();
         showRouteReadySplash(true);
         return;
+    }else if (event.key === "v") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.space = true}
+            return;
+    }else if (event.key === "b") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.b = true}
+            return;
+    }else if (event.key === "n") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.n = true}
+            return;
+    }else if (event.key === ".") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.dot = true}
+            return;
+    }else if (event.key === ",") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){cameraArrowKeys.commar = true}
+            return;
+    }else if (event.key === "m") {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            if (super_developer_mode){crashed = false;crashedtext = ""}
+            return;
     }else if ((event.key === "1") && allow_number_keys){
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        lookx = 0;
-        looky = 0;
-        if(flip_out){cameraReverseView = true;camera_view = 0}else{cameraReverseView = false;camera_view = 1};
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            lookx = 0;
+            looky = 0;
+            if(flip_out){cameraReverseView = true;camera_view = 0}else{cameraReverseView = false;camera_view = 1};
 
-        camera_subview = 0;
-        setStatuss("View 1 - Front cab");
-        return;
+            camera_subview = 0;
+            setStatuss("View 1 - Front cab");
+            return;
 
-        }else if ((event.key === "2")  && allow_number_keys){
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        lookx = 0;
-        looky = 0;
+    }else if ((event.key === "2")  && allow_number_keys){
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            lookx = 0;
+            looky = 0;
 
-cameraReverseView = (temp_reverser == -1);
+            cameraReverseView = (temp_reverser == -1);
         if (camera_view != 2) {
             camera_subview = temp_reverser == -1 ? 2 : 0;
         }else{
@@ -505,7 +521,7 @@ cameraReverseView = (temp_reverser == -1);
         looky = 0;
         camera_view = 8;
         camera_subview = 0;
-        setStatuss("View 8 - Passing view (not implemented)");
+        setStatuss("View 8 -  Passenger mode (Use arrow keys to control the passenger)");
         return;
 
     }else if ((event.key === "9") && allow_number_keys) {
@@ -515,7 +531,7 @@ cameraReverseView = (temp_reverser == -1);
         looky = 0;
         camera_view = 9;
         camera_subview = 0;
-        setStatuss("View 9 - Passenger view (not implemented)");
+        setStatuss("View 9 - Trackside view");
         return;
 
     }else if ((event.key === "0")  && allow_number_keys){
@@ -530,17 +546,44 @@ cameraReverseView = (temp_reverser == -1);
 
         return;
     }else{
-        if (speed <= 0.1){
+        if (current_speed <= 0.01){
             if (((event.key.toLowerCase() === "q") && (!flip_out)) || ((event.key.toLowerCase() === "e") && (flip_out))){
                 if (left_doors_mode == 0){if (boat_mode){left_doors_mode = 2}else{left_doors_mode = 1}}else if (left_doors_mode == 2){if(passengersfinished()){if (boat_mode){left_doors_mode = 0}else{left_doors_mode = (0 - (the_time + (door_alarm*1000)))}}}else if (left_doors_mode < 0){left_doors_mode = 2}else if (left_doors_mode == 4){left_doors_mode = 1}
             }else if (((event.key.toLowerCase() === "q") && (flip_out)) || ((event.key.toLowerCase() === "e") && (!flip_out)) && (!boat_mode)){
                 if (right_doors_mode == 0){right_doors_mode = 1}else if (right_doors_mode == 2){if(passengersfinished()){right_doors_mode = (0 - (the_time + (door_alarm*1000)))}}else if (right_doors_mode < 0){right_doors_mode = 2}else if (right_doors_mode == 4){right_doors_mode = 1}
-            } else if ((event.key.toLowerCase() === "w") && allow_driving_keys) {
+            } else if ((event.key.toLowerCase() === "w") && (throttle_notch<1) && allow_driving_keys && !crashed) {
                 // Increment reverser, capping it at a maximum of 1
                 if (flip_out){reverser--}else{reverser++}if (reverser>1){reverser=1}if (reverser<-1){reverser=-1}
-            } else if ((event.key.toLowerCase() === "s") && allow_driving_keys) {
+            } else if ((event.key.toLowerCase() === "s") && (throttle_notch<1) && allow_driving_keys && !crashed) {
                 if (flip_out){reverser++}else{reverser--}if (reverser>1){reverser=1}if (reverser<-1){reverser=-1}
-            } else if ((reverser == 1) && allow_points_change && allow_driving_keys){
+
+
+            }
+        }
+
+
+
+
+        if((event.key.toLowerCase() === "a") && (reverser != 0) && allow_driving_keys && !crashed) {
+                    key_a = true;
+                    throttle_notch++;if(throttle_notch > power_notches){throttle_notch = power_notches}current_throttle = 0;if(throttle_notch<0){current_throttle = Math.floor(100*(throttle_notch/brake_notches))}if(throttle_notch>0){current_throttle = Math.floor(100*(throttle_notch/power_notches))}
+
+
+                }else if((event.key.toLowerCase() === "d") && (reverser != 0) && allow_driving_keys && !crashed) {
+                    key_d = true;
+                    throttle_notch--;if(throttle_notch < (0-brake_notches)){throttle_notch = (0-brake_notches)}current_throttle = 0;if(throttle_notch<0){current_throttle = Math.floor(100*(throttle_notch/brake_notches))}if(throttle_notch>0){current_throttle = Math.floor(100*(throttle_notch/power_notches))}
+
+
+
+
+
+            } else if ((reverser == 1) && allow_points_change && allow_driving_keys && !crashed){
+
+
+
+
+
+
                 if(event.key.toLowerCase() === "p") {
                     changepoints(pos, 1);
 
@@ -554,7 +597,7 @@ cameraReverseView = (temp_reverser == -1);
                     changepoints(pos, 4);
 
                 }
-            }else if ((reverser == -1) && allow_points_change){
+            }else if ((reverser == -1) && allow_points_change && allow_driving_keys && !crashed){
 
                 if(event.key.toLowerCase() === "p") {
                     changepoints(pos-(adjusted_train_length), -1);
@@ -572,7 +615,7 @@ cameraReverseView = (temp_reverser == -1);
 
             }
         }
-    }
+
 
     }
 }, true);
@@ -2076,409 +2119,14 @@ var units_2_selected = prefer_units == 2;
 
 
 
-var overlay;
-var ctx;
-
-////////////////////////////
-
-var little_canvas_show_track_numbers = true;
-
-function little_canvas() {
-    var items = current_route_items_detailed;
-    var w = overlay.width, h = overlay.height;
-    var forward = (reverser) === 1, reverse = (reverser) === -1;
-    var direction = forward ? 1 : reverse ? -1 : 0;
-    var i, item, d, minD = Infinity, maxD = -Infinity, upcoming = [];
-    var p = pos;
-
-
-    var coachCount = (coaches);
-    var coachLength = (coachlength);
-
-
-    var trainLength = train_length;
-    var routePosition = reverse ? p - trainLength : p;
-
-    ctx.clearRect(0, 0, w, h);
-
-    for (i = 0; i < items.length; i++) {
-        item = items[i];
-        if (!Array.isArray(item)) continue;
-        d = Number(item[1]);
-        if (!Number.isFinite(d)) continue;
-        if (d < minD) minD = d;
-        if (d > maxD) maxD = d;
-    }
-
-    var startBuffer = Infinity, endBuffer = -Infinity;
-
-    for (i = 0; i < items.length; i++) {
-        item = items[i];
-        if (!Array.isArray(item) || item[0] !== 'buffer') continue;
-        d = Number(item[1]);
-        if (!Number.isFinite(d)) continue;
-        if (Math.abs(d - minD) < 0.01) startBuffer = d;
-        if (Math.abs(d - maxD) < 0.01) endBuffer = d;
-    }
-
-    // The global crash record persists; diagramCrashed is recalculated each frame.
-    var diagramCrashed = false;
-
-
-
-
-
-if (forward) {
-    if (pos > (items[items.length - 1][1])) {
-        crashed = true;
-        crashedtext = 'Crashed into buffer';
-        diagramCrashed = true;
-    }
-} else if (reverse) {
-    if (pos - train_length < (items[0][1])) {
-        crashed = true;
-        crashedtext = 'Crashed into buffer';
-        diagramCrashed = true;
-    }
-}
-
-    var panelX = w * 0.8, panelW = w * 0.2;
-
-    if (Number(reverser) === 0) {
-        ctx.fillStyle = '#101925';
-        ctx.fillRect(panelX, 0, panelW, h);
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '12px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('Reverser is in neutral', panelX + panelW / 2, h / 2);
-
-        if (diagramCrashed) {
-            ctx.fillStyle = 'rgba(0,0,0,0.85)';
-            ctx.fillRect(panelX + 3, h * 0.40, panelW - 6, h * 0.20);
-            ctx.fillStyle = '#ff3030';
-            ctx.font = '900 ' + Math.min(38, panelW * 0.18) + 'px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('CRASHED!', panelX + panelW / 2, h * 0.5);
-        }
-
-        return;
-    }
-
-    if (!forward && !reverse) return;
-
-    for (
-        i = forward ? 0 : items.length - 1;
-        forward ? i < items.length && upcoming.length < 4 : i >= 0 && upcoming.length < 4;
-        forward ? i++ : i--
-    ) {
-        item = items[i];
-        if (!Array.isArray(item)) continue;
-
-        d = Number(item[1]);
-        if (!Number.isFinite(d) || (forward ? d < routePosition : d > routePosition)) continue;
-
-        if (item[0] === 'buffer') {
-            if (forward && Math.abs(d - minD) < 0.01) continue;
-            if (reverse && Math.abs(d - maxD) < 0.01) continue;
-        }
-
-        if (
-            item[0] === 'facingpoints' ||
-            item[0] === 'nonfacingpoints' ||
-            item[0] === 'conflictingpoints' ||
-            item[0] === 'handover' ||
-            item[0] === 'buffer'
-        ) {
-            upcoming.push({ data: item, index: i });
-        }
-    }
-
-    var slot = h / 5;
-    var size = Math.min(68, panelW * 0.48, slot * 0.94);
-    var cx = panelX + panelW * 0.50;
-    var x1 = cx - size / 2, x2 = cx + size / 2;
-    var keyX = panelX + panelW * 0.85;
-    var keySize = Math.min(25, slot * 0.57);
-    var warningX = x2 + (keyX - keySize / 2 - x2) / 2;
-    var keys = ['p', 'o', 'i', 'u'], keyNo = 0;
-
-    ctx.fillStyle = '#101925';
-    ctx.fillRect(panelX, 0, panelW, h);
-
-    var trainY = forward ? slot * 4.65 : slot * 0.28;
-    ctx.fillStyle = '#26394e';
-    ctx.strokeStyle = '#ffffff';
-    ctx.lineWidth = 1.5;
-    ctx.fillRect(cx - 7, trainY - 11, 14, 22);
-    ctx.strokeRect(cx - 7, trainY - 11, 14, 22);
-    ctx.fillStyle = '#cbd8e7';
-    ctx.fillRect(cx - 4, trainY - 6, 8, 4);
-    ctx.fillRect(cx - 4, trainY + 2, 8, 3);
-
-    for (i = 0; i < upcoming.length; i++) {
-        item = upcoming[i].data;
-        var index = upcoming[i].index, type = item[0];
-        d = Number(item[1]);
-
-        var y = forward ? slot * (3.9 - i * 1.05) : slot * (1.2 + i * 0.9);
-        var top = y - size / 2, bottom = y + size / 2;
-        var warningItem = type === 'conflictingpoints' || type === 'buffer';
-
-        ctx.fillStyle = warningItem ? '#77400b' : '#000000';
-        ctx.fillRect(x1, top, size, size);
-        ctx.strokeStyle = warningItem ? '#f0a33a' : '#9aacc1';
-        ctx.lineWidth = 1.5;
-        ctx.strokeRect(x1, top, size, size);
-
-        ctx.fillStyle = '#e3eaf3';
-        ctx.font = '700 11px sans-serif';
-        ctx.textAlign = 'left';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(Math.round(Math.abs(d - routePosition)) + 'm', panelX + 3, y);
-
-        if (
-            type === 'facingpoints' ||
-            type === 'nonfacingpoints' ||
-            type === 'conflictingpoints'
-        ) {
-            var track = Number(item[2]);
-            var prevTrack = index > 0 && Array.isArray(items[index - 1])
-                ? Number(items[index - 1][2])
-                : track;
-            var nextTrack = index + 1 < items.length && Array.isArray(items[index + 1])
-                ? Number(items[index + 1][2])
-                : track;
-
-            if (!Number.isFinite(prevTrack)) prevTrack = track;
-            if (!Number.isFinite(nextTrack)) nextTrack = track;
-
-            var incoming = forward ? prevTrack : nextTrack;
-            var otherExit = forward ? nextTrack : prevTrack;
-            var split = forward
-                ? type === 'facingpoints'
-                : type === 'nonfacingpoints';
-
-            var branchLeft = item[5] === true;
-            if (reverse) branchLeft = !branchLeft;
-
-            var bx = cx + (branchLeft ? -1 : 1) * size * 0.31;
-            var startY = forward ? bottom - 8 : top + 8;
-            var endY = forward ? top + 8 : bottom - 8;
-            var nodeY = split
-                ? startY + (endY - startY) * 0.36
-                : startY + (endY - startY) * 0.64;
-
-            var conflict = type === 'conflictingpoints';
-            var branchActive = incoming !== track;
-            var branchTrack, straightTrack;
-
-            if (split) {
-                straightTrack = branchActive ? otherExit : track;
-                branchTrack = branchActive ? track : otherExit;
-            } else {
-                straightTrack = branchActive ? otherExit : incoming;
-                branchTrack = branchActive ? incoming : otherExit;
-            }
-
-            ctx.beginPath();
-
-            if (split) {
-                if (conflict) {
-                    ctx.moveTo(cx, startY);
-                    ctx.lineTo(cx, nodeY);
-                    ctx.lineTo(branchActive ? bx : cx, endY);
-                } else if (branchActive) {
-                    ctx.moveTo(cx, nodeY);
-                    ctx.lineTo(cx, endY);
-                } else {
-                    ctx.moveTo(cx, nodeY);
-                    ctx.lineTo(bx, endY);
-                }
-            } else {
-                if (conflict) {
-                    ctx.moveTo(branchActive ? bx : cx, startY);
-                    ctx.lineTo(cx, nodeY);
-                    ctx.lineTo(cx, endY);
-                } else if (branchActive) {
-                    ctx.moveTo(cx, startY);
-                    ctx.lineTo(cx, nodeY);
-                } else {
-                    ctx.moveTo(bx, startY);
-                    ctx.lineTo(cx, nodeY);
-                }
-            }
-
-            ctx.strokeStyle = '#858585';
-            ctx.lineWidth = 3.2;
-            ctx.lineCap = 'round';
-            ctx.stroke();
-
-            ctx.beginPath();
-
-            if (split) {
-                if (conflict) {
-                    ctx.moveTo(cx, nodeY);
-                    ctx.lineTo(branchActive ? cx : bx, endY);
-                } else {
-                    ctx.moveTo(cx, startY);
-                    ctx.lineTo(cx, nodeY);
-                    ctx.lineTo(branchActive ? bx : cx, endY);
-                }
-            } else {
-                if (conflict) {
-                    ctx.moveTo(branchActive ? cx : bx, startY);
-                    ctx.lineTo(cx, nodeY);
-                } else {
-                    ctx.moveTo(branchActive ? bx : cx, startY);
-                    ctx.lineTo(cx, nodeY);
-                    ctx.lineTo(cx, endY);
-                }
-            }
-
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 3.2;
-            ctx.stroke();
-
-            if (little_canvas_show_track_numbers) {
-                ctx.fillStyle = '#ff777b';
-                ctx.font = '700 7px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-
-                if (split) {
-                    ctx.fillText(String(incoming), cx, startY);
-                    ctx.fillText(String(straightTrack), cx, endY);
-                    ctx.fillText(String(branchTrack), bx, endY);
-                } else {
-                    ctx.fillText(String(straightTrack), cx, startY);
-                    ctx.fillText(String(branchTrack), bx, startY);
-                    ctx.fillText(String(track), cx, endY);
-                }
-            }
-
-            // Green number is the original trackSwitches array index.
-            ctx.fillStyle = '#65e3a0';
-            ctx.font = '700 9px sans-serif';
-            ctx.textAlign = branchLeft ? 'right' : 'left';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(
-                item[4] === null || item[4] === undefined ? '?' : String(item[4]),
-                branchLeft ? x2 - 3 : x1 + 3,
-                y
-            );
-
-            // Dashed connector and computer-style keycap.
-            ctx.beginPath();
-            ctx.setLineDash([3, 3]);
-            ctx.moveTo(x2 + 3, y);
-            ctx.lineTo(keyX - keySize / 2 - 3, y);
-            ctx.strokeStyle = '#b5c3d4';
-            ctx.lineWidth = 1.3;
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            ctx.fillStyle = '#536478';
-            ctx.fillRect(keyX - keySize / 2, y - keySize / 2 + 2, keySize, keySize);
-            ctx.fillStyle = '#e9eef5';
-            ctx.fillRect(keyX - keySize / 2, y - keySize / 2, keySize, keySize - 2);
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 1;
-            ctx.strokeRect(keyX - keySize / 2, y - keySize / 2, keySize, keySize - 2);
-
-            ctx.beginPath();
-            ctx.moveTo(keyX - keySize / 2 + 3, y - keySize / 2 + 2);
-            ctx.lineTo(keyX + keySize / 2 - 3, y - keySize / 2 + 2);
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 1;
-            ctx.stroke();
-
-            ctx.fillStyle = '#172333';
-            ctx.font = '800 13px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(keys[keyNo], keyX, y);
-            keyNo++;
-
-        } else if (type === 'handover') {
-            ctx.beginPath();
-            ctx.moveTo(cx, top + 3);
-            ctx.lineTo(cx, bottom - 3);
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            if (little_canvas_show_track_numbers) {
-                ctx.fillStyle = '#ff777b';
-                ctx.font = '700 8px sans-serif';
-                ctx.textBaseline = 'middle';
-                ctx.textAlign = 'center';
-                ctx.fillText(String(item[2]), cx, top + 7);
-                ctx.fillText(String(item[3]), cx, bottom - 7);
-            }
-
-        } else if (type === 'buffer') {
-            var barY = forward ? top + size * 0.27 : bottom - size * 0.27;
-
-            ctx.beginPath();
-            ctx.moveTo(cx, forward ? bottom - 3 : top + 3);
-            ctx.lineTo(cx, barY);
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 3;
-            ctx.stroke();
-
-            ctx.beginPath();
-            ctx.moveTo(x1 + 4, barY);
-            ctx.lineTo(x2 - 4, barY);
-            ctx.strokeStyle = '#f04f52';
-            ctx.lineWidth = 4;
-            ctx.stroke();
-
-            if (little_canvas_show_track_numbers) {
-                ctx.fillStyle = '#ff777b';
-                ctx.font = '700 8px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(String(item[2]), cx, forward ? bottom - 7 : top + 7);
-            }
-        }
-
-        if (warningItem) {
-            var ts = Math.min(42, panelW * 0.14, slot * 0.75);
-
-            ctx.beginPath();
-            ctx.moveTo(warningX, y - ts);
-            ctx.lineTo(warningX - ts, y + ts * 0.85);
-            ctx.lineTo(warningX + ts, y + ts * 0.85);
-            ctx.closePath();
-            ctx.fillStyle = '#ffff00';
-            ctx.fill();
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = 1.5;
-            ctx.stroke();
-
-            ctx.fillStyle = '#30200a';
-            ctx.font = '900 ' + Math.max(16, ts * 0.95) + 'px sans-serif';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('!', warningX, y + 2);
-        }
-    }
-
-    if (diagramCrashed) {
-        ctx.fillStyle = 'rgba(0,0,0,0.85)';
-        ctx.fillRect(panelX + 3, h * 0.40, panelW - 6, h * 0.20);
-        ctx.fillStyle = '#ff3030';
-        ctx.font = '900 ' + Math.min(38, panelW * 0.18) + 'px sans-serif';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText('CRASHED!', panelX + panelW / 2, h * 0.5);
-    }
-}
 
 function make_default_values(){
-
+power_notches = 4;
+brake_notches = 6;
+current_throttle = 0;
+throttle_notch = 0;
+key_a = false;
+key_d = false;
 left_doors = 0;
 right_doors = 0;
 left_doors_mode = 0;
@@ -2556,7 +2204,7 @@ function startRenderLoop() {
 
 
 function pauseRenderLoop(){renderLoopRunning=!1,null!==renderAnimationFrameId&&(cancelAnimationFrame(renderAnimationFrameId),renderAnimationFrameId=null),stop_sound()}function stopRenderLoop(){renderLoopRunning=!1,null!==renderAnimationFrameId&&(cancelAnimationFrame(renderAnimationFrameId),renderAnimationFrameId=null),stop_sound();var e=!!gl;try{e&&gl.isContextLost()&&(e=!1)}catch(t){e=!1}function t(t,n){if(e)try{n()}catch(e){console.warn(t,e)}}function n(e,n){e&&t(n||"Could not delete a WebGL buffer:",function(){gl.deleteBuffer(e)})}function a(e,n){e&&t(n||"Could not delete a WebGL vertex array:",function(){gl.deleteVertexArray(e)})}function r(e,n){e&&t(n||"Could not delete a WebGL texture:",function(){gl.deleteTexture(e)})}if(t("Could not reset WebGL state:",function(){gl.bindVertexArray(null),gl.bindBuffer(gl.ARRAY_BUFFER,null),gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,null),gl.useProgram(null),gl.bindFramebuffer(gl.FRAMEBUFFER,null),gl.bindRenderbuffer(gl.RENDERBUFFER,null),gl.depthMask(!0),gl.disable(gl.BLEND),gl.disable(gl.CULL_FACE);
-for(var e=gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS),t=0;t<e;t++)gl.activeTexture(gl.TEXTURE0+t),gl.bindTexture(gl.TEXTURE_2D,null);gl.activeTexture(gl.TEXTURE0)}),routeMesh&&Array.isArray(routeMesh.zones)){for(var o of routeMesh.zones)o&&(a(o.vao,"Could not delete a route-zone VAO:"),n(o.buffer,"Could not delete a route-zone buffer:"),o.vao=null,o.buffer=null,o.segmentFirst=null,o.segmentCount=null);routeMesh.zones.length=0}if(Array.isArray(route_objects))for(var i of route_objects)if(i){var s=i[4];if(s&&Array.isArray(s.meshes)){for(var u of s.meshes)if(u){for(var l of(a(u.objectVao,"Could not delete an object-mesh VAO:"),u.objectVao=null,["positionBuffer","normalBuffer","uvBuffer","indexBuffer"]))n(u[l],"Could not delete object-mesh buffer "+l+":"),u[l]=null;delete u._positions,delete u._normals,delete u._uvs,delete u._indices,u.texture=null,u.nightTexture=null,u.indexCount=0,u.vertexCount=0}s.meshes.length=0}i[3]=!1,i[4]=null}if(Array.isArray(route_textures))for(var c of route_textures)if(c){var d=c[3];if(r(c[5],"Could not delete a route texture:"),d&&"function"==typeof d.close)try{d.close()}catch(e){console.warn("Could not close a decoded route image:",e)}c[2]=!1,c[3]=null,c[4]=!1,c[5]=null}objectProgram&&t("Could not delete the object shader program:",function(){gl.deleteProgram(objectProgram)}),objectProgram=null,objectLocations=null,route=null,routeMesh=null,route_textures=[],route_objects=[],route_texture_errors=[],route_object_errors=[],object_linup=[],use_track_texture=[],route_zip=null,activeRoute=null,currentRoute=null,ctx.clearRect(0,0,overlay.width,overlay.height),t("Could not clear the WebGL canvas:",function(){gl.clearColor(.47,.63,.74,1),gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT)}),statusElement.textContent="No route loaded.",console.log("Route unloaded. Route GPU resources released; ZIP cache preserved."),setTimeout(function(){main_menu("developer"===routeLaunchSource?0:3)},100)}
+for(var e=gl.getParameter(gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS),t=0;t<e;t++)gl.activeTexture(gl.TEXTURE0+t),gl.bindTexture(gl.TEXTURE_2D,null);gl.activeTexture(gl.TEXTURE0)}),routeMesh&&Array.isArray(routeMesh.zones)){for(var o of routeMesh.zones)o&&(a(o.vao,"Could not delete a route-zone VAO:"),n(o.buffer,"Could not delete a route-zone buffer:"),o.vao=null,o.buffer=null,o.segmentFirst=null,o.segmentCount=null);routeMesh.zones.length=0}if(Array.isArray(route_objects))for(var i of route_objects)if(i){var s=i[4];if(s&&Array.isArray(s.meshes)){for(var u of s.meshes)if(u){for(var l of(a(u.objectVao,"Could not delete an object-mesh VAO:"),u.objectVao=null,["positionBuffer","normalBuffer","uvBuffer","indexBuffer"]))n(u[l],"Could not delete object-mesh buffer "+l+":"),u[l]=null;delete u._positions,delete u._normals,delete u._uvs,delete u._indices,u.texture=null,u.nightTexture=null,u.indexCount=0,u.vertexCount=0}s.meshes.length=0}i[3]=!1,i[4]=null}if(Array.isArray(route_textures))for(var c of route_textures)if(c){var d=c[3];if(r(c[5],"Could not delete a route texture:"),d&&"function"==typeof d.close)try{d.close()}catch(e){console.warn("Could not close a decoded route image:",e)}c[2]=!1,c[3]=null,c[4]=!1,c[5]=null}objectProgram&&t("Could not delete the object shader program:",function(){gl.deleteProgram(objectProgram)}),objectProgram=null,objectLocations=null,route=null,routeMesh=null,route_textures=[],route_objects=[],route_texture_errors=[],route_object_errors=[],object_linup=[],use_track_texture=[],route_zip=null,activeRoute=null,currentRoute=null,ctx_controls_canvas.clearRect(0,0,controls_canvas.width,controls_canvas.height),t("Could not clear the WebGL canvas:",function(){gl.clearColor(.47,.63,.74,1),gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT)}),statusElement.textContent="No route loaded.",console.log("Route unloaded. Route GPU resources released; ZIP cache preserved."),setTimeout(function(){main_menu("developer"===routeLaunchSource?0:3)},100)}
 
 
 

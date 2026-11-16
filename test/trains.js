@@ -49,7 +49,8 @@ const list_of_trains = [
                 globalThis.bogie_height = 1;
 
 
-
+                globalThis.power_notches = 4;  // throttle positions
+                globalThis.brake_notches = 6;  // brake positions
                 globalThis.EYE_HEIGHT = 2;  // the view eye height
                 globalThis.cameraXOffset = -0.5;  // camera offset for train cab
 
@@ -189,7 +190,8 @@ const list_of_trains = [
             globalThis.bogie_height = 1;
 
 
-
+            globalThis.power_notches = 4;  // throttle positions
+            globalThis.brake_notches = 6;  // brake positions
             globalThis.EYE_HEIGHT = 2;  // the view eye height
             globalThis.cameraXOffset = -0.5;  // camera offset for train cab
 
@@ -340,7 +342,8 @@ const list_of_trains = [
 
 
 
-
+                globalThis.power_notches = 100;  // throttle positions
+                globalThis.brake_notches = 100;  // brake positions
                 globalThis.EYE_HEIGHT = 2;  // the view eye height
                 globalThis.cameraXOffset = 0;  // camera offset for train cab
 

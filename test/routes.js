@@ -43,7 +43,7 @@ const routes = [
                 globalThis.block_length = 25;  // track block ength
                 globalThis.driving_on_track = 0; // The track the user drives on. If it needs changing mid route use the route_eval to dynamically change;
                 globalThis.allow_points_change = true;  // Allow the user to change points
-                globalThis.points_speed_limit = 25;  // The speed limit when going over points when not on main route
+                globalThis.points_speed_limit = 3;  // The speed limit when going over points when not on main route
                 globalThis.flip_out = false;  // The train runs in reverse as default
 
                 ///// NPC TRAIN SETTINGS
@@ -70,7 +70,7 @@ const routes = [
 
                 // Terrain and curves
                 globalThis.TRACK_GRADIENT_SCALE = 0.2; // How much should the route have terrain
-                globalThis.curveMultiplier = 1.3; // How tight should the curves be
+                globalThis.curveMultiplier = 1.1; // How tight should the curves be
 
                 //globalThis.TRACK_GRADIENT_SCALE = 20; // How much should the route have terrain
                 //globalThis.curveMultiplier = 1.3; // How tight should the curves be
@@ -756,7 +756,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
     scripts: {
         beforeStartup() {
             // Track configuration
-            globalThis.pos = 4;  // start position
+            globalThis.pos = 4400;  // start position
             globalThis.current_track = 0;  // which track to start on
             globalThis.starttrack = 0;  // start track
             globalThis.block_length = 25;  // track block ength
@@ -778,7 +778,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
 
             // Terrain and curves
             globalThis.TRACK_GRADIENT_SCALE = 0.2; // How much should the route have terrain
-            globalThis.curveMultiplier = 1.3; // How tight should the curves be
+            globalThis.curveMultiplier = 1,3; // How tight should the curves be
 
             // Pitch settings
             globalThis.wall_follow_pitch = true; // Set these to adjust to the route developers discrpency of how the route was built
