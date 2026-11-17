@@ -5301,6 +5301,8 @@ function parseEvents(txt) {
     var currentDistance = 0;
     var lowestRoutePosition = Infinity;
     var routePositions = new Set();
+    var railOffsetHistory = new Map();
+    var railCurvePoints = [];
     use_track_texture = [];
     var inTrack = false;
     var inTrain = false;
@@ -5723,7 +5725,70 @@ function parseEvents(txt) {
                             lineNo + ': ' + cmd
                         );
                     }
+                } else if (name === 'section') {
+                    // Track.Section Aspect0; Aspect1; Aspect2; ...
+                    events.push({
+                        type: 'section',
+                        distance: currentDistance,
+                        aspects: v.map(value => int(value, NaN)),
+                                line: lineNo
+                    });
 
+                    stationsignals.push(currentDistance);
+
+                } else if (name === 'sigf') {
+                    // Track.SigF SignalIndex; Section; X; Y; Yaw; Pitch; Roll
+                    events.push({
+                        type: 'sigf',
+                        distance: currentDistance,
+                        signalIndex: int(v[0], 0),
+                                section: int(v[1], 0),
+                                x: num(v[2], 0),
+                                y: num(v[3], 0),
+                                yaw: num(v[4], 0),
+                                pitch: num(v[5], 0),
+                                roll: num(v[6], 0),
+                                line: lineNo
+                    });
+
+                } else if (name === 'sig' || name === 'signal') {
+                    // BVE Track.Signal:
+                    // Aspects; Label; X; Y; Type
+                    events.push({
+                        type: 'signal',
+                        command: name,
+                        distance: currentDistance,
+                        aspects: int(v[0], -2),
+                                label: String(v[1] ?? '').trim(),
+                                x: num(v[2], 0),
+                                y: num(v[3], 0),
+                                signalType: int(v[4], NaN),
+                                line: lineNo
+                    });
+
+                    // Signal also creates a functional section.
+                    stationsignals.push(currentDistance);
+
+                } else if (name === 'announce') {
+                    // Track.Announce FileName; Speed
+                    events.push({
+                        type: 'announce',
+                        distance: currentDistance,
+                        fileName: String(v[0] ?? '').trim(),
+                                speed: num(v[1], 0),
+                                line: lineNo
+                    });
+
+                } else if (name === 'doppler') {
+                    // Track.Doppler FileName; X; Y
+                    events.push({
+                        type: 'doppler',
+                        distance: currentDistance,
+                        fileName: String(v[0] ?? '').trim(),
+                                x: num(v[1], 0),
+                                y: num(v[2], 0),
+                                line: lineNo
+                    });
                 } else if (name === 'stop') {
                     events.push({
                         type: 'stop',
@@ -5739,13 +5804,66 @@ function parseEvents(txt) {
                     var rail = int(v[0], -1);
 
                     if (rail > 0) {
+                        var offsetX = num(v[1], NaN);
+                        var offsetY = num(v[2], NaN);
+
+                        var suppliedX = Number.isFinite(offsetX);
+                        var suppliedY = Number.isFinite(offsetY);
+
+                        var history = railOffsetHistory.get(rail) || {
+                            active: false,
+                            startDistance: NaN,
+                            lastDistance: NaN,
+                            lastRailDistance: NaN,
+                            x: 0,
+                            y: 0
+                        };
+
+                        var isRailStart = name === 'railstart';
+
+                        var duplicateRail =
+                        !isRailStart &&
+                        history.active &&
+                        history.lastRailDistance === currentDistance;
+
+                        if (!duplicateRail) {
+                            if (isRailStart || !history.active) {
+                                // Establish the real start. Never add a point before it.
+                                history.active = true;
+                                history.startDistance = currentDistance;
+                                history.lastDistance = currentDistance;
+
+                            } else if (suppliedX || suppliedY) {
+                                // Only add a curve point when the previous offset
+                                // update is more than one block behind this update.
+                                if (currentDistance - history.lastDistance > block_length) {
+                                    railCurvePoints.push({
+                                        rail: rail,
+                                        startDistance: history.startDistance,
+                                        distance: currentDistance - block_length,
+                                        x: history.x,
+                                        y: history.y
+                                    });
+                                }
+
+                                history.lastDistance = currentDistance;
+                            }
+
+                            if (suppliedX) history.x = offsetX;
+                            if (suppliedY) history.y = offsetY;
+
+                            history.lastRailDistance = currentDistance;
+                        }
+
+                        railOffsetHistory.set(rail, history);
+
                         events.push({
                             type: 'rail',
                             distance: currentDistance,
                             rail: rail,
-                            offsetX: num(v[1], NaN),
-                                    offsetY: num(v[2], NaN),
-                                    railType: int(v[3], NaN),
+                            offsetX: offsetX,
+                            offsetY: offsetY,
+                            railType: int(v[3], NaN),
                                     line: lineNo,
                                     command: name
                         });
@@ -5753,7 +5871,45 @@ function parseEvents(txt) {
 
                 } else if (name === 'railend') {
                     var endRail = int(v[0], -1);
+                    if (endRail > 0) {
+                        var history = railOffsetHistory.get(endRail) || {
+                            active: false,
+                            startDistance: NaN,
+                            lastDistance: NaN,
+                            lastRailDistance: NaN,
+                            x: 0,
+                            y: 0
+                        };
 
+                        var endX = num(v[1], NaN);
+                        var endY = num(v[2], NaN);
+
+                        var suppliedEndX = Number.isFinite(endX);
+                        var suppliedEndY = Number.isFinite(endY);
+
+                        if (
+                            history.active &&
+                            (suppliedEndX || suppliedEndY) &&
+                            currentDistance - history.lastDistance > block_length
+                        ) {
+                            railCurvePoints.push({
+                                rail: endRail,
+                                startDistance: history.startDistance,
+                                distance: currentDistance - block_length,
+                                x: history.x,
+                                y: history.y
+                            });
+                        }
+
+                        if (suppliedEndX) history.x = endX;
+                        if (suppliedEndY) history.y = endY;
+
+                        history.active = false;
+                        history.lastDistance = NaN;
+                        history.lastRailDistance = NaN;
+
+                        railOffsetHistory.set(endRail, history);
+                    }
                     if (endRail > 0) {
                         events.push({
                             type: 'railend',
@@ -6498,7 +6654,9 @@ function parseEvents(txt) {
 
     events.groundCycles = groundCycles;
     events.railCycles = railCycles;
-
+    events.railCurvePoints = railCurvePoints;
+    stationsignals.sort((a, b) => a - b);
+    events.stationsignals = stationsignals;
     return events;
 }
 
@@ -6918,7 +7076,8 @@ function buildGeometry(events) {
         railEvents,
         maxDistance,
         routePositions,
-        samples
+        samples,
+        events.railCurvePoints
     );
     var railObjectRuns = Array.isArray(rails.railObjectRuns)
     ? rails.railObjectRuns
@@ -7240,8 +7399,8 @@ function buildGeometry(events) {
             return { x: 0, y: 0 };
         }
 
-        // A RailIndex can be ended and restarted at the same position.
-        // Prefer the run with the latest start distance at shared boundaries.
+        // First look for a dynamically generated track.
+        // This preserves its existing switch-smoothed geometry.
         var selectedTrack = null;
         var selectedStartDistance = -Infinity;
 
@@ -7252,8 +7411,6 @@ function buildGeometry(events) {
             var endDistance = Number(track.endDistance);
 
             if (
-                !Number.isFinite(startDistance) ||
-                !Number.isFinite(endDistance) ||
                 distance < startDistance - 1e-7 ||
                 distance > endDistance + 1e-7
             ) {
@@ -7270,8 +7427,68 @@ function buildGeometry(events) {
             return interpolateRailOffset(selectedTrack, distance);
         }
 
-        // Do not silently attach an object to the player's rail
-        // if its requested reference rail cannot be found.
+        // If there is no dynamic track, look through ALL original rail runs.
+        // This includes rails omitted from dynamic track generation.
+        var selectedRun = null;
+        var selectedRunStart = -Infinity;
+
+        var lastEndedRun = null;
+        var lastEndedDistance = -Infinity;
+
+        for (var run of railObjectRuns) {
+            if (
+                Number(run.rail) !== railIndex ||
+                !run.points ||
+                !run.points.length
+            ) {
+                continue;
+            }
+
+            var runStart = Number(run.points[0].d);
+            var runEnd = Number(run.endDistance);
+
+            // Find a run which actually exists at this distance.
+            if (
+                distance >= runStart - 1e-7 &&
+                distance <= runEnd + 1e-7
+            ) {
+                if (runStart >= selectedRunStart) {
+                    selectedRun = run;
+                    selectedRunStart = runStart;
+                }
+
+                // Otherwise remember the most recently ended run.
+            } else if (
+                runEnd < distance - 1e-7 &&
+                runEnd > lastEndedDistance
+            ) {
+                lastEndedRun = run;
+                lastEndedDistance = runEnd;
+            }
+        }
+
+        // An existing rail run which was omitted from dynamic geometry.
+        if (selectedRun) {
+            return interpolateRailOffset(
+                selectedRun,
+                distance,
+                true
+            );
+        }
+
+        // The rail has ended: retain its last known X and Y.
+        if (lastEndedRun) {
+            var lastPoint =
+            lastEndedRun.points[lastEndedRun.points.length - 1];
+
+            return {
+                x: lastPoint.x,
+                y: lastPoint.y,
+                dx: 0,
+                dy: 0
+            };
+        }
+
         return null;
     }
     function getRailWorldPoint(railIndex, distance) {
@@ -9021,6 +9238,25 @@ function buildGeometry(events) {
     // ------------------------------------------------------------
 
     return {
+        trackEvents: events.filter(e =>
+        [
+            'section',
+            'sigf',
+            'signal',
+            'announce',
+            'doppler'
+        ].includes(e.type)
+        ).sort((a, b) =>
+        (a.distance - b.distance) ||
+        (a.order - b.order)
+        ),
+
+        sections: events.filter(e => e.type === 'section'),
+        sigf: events.filter(e => e.type === 'sigf'),
+        signals: events.filter(e => e.type === 'signal'),
+            announces: events.filter(e => e.type === 'announce'),
+            dopplers: events.filter(e => e.type === 'doppler'),
+            stationsignals: events.stationsignals,
         samples: samples,
         firstRouteDistance: events.firstRouteDistance ?? 0,
         rails: rails,
@@ -9077,7 +9313,8 @@ function buildRailTracks(
     events,
     maxDistance,
     routePositions,
-    routeSamples
+    routeSamples,
+    railCurvePoints
 ) {
     var EPS = 1e-7;
     var ZERO_RAIL_TOLERANCE = 0.001;
@@ -9375,6 +9612,38 @@ function buildRailTracks(
             });
         }
     }
+
+
+    for (var curvePoint of (railCurvePoints || [])) {
+        var run = completedRuns.find(run =>
+        run.rail === curvePoint.rail &&
+        Math.abs(run.points[0].d - curvePoint.startDistance) <= EPS
+        );
+
+        if (!run) continue;
+
+        if (
+            curvePoint.distance <= run.points[0].d + EPS ||
+            curvePoint.distance >= run.endDistance - EPS
+        ) {
+            continue;
+        }
+
+        var alreadyExists = run.points.some(point =>
+        Math.abs(point.d - curvePoint.distance) <= EPS
+        );
+
+        if (!alreadyExists) {
+            run.points.push({
+                d: curvePoint.distance,
+                x: curvePoint.x,
+                y: curvePoint.y
+            });
+
+            run.points.sort((a, b) => a.d - b.d);
+        }
+    }
+
 
     // ------------------------------------------------------------
     // BUILD THE FINISHED TRACKS

@@ -1676,7 +1676,7 @@ globalThis.flip_out = false;  // The train runs in reverse as default
     scripts: {
         beforeStartup() {
             // Track configuration
-            globalThis.pos = 4;  // start position
+            globalThis.pos = 10000;  // start position
             globalThis.current_track = 0;  // which track to start on
             globalThis.starttrack = 0;  // start track
             globalThis.block_length = 25;  // track block ength

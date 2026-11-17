@@ -1991,7 +1991,7 @@ export function updateMotorSound(
     );
 
     const isDCResistorBraking =
-        traction === "DC_RESISTOR" &&
+
         Number(throttleValue) < 0 &&
         Number(speedKmh) > (
             Number.isFinite(decelCutoff)
