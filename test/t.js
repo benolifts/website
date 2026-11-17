@@ -745,32 +745,29 @@ write the function
 
 
 
-
 function little_canvas() {
-
+try{
     var ctx = ctx_controls_canvas;
     var items = current_route_items_detailed;
 
     var w = controls_canvas.width;
     var h = controls_canvas.height;
 
-    var forward = reverser === 1;
-    var reverse = reverser === -1;
-    var neutral = reverser === 0;
-
-    var displayDirection =
-    (forward ? 1 : reverse ? -1 : 0) *
-    (flip_out ? -1 : 1);
-
-    var displayForward = displayDirection > 0;
-    var displayReverse = displayDirection < 0;
-
     var p = pos;
     var trainLength = train_length;
 
-    var routePosition = displayReverse
+    // The train's reference position for route items:
+    // Forward uses the front of the train.
+    // Reverse uses the rear of the train.
+    var routePosition = reverser === -1
     ? p - trainLength
     : p;
+
+    // This controls only the screen orientation of the points diagram.
+    // It does not affect speed limits or signal measurements.
+    var trainAtBottom =
+    (reverser === 1 && !flip_out) ||
+    (reverser === -1 && flip_out);
 
     var panelTotalW = 275;
     var panelX = Math.max(0, w - panelTotalW);
@@ -805,7 +802,7 @@ function little_canvas() {
     var drawSmallThrottleArrow;
     var convertDisplayedSpeed;
     var formatSpeedDistance;
-
+}catch{}
     try {
 
         drawKeyCap = function (
@@ -962,14 +959,14 @@ function little_canvas() {
             if (d > maxD) maxD = d;
         }
 
-        if (displayForward && p > maxD) {
+        if (reverser === 1 && p > maxD) {
 
             crashed = true;
             crashedtext = 'Crashed into buffer';
             diagramCrashed = true;
 
         } else if (
-            displayReverse &&
+            reverser === -1 &&
             p - trainLength < minD
         ) {
 
@@ -1079,91 +1076,33 @@ function little_canvas() {
 
 
     // ============================================================
-    // 6. SPEED PANEL NEUTRAL REVERSER
+    // 6. COMMON SPEED PANEL CONTROLS
+    //
+    // These controls are displayed in all reverser states,
+    // including neutral.
+    //
+    // SLOT 0: LEFT DOOR ARROW AND Q
+    // SLOT 1: SIGNAL
+    // SLOT 2: REVERSER AND W/S
+    // SLOT 3: THROTTLE
     // ============================================================
 
-    else if (neutral && speedAreaW > 0) {
+    var slotWidth = speedAreaW / 9;
 
-        try {
-
-            var neutralKeySize = Math.min(
-                34,
-                speedBoxH * 0.27,
-                speedAreaW * 0.045
-            );
-
-            var neutralY = speedBoxH / 2;
-
-            drawKeyCap(
-                speedAreaW * 0.30 - 38,
-                neutralY,
-                'W',
-                neutralKeySize,
-                neutralKeySize,
-                16
-            );
-
-            drawKeyCap(
-                speedAreaW * 0.70 - 38,
-                neutralY,
-                'S',
-                neutralKeySize,
-                neutralKeySize,
-                16
-            );
-
-            ctx.fillStyle = '#ffffff';
-            ctx.font = '700 13px sans-serif';
-            ctx.textAlign = 'left';
-            ctx.textBaseline = 'middle';
-
-            ctx.fillText(
-                'Reverser forward',
-                speedAreaW * 0.30 - 15,
-                neutralY,
-                speedAreaW * 0.25
-            );
-
-            ctx.fillText(
-                'Reverser reverse',
-                speedAreaW * 0.70 - 15,
-                neutralY,
-                speedAreaW * 0.25
-            );
-
-        } catch {}
-    }
+    var slot0 = slotWidth * 0.5;
+    var slot1 = slotWidth * 1.5;
+    var slot2 = slotWidth * 2.5;
+    var slot3 = slotWidth * 3.5;
+    var slot4 = slotWidth * 4.5;
+    var slot5 = slotWidth * 5.5;
+    var slot6 = slotWidth * 6.5;
+    var slot7 = slotWidth * 7.5;
+    var slot8 = slotWidth * 8.5;
 
 
-    // ============================================================
-    // 7. NORMAL SPEED PANEL
-    // ============================================================
+    if (!isCrashed && speedAreaW > 0) {
 
-    else if (!neutral && speedAreaW > 0) {
-
-        try {
-
-            metricSpeed = use_metric !== false;
-            speedUnit = metricSpeed ? 'kmh' : 'mph';
-
-
-            // ----------------------------------------------------
-            // NINE DISPLAY POSITIONS
-            //
-            // LEFT | BLANK | BLANK | THROTTLE | SPEED |
-            // CURRENT | NEXT | AFTER | RIGHT
-            // ----------------------------------------------------
-
-            var slotWidth = speedAreaW / 9;
-
-            var slot0 = slotWidth * 0.5;
-            var slot3 = slotWidth * 3.5;
-            var slot4 = slotWidth * 4.5;
-            var slot5 = slotWidth * 5.5;
-            var slot6 = slotWidth * 6.5;
-            var slot7 = slotWidth * 7.5;
-            var slot8 = slotWidth * 8.5;
-
+        //try {
 
             // ----------------------------------------------------
             // DOOR ARROWS AND Q/E
@@ -1217,6 +1156,414 @@ function little_canvas() {
 
 
             // ----------------------------------------------------
+            // SIGNAL: SLOT 2
+            // Only shown on track 0 or track 1.
+            //
+            // Forward:
+            // Use pos and stationsignals.
+            //
+            // Reverse:
+            // Use pos - train_length and subtract
+            // signalprogression_reverse_offset from each signal.
+            //
+            // flip_out is not used for signal measurements.
+            // ----------------------------------------------------
+            // ----------------------------------------------------
+            // SIGNAL: SLOT 2
+            //
+            // Forward:
+            //   Signal positions use stationsignals directly.
+            //   Distance is measured from pos.
+            //
+            // Reverse:
+            //   Signal positions have signalprogression_reverse_offset
+            //   subtracted from them.
+            //   Distance is measured from pos - train_length.
+            //
+            // Signal progression:
+            //   Forward: progression identifies the first red signal.
+            //   Reverse: progression identifies the last red signal
+            //   in reverse travel order.
+            // ----------------------------------------------------
+
+            if ((current_track === 0 || current_track === 1) &&  (reverser != 0)){
+
+                var nextSignalIndex = -1;
+                var nextSignalPosition = null;
+                var signalDistance = null;
+
+                var signalReferencePosition = reverser === -1
+                ? p - trainLength
+                : p;
+
+
+                // ------------------------------------------------
+                // FIND NEXT SIGNAL
+                // ------------------------------------------------
+
+                if (reverser === -1) {
+
+                    // Reverse: find the nearest signal at a lower
+                    // route position than the rear of the train.
+
+                    for (
+                        var signalIndex = stationsignals.length - 1;
+                    signalIndex >= 0;
+                    signalIndex--
+                    ) {
+
+                        var candidateReverseSignal =
+                        stationsignals[signalIndex] -
+                        signalprogression_reverse_offset;
+
+                        if (
+                            candidateReverseSignal <
+                            signalReferencePosition - 1e-7
+                        ) {
+
+                            nextSignalIndex = signalIndex;
+                            nextSignalPosition = candidateReverseSignal;
+
+                            break;
+                        }
+                    }
+
+                } else {
+
+                    // Forward, or neutral: find the nearest signal
+                    // at a higher route position than the train.
+
+                    for (
+                        signalIndex = 0;
+                    signalIndex < stationsignals.length;
+                    signalIndex++
+                    ) {
+
+                        var candidateForwardSignal =
+                        stationsignals[signalIndex];
+
+                        if (
+                            candidateForwardSignal >
+                            signalReferencePosition + 1e-7
+                        ) {
+
+                            nextSignalIndex = signalIndex;
+                            nextSignalPosition = candidateForwardSignal;
+
+                            break;
+                        }
+                    }
+                }
+
+
+                // ------------------------------------------------
+                // DETERMINE DISTANCE AND COLOUR
+                // ------------------------------------------------
+
+                var signalColour = '#59616c';
+
+                if (nextSignalPosition !== null) {
+
+                    if (reverser === -1) {
+
+                        signalDistance =
+                        signalReferencePosition - nextSignalPosition;
+
+                        // Reverse signal numbering is 1-based:
+                        // progression 2 means:
+                        // signal 1 and 2 = red
+                        // signal 3 = yellow
+                        // signal 4 and beyond = green
+
+                        var reverseSignalNumber =
+                        nextSignalIndex + 1;
+
+                        if (
+                            reverseSignalNumber <= signalprogression_reverse
+                        ) {
+
+                            signalColour = '#ed292f';
+
+                        } else if (
+                            reverseSignalNumber ===
+                            signalprogression_reverse + 1
+                        ) {
+
+                            signalColour = '#ffd52a';
+
+                        } else {
+
+                            signalColour = '#27d957';
+                        }
+
+                    } else {
+
+                        signalDistance =
+                        nextSignalPosition - signalReferencePosition;
+
+                        // Forward progression 3 means:
+                        // signal 0 and 1 = green
+                        // signal 2 = yellow
+                        // signal 3 and beyond = red
+
+                        if (
+                            nextSignalIndex >= signalprogression_forwards
+                        ) {
+
+                            signalColour = '#ed292f';
+
+                        } else if (
+                            nextSignalIndex ===
+                            signalprogression_forwards - 1
+                        ) {
+
+                            signalColour = '#ffd52a';
+
+                        } else {
+
+                            signalColour = '#27d957';
+                        }
+                    }
+                }
+
+
+                // ------------------------------------------------
+                // SIGNAL LABEL
+                // ------------------------------------------------
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '700 ' + Math.max(8, slotWidth * 0.105) +
+                'px sans-serif';
+
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                ctx.fillText(
+                    'SIGNAL',
+                    slot1,
+                    speedBoxH * 0.16,
+                    slotWidth - 3
+                );
+
+
+                // ------------------------------------------------
+                // LARGER SIGNAL HOUSING
+                // ------------------------------------------------
+
+                var signalBoxSize = Math.min(
+                    54,
+                    slotWidth * 0.82,
+                    speedBoxH * 0.42
+                );
+
+                var signalCentreY = speedBoxH * 0.48;
+
+                ctx.fillStyle = '#000000';
+
+                ctx.fillRect(
+                    slot1 - signalBoxSize / 2,
+                    signalCentreY - signalBoxSize / 2,
+                    signalBoxSize,
+                    signalBoxSize
+                );
+
+                ctx.strokeStyle = '#8995a3';
+                ctx.lineWidth = 1.5;
+
+                ctx.strokeRect(
+                    slot1 - signalBoxSize / 2,
+                    signalCentreY - signalBoxSize / 2,
+                    signalBoxSize,
+                    signalBoxSize
+                );
+
+
+                // ------------------------------------------------
+                // SIGNAL LAMP
+                // ------------------------------------------------
+
+                ctx.beginPath();
+
+                ctx.arc(
+                    slot1,
+                    signalCentreY,
+                    signalBoxSize * 0.34,
+                    0,
+                    Math.PI * 2
+                );
+
+                ctx.fillStyle = signalColour;
+                ctx.fill();
+
+                ctx.strokeStyle = '#bfc8d2';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+
+
+                // ------------------------------------------------
+                // DISTANCE BELOW SIGNAL
+                // ------------------------------------------------
+
+                ctx.fillStyle = '#ffffff';
+
+                ctx.font =
+                '700 ' + Math.max(9, Math.min(14, slotWidth * 0.22)) +
+                'px sans-serif';
+
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                ctx.fillText(
+                    signalDistance !== null
+                    ? formatSpeedDistance(signalDistance)
+                    : '--',
+                    slot1,
+                    signalCentreY + signalBoxSize / 2 + 15,
+                    slotWidth - 2
+                );
+            }
+
+            // ----------------------------------------------------
+            // REVERSER: SLOT 3
+            //
+            // F = reverser 1
+            // N = reverser 0
+            // R = reverser -1
+            //
+            // W/S keys are always displayed.
+            // ----------------------------------------------------
+
+            var reverserX = slot2 - slotWidth * 0.14;
+
+            var reverserLetter =
+            reverser === 1
+            ? 'F'
+            : reverser === -1
+            ? 'R'
+            : 'N';
+
+            ctx.fillStyle = '#ffffff';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+
+            ctx.font = '700 ' + Math.max(8, slotWidth * 0.105) +
+            'px sans-serif';
+
+            ctx.fillText(
+                'REVERSER',
+                reverserX,
+                speedBoxH * 0.28,
+                slotWidth * 0.48
+            );
+
+            ctx.font = '900 ' + Math.max(18, slotWidth * 0.23) +
+            'px sans-serif';
+
+            ctx.fillText(
+                reverserLetter,
+                reverserX,
+                speedBoxH * 0.52,
+                slotWidth * 0.40
+            );
+
+
+            // W/S keycaps to the right of the reverser display.
+            var reverserKeyX = slot2 + slotWidth * 0.29;
+
+            var reverserKeyW = Math.min(
+                19,
+                slotWidth * 0.21
+            );
+
+            var reverserKeyH = Math.min(
+                19,
+                speedBoxH * 0.19
+            );
+
+            var reverserArrowSize = Math.min(
+                5,
+                slotWidth * 0.055
+            );
+
+            var reverserArrowX =
+            reverserKeyX + reverserKeyW / 2 + 5;
+
+            drawKeyCap(
+                reverserKeyX,
+                speedBoxH * 0.36,
+                'W',
+                reverserKeyW,
+                reverserKeyH,
+                11
+            );
+
+            drawSmallThrottleArrow(
+                reverserArrowX,
+                speedBoxH * 0.36,
+                true,
+                reverserArrowSize
+            );
+
+            drawKeyCap(
+                reverserKeyX,
+                speedBoxH * 0.69,
+                'S',
+                reverserKeyW,
+                reverserKeyH,
+                11
+            );
+
+            drawSmallThrottleArrow(
+                reverserArrowX,
+                speedBoxH * 0.69,
+                false,
+                reverserArrowSize
+            );
+
+
+            // ----------------------------------------------------
+            // NEUTRAL MESSAGE
+            // ----------------------------------------------------
+
+            if (reverser === 0) {
+
+                ctx.fillStyle = '#e3eaf3';
+                ctx.font = '700 16px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                ctx.fillText(
+                    'Set the reverser to begin',
+                    (slot3 + slot8) / 2,
+                             speedBoxH * 0.78,
+                             slotWidth * 5
+                );
+            }
+
+       // } catch {}
+    }
+
+
+    // ============================================================
+    // 7. NORMAL SPEED PANEL
+    //
+    // Speed limits use reverser only.
+    // flip_out has no involvement in speed-limit measurements.
+    // ============================================================
+
+    if (
+        !isCrashed &&
+        reverser !== 0 &&
+        speedAreaW > 0
+    ) {
+
+        try {
+
+            metricSpeed = use_metric !== false;
+            speedUnit = metricSpeed ? 'kmh' : 'mph';
+
+
+            // ----------------------------------------------------
             // THROTTLE: SLOT 4
             // A ABOVE D
             // ----------------------------------------------------
@@ -1247,44 +1594,55 @@ function little_canvas() {
                          slotWidth * 0.48
             );
 
-            var throttleKeyX = throttleX + slotWidth * 0.29;
+            // Smaller A/D keys, moved closer to the throttle.
+            var throttleKeyX = throttleX + slotWidth * 0.25;
 
-            var throttleKeyW = Math.min(23, slotWidth * 0.25);
-            var throttleKeyH = Math.min(22, speedBoxH * 0.22);
+            var throttleKeyW = Math.min(
+                19,
+                slotWidth * 0.21
+            );
 
-            var throttleArrowSize = Math.min(6, slotWidth * 0.07);
+            var throttleKeyH = Math.min(
+                19,
+                speedBoxH * 0.19
+            );
+
+            var throttleArrowSize = Math.min(
+                5,
+                slotWidth * 0.055
+            );
 
             var throttleArrowX =
-            throttleKeyX + throttleKeyW / 2 + 7;
+            throttleKeyX + throttleKeyW / 2 + 5;
 
             drawKeyCap(
                 throttleKeyX,
-                speedBoxH * 0.34,
+                speedBoxH * 0.36,
                 'A',
                 throttleKeyW,
                 throttleKeyH,
-                12
+                11
             );
 
             drawSmallThrottleArrow(
                 throttleArrowX,
-                speedBoxH * 0.34,
+                speedBoxH * 0.36,
                 true,
                 throttleArrowSize
             );
 
             drawKeyCap(
                 throttleKeyX,
-                speedBoxH * 0.68,
+                speedBoxH * 0.69,
                 'D',
                 throttleKeyW,
                 throttleKeyH,
-                12
+                11
             );
 
             drawSmallThrottleArrow(
                 throttleArrowX,
-                speedBoxH * 0.68,
+                speedBoxH * 0.69,
                 false,
                 throttleArrowSize
             );
@@ -1295,7 +1653,7 @@ function little_canvas() {
             // ----------------------------------------------------
 
             var displaySpeed =
-            convertDisplayedSpeed(Math.abs(corrected_speed));
+            convertDisplayedSpeed(Math.abs(current_speed));
 
             var speedNumberFont = Math.min(
                 78,
@@ -1354,13 +1712,12 @@ function little_canvas() {
             // Do not copy or sort it.
             //
             // The train occupies:
-            // pos - train_length  to  pos
+            // pos - train_length to pos
             //
             // CURRENT is the slowest limit under the train.
             //
-            // NEXT and AFTER are measured from:
-            // Forward: p
-            // Reverse: p - train_length
+            // Forward: NEXT and AFTER measured from pos.
+            // Reverse: NEXT and AFTER measured from pos - train_length.
             // ----------------------------------------------------
 
             var limits = normalised_speed_limits;
@@ -1390,7 +1747,7 @@ function little_canvas() {
             var trainStart = p - trainLength;
             var trainEnd = p;
 
-            var speedPosition = displayReverse
+            var speedPosition = reverser === -1
             ? trainStart
             : trainEnd;
 
@@ -1464,7 +1821,7 @@ function little_canvas() {
 
             var higherSpeedLimit = null;
 
-            if (displayForward) {
+            if (reverser === 1) {
 
                 for (
                     si = 0;
@@ -1486,7 +1843,7 @@ function little_canvas() {
                     }
                 }
 
-            } else {
+            } else if (reverser === -1) {
 
                 for (
                     si = speedLimitsUnderTrain.length - 1;
@@ -1519,7 +1876,7 @@ function little_canvas() {
 
 
             // FORWARD.
-            if (displayForward) {
+            if (reverser === 1) {
 
                 var nextForwardIndex = -1;
 
@@ -1548,7 +1905,7 @@ function little_canvas() {
 
 
             // REVERSE.
-            else {
+            else if (reverser === -1) {
 
                 var previousChangeIndex = -1;
 
@@ -1843,13 +2200,6 @@ function little_canvas() {
 
             // ----------------------------------------------------
             // TRAIN CLEARANCE TEXT
-            //
-            // One line along the bottom of the speed panel.
-            // Starts at the left edge of the throttle slot and
-            // extends beyond the right edge of CURRENT.
-            //
-            // Only displayed for an increase in the direction
-            // of travel while different limits are under the train.
             // ----------------------------------------------------
 
             if (higherSpeedLimit) {
@@ -1861,7 +2211,8 @@ function little_canvas() {
 
                 var clearanceRight = slot5 + currentRadius;
 
-                var clearanceWidth = clearanceRight - clearanceLeft;
+                var clearanceWidth =
+                clearanceRight - clearanceLeft;
 
                 ctx.fillStyle = '#e3eaf3';
                 ctx.font = '700 14px sans-serif';
@@ -1890,7 +2241,7 @@ function little_canvas() {
                     smallRadius,
                     smallCircleY,
                     (nextSpeedLimit[0] - speedPosition) *
-                    displayDirection
+                    (reverser === 1 ? 1 : -1)
                 );
             }
 
@@ -1908,7 +2259,7 @@ function little_canvas() {
                     smallRadius,
                     smallCircleY,
                     (afterSpeedLimit[0] - speedPosition) *
-                    displayDirection
+                    (reverser === 1 ? 1 : -1)
                 );
             }
 
@@ -1938,7 +2289,7 @@ function little_canvas() {
     // 9. NEUTRAL RIGHT PANEL
     // ============================================================
 
-    if (neutral) {
+    if (reverser === 0) {
 
         try {
 
@@ -2025,9 +2376,17 @@ function little_canvas() {
             var stationInfoCentreX =
             (stationX + indicatorX) / 2;
 
+
+            // Forward distance is measured from the front.
+            // Reverse distance is measured from the rear.
+            // flip_out does not change the actual distance.
+            var stationReferencePosition = reverser === -1
+            ? p - trainLength
+            : p;
+
             var stationRemainingDistance =
-            (currentStation.distance - p) *
-            displayDirection;
+            (currentStation.distance - stationReferencePosition) *
+            (reverser === 1 ? 1 : -1);
 
 
             // NEXT / STATION.
@@ -2159,9 +2518,20 @@ function little_canvas() {
 
 
                     // Position arrow.
-                    var positionRatio =
+                    //
+                    // When the train icon is at the bottom, positive
+                    // station distance points upwards on the indicator.
+                    //
+                    // When the train icon is at the top, positive
+                    // station distance points downwards instead.
+
+                    var stationPositionRatio =
                     stationRemainingDistance /
                     (2 * stopaccuracy);
+
+                    if (!trainAtBottom) {
+                        stationPositionRatio *= -1;
+                    }
 
                     var arrowX = indicatorX - 11;
 
@@ -2169,7 +2539,7 @@ function little_canvas() {
                     ctx.strokeStyle = '#202b38';
                     ctx.lineWidth = 1;
 
-                    if (positionRatio > 1) {
+                    if (stationPositionRatio > 1) {
 
                         ctx.beginPath();
 
@@ -2185,7 +2555,7 @@ function little_canvas() {
                         ctx.fill();
                         ctx.stroke();
 
-                    } else if (positionRatio < -1) {
+                    } else if (stationPositionRatio < -1) {
 
                         ctx.beginPath();
 
@@ -2205,7 +2575,7 @@ function little_canvas() {
 
                         var arrowY =
                         indicatorMiddle -
-                        positionRatio * (indicatorHeight / 2);
+                        stationPositionRatio * (indicatorHeight / 2);
 
                         ctx.beginPath();
 
@@ -2226,25 +2596,28 @@ function little_canvas() {
 
     // ============================================================
     // 12. FIND UPCOMING ROUTE ITEMS
+    //
+    // Route order is controlled by reverser.
+    // Screen orientation is controlled by reverser and flip_out.
     // ============================================================
 
     try {
 
         for (
-            var i = displayForward ? 0 : items.length - 1;
+            var i = reverser === 1 ? 0 : items.length - 1;
 
-        displayForward
+        reverser === 1
         ? i < items.length && upcoming.length < 4
         : i >= 0 && upcoming.length < 4;
 
-        displayForward ? i++ : i--
+        reverser === 1 ? i++ : i--
         ) {
 
             var item = items[i];
             var d = item[1];
 
             if (
-                displayForward
+                reverser === 1
                 ? d < routePosition
                 : d > routePosition
             ) {
@@ -2254,8 +2627,14 @@ function little_canvas() {
             if (
                 item[0] === 'buffer' &&
                 (
-                    (displayForward && Math.abs(d - minD) < 0.01) ||
-                    (displayReverse && Math.abs(d - maxD) < 0.01)
+                    (
+                        reverser === 1 &&
+                        Math.abs(d - minD) < 0.01
+                    ) ||
+                    (
+                        reverser === -1 &&
+                        Math.abs(d - maxD) < 0.01
+                    )
                 )
             ) {
                 continue;
@@ -2314,7 +2693,7 @@ function little_canvas() {
         // TRAIN POSITION
         // --------------------------------------------------------
 
-        var trainY = displayForward
+        var trainY = trainAtBottom
         ? slot * 4.65
         : slot * 0.28;
 
@@ -2343,7 +2722,7 @@ function little_canvas() {
             var type = item[0];
             var d = item[1];
 
-            var y = displayForward
+            var y = trainAtBottom
             ? slot * (3.9 - i * 1.05)
             : slot * (1.2 + i * 0.9);
 
@@ -2403,32 +2782,36 @@ function little_canvas() {
                 ? items[index + 1][2]
                 : track;
 
-                var incoming = displayForward
+                // The incoming and outgoing tracks are determined
+                // by actual travel direction, not screen orientation.
+                var incoming = reverser === 1
                 ? prevTrack
                 : nextTrack;
 
-                var otherExit = displayForward
+                var otherExit = reverser === 1
                 ? nextTrack
                 : prevTrack;
 
-                var split = displayForward
+                var split = reverser === 1
                 ? type === 'facingpoints'
                 : type === 'nonfacingpoints';
 
                 var branchLeft = item[5] === true;
 
-                if (displayReverse) {
+                if (reverser === -1) {
                     branchLeft = !branchLeft;
                 }
 
                 var bx = cx +
                 (branchLeft ? -1 : 1) * size * 0.31;
 
-                var startY = displayForward
+                // These screen coordinates follow the train's
+                // top/bottom position in the points diagram.
+                var startY = trainAtBottom
                 ? bottom - 8
                 : top + 8;
 
-                var endY = displayForward
+                var endY = trainAtBottom
                 ? top + 8
                 : bottom - 8;
 
@@ -2674,7 +3057,7 @@ function little_canvas() {
 
             } else if (type === 'buffer') {
 
-                var barY = displayForward
+                var barY = trainAtBottom
                 ? top + size * 0.27
                 : bottom - size * 0.27;
 
@@ -2682,7 +3065,7 @@ function little_canvas() {
 
                 ctx.moveTo(
                     cx,
-                    displayForward ? bottom - 3 : top + 3
+                    trainAtBottom ? bottom - 3 : top + 3
                 );
 
                 ctx.lineTo(cx, barY);
@@ -2711,7 +3094,7 @@ function little_canvas() {
                     ctx.fillText(
                         String(item[2]),
                                  cx,
-                                 displayForward ? bottom - 7 : top + 7
+                                 trainAtBottom ? bottom - 7 : top + 7
                     );
                 }
             }
@@ -3121,14 +3504,6 @@ function little_canvas() {
 
 
 
-
-
-
-
-
-
-
-
 var route_contains_translucent_textured_faces = false
 var traindoors = [];
 var door_positions = [];
@@ -3156,6 +3531,28 @@ var passengerWalkSpeed = 1;
 var passengerPlaceholderMesh = null;
 var freeroamX = 3
 var freeroamY = 0.6
+
+var stationsignals = [200,400,600,800];
+
+var stationprogression = 0; // What is the next station to stop at
+var signalprogression_forwards = 0; // the next signal to be red in forwards direction
+var signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+var signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var left_doors = 0;  //  how far opened are the doors 0 is fully shut and 1 is fully open
 var right_doors = 0;  //   how far opened are the doors 0 is fully shut and 1 is fully open
 var left_doors_mode = 0;  // 0 is shut, 1 is opening, 2 is open, a minus number is waiting to close and it is a timestamp (in negative) of when the door will close, and 4 is closing
@@ -5735,7 +6132,124 @@ function profileMarkEnd() {
 
 
 
+// ============================================================
+// CALCULATE SPEED ALONG THE MAIN ROUTE COORDINATE
+// Uses the FRONT of the train, at pos.
+// ============================================================
 
+// ============================================================
+// CORRECT SPEED FOR THE FRONT TRAIN'S ANGLE TO THE MAIN ROUTE
+// ============================================================
+
+function calculate_corrected_speed(speed) {
+
+    speed = Number(speed);
+    if (!Number.isFinite(speed)) return 0;
+
+    var distance = Number(pos);
+    if (!Number.isFinite(distance)) return speed;
+
+    // --------------------------------------------------------
+    // IDENTIFY THE RAIL AT THE FRONT OF THE TRAIN (pos)
+    // --------------------------------------------------------
+
+    var routing = Array.isArray(current_route_items_routing)
+    ? current_route_items_routing
+    : [];
+
+    var activeRail = Number(current_track);
+
+    if (!Number.isFinite(activeRail)) activeRail = 0;
+
+    var latestBoundary = -Infinity;
+    var latestOrder = -1;
+
+    for (var i = 0; i < routing.length; i++) {
+
+        var entry = routing[i];
+
+        if (!Array.isArray(entry) || entry.length < 2) continue;
+
+        var boundary = Number(entry[0]);
+        var rail = Number(entry[1]);
+
+        if (
+            !Number.isFinite(boundary) ||
+            !Number.isFinite(rail)
+        ) continue;
+
+        if (
+            boundary <= distance + 1e-7 &&
+            (
+                boundary > latestBoundary ||
+                (boundary === latestBoundary && i > latestOrder)
+            )
+        ) {
+            latestBoundary = boundary;
+            latestOrder = i;
+            activeRail = rail;
+        }
+    }
+
+    // --------------------------------------------------------
+    // GET MASTER ROUTE GEOMETRY AT pos
+    // --------------------------------------------------------
+
+    var sample = sampleAt(distance, false);
+
+    if (!sample) return speed;
+
+    var curvature = Number(sample.curvature);
+
+    if (!Number.isFinite(curvature)) curvature = 0;
+
+    // --------------------------------------------------------
+    // GET THE ACTIVE RAIL'S LATERAL OFFSET AND GRADIENT
+    // --------------------------------------------------------
+
+    var offsetX = 0;
+    var offsetDX = 0;
+
+    if (activeRail !== 0) {
+
+        if (typeof window.getPassengerRailOffsetAt !== "function") {
+            return speed;
+        }
+
+        var offset = window.getPassengerRailOffsetAt(
+            activeRail,
+            distance
+        );
+
+        if (!offset) return speed;
+
+        offsetX = Number(offset.x);
+        offsetDX = Number(offset.dx);
+
+        if (
+            !Number.isFinite(offsetX) ||
+            !Number.isFinite(offsetDX)
+        ) {
+            return speed;
+        }
+    }
+
+    // --------------------------------------------------------
+    // CALCULATE THE FRONT RAIL'S ANGLE
+    // Uses the same geometry as getTrackGeometryAt().
+    // --------------------------------------------------------
+
+    var along = 1 - curvature * offsetX;
+    var across = offsetDX;
+
+    var branchAngle = Math.atan2(across, along);
+
+    // --------------------------------------------------------
+    // PROJECT ACTUAL SPEED ONTO THE MAIN ROUTE DIRECTION
+    // --------------------------------------------------------
+
+    return speed * Math.cos(branchAngle);
+}
 
 
 
@@ -5769,6 +6283,25 @@ function render() {
 
 
 
+///////////////////// todo
+
+    //try{
+
+        VFSimulatorRemote.operate((current_throttle/100), 1)
+
+
+
+    //}catch{}
+
+    current_speed = simulated_speed;
+    corrected_speed = calculate_corrected_speed(current_speed);;
+    if(reverser==1){pos += (corrected_speed / 3.6 / fps)}
+    if(reverser==-1){pos -= (corrected_speed / 3.6 / fps)}
+
+
+
+
+
 
     if (cameraArrowKeys.b) pos += (400 / fps);
     if (cameraArrowKeys.n) pos -= (400 / fps);
@@ -5776,6 +6309,9 @@ function render() {
     ////////////////// speed calculations go here
 
     if (crashed) {
+
+
+        VFSimulatorRemote.reset()
         //todo
     }
 

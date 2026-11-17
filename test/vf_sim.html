@@ -1,0 +1,4580 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train V/F Simulator</title>
+
+<style>
+:root{color-scheme:dark;--page:#080808;--panel:#171717;--raised:#222;--border:#454545;--text:#f0efce;--muted:#b9b79c;--accent:#f0dc65;--input:#101010}*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--page);color:var(--text);font:14px "Fira Sans",Arial,sans-serif}body{display:flex;flex-direction:column}button,input,select,textarea{font:inherit}button,input,select{accent-color:var(--accent)}button{padding:.35rem .65rem;margin:.12rem .2rem .12rem 0;color:var(--text);background:#303030;border:1px solid #666;border-radius:3px;cursor:pointer}button:hover{background:#424242}button:disabled{opacity:.55;cursor:not-allowed}input,select{min-height:1.8rem;padding:.18rem .35rem;color:var(--text);background:var(--input);border:1px solid #666;border-radius:3px}input[type=number]{width:6.5rem}input[type=range]{padding:0}.app{position:relative;z-index:1;display:flex;flex-direction:column;flex:1 1 auto;min-height:0}.workspace{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;flex:1;min-height:0;padding:.7rem;overflow:hidden}.panel{min-width:0;min-height:0;padding:.8rem;overflow:auto;background:var(--panel);border:1px solid var(--border);border-radius:5px}.panel h2{margin:0 0 .75rem;padding-bottom:.55rem;color:var(--accent);font-size:1.05rem;border-bottom:1px solid var(--border)}.panel h3{margin:1rem 0 .35rem;color:var(--accent);font-size:.95rem}#train-list-panel{display:grid;grid-template-rows:minmax(0,1fr) 148px;gap:.65rem;overflow:hidden}.train-library{display:flex;flex-direction:column;min-height:0;overflow:hidden}.train-library-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}.train-library-header h2{margin:0;padding:0;border:0}.train-library-actions{display:flex;flex-wrap:wrap;gap:.2rem}.train-library-actions button{margin:0}.train-tabs{display:flex;gap:.35rem;margin-top:.55rem}.train-tabs button{flex:1;margin:0}.train-tabs button.active,.train-list-item.active,.traction-options button.active{color:var(--accent);background:#383522;border-color:var(--accent)}#train-list{display:flex;flex:1;flex-direction:column;align-items:stretch;gap:.35rem;min-height:0;margin-top:.6rem;overflow-y:auto}.train-list-item{width:100%;min-height:2.1rem;margin:0;padding:.45rem .6rem;text-align:left;overflow-wrap:anywhere}.driving-controls{display:flex;flex-direction:column;justify-content:space-between;gap:.35rem;height:148px;min-height:148px;padding:.55rem .65rem;overflow:hidden;background:var(--raised);border:1px solid #555;border-radius:5px}.driving-controls-header{display:flex;justify-content:space-between;align-items:center;gap:.5rem}.driving-controls-header h3{margin:0;color:var(--accent);font-size:1rem}.driving-controls-header button{margin:0;padding:.25rem .5rem}.driving-control-row{display:flex;align-items:center;gap:.5rem;min-width:0}.driving-control-row label{flex:0 0 4.1rem;color:var(--muted);font-weight:600}#throttle,#hill{flex:1;width:100%;min-width:0;height:1.65rem}#hill-val{flex:0 0 2.8rem;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums}.traction-selector{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.9rem}.traction-label{color:var(--muted);font-weight:600}.traction-options{display:flex;flex-wrap:wrap;gap:.35rem}.traction-options button{flex:1;margin:0}.audio-setting{display:flex;justify-content:space-between;align-items:center;gap:.75rem;margin-bottom:.9rem;padding:.45rem 0;border-bottom:1px solid var(--border)}.audio-setting label{color:var(--muted);font-weight:600}.setting-row{display:flex;justify-content:space-between;align-items:center;gap:.6rem;min-height:2.2rem;margin:.18rem 0}.setting-row>span:first-child{min-width:0;color:var(--muted)}.setting-row input,.setting-row select{flex:0 0 auto}.setting-row[hidden]{display:none!important}.gear-ratio-inputs{display:inline-flex;gap:.35rem;align-items:center}.gear-ratio-inputs input{width:5rem}.calculated-value{min-width:6.5rem;color:var(--accent);text-align:right;font-variant-numeric:tabular-nums}.pulsing-header{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:.4rem;margin-bottom:.65rem}.pulsing-header h2{flex:1;margin-bottom:0}#pulsing-config{display:flex;flex-direction:column;gap:.65rem;margin-top:.65rem}.pulsing-element{padding:.7rem;background:var(--raised);border:1px solid #555;border-radius:4px}.pulsing-element .setting-row{gap:.8rem}.pulsing-element .setting-row input,.pulsing-element .setting-row select{width:min(12rem,48%)}.pulsing-element .mode-row select{width:min(15rem,60%)}.pulsing-actions{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.55rem}.pulsing-actions button{margin:0}.muted-note{color:var(--muted);font-size:.85rem}canvas{position:relative;z-index:0;display:block;width:100%;height:25vh;flex:0 0 25vh;background:#000}.status-bar{position:relative;z-index:5;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.45rem 1.6rem;min-height:3.6rem;padding:.65rem 1rem;background:rgba(5,5,5,.86);border-top:1px solid #777}#status-text{width:100%;text-align:center;line-height:1.5;font-size:1rem;font-weight:600;font-variant-numeric:tabular-nums}#text{position:fixed;z-index:20;top:5vh;left:5vw;width:90vw;height:80vh;padding:1rem;overflow:auto;color:var(--text);background:#252525;border:1px solid #777;border-radius:5px;font:13px/1.45 monospace}.buttons{position:fixed;z-index:21;right:5vw;bottom:8vh;display:flex;gap:.4rem}#music-editor-view{position:fixed;z-index:50;inset:0;display:flex;flex-direction:column;padding:.8rem;background:var(--page)}#music-editor-view[hidden]{display:none!important}.music-editor-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:.65rem;border-bottom:1px solid var(--border)}.music-editor-header h2{margin:0;color:var(--accent)}#music-editor-canvas{width:100%;flex:1;min-height:0;margin-top:.75rem;background:#000;border:1px solid var(--border)}@media(max-width:1050px){.workspace{grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;padding:.5rem}.panel{padding:.6rem}.pulsing-element{padding:.5rem}}
+
+
+
+@media(max-width:620px){
+    .workspace{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+        gap:.25rem;
+        padding:.25rem;
+    }
+
+    .panel{
+        min-width:0;
+        padding:.3rem;
+        overflow-x:hidden;
+        overflow-y:auto;
+    }
+
+    .panel h2{
+        font-size:.78rem;
+        line-height:1.2;
+        margin-bottom:.45rem;
+        padding-bottom:.35rem;
+        overflow-wrap:anywhere;
+    }
+
+    .panel h3{
+        font-size:.78rem;
+        margin:.65rem 0 .25rem;
+        overflow-wrap:anywhere;
+    }
+
+    button{
+        min-width:0;
+        max-width:100%;
+        padding:.25rem .3rem;
+        font-size:.72rem;
+        overflow-wrap:anywhere;
+    }
+
+    input,select{
+        min-width:0;
+        max-width:100%;
+        font-size:.72rem;
+        padding:.12rem .2rem;
+    }
+
+    input[type=number]{
+        width:100%;
+    }
+
+    .train-library-header{
+        align-items:flex-start;
+        gap:.25rem;
+    }
+
+    .train-library-header h2{
+        font-size:.78rem;
+    }
+
+    .train-library-actions{
+        flex-direction:column;
+        width:100%;
+    }
+
+    .train-library-actions button{
+        width:100%;
+        font-size:.65rem;
+        padding:.2rem;
+        margin:0;
+    }
+
+    .train-tabs{
+        gap:.15rem;
+    }
+
+    .train-tabs button{
+        padding:.2rem .1rem;
+        font-size:.65rem;
+    }
+
+    .train-list-item{
+        min-height:1.8rem;
+        padding:.3rem;
+        font-size:.7rem;
+    }
+
+    .setting-row{
+        flex-wrap:wrap;
+        align-items:flex-start;
+        gap:.2rem;
+        margin:.25rem 0;
+    }
+
+    .setting-row>span:first-child{
+        flex:1 1 100%;
+        font-size:.7rem;
+        overflow-wrap:anywhere;
+    }
+
+    .setting-row input,
+    .setting-row select{
+        flex:1 1 auto;
+        width:100%;
+    }
+
+    .gear-ratio-inputs{
+        flex-wrap:wrap;
+        max-width:100%;
+    }
+
+    .gear-ratio-inputs input{
+        width:100%;
+    }
+
+    .calculated-value{
+        min-width:0;
+        text-align:left;
+        font-size:.7rem;
+    }
+
+    .traction-options{
+        gap:.2rem;
+    }
+
+    .traction-options button{
+        padding:.25rem .1rem;
+        font-size:.65rem;
+    }
+
+    .audio-setting{
+        flex-wrap:wrap;
+        gap:.25rem;
+        font-size:.7rem;
+    }
+
+    .pulsing-element{
+        padding:.35rem;
+    }
+
+    .pulsing-element .setting-row{
+        gap:.25rem;
+    }
+
+    .pulsing-element .setting-row input,
+    .pulsing-element .setting-row select{
+        width:100%;
+        max-width:100%;
+    }
+
+    .pulsing-element .mode-row select{
+        width:100%;
+    }
+
+    .driving-controls{
+        height:148px;
+        min-height:148px;
+        padding:.3rem;
+        gap:.25rem;
+    }
+
+    .driving-controls-header{
+        gap:.2rem;
+    }
+
+    .driving-controls-header h3{
+        font-size:.75rem;
+    }
+
+    .driving-controls-header button{
+        padding:.15rem .25rem;
+        font-size:.65rem;
+    }
+
+    .driving-control-row{
+        gap:.2rem;
+    }
+
+    .driving-control-row label{
+        flex:0 0 2rem;
+        font-size:.65rem;
+    }
+
+    #throttle,#hill{
+        min-width:0;
+    }
+
+    #hill-val{
+        flex:0 0 2rem;
+        font-size:.65rem;
+    }
+
+    .status-bar{
+        justify-content:center;
+        gap:.2rem .4rem;
+        padding:.3rem;
+    }
+
+    #status-text{
+        font-size:.7rem;
+        line-height:1.3;
+        overflow-wrap:anywhere;
+    }
+
+    .muted-note{
+        font-size:.65rem;
+        overflow-wrap:anywhere;
+    }
+}
+
+
+
+
+</style>
+</head>
+<body>
+
+<main class="app">
+    <section class="workspace">
+
+        <!-- LEFT: TRAIN LIBRARY -->
+        <aside class="panel" id="train-list-panel">
+            <section class="train-library">
+                <div class="train-library-header">
+                    <h2>Trains</h2>
+                    <div class="train-library-actions">
+                        <button id="new" type="button">New Train</button>
+                        <button id="save-train" type="button">Save</button>
+                        <button id="save" type="button">JSON Editor</button>
+                    </div>
+                </div>
+
+                <div class="train-tabs">
+                    <button id="train-tab-included" class="active" type="button">
+                        Included Trains
+                    </button>
+                    <button id="train-tab-user" type="button">
+                        User Trains
+                    </button>
+                </div>
+
+                <div id="train-list">Loading trains…</div>
+            </section>
+
+            <section class="driving-controls" aria-label="Driving controls">
+                <div class="driving-controls-header">
+                    <h3>Driving Controls</h3>
+                    <button id="reset" type="button">Reset Speed</button>
+                </div>
+
+                <div class="driving-control-row">
+                    <label for="throttle">Throttle</label>
+                    <input id="throttle" type="range"
+                           min="-1" max="1" step="0.01" value="0">
+                </div>
+
+                <div class="driving-control-row">
+                    <label for="hill">Hill</label>
+                    <input id="hill" type="range"
+                           min="0" max="2" step="0.01" value="1">
+                    <span id="hill-val">1.00</span>
+                </div>
+            </section>
+        </aside>
+
+        <!-- MIDDLE: TRAIN SETTINGS -->
+        <section class="panel" id="train-panel">
+            <h2>Train Settings</h2>
+
+            <div class="traction-selector">
+                <span class="traction-label">Traction</span>
+                <div class="traction-options">
+                    <button type="button" data-traction="AC_PWM">AC PWM</button>
+                    <button type="button" data-traction="DC_PWM">DC PWM</button>
+                    <button type="button" data-traction="DC_RESISTOR">DC Resistor</button>
+                </div>
+            </div>
+
+            <div class="audio-setting">
+                <label for="audio">Audio Mode</label>
+                <select id="audio">
+                    <option value="48T">48kHz 3 Phase</option>
+                    <option value="48S">48kHz Single Phase</option>
+                </select>
+            </div>
+
+            <div id="train-config"></div>
+        </section>
+
+        <!-- RIGHT: PULSING CONFIGURATION -->
+        <section class="panel" id="pulsing-panel">
+            <div class="pulsing-header">
+                <h2>Pulsing Configuration</h2>
+                <button id="add-pulsing" type="button">Add Mode</button>
+            </div>
+
+            <div class="muted-note">
+                Make sure to put these in the order of speed
+            </div>
+
+            <div id="pulsing-config"></div>
+        </section>
+    </section>
+</main>
+
+<!-- Dedicated MUSIC editor. -->
+<section id="music-editor-view" hidden>
+    <div class="music-editor-header">
+        <h2>Music Editor</h2>
+        <button id="music-editor-back" type="button">Back</button>
+    </div>
+    <canvas id="music-editor-canvas"></canvas>
+</section>
+
+<canvas id="canvas"></canvas>
+
+<div class="status-bar" aria-live="polite">
+    <div id="status-text">
+        Frequency: — Hz | Pulsing: — Hz | Power: 0% |
+        Speed: 0.00 km/h | Acceleration: 0.00 km/h/s | Mode: —
+    </div>
+</div>
+
+<textarea id="text" hidden aria-label="JSON editor"></textarea>
+
+<script type="module" src="./pulsing.js"></script>
+<script type="module" src="./render.js"></script>
+<script type="module" src="./sound.js"></script>
+<script type="module" src="./interface.js"></script>
+
+<script type="module">
+// Editor-only page logic. The shared simulation engine is in vf-simulator.js.
+import { setTrain, commandVF } from "./interface.js";
+import {
+    clamp, lerp, normaliseTraction, normaliseAudioMode,
+    isAC as runtimeIsAC, isDCPWM as runtimeIsDCPWM, isDCResistor as runtimeIsDCResistor,
+    parseNumberArray, normalisePowerControls as runtimeNormalisePowerControls,
+    calculateSpeedPerMotorHz, calculateDCMotorRotationHz,
+    OSCILLATION_MODES, FIELD_DEFINITIONS, getPulsingSchema as coreGetPulsingSchema,
+    getActiveFields, normalisePulsingConfig as coreNormalisePulsingConfig,
+    serialisePulsingConfig as coreSerialisePulsingConfig,
+    transitionPulsingConfig as coreTransitionPulsingConfig,
+    readUserTrains, USER_TRAIN_STORAGE_KEY, normaliseTrainConfig,
+    setTrainConfiguration, stopDriveOutput, stopMotorSound, preloadMotorSounds,
+    getACInterfaceTrain, applyAudioMode as runtimeApplyAudioMode, restartSound,
+    ensureSoundStarted, isSoundStarted, getSoundUpdateFunction,
+    getRuntimeSnapshot, getIncludedTrains, getIncludedTrainConfigs,
+    setPulsingHighlightCallback, setInterfaceTrainReady, isInterfaceTrainReady,
+    setSimulationPaused, resetSimulationSpeed, initializeVFSimulator,
+    setThrottle, setHill
+} from "./vf-simulator.js";
+
+let hide_unnecessary_modes = true;
+
+const USER_TRAINS_KEY = USER_TRAIN_STORAGE_KEY;
+let currentTrain = { traction: "AC_PWM", audio_mode: "48T", controls: {}, pulsing: [] };
+let trainName = "";
+let activeTrainSource = "included";
+let includedTrains = [];
+let includedTrainConfigs = new Map();
+let userTrains = readUserTrains();
+let activeTrainTab = "included";
+let activeMusicSession = null;
+let refreshPulsingHighlight = () => {};
+
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+const throttleSlider = document.getElementById("throttle");
+const resetButton = document.getElementById("reset");
+const hillSlider = document.getElementById("hill");
+const hillValue = document.getElementById("hill-val");
+const audioSelect = document.getElementById("audio");
+const displayArea = document.getElementById("text");
+const trainListElement = document.getElementById("train-list");
+const musicEditorView = document.getElementById("music-editor-view");
+const musicEditorCanvas = document.getElementById("music-editor-canvas");
+const musicEditorCtx = musicEditorCanvas.getContext("2d");
+const musicEditorBack = document.getElementById("music-editor-back");
+
+function isAC(train = currentTrain) {
+    return runtimeIsAC(train);
+}
+function isDCPWM(train = currentTrain) {
+    return runtimeIsDCPWM(train);
+}
+function isDCResistor(train = currentTrain) {
+    return runtimeIsDCResistor(train);
+}
+function normalisePowerControls(raw = {}, traction = currentTrain.traction) {
+    return runtimeNormalisePowerControls(raw, traction);
+}
+function normalisePulsingConfig(raw = {}, train = currentTrain) {
+    return coreNormalisePulsingConfig(raw, train);
+}
+function serialisePulsingConfig(config, train = currentTrain) {
+    return coreSerialisePulsingConfig(config, train);
+}
+function transitionPulsingConfig(previous, newMode, train = currentTrain) {
+    return coreTransitionPulsingConfig(previous, newMode, train);
+}
+function getPulsingSchema(train = currentTrain) {
+    return coreGetPulsingSchema(train);
+}
+function loadTrainToSim() {
+    return setTrainConfiguration(currentTrain, trainName, { reset: false, source: activeTrainSource });
+}
+function applyEditorAudioMode(mode) {
+    const normalised = normaliseAudioMode(mode);
+    audioSelect.value = normalised;
+    currentTrain.audio_mode = normalised;
+    return runtimeApplyAudioMode(normalised);
+}
+
+function createElement(type, properties = {}, classes = []) {
+    const element = Object.assign(
+        document.createElement(type),
+        properties
+    );
+
+    if (typeof classes === "string") {
+        classes = classes.split(/\s+/).filter(Boolean);
+    }
+
+    if (classes.length) {
+        element.classList.add(...classes);
+    }
+
+    return element;
+}
+
+
+function createInput(label, input, className = "setting-row") {
+    const row = createElement("div", {}, className);
+
+    row.append(
+        createElement("span", { textContent: label }),
+        input
+    );
+
+    return row;
+}
+
+
+function setActiveTrain(name) {
+    trainListElement
+        .querySelectorAll(".train-list-item")
+        .forEach(button => {
+            button.classList.toggle(
+                "active",
+                button.dataset.trainName === name
+            );
+        });
+}
+
+
+function renderTrainList() {
+    trainListElement.replaceChildren();
+
+    const entries = activeTrainTab === "included"
+        ? includedTrains.map(name => ({
+            name,
+            included: true
+        }))
+        : userTrains.map(item => ({
+            name: item.name,
+            config: item.config,
+            included: false
+        }));
+
+    if (!entries.length) {
+        trainListElement.textContent = "No trains in this tab.";
+        return;
+    }
+
+    for (const entry of entries) {
+        const button = createElement("button", {
+            type: "button",
+            textContent: entry.name
+        }, ["train-list-item"]);
+
+        button.dataset.trainName = entry.name;
+
+        button.addEventListener("click", () => {
+            if (entry.included) {
+                loadSelectedTrain(entry.name);
+            } else {
+                loadEditor(
+                    entry.name,
+                    structuredClone(entry.config),
+                    { source: "user" }
+                );
+            }
+        });
+
+        trainListElement.appendChild(button);
+    }
+
+    setActiveTrain(trainName);
+}
+
+
+function setTrainTab(tab) {
+    activeTrainTab = tab;
+
+    document.getElementById("train-tab-included")
+        .classList.toggle("active", tab === "included");
+
+    document.getElementById("train-tab-user")
+        .classList.toggle("active", tab === "user");
+
+    renderTrainList();
+}
+
+
+function getPulsingStartSpeed(config) {
+
+
+    return Number(config.min_speed ?? 0);
+}
+
+
+function getInheritedStartSpeed(items, insertIndex) {
+    for (let i = insertIndex - 1; i >= 0; i--) {
+        const speed = getPulsingStartSpeed(items[i].config);
+
+        if (Number.isFinite(speed)) return speed;
+    }
+
+    return 0;
+}
+
+
+function setPulsingHighlight(items, speedKmh) {
+    items.forEach(item => {
+        item.element.style.backgroundColor = "";
+        item.element.style.borderColor = "";
+    });
+
+    if (Math.abs(Number(throttleSlider.value)) < 0.000001) {
+        return;
+    }
+
+    for (let i = 0; i < items.length; i++) {
+        const start = getPulsingStartSpeed(items[i].config);
+
+        const nextStart = i + 1 < items.length
+            ? getPulsingStartSpeed(items[i + 1].config)
+            : Infinity;
+
+        if (speedKmh >= start && speedKmh < nextStart) {
+            items[i].element.style.backgroundColor = "#302f25";
+            items[i].element.style.borderColor = "#756b40";
+            break;
+        }
+    }
+}
+
+
+document.getElementById("train-tab-included").addEventListener("click", () => setTrainTab("included"));
+document.getElementById("train-tab-user").addEventListener("click", () => setTrainTab("user"));
+
+function loadEditor(name, trainConfig, options = {}) {
+    trainName = name;
+
+    activeTrainSource = options.source ?? activeTrainSource ?? "user";
+    currentTrain = normaliseTrainConfig(trainConfig);
+    audioSelect.value = currentTrain.audio_mode;
+
+    const editor = document.getElementById("train-config");
+    const pulsingEditor = document.getElementById("pulsing-config");
+
+    editor.replaceChildren();
+    pulsingEditor.replaceChildren();
+
+    refreshPulsingHighlight = () => {};
+
+    setActiveTrain(trainName);
+
+
+    // ----------------------------------------------------
+    // Number setting helper.
+    // ----------------------------------------------------
+
+    function addNumberSetting(
+        parent,
+        label,
+        target,
+        key,
+        options = {}
+    ) {
+        const input = createElement("input", {
+            type: "number",
+            step: options.step ?? 1,
+            min: options.min ?? "",
+            max: options.max ?? "",
+            value: target[key] ?? ""
+        });
+
+        input.addEventListener("change", () => {
+            const value = input.valueAsNumber;
+
+            if (
+                !Number.isFinite(value) ||
+                value < (options.min ?? -Infinity) ||
+                value > (options.max ?? Infinity)
+            ) {
+                input.value = target[key];
+                return;
+            }
+
+            target[key] = value;
+            loadTrainToSim();
+        });
+
+        parent.appendChild(createInput(label, input));
+        return input;
+    }
+
+
+    // ----------------------------------------------------
+    // Train name.
+    // ----------------------------------------------------
+
+    const nameInput = createElement("input", {
+        id: "train-name",
+        type: "text",
+        value: trainName
+    });
+
+    nameInput.addEventListener("change", () => {
+        trainName = nameInput.value.trim();
+        setActiveTrain(trainName);
+    });
+
+    editor.appendChild(createInput("Name", nameInput));
+
+
+    // ----------------------------------------------------
+    // Mechanical settings.
+    // ----------------------------------------------------
+
+    addNumberSetting(
+        editor,
+        "Wheel Diameter (m)",
+        currentTrain,
+        "wheel_diameter",
+        { step: 0.01, min: 0.1 }
+    );
+
+    if (isAC()) {
+        addNumberSetting(
+            editor,
+            "Motor Poles",
+            currentTrain,
+            "motor_poles",
+            { step: 2, min: 2 }
+        );
+        addNumberSetting(
+            editor,
+            "Resonance",
+            currentTrain,
+            "resonance",
+            { step: 1, min: 1 }
+        );
+    }
+
+    const motorRatio = createElement("input", {
+        type: "number",
+        step: 0.1,
+        min: 0.1,
+        value: currentTrain.gear_ratio_motor_side
+    });
+
+    const wheelRatio = createElement("input", {
+        type: "number",
+        step: 0.1,
+        min: 0.1,
+        value: currentTrain.gear_ratio_wheel_side
+    });
+
+    const ratioContainer = createElement(
+        "span",
+        {},
+        ["gear-ratio-inputs"]
+    );
+
+    ratioContainer.append(
+        motorRatio,
+        document.createTextNode(":"),
+        wheelRatio
+    );
+
+    function updateGearRatio() {
+        const motor = motorRatio.valueAsNumber;
+        const wheel = wheelRatio.valueAsNumber;
+
+        if (
+            !Number.isFinite(motor) || motor <= 0 ||
+            !Number.isFinite(wheel) || wheel <= 0
+        ) {
+            motorRatio.value = currentTrain.gear_ratio_motor_side;
+            wheelRatio.value = currentTrain.gear_ratio_wheel_side;
+            return;
+        }
+
+        currentTrain.gear_ratio_motor_side = motor;
+        currentTrain.gear_ratio_wheel_side = wheel;
+
+        loadTrainToSim();
+    }
+
+    motorRatio.addEventListener("change", updateGearRatio);
+    wheelRatio.addEventListener("change", updateGearRatio);
+
+    editor.appendChild(
+        createInput("Gear Ratio", ratioContainer)
+    );
+// ----------------------------------------------------
+// DC motor sound profile.
+// DC PWM and DC RESISTOR only.
+// ----------------------------------------------------
+
+if (isDCPWM() || isDCResistor()) {
+
+    const soundProfileInput = createElement("input", {
+        type: "number",
+        step: 1,
+        min: 1,
+        value: currentTrain.sound_profile
+    });
+
+
+
+
+
+
+
+
+
+soundProfileInput.addEventListener("change", () => {
+
+    const value = soundProfileInput.valueAsNumber;
+
+    if (
+        !Number.isInteger(value) ||
+        value < 1
+    ) {
+
+        soundProfileInput.value =
+            currentTrain.sound_profile;
+
+        return;
+    }
+
+    currentTrain.sound_profile = value;
+
+    // Stop the old recordings.
+    stopMotorSound();
+
+    // Download the new profile immediately.
+    preloadMotorSounds(value, true);
+
+    loadTrainToSim();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    editor.appendChild(
+        createInput("Sound Profile", soundProfileInput)
+    );
+}
+
+    // ----------------------------------------------------
+    // Speed per motor Hz: AC PWM only.
+    // ----------------------------------------------------
+
+    if (isAC()) {
+        const factorDisplay = createElement("div", {
+            id: "speed-per-motor-hz",
+            className: "calculated-value"
+        });
+
+        const factor = calculateSpeedPerMotorHz(currentTrain);
+
+        factorDisplay.textContent =
+            Number.isFinite(factor) && factor > 0
+                ? factor.toFixed(4)
+                : "Invalid gear ratio";
+
+        editor.appendChild(
+            createInput("Speed Per Motor Hz", factorDisplay)
+        );
+    }
+
+
+    // ----------------------------------------------------
+    // General performance settings.
+    // ----------------------------------------------------
+
+    addNumberSetting(
+        editor,
+        "Max Speed (km/h)",
+        currentTrain,
+        "max_speed",
+        { min: 0 }
+    );
+
+    if (!isAC()) {
+        addNumberSetting(
+            editor,
+            "Decel Cutoff (km/h)",
+            currentTrain,
+            "decel_cutoff",
+            { step: 1, min: 0 }
+        );
+    }
+
+
+
+
+    addNumberSetting(
+        editor,
+        "Rolling Resistance",
+        currentTrain,
+        "rolling_resistance",
+        { step: 0.01, min: 0 }
+    );
+
+
+    // ----------------------------------------------------
+    // Acceleration and deceleration.
+    // ----------------------------------------------------
+
+    addNumberSetting(
+        editor,
+        "Acceleration (km/h)",
+        currentTrain.controls,
+        "acceleration",
+        { min: 0 }
+    );
+
+    addNumberSetting(
+        editor,
+        "Deceleration (km/h)",
+        currentTrain.controls,
+        "deceleration",
+        { min: 0 }
+    );
+
+
+    // ----------------------------------------------------
+    // Resistor taper or PWM peak point.
+    // ----------------------------------------------------
+
+    if (isDCResistor()) {
+
+        addNumberSetting(
+            editor,
+            "Taper Off",
+            currentTrain,
+            "taper_off",
+            { step: "any" }
+        );
+
+    } else {
+
+        addNumberSetting(
+            editor,
+            "Peak Point (km/h)",
+            currentTrain,
+            "peak_point",
+            { min: 0 }
+        );
+
+
+        // Four PWM power settings.
+        const powerInputs = {};
+
+        function addPowerSetting(key, label) {
+            const input = createElement("input", {
+                type: "number",
+                min: 0,
+                max: 100,
+                step: 1,
+                value: currentTrain.controls[key]
+            });
+
+            powerInputs[key] = input;
+
+            input.addEventListener("change", () => {
+                const value = input.valueAsNumber;
+
+                if (
+                    !Number.isFinite(value) ||
+                    value < 0 ||
+                    value > 100
+                ) {
+                    input.value = currentTrain.controls[key];
+                    return;
+                }
+
+                Object.assign(
+                    currentTrain.controls,
+                    normalisePowerControls({
+                        ...currentTrain.controls,
+                        [key]: value
+                    }, currentTrain.traction)
+                );
+
+                for (const [name, field] of Object.entries(powerInputs)) {
+                    field.value = currentTrain.controls[name];
+                }
+
+                loadTrainToSim();
+            });
+
+            editor.appendChild(createInput(label, input));
+        }
+
+        addPowerSetting(
+            "initial_min_power",
+            "Initial Min Power (%)"
+        );
+
+        addPowerSetting(
+            "initial_max_power",
+            "Initial Max Power (%)"
+        );
+
+        addPowerSetting(
+            "peak_min_power",
+            "Peak Min Power (%)"
+        );
+
+        addPowerSetting(
+            "peak_max_power",
+            "Peak Max Power (%)"
+        );
+    }
+
+
+    // ====================================================
+    // PULSING EDITOR
+    // ====================================================
+
+    const pulsingItems = [];
+    let nextPulsingID = 0;
+
+
+function syncFirstPulsingMode() {
+    if (!pulsingItems.length) return;
+
+    const first = pulsingItems[0];
+
+    first.config.min_speed = 0;
+
+    const field = first.fields.get("min_speed");
+
+    if (field) field.value = "0";
+}
+
+
+    function commitPulsing(updateSimulation = true) {
+        syncFirstPulsingMode();
+
+        currentTrain.pulsing = pulsingItems.map(item =>
+            serialisePulsingConfig(item.config)
+        );
+
+        if (updateSimulation) {
+            loadTrainToSim();
+        }
+
+        refreshPulsingHighlight(getRuntimeSnapshot().speedKmh);
+    }
+
+
+    function updatePulsingFields(item) {
+        const activeFields = new Set(
+            getActiveFields(item.config, getPulsingSchema())
+        );
+
+        if (item.modeSelect) {
+            item.modeSelect.value = item.config.mode;
+        }
+
+        for (const [key, field] of item.fields) {
+            const visible = activeFields.has(key);
+
+            item.rows.get(key).hidden = !visible;
+
+            if (!visible) {
+                field.value = "";
+                continue;
+            }
+
+            const value = item.config[key];
+
+            field.value = Array.isArray(value)
+                ? value.join(", ")
+                : String(value ?? "");
+        }
+
+        item.musicButton.hidden =
+            item.config.mode !== "ASYNC-MUSIC";
+
+        syncFirstPulsingMode();
+    }
+
+
+    function addPulsingMode(
+        insertIndex = pulsingItems.length,
+        rawConfig = null,
+        updateSimulation = true
+    ) {
+        insertIndex = Math.max(
+            0,
+            Math.min(insertIndex, pulsingItems.length)
+        );
+
+        const availableModes = Object.keys(getPulsingSchema());
+        const hiddenModes = ["ASYNC-STEP", "AUTO-SYNC"];
+
+const selectableModes = hide_unnecessary_modes
+    ? availableModes.filter(mode => !hiddenModes.includes(mode))
+    : availableModes;
+
+        const inheritedSpeed = getInheritedStartSpeed(
+            pulsingItems,
+            insertIndex
+        );
+
+        const config = normalisePulsingConfig(
+            rawConfig ?? {
+                mode: availableModes[0],
+                min_speed: inheritedSpeed
+            }
+        );
+
+        const item = {
+            id: nextPulsingID++,
+            config,
+            fields: new Map(),
+            rows: new Map(),
+            modeSelect: null,
+            element: null,
+            musicButton: null,
+            updateFields: null
+        };
+
+        const element = createElement(
+            "div",
+            {},
+            ["pulsing-element"]
+        );
+
+        item.element = element;
+
+
+        // Mode selector.
+        const modeRow = createElement(
+            "div",
+            {},
+            ["setting-row", "mode-row"]
+        );
+
+        modeRow.appendChild(
+            createElement("span", { textContent: "Mode" })
+        );
+
+        if (
+    selectableModes.length > 1 ||
+    (hide_unnecessary_modes && hiddenModes.includes(config.mode))
+) {
+            const select = createElement("select");
+
+            for (const mode of selectableModes) {
+                select.appendChild(
+                    createElement("option", {
+                        value: mode,
+                        textContent: mode
+                    })
+                );
+            }
+if (
+    hide_unnecessary_modes &&
+    hiddenModes.includes(config.mode)
+) {
+    select.appendChild(createElement("option", {
+        value: config.mode,
+        textContent: config.mode,
+        disabled: true,
+        hidden: true
+    }));
+}
+            select.value = config.mode;
+            item.modeSelect = select;
+
+            modeRow.appendChild(select);
+
+            select.addEventListener("change", () => {
+                item.config = transitionPulsingConfig(
+                    item.config,
+                    select.value
+                );
+
+                updatePulsingFields(item);
+                commitPulsing();
+            });
+
+        } else {
+            modeRow.appendChild(
+                createElement("strong", {
+                    textContent: availableModes[0]
+                })
+            );
+        }
+
+        element.appendChild(modeRow);
+
+
+        // Create fields for every mode.
+        for (const [key, def] of Object.entries(FIELD_DEFINITIONS)) {
+            let field;
+
+            if (def.type === "select") {
+                field = createElement("select");
+
+                for (const option of def.options) {
+                    field.appendChild(
+                        createElement("option", {
+                            value: option,
+                            textContent: option === "RANDOM"
+                                ? "Random"
+                                : option
+                        })
+                    );
+                }
+
+            } else {
+                field = createElement("input", {
+                    type: def.type === "array" ? "text" : "number",
+                    step: def.step,
+                    min: def.min,
+                    placeholder: def.type === "array"
+                        ? "e.g. 400, 600, 800"
+                        : ""
+                });
+            }
+
+            const row = createInput(def.label, field);
+
+            item.fields.set(key, field);
+            item.rows.set(key, row);
+
+            element.appendChild(row);
+
+            field.addEventListener("change", () => {
+                const activeFields = getActiveFields(
+                    item.config,
+                    getPulsingSchema()
+                );
+
+                if (!activeFields.includes(key)) return;
+
+                // The first pulsing entry always starts at zero.
+                if (
+                    pulsingItems[0] === item &&
+                    (
+                        key === "min_speed" ||
+                        key === "min_motor_frequency"
+                    )
+                ) {
+                    item.config[key] = 0;
+                    field.value = "0";
+                    return;
+                }
+
+                let value;
+
+                if (def.type === "select") {
+                    value = field.value;
+
+                    if (!def.options.includes(value)) {
+                        updatePulsingFields(item);
+                        return;
+                    }
+
+                } else if (def.type === "array") {
+                    value = parseNumberArray(field.value);
+
+                    if (!value?.length) {
+                        updatePulsingFields(item);
+                        alert("Enter a comma-separated list of valid numbers.");
+                        return;
+                    }
+
+                } else {
+                    value = field.valueAsNumber;
+
+                    if (
+                        !Number.isFinite(value) ||
+                        value < (def.min ?? -Infinity) ||
+                        value > (def.max ?? Infinity)
+                    ) {
+                        updatePulsingFields(item);
+                        return;
+                    }
+                }
+
+                item.config = normalisePulsingConfig({
+                    ...item.config,
+                    [key]: value
+                });
+
+                updatePulsingFields(item);
+                commitPulsing();
+            });
+        }
+
+
+        // Card buttons.
+        const actions = createElement(
+            "div",
+            {},
+            ["pulsing-actions"]
+        );
+
+        const deleteButton = createElement("button", {
+            type: "button",
+            textContent: "Delete"
+        });
+
+        const insertButton = createElement("button", {
+            type: "button",
+            textContent: "Insert After"
+        });
+
+        const musicButton = createElement("button", {
+            type: "button",
+            textContent: "Open Music Editor",
+            hidden: true
+        });
+
+        item.musicButton = musicButton;
+        item.updateFields = () => updatePulsingFields(item);
+
+
+        deleteButton.addEventListener("click", () => {
+            const index = pulsingItems.indexOf(item);
+
+            if (index < 0) return;
+
+            pulsingItems.splice(index, 1);
+            element.remove();
+
+            syncFirstPulsingMode();
+            commitPulsing();
+        });
+
+
+        insertButton.addEventListener("click", () => {
+            const index = pulsingItems.indexOf(item);
+
+            if (index < 0) return;
+
+            const speed = getInheritedStartSpeed(
+                pulsingItems,
+                index + 1
+            );
+
+            addPulsingMode(index + 1, {
+                mode: Object.keys(getPulsingSchema())[0],
+                min_speed: speed
+            });
+        });
+
+
+        musicButton.addEventListener("click", () => {
+            if (item.config.mode === "ASYNC-MUSIC") {
+                openMusicEditor(
+                    item,
+                    () => commitPulsing()
+                );
+            }
+        });
+
+        actions.append(
+            deleteButton,
+            insertButton,
+            musicButton
+        );
+
+        element.appendChild(actions);
+
+
+        const before = pulsingItems[insertIndex]?.element ?? null;
+
+        pulsingItems.splice(insertIndex, 0, item);
+        pulsingEditor.insertBefore(element, before);
+
+        updatePulsingFields(item);
+        syncFirstPulsingMode();
+
+        if (updateSimulation) {
+            commitPulsing();
+        }
+    }
+
+
+    // Load existing pulsing entries.
+    for (const config of currentTrain.pulsing) {
+        addPulsingMode(pulsingItems.length, config, false);
+    }
+
+    commitPulsing(false);
+
+    refreshPulsingHighlight = speed =>
+        setPulsingHighlight(
+            pulsingItems,
+            Number(speed ?? getRuntimeSnapshot().speedKmh)
+        );
+
+    setPulsingHighlightCallback((speed, throttle) => {
+        refreshPulsingHighlight(speed);
+    });
+
+    document.getElementById("add-pulsing").onclick = () =>
+        addPulsingMode(pulsingItems.length);
+
+
+    // ----------------------------------------------------
+    // Traction changes.
+    // ----------------------------------------------------
+
+    function updateTractionButtons() {
+        document.querySelectorAll("[data-traction]").forEach(button => {
+            const active =
+                button.dataset.traction === currentTrain.traction;
+
+            button.classList.toggle("active", active);
+            button.setAttribute("aria-pressed", String(active));
+        });
+    }
+
+
+    function changeTraction(newTraction) {
+        newTraction = normaliseTraction(newTraction);
+
+        if (newTraction === currentTrain.traction) return;
+
+        if (
+            currentTrain.pulsing.length > 0 &&
+            !confirm("Changing traction will clear the pulsing configuration. Continue?")
+        ) {
+            updateTractionButtons();
+            return;
+        }
+
+        const updated = structuredClone(currentTrain);
+
+        updated.traction = newTraction;
+        updated.pulsing = [];
+
+        loadEditor(trainName, updated);
+    }
+
+
+    document.querySelectorAll("[data-traction]").forEach(button => {
+        button.onclick = () =>
+            changeTraction(button.dataset.traction);
+    });
+
+    updateTractionButtons();
+
+    if (!options.runtimeAlreadyLoaded) {
+        setTrainConfiguration(currentTrain, trainName, {
+            reset: true,
+            activate: true,
+            source: activeTrainSource
+        });
+    }
+
+}
+
+
+const MUSIC_NOTE_LENGTHS = [
+    { key: "demisemiquaver", label: "1/8", ratio: 0.125, dotted: false },
+    { key: "semiquaver", label: "1/4", ratio: 0.25, dotted: false },
+    { key: "quaver", label: "1/2", ratio: 0.5, dotted: false },
+    { key: "dottedQuaver", label: "3/4", ratio: 0.75, dotted: true },
+    { key: "crotchet", label: "1", ratio: 1, dotted: false },
+    { key: "dottedCrotchet", label: "1.5", ratio: 1.5, dotted: true },
+    { key: "minim", label: "2", ratio: 2, dotted: false },
+    { key: "dottedMinim", label: "3", ratio: 3, dotted: true },
+    { key: "semibreve", label: "4", ratio: 4, dotted: false }
+];
+
+
+const MUSIC_NOTE_NAMES = [
+    "C", "C#", "D", "D#", "E", "F",
+    "F#", "G", "G#", "A", "A#", "B"
+];
+
+
+const MUSIC_NOTE_NAMES_FLATS = [
+    "C", "Db", "D", "Eb", "E", "F",
+    "Gb", "G", "Ab", "A", "Bb", "B"
+];
+
+
+const MUSIC_WHITE_KEYS = [0, 2, 4, 5, 7, 9, 11];
+
+
+const MUSIC_TUNING_PROFILES = [
+    { label: "Universal · 12-TET", mode: "equal", root: null },
+
+    { label: "C Major · Just", mode: "major", root: 0 },
+    { label: "G Major · Just", mode: "major", root: 7 },
+    { label: "D Major · Just", mode: "major", root: 2 },
+    { label: "A Major · Just", mode: "major", root: 9 },
+    { label: "E Major · Just", mode: "major", root: 4 },
+    { label: "B Major · Just", mode: "major", root: 11 },
+    { label: "F# Major · Just", mode: "major", root: 6 },
+    { label: "Db Major · Just", mode: "major", root: 1 },
+    { label: "Ab Major · Just", mode: "major", root: 8 },
+    { label: "Eb Major · Just", mode: "major", root: 3 },
+    { label: "Bb Major · Just", mode: "major", root: 10 },
+    { label: "F Major · Just", mode: "major", root: 5 },
+
+    { label: "A Minor · Just", mode: "minor", root: 9 },
+    { label: "E Minor · Just", mode: "minor", root: 4 },
+    { label: "B Minor · Just", mode: "minor", root: 11 },
+    { label: "F# Minor · Just", mode: "minor", root: 6 },
+    { label: "C# Minor · Just", mode: "minor", root: 1 },
+    { label: "G# Minor · Just", mode: "minor", root: 8 },
+    { label: "D# Minor · Just", mode: "minor", root: 3 },
+    { label: "Bb Minor · Just", mode: "minor", root: 10 },
+    { label: "F Minor · Just", mode: "minor", root: 5 },
+    { label: "C Minor · Just", mode: "minor", root: 0 },
+    { label: "G Minor · Just", mode: "minor", root: 7 },
+    { label: "D Minor · Just", mode: "minor", root: 2 }
+];
+
+
+const MUSIC_JUST_RATIOS = [
+    1,
+    16 / 15,
+    9 / 8,
+    6 / 5,
+    5 / 4,
+    4 / 3,
+    45 / 32,
+    3 / 2,
+    8 / 5,
+    5 / 3,
+    9 / 5,
+    15 / 8
+];
+
+
+const MUSIC_FIRST_MIDI = 36;
+const MUSIC_LAST_MIDI = 90;
+let musicNotes = [];
+let musicSelectedLength = "crotchet";
+let musicTempo = 120;
+let musicTuningIndex = 0;
+let musicNotation = "sharps";
+let musicHeldMidi = null;
+let musicHeldPointer = null;
+let musicLastPreviewFrequency = 440;
+let musicPlaybackID = 0;
+let musicPlayingNoteIndex = -1;
+let musicCanvasButtons = [];
+let musicWhiteKeys = [];
+let musicBlackKeys = [];
+let musicOriginalInterfaceTrain = null;
+let musicOriginalInterfaceReady = false;
+let musicTemporaryTrainActive = false;
+let musicAudioFrameId = null;
+let musicAudioLoopToken = 0;
+let musicAudioPower = 0;
+let musicAudioLastFrame = 0;
+
+function musicReadTempo(value) {
+    const tempo = Number(value);
+
+    if (
+        !Number.isFinite(tempo) ||
+        tempo <= 0
+    ) {
+        return 120;
+    }
+
+    return Math.max(
+        40,
+        Math.min(240, tempo)
+    );
+}
+
+
+function musicGetPlaybackDuration(note) {
+    const bpm = musicReadTempo(musicTempo);
+
+    const beatValue = Number(note.beats);
+
+    const validBeatValue =
+        Number.isFinite(beatValue) &&
+        beatValue > 0
+            ? beatValue
+            : 1;
+
+    const millisecondsPerBeat = 60000 / bpm;
+
+    return Math.max(
+        1,
+        Math.round(
+            millisecondsPerBeat * validBeatValue
+        )
+    );
+}
+
+
+function musicMidiToFrequency(midi) {
+    return 440 * Math.pow(2, (midi - 69) / 12);
+}
+
+
+function musicFrequencyToMidi(frequency) {
+    if (
+        !Number.isFinite(frequency) ||
+        frequency <= 0
+    ) {
+        return null;
+    }
+
+    return Math.round(
+        69 + 12 * Math.log2(frequency / 440)
+    );
+}
+
+
+function musicGetPitch(midi) {
+    const names = musicNotation === "flats"
+        ? MUSIC_NOTE_NAMES_FLATS
+        : MUSIC_NOTE_NAMES;
+
+    const pitch = names[midi % 12];
+
+    return {
+        name: pitch,
+        letter: pitch[0],
+        accidental: pitch.length > 1,
+
+        accidentalSymbol: pitch.length > 1
+            ? (musicNotation === "flats" ? "♭" : "♯")
+            : "",
+
+        octave: Math.floor(midi / 12) - 1
+    };
+}
+
+
+function musicGetLength(key) {
+    return MUSIC_NOTE_LENGTHS.find(
+        note => note.key === key
+    ) ?? MUSIC_NOTE_LENGTHS[4];
+}
+
+
+function musicGetLengthFromBeats(beats) {
+    const beatValue = Number(beats);
+
+    if (
+        !Number.isFinite(beatValue) ||
+        beatValue <= 0
+    ) {
+        return MUSIC_NOTE_LENGTHS[4];
+    }
+
+    let best = MUSIC_NOTE_LENGTHS[4];
+    let bestError = Infinity;
+
+    for (const note of MUSIC_NOTE_LENGTHS) {
+        const error = Math.abs(
+            Math.log(beatValue / note.ratio)
+        );
+
+        if (error < bestError) {
+            bestError = error;
+            best = note;
+        }
+    }
+
+    return best;
+}
+
+
+function musicGetBeatValue(length) {
+    return musicGetLength(length).ratio;
+}
+
+
+function musicEstimateTuning(frequencies, beats) {
+    const notes = frequencies
+        .map((frequency, index) => ({
+            midi: musicFrequencyToMidi(
+                Number(frequency)
+            ),
+
+            duration: Math.max(
+                0.001,
+                Number(beats[index]) || 1
+            )
+        }))
+        .filter(note => note.midi !== null);
+
+    if (notes.length < 4) return 0;
+
+    const chroma = new Array(12).fill(0);
+
+    for (const note of notes) {
+        const weight = Math.sqrt(
+            Math.max(0.1, note.duration)
+        );
+
+        chroma[note.midi % 12] += weight;
+    }
+
+    const majorProfile = [
+        6.35, 2.23, 3.48, 2.33, 4.38, 4.09,
+        2.52, 5.19, 2.39, 3.66, 2.29, 2.88
+    ];
+
+    const minorProfile = [
+        6.33, 2.68, 3.52, 5.38, 2.60, 3.53,
+        2.54, 4.75, 3.98, 2.69, 3.34, 3.17
+    ];
+
+    let bestIndex = 0;
+    let bestScore = -Infinity;
+
+    for (
+        let index = 1;
+        index < MUSIC_TUNING_PROFILES.length;
+        index++
+    ) {
+        const candidate = MUSIC_TUNING_PROFILES[index];
+
+        const profile = candidate.mode === "major"
+            ? majorProfile
+            : minorProfile;
+
+        let score = 0;
+
+        for (let pitch = 0; pitch < 12; pitch++) {
+            const relativePitch =
+                (pitch - candidate.root + 12) % 12;
+
+            score +=
+                chroma[pitch] *
+                profile[relativePitch];
+        }
+
+        const finalMidi = notes[
+            notes.length - 1
+        ].midi;
+
+        if (finalMidi % 12 === candidate.root) {
+            score += chroma[candidate.root] * 1.5;
+        }
+
+        if (score > bestScore) {
+            bestScore = score;
+            bestIndex = index;
+        }
+    }
+
+    return bestIndex;
+}
+
+
+function musicTuneFrequency(midi) {
+    const profile =
+        MUSIC_TUNING_PROFILES[musicTuningIndex];
+
+    if (
+        !profile ||
+        profile.mode === "equal"
+    ) {
+        return musicMidiToFrequency(midi);
+    }
+
+    const interval =
+        (midi - profile.root + 12) % 12;
+
+    const rootMidi = midi - interval;
+
+    return (
+        musicMidiToFrequency(rootMidi) *
+        MUSIC_JUST_RATIOS[interval]
+    );
+}
+
+
+function musicApplyTuning() {
+    for (const note of musicNotes) {
+        if (
+            !note.rest &&
+            note.midi !== null
+        ) {
+            note.frequency =
+                musicTuneFrequency(note.midi);
+        }
+    }
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function syncMusicData() {
+    if (!activeMusicSession) return;
+
+    // Save tempo as BPM.
+    activeMusicSession.data.tempo = musicTempo;
+
+    // Save musical frequencies.
+    activeMusicSession.data.frequencies =
+        musicNotes.map(note => note.frequency);
+
+    // Save beat values, not milliseconds.
+    activeMusicSession.data.beats =
+        musicNotes.map(note => note.beats);
+}
+
+
+function addMusicNote(midi) {
+    musicNotes.push({
+        midi,
+
+        frequency: musicTuneFrequency(midi),
+
+        beats: musicGetBeatValue(
+            musicSelectedLength
+        ),
+
+        length: musicSelectedLength,
+
+        rest: false
+    });
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function addMusicRest() {
+    musicNotes.push({
+        midi: null,
+
+        frequency: 0,
+
+        beats: musicGetBeatValue(
+            musicSelectedLength
+        ),
+
+        length: musicSelectedLength,
+
+        rest: true
+    });
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function deleteMusicNote() {
+    if (!musicNotes.length) return;
+
+    musicPlaybackID++;
+
+    musicPlayingNoteIndex = -1;
+
+    stopMusicAudioLoop(true);
+
+    musicNotes.pop();
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function changeMusicTempo(direction) {
+    musicTempo = Math.max(
+        40,
+        Math.min(
+            240,
+            musicTempo + direction
+        )
+    );
+
+    syncMusicData();
+    drawMusicEditor();
+}
+
+
+function createMusicDCPWMTrain(carrierFrequency) {
+    const safeFrequency =
+        Number.isFinite(Number(carrierFrequency)) &&
+        Number(carrierFrequency) > 0
+            ? Number(carrierFrequency)
+            : 440;
+
+    // Work on a completely separate copy.
+    const temporaryTrain = structuredClone(currentTrain);
+
+    // Convert the copy to DC-PWM.
+    temporaryTrain.traction = "DC_PWM";
+
+    // DC-PWM does not use the AC motor pole setting.
+    delete temporaryTrain.motor_poles;
+    delete temporaryTrain.resonance;
+
+    // Use the correct DC-PWM power controls.
+    temporaryTrain.controls = normalisePowerControls(
+        temporaryTrain.controls ?? {},
+        "DC_PWM"
+    );
+
+    // One temporary PWM entry for this musical note.
+    temporaryTrain.pulsing = [
+        {
+            mode: "PWM",
+            min_speed: 0,
+            carrier_frequency: safeFrequency
+        }
+    ];
+
+    // Motor frequency remains zero during playback.
+    // This conversion is retained for compatibility with
+    // the DC-PWM train configuration.
+    const factor = calculateDCMotorRotationHz(
+        1,
+        temporaryTrain
+    );
+
+    if (
+        !Number.isFinite(factor) ||
+        factor <= 0
+    ) {
+        throw new Error(
+            "Could not configure the temporary DC-PWM train. " +
+            "Check the wheel diameter and gear ratio."
+        );
+    }
+
+    temporaryTrain.speed_per_motor_hz = factor;
+
+    return temporaryTrain;
+}
+
+
+function loadMusicDCPWMTrain(carrierFrequency) {
+    if (!activeMusicSession) {
+        throw new Error(
+            "The music editor is not active."
+        );
+    }
+
+    const temporaryTrain =
+        createMusicDCPWMTrain(carrierFrequency);
+
+    // Load into the V/F interface only.
+    // Do not assign this to currentTrain.
+
+    setTrain(temporaryTrain);
+
+    musicTemporaryTrainActive = true;
+
+    setInterfaceTrainReady(true);
+}
+
+
+function restoreMusicInterfaceTrain(
+    forceRestore = false,
+    clearSnapshot = false
+) {
+    if (
+        !musicTemporaryTrainActive &&
+        !forceRestore
+    ) {
+        if (clearSnapshot) {
+            musicOriginalInterfaceTrain = null;
+            musicOriginalInterfaceReady = false;
+        }
+
+        return;
+    }
+
+    try {
+        if (
+            musicOriginalInterfaceReady &&
+            musicOriginalInterfaceTrain
+        ) {
+            setTrain(
+                structuredClone(
+                    musicOriginalInterfaceTrain
+                )
+            );
+
+            setInterfaceTrainReady(true);
+
+        } else {
+
+            setInterfaceTrainReady(false);
+
+        }
+
+    } catch (error) {
+        setInterfaceTrainReady(false);
+
+        console.error(
+            "Could not restore the original V/F train:",
+            error
+        );
+
+    } finally {
+
+        musicTemporaryTrainActive = false;
+
+        if (clearSnapshot) {
+            musicOriginalInterfaceTrain = null;
+            musicOriginalInterfaceReady = false;
+        }
+    }
+}
+
+
+function startMusicAudioLoop() {
+    if (!activeMusicSession) return;
+
+    const loopToken = ++musicAudioLoopToken;
+
+    musicAudioLastFrame = performance.now();
+
+    function updateMusicAudio(now) {
+        if (
+            !activeMusicSession ||
+            loopToken !== musicAudioLoopToken ||
+            musicAudioPower <= 0 ||
+            !musicTemporaryTrainActive
+        ) {
+            musicAudioFrameId = null;
+            return;
+        }
+
+        const deltaTime = Math.max(
+            1,
+            Math.min(
+                100,
+                now - musicAudioLastFrame
+            )
+        );
+
+        musicAudioLastFrame = now;
+
+        try {
+            // Motor frequency = 0 Hz.
+            // Duty cycle = 50%.
+            //
+            // The temporary train supplies the musical
+            // frequency through carrier_frequency.
+
+            commandVF(
+                0,
+                musicAudioPower,
+                deltaTime
+            );
+
+        } catch (error) {
+            console.error(
+                "Music editor DC-PWM audio error:",
+                error
+            );
+
+            stopMusicAudioLoop(
+                false,
+                true
+            );
+
+            return;
+        }
+
+        musicAudioFrameId =
+            requestAnimationFrame(updateMusicAudio);
+    }
+
+    musicAudioFrameId =
+        requestAnimationFrame(updateMusicAudio);
+}
+
+
+function stopMusicAudioLoop(
+    sendSilence = true,
+    restoreTrain = true
+) {
+    musicAudioLoopToken++;
+
+    if (musicAudioFrameId !== null) {
+        cancelAnimationFrame(musicAudioFrameId);
+
+        musicAudioFrameId = null;
+    }
+
+    musicAudioPower = 0;
+
+    const hadTemporaryTrain =
+        musicTemporaryTrainActive;
+
+    if (
+        sendSilence &&
+        hadTemporaryTrain
+    ) {
+        try {
+            commandVF(0, 0, 16);
+
+        } catch (error) {
+            console.warn(
+                "Could not stop music DC-PWM output:",
+                error
+            );
+        }
+    }
+
+    if (
+        restoreTrain &&
+        hadTemporaryTrain
+    ) {
+        restoreMusicInterfaceTrain();
+    }
+}
+
+
+function sendMusicTone(frequency, power) {
+    if (!activeMusicSession) return;
+
+    const safeFrequency =
+        Number.isFinite(Number(frequency)) &&
+        Number(frequency) > 0
+            ? Number(frequency)
+            : 440;
+
+    const safePower = clamp(
+        power,
+        0,
+        1,
+        0
+    );
+
+    musicLastPreviewFrequency = safeFrequency;
+
+    // Stop and restore the previous note first.
+    stopMusicAudioLoop(true, true);
+
+    // Zero power means silence.
+    // No temporary train is needed for a rest.
+    if (safePower <= 0) {
+        return;
+    }
+
+    // The normal sound engine must be running.
+    if (
+        !isSoundStarted() ||
+        typeof getSoundUpdateFunction() !== "function"
+    ) {
+        console.warn(
+            "Music audio is not ready."
+        );
+
+        return;
+    }
+
+    try {
+        // Load a fresh temporary train for this note.
+        loadMusicDCPWMTrain(safeFrequency);
+
+        musicAudioPower = safePower;
+
+        // Continuously drive the DC-PWM interface.
+        startMusicAudioLoop();
+
+    } catch (error) {
+        musicAudioPower = 0;
+
+        console.error(
+            "Could not play music note:",
+            error
+        );
+
+        stopMusicAudioLoop(
+            false,
+            true
+        );
+    }
+}
+
+
+async function ensureMusicAudioReady() {
+    await ensureSoundStarted(true);
+
+    if (
+        !isSoundStarted() ||
+        typeof getSoundUpdateFunction() !== "function"
+    ) {
+        throw new Error(
+            "The music audio engine could not be started."
+        );
+    }
+}
+
+
+async function previewMusicKey(midi) {
+    const session = activeMusicSession;
+
+    const noteFrequency =
+        musicTuneFrequency(midi);
+
+    musicLastPreviewFrequency = noteFrequency;
+
+    try {
+        await ensureMusicAudioReady();
+
+        // Check that the same key is still held.
+        if (
+            activeMusicSession !== session ||
+            musicHeldMidi !== midi
+        ) {
+            return;
+        }
+
+        sendMusicTone(
+            noteFrequency,
+            0.5
+        );
+
+    } catch (error) {
+        console.error(
+            "Could not play keyboard note:",
+            error
+        );
+    }
+}
+
+
+function releaseMusicKey() {
+    if (musicHeldMidi === null) return;
+
+    // Stop and restore the temporary DC-PWM train.
+    sendMusicTone(
+        musicLastPreviewFrequency,
+        0
+    );
+
+    musicHeldMidi = null;
+    musicHeldPointer = null;
+
+    drawMusicEditor();
+}
+
+
+function stopMusicSequence() {
+    musicPlaybackID++;
+
+    musicPlayingNoteIndex = -1;
+
+    // Stop the temporary DC-PWM train immediately.
+    stopMusicAudioLoop(true, true);
+
+    drawMusicEditor();
+}
+
+
+async function playMusicSequence() {
+    if (
+        !musicNotes.length ||
+        !activeMusicSession
+    ) {
+        return;
+    }
+
+    const session = activeMusicSession;
+
+    const playbackID = ++musicPlaybackID;
+
+    const sequence = musicNotes.map(
+        note => ({ ...note })
+    );
+
+    // Release a held piano key before playback.
+    if (musicHeldMidi !== null) {
+        releaseMusicKey();
+    }
+
+    // Ensure no earlier note is still sounding.
+    stopMusicAudioLoop(true, true);
+
+    musicPlayingNoteIndex = -1;
+
+    drawMusicEditor();
+
+    try {
+        await ensureMusicAudioReady();
+
+        if (
+            activeMusicSession !== session ||
+            playbackID !== musicPlaybackID
+        ) {
+            return;
+        }
+
+        for (
+            let i = 0;
+            i < sequence.length;
+            i++
+        ) {
+            if (
+                playbackID !== musicPlaybackID ||
+                activeMusicSession !== session
+            ) {
+                break;
+            }
+
+            const note = sequence[i];
+
+            // Highlight the current note.
+            musicPlayingNoteIndex = i;
+
+            drawMusicEditor();
+
+            if (
+                note.rest ||
+                note.frequency <= 0
+            ) {
+
+                // A rest stops the current temporary train.
+                sendMusicTone(440, 0);
+
+            } else {
+
+                // Load a temporary DC-PWM train for this note.
+                sendMusicTone(
+                    note.frequency,
+                    0.5
+                );
+            }
+
+            // Duration is calculated using JSON BPM and beats.
+            await new Promise(resolve => {
+                setTimeout(
+                    resolve,
+                    musicGetPlaybackDuration(note)
+                );
+            });
+        }
+
+        if (
+            playbackID === musicPlaybackID &&
+            activeMusicSession === session
+        ) {
+            // Stop the last note and restore the original train.
+            stopMusicAudioLoop(true, true);
+
+            musicPlayingNoteIndex = -1;
+
+            drawMusicEditor();
+        }
+
+    } catch (error) {
+        console.error(
+            "Music playback failed:",
+            error
+        );
+
+        stopMusicAudioLoop(true, true);
+
+        if (playbackID === musicPlaybackID) {
+            musicPlayingNoteIndex = -1;
+
+            drawMusicEditor();
+        }
+    }
+}
+
+
+function drawMusicNoteSymbol(
+    ctx,
+    x,
+    y,
+    note,
+    colour,
+    scale = 1
+) {
+    const ratio = note.ratio;
+
+    // Minims and longer have open note heads.
+    const open = ratio >= 2;
+
+    // All notes shorter than a semibreve have stems.
+    const hasStem = ratio < 4;
+
+    // Number of flags for shorter notes.
+    const flagCount =
+        ratio <= 0.125 ? 3 :
+        ratio <= 0.25 ? 2 :
+        ratio < 1 ? 1 : 0;
+
+    ctx.save();
+
+    ctx.strokeStyle = colour;
+    ctx.fillStyle = colour;
+
+    ctx.lineWidth = 1.7 * scale;
+    ctx.lineCap = "round";
+
+    // Note head.
+    ctx.beginPath();
+
+    ctx.ellipse(
+        x,
+        y,
+        6.5 * scale,
+        4.5 * scale,
+        -0.25,
+        0,
+        Math.PI * 2
+    );
+
+    if (open) {
+        ctx.stroke();
+    } else {
+        ctx.fill();
+    }
+
+    // Stem.
+    if (hasStem) {
+        const stemX = x + 5.5 * scale;
+        const stemTop = y - 25 * scale;
+
+        ctx.beginPath();
+
+        ctx.moveTo(stemX, y);
+        ctx.lineTo(stemX, stemTop);
+
+        ctx.stroke();
+
+        // Flags.
+        for (let i = 0; i < flagCount; i++) {
+            const flagY = stemTop + i * 5 * scale;
+
+            ctx.beginPath();
+
+            ctx.moveTo(stemX, flagY);
+
+            ctx.quadraticCurveTo(
+                stemX + 13 * scale,
+                flagY + 7 * scale,
+                stemX + 7 * scale,
+                flagY + 14 * scale
+            );
+
+            ctx.stroke();
+        }
+    }
+
+    // Dotted notes.
+    if (note.dotted) {
+        ctx.beginPath();
+
+        ctx.arc(
+            x + 13 * scale,
+            y - 2 * scale,
+            2.2 * scale,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+
+function drawMusicRestSymbol(
+    ctx,
+    x,
+    y,
+    note,
+    colour
+) {
+    ctx.save();
+
+    ctx.strokeStyle = colour;
+    ctx.fillStyle = colour;
+
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+
+    if (note.ratio >= 4) {
+
+        // Whole-note and longer rests.
+        ctx.fillRect(
+            x - 7,
+            y + 1,
+            14,
+            5
+        );
+
+        if (note.ratio >= 8) {
+            ctx.fillStyle = colour;
+            ctx.font = "10px Arial";
+
+            ctx.fillText(
+                note.ratio === 8 ? "2" :
+                note.ratio === 12 ? "3" : "4",
+                x + 11,
+                y + 7
+            );
+        }
+
+    } else if (note.ratio >= 2) {
+
+        // Half-note rest.
+        ctx.fillRect(
+            x - 7,
+            y - 5,
+            14,
+            5
+        );
+
+    } else {
+
+        // Quarter and eighth-note rests.
+        ctx.beginPath();
+
+        ctx.moveTo(x + 3, y - 15);
+        ctx.lineTo(x - 3, y - 5);
+        ctx.lineTo(x + 3, y + 2);
+        ctx.lineTo(x - 3, y + 10);
+        ctx.lineTo(x + 2, y + 15);
+
+        ctx.stroke();
+
+        if (note.ratio === 0.5) {
+            ctx.beginPath();
+
+            ctx.arc(
+                x + 7,
+                y - 9,
+                2,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+    }
+
+    if (note.dotted) {
+        ctx.beginPath();
+
+        ctx.arc(
+            x + 12,
+            y - 2,
+            2.2,
+            0,
+            Math.PI * 2
+        );
+
+        ctx.fill();
+    }
+
+    ctx.restore();
+}
+
+
+function drawMusicStaff(
+    ctx,
+    top,
+    clef,
+    width,
+    gap
+) {
+    ctx.save();
+
+    ctx.strokeStyle = "#b9b79c";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i < 5; i++) {
+        const y = top + i * gap;
+
+        ctx.beginPath();
+
+        ctx.moveTo(48, y);
+        ctx.lineTo(width - 12, y);
+
+        ctx.stroke();
+    }
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 10px Arial";
+
+    ctx.fillText(
+        clef === "treble" ? "TREBLE" : "BASS",
+        5,
+        top - 5
+    );
+
+    ctx.font = "39px serif";
+
+    ctx.fillText(
+        clef === "treble" ? "𝄞" : "𝄢",
+        8,
+        top + gap * 4 + 5
+    );
+
+    ctx.restore();
+}
+
+
+function drawMusicScoreNote(
+    ctx,
+    note,
+    x,
+    trebleTop,
+    bassTop,
+    gap,
+    highlighted = false
+) {
+    const noteColour = highlighted
+        ? "#00d9ff"
+        : "#f0efce";
+
+    if (
+        note.rest ||
+        note.frequency <= 0
+    ) {
+        drawMusicRestSymbol(
+            ctx,
+            x,
+            trebleTop + gap * 2,
+            musicGetLength(note.length),
+            noteColour
+        );
+
+        return;
+    }
+
+    const midi = note.midi ??
+        musicFrequencyToMidi(note.frequency);
+
+    if (midi === null) return;
+
+    const pitch = musicGetPitch(midi);
+
+    const treble = midi >= 60;
+
+    const top = treble
+        ? trebleTop
+        : bassTop;
+
+    const bottomY = top + 4 * gap;
+
+    const letterIndex = {
+        C: 0,
+        D: 1,
+        E: 2,
+        F: 3,
+        G: 4,
+        A: 5,
+        B: 6
+    }[pitch.letter];
+
+    const absoluteStep =
+        pitch.octave * 7 + letterIndex;
+
+    // Treble bottom line = E4.
+    // Bass bottom line = G2.
+
+    const baseStep = treble
+        ? 4 * 7 + 2
+        : 2 * 7 + 4;
+
+    const stepDifference =
+        absoluteStep - baseStep;
+
+    const y =
+        bottomY - stepDifference * gap / 2;
+
+    // Ledger lines.
+    ctx.save();
+
+    ctx.strokeStyle = "#b9b79c";
+    ctx.lineWidth = 1;
+
+    if (stepDifference >= 10) {
+
+        for (
+            let s = 10;
+            s <= stepDifference;
+            s += 2
+        ) {
+            const ledgerY =
+                bottomY - s * gap / 2;
+
+            ctx.beginPath();
+
+            ctx.moveTo(x - 10, ledgerY);
+            ctx.lineTo(x + 10, ledgerY);
+
+            ctx.stroke();
+        }
+
+    } else if (stepDifference <= -2) {
+
+        for (
+            let s = -2;
+            s >= stepDifference;
+            s -= 2
+        ) {
+            const ledgerY =
+                bottomY - s * gap / 2;
+
+            ctx.beginPath();
+
+            ctx.moveTo(x - 10, ledgerY);
+            ctx.lineTo(x + 10, ledgerY);
+
+            ctx.stroke();
+        }
+    }
+
+    ctx.restore();
+
+    // Sharps and flats.
+    if (pitch.accidental) {
+        ctx.fillStyle = noteColour;
+        ctx.font = "19px serif";
+
+        ctx.fillText(
+            pitch.accidentalSymbol,
+            x - 17,
+            y + 6
+        );
+    }
+
+    // Draw the actual musical note type.
+    //
+    // JSON beats = 1 maps to a crotchet.
+    // JSON beats = 0.5 maps to a quaver.
+
+    drawMusicNoteSymbol(
+        ctx,
+        x,
+        y,
+        musicGetLength(note.length),
+        noteColour,
+        0.85
+    );
+}
+
+
+function addMusicCanvasButton(
+    ctx,
+    x,
+    y,
+    width,
+    height,
+    label,
+    action,
+    selected = false,
+    fontSize = 11
+) {
+    ctx.save();
+
+    ctx.fillStyle = selected
+        ? "#494326"
+        : "#252525";
+
+    ctx.strokeStyle = selected
+        ? "#f0dc65"
+        : "#777";
+
+    ctx.lineWidth = selected ? 2 : 1;
+
+    ctx.fillRect(
+        x,
+        y,
+        width,
+        height
+    );
+
+    ctx.strokeRect(
+        x,
+        y,
+        width,
+        height
+    );
+
+    ctx.fillStyle = "#f0efce";
+
+    ctx.font = `bold ${fontSize}px Arial`;
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(
+        label,
+        x + width / 2,
+        y + height / 2
+    );
+
+    ctx.restore();
+
+    musicCanvasButtons.push({
+        x,
+        y,
+        width,
+        height,
+        action
+    });
+}
+
+
+function drawMusicToolbar(ctx, width) {
+    const margin = 7;
+    const gap = 3;
+
+    const y = 7;
+    const height = 45;
+
+    const buttonWidth =
+        (width - margin * 2 - gap * 8) / 9;
+
+    MUSIC_NOTE_LENGTHS.forEach((note, index) => {
+        const x =
+            margin + index * (buttonWidth + gap);
+
+        const selected =
+            musicSelectedLength === note.key;
+
+        ctx.save();
+
+        ctx.fillStyle = selected
+            ? "#494326"
+            : "#252525";
+
+        ctx.strokeStyle = selected
+            ? "#f0dc65"
+            : "#777";
+
+        ctx.lineWidth = selected ? 2 : 1;
+
+        ctx.fillRect(
+            x,
+            y,
+            buttonWidth,
+            height
+        );
+
+        ctx.strokeRect(
+            x,
+            y,
+            buttonWidth,
+            height
+        );
+
+        drawMusicNoteSymbol(
+            ctx,
+            x + buttonWidth / 2 - 2,
+            y + 16,
+            note,
+            "#f0efce",
+            0.55
+        );
+
+        ctx.fillStyle = "#f0efce";
+        ctx.font = "bold 10px Arial";
+        ctx.textAlign = "center";
+
+        ctx.fillText(
+            note.label,
+            x + buttonWidth / 2,
+            y + 36
+        );
+
+        ctx.restore();
+
+        musicCanvasButtons.push({
+            x,
+            y,
+            width: buttonWidth,
+            height,
+
+            action: () => {
+                musicSelectedLength = note.key;
+                drawMusicEditor();
+            }
+        });
+    });
+}
+
+
+function drawMusicRestDeleteButtons(
+    ctx,
+    width,
+    y
+) {
+    const buttonWidth = Math.min(
+        130,
+        (width - 36) / 2
+    );
+
+    const buttonHeight = 38;
+    const gap = 10;
+
+    const totalWidth =
+        buttonWidth * 2 + gap;
+
+    const startX =
+        (width - totalWidth) / 2;
+
+    const restX = startX;
+
+    const deleteX =
+        startX + buttonWidth + gap;
+
+    // REST button.
+    ctx.save();
+
+    ctx.fillStyle = "#252525";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        restX,
+        y,
+        buttonWidth,
+        buttonHeight
+    );
+
+    ctx.strokeRect(
+        restX,
+        y,
+        buttonWidth,
+        buttonHeight
+    );
+
+    drawMusicRestSymbol(
+        ctx,
+        restX + buttonWidth * 0.28,
+        y + buttonHeight / 2,
+        musicGetLength(musicSelectedLength),
+        "#f0efce"
+    );
+
+    ctx.fillStyle = "#f0efce";
+
+    ctx.font = "bold 12px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+
+    ctx.fillText(
+        "REST",
+        restX + buttonWidth * 0.7,
+        y + buttonHeight / 2
+    );
+
+    ctx.restore();
+
+    musicCanvasButtons.push({
+        x: restX,
+        y,
+        width: buttonWidth,
+        height: buttonHeight,
+        action: addMusicRest
+    });
+
+    // DELETE button.
+    addMusicCanvasButton(
+        ctx,
+        deleteX,
+        y,
+        buttonWidth,
+        buttonHeight,
+        "DELETE",
+        deleteMusicNote,
+        false,
+        12
+    );
+}
+
+
+function drawMusicTuningSelector(
+    ctx,
+    x,
+    y,
+    width,
+    height
+) {
+    const arrowWidth = Math.min(
+        25,
+        width * 0.17
+    );
+
+    ctx.save();
+
+    ctx.fillStyle = "#171717";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        x,
+        y,
+        width,
+        height
+    );
+
+    ctx.strokeRect(
+        x,
+        y,
+        width,
+        height
+    );
+
+    ctx.fillStyle = "#b9b79c";
+
+    ctx.font = "bold 9px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        "TUNING",
+        x + width / 2,
+        y + 11
+    );
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 11px Arial";
+
+    ctx.fillText(
+        MUSIC_TUNING_PROFILES[musicTuningIndex].label,
+        x + width / 2,
+        y + 30,
+        Math.max(
+            10,
+            width - arrowWidth * 2 - 8
+        )
+    );
+
+    ctx.restore();
+
+    // Previous tuning.
+    addMusicCanvasButton(
+        ctx,
+        x + 2,
+        y + 4,
+        arrowWidth,
+        height - 8,
+        "◀",
+
+        () => {
+            musicTuningIndex =
+                (
+                    musicTuningIndex -
+                    1 +
+                    MUSIC_TUNING_PROFILES.length
+                ) %
+                MUSIC_TUNING_PROFILES.length;
+
+            musicApplyTuning();
+        },
+
+        false,
+        10
+    );
+
+    // Next tuning.
+    addMusicCanvasButton(
+        ctx,
+        x + width - arrowWidth - 2,
+        y + 4,
+        arrowWidth,
+        height - 8,
+        "▶",
+
+        () => {
+            musicTuningIndex =
+                (
+                    musicTuningIndex + 1
+                ) %
+                MUSIC_TUNING_PROFILES.length;
+
+            musicApplyTuning();
+        },
+
+        false,
+        10
+    );
+}
+
+
+function drawMusicControls(
+    ctx,
+    width,
+    y
+) {
+    const margin = 8;
+    const panelHeight = 60;
+    const gap = 5;
+
+    const panelX = margin;
+    const panelWidth = width - margin * 2;
+
+    ctx.save();
+
+    ctx.fillStyle = "#222";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        panelX,
+        y,
+        panelWidth,
+        panelHeight
+    );
+
+    ctx.strokeRect(
+        panelX,
+        y,
+        panelWidth,
+        panelHeight
+    );
+
+    ctx.restore();
+
+    const innerX = panelX + 6;
+
+    const innerWidth =
+        panelWidth - 12 - gap * 3;
+
+    const playStopWidth =
+        innerWidth * 0.24;
+
+    const tempoWidth =
+        innerWidth * 0.25;
+
+    const tuningWidth =
+        innerWidth * 0.36;
+
+    const viewWidth =
+        innerWidth -
+        playStopWidth -
+        tempoWidth -
+        tuningWidth;
+
+    const buttonY = y + 8;
+    const buttonHeight = 44;
+
+    let x = innerX;
+
+    // ----------------------------------------------------
+    // PLAY AND STOP
+    // ----------------------------------------------------
+
+    const playStopGap = 3;
+
+    const individualButtonWidth =
+        (playStopWidth - playStopGap) / 2;
+
+    addMusicCanvasButton(
+        ctx,
+        x,
+        buttonY,
+        individualButtonWidth,
+        buttonHeight,
+        "PLAY",
+        playMusicSequence,
+        false,
+        11
+    );
+
+    addMusicCanvasButton(
+        ctx,
+        x + individualButtonWidth + playStopGap,
+        buttonY,
+        individualButtonWidth,
+        buttonHeight,
+        "STOP",
+        stopMusicSequence,
+        false,
+        11
+    );
+
+    x += playStopWidth + gap;
+
+
+    // ----------------------------------------------------
+    // TEMPO
+    // ----------------------------------------------------
+
+    ctx.save();
+
+    ctx.fillStyle = "#171717";
+    ctx.strokeStyle = "#777";
+    ctx.lineWidth = 1;
+
+    ctx.fillRect(
+        x,
+        buttonY,
+        tempoWidth,
+        buttonHeight
+    );
+
+    ctx.strokeRect(
+        x,
+        buttonY,
+        tempoWidth,
+        buttonHeight
+    );
+
+    const smallWidth = Math.min(
+        22,
+        tempoWidth * 0.2
+    );
+
+    ctx.fillStyle = "#f0dc65";
+    ctx.font = "bold 13px Arial";
+    ctx.textAlign = "center";
+
+    ctx.fillText(
+        `${Number(musicTempo.toFixed(2))} BPM`,
+        x + tempoWidth / 2,
+        buttonY + 17
+    );
+
+    ctx.fillStyle = "#b9b79c";
+    ctx.font = "9px Arial";
+
+    ctx.fillText(
+        "JSON TEMPO",
+        x + tempoWidth / 2,
+        buttonY + 33
+    );
+
+    ctx.restore();
+
+    // Tempo decrease.
+    addMusicCanvasButton(
+        ctx,
+        x + 2,
+        buttonY + 8,
+        smallWidth,
+        28,
+        "−",
+        () => changeMusicTempo(-5),
+        false,
+        15
+    );
+
+    // Tempo increase.
+    addMusicCanvasButton(
+        ctx,
+        x + tempoWidth - smallWidth - 2,
+        buttonY + 8,
+        smallWidth,
+        28,
+        "+",
+        () => changeMusicTempo(5),
+        false,
+        15
+    );
+
+    x += tempoWidth + gap;
+
+
+    // ----------------------------------------------------
+    // TUNING
+    // ----------------------------------------------------
+
+    drawMusicTuningSelector(
+        ctx,
+        x,
+        buttonY,
+        tuningWidth,
+        buttonHeight
+    );
+
+    x += tuningWidth + gap;
+
+
+    // ----------------------------------------------------
+    // NOTATION
+    // ----------------------------------------------------
+
+    addMusicCanvasButton(
+        ctx,
+        x,
+        buttonY,
+        viewWidth,
+        buttonHeight,
+
+        musicNotation === "sharps"
+            ? "VIEW SHARPS"
+            : "VIEW FLATS",
+
+        () => {
+            musicNotation =
+                musicNotation === "sharps"
+                    ? "flats"
+                    : "sharps";
+
+            drawMusicEditor();
+        },
+
+        false,
+        9
+    );
+}
+
+
+function drawMusicKeyboard(
+    ctx,
+    width,
+    keyboardTop,
+    keyboardHeight
+) {
+    musicWhiteKeys = [];
+    musicBlackKeys = [];
+
+    const whiteCount = 32;
+
+    const whiteWidth =
+        width / whiteCount;
+
+    const blackWidth =
+        whiteWidth * 0.62;
+
+    const blackHeight =
+        keyboardHeight * 0.62;
+
+    let whiteIndex = 0;
+
+    // ----------------------------------------------------
+    // WHITE KEYS
+    // ----------------------------------------------------
+
+    for (
+        let midi = MUSIC_FIRST_MIDI;
+        midi <= MUSIC_LAST_MIDI;
+        midi++
+    ) {
+        const pitchClass = midi % 12;
+
+        if (!MUSIC_WHITE_KEYS.includes(pitchClass)) {
+            continue;
+        }
+
+        const x = whiteIndex * whiteWidth;
+
+        const key = {
+            midi,
+            x,
+            y: keyboardTop,
+            width: whiteWidth,
+            height: keyboardHeight,
+            black: false
+        };
+
+        musicWhiteKeys.push(key);
+
+        ctx.fillStyle =
+            musicHeldMidi === midi
+                ? "#f0dc65"
+                : "#eee";
+
+        ctx.strokeStyle = "#222";
+        ctx.lineWidth = 1;
+
+        ctx.fillRect(
+            x,
+            keyboardTop,
+            whiteWidth,
+            keyboardHeight
+        );
+
+        ctx.strokeRect(
+            x,
+            keyboardTop,
+            whiteWidth,
+            keyboardHeight
+        );
+
+        // Indicate notes already entered.
+        if (
+            musicNotes.some(
+                note => note.midi === midi
+            )
+        ) {
+            ctx.fillStyle = "#a48d25";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x + whiteWidth / 2,
+                keyboardTop + keyboardHeight - 29,
+                3.5,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+
+        // Label C octaves.
+        if (pitchClass === 0) {
+            ctx.fillStyle = "#333";
+
+            ctx.font =
+                `${Math.max(
+                    7,
+                    Math.min(11, whiteWidth * 0.38)
+                )}px Arial`;
+
+            ctx.textAlign = "center";
+
+            ctx.fillText(
+                `C${Math.floor(midi / 12) - 1}`,
+                x + whiteWidth / 2,
+                keyboardTop + keyboardHeight - 7
+            );
+        }
+
+        whiteIndex++;
+    }
+
+
+    // ----------------------------------------------------
+    // BLACK KEYS
+    // ----------------------------------------------------
+
+    whiteIndex = 0;
+
+    for (
+        let midi = MUSIC_FIRST_MIDI;
+        midi <= MUSIC_LAST_MIDI;
+        midi++
+    ) {
+        const pitchClass = midi % 12;
+
+        if (MUSIC_WHITE_KEYS.includes(pitchClass)) {
+            whiteIndex++;
+            continue;
+        }
+
+        const x =
+            whiteIndex * whiteWidth - blackWidth / 2;
+
+        const key = {
+            midi,
+            x,
+            y: keyboardTop,
+            width: blackWidth,
+            height: blackHeight,
+            black: true
+        };
+
+        musicBlackKeys.push(key);
+
+        ctx.fillStyle =
+            musicHeldMidi === midi
+                ? "#f0dc65"
+                : "#151515";
+
+        ctx.strokeStyle = "#000";
+        ctx.lineWidth = 1;
+
+        ctx.fillRect(
+            x,
+            keyboardTop,
+            blackWidth,
+            blackHeight
+        );
+
+        ctx.strokeRect(
+            x,
+            keyboardTop,
+            blackWidth,
+            blackHeight
+        );
+
+        if (
+            musicNotes.some(
+                note => note.midi === midi
+            )
+        ) {
+            ctx.fillStyle = "#f0dc65";
+
+            ctx.beginPath();
+
+            ctx.arc(
+                x + blackWidth / 2,
+                keyboardTop + blackHeight - 12,
+                3,
+                0,
+                Math.PI * 2
+            );
+
+            ctx.fill();
+        }
+    }
+}
+
+
+function drawMusicEditor() {
+    if (!activeMusicSession) return;
+
+    const width =
+        musicEditorCanvas.clientWidth;
+
+    const height =
+        musicEditorCanvas.clientHeight;
+
+    if (
+        width <= 0 ||
+        height <= 0
+    ) {
+        return;
+    }
+
+    musicCanvasButtons = [];
+
+    musicEditorCtx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    musicEditorCtx.fillStyle = "#101010";
+
+    musicEditorCtx.fillRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    // Note lengths across the top.
+    drawMusicToolbar(
+        musicEditorCtx,
+        width
+    );
+
+
+    // ----------------------------------------------------
+    // KEYBOARD POSITION
+    // ----------------------------------------------------
+
+    const keyboardHeight = Math.min(
+        185,
+        Math.max(90, height * 0.28)
+    );
+
+    const keyboardTop =
+        height - keyboardHeight;
+
+
+    // ----------------------------------------------------
+    // CONTROL BAR POSITION
+    // ----------------------------------------------------
+
+    const controlsHeight = 60;
+
+    const controlsY =
+        keyboardTop - controlsHeight - 6;
+
+    const restDeleteHeight = 38;
+
+
+    // ----------------------------------------------------
+    // SCORE POSITION
+    // ----------------------------------------------------
+
+    const scoreTop = 62;
+
+    const scoreBottom =
+        controlsY - restDeleteHeight - 13;
+
+    const scoreHeight = Math.max(
+        10,
+        scoreBottom - scoreTop
+    );
+
+    const staffGap = Math.max(
+        3.5,
+        Math.min(9, scoreHeight / 10)
+    );
+
+    const staffGroupHeight =
+        staffGap * 10;
+
+    const staffTop =
+        scoreTop +
+        Math.max(
+            0,
+            (scoreHeight - staffGroupHeight) / 2
+        );
+
+    const bassTop =
+        staffTop + staffGap * 6;
+
+    const staffBottom =
+        bassTop + staffGap * 4;
+
+
+    // ----------------------------------------------------
+    // REST AND DELETE POSITION
+    // ----------------------------------------------------
+
+    const restDeleteY = Math.min(
+        staffBottom + staffGap * 2 + 8,
+        controlsY - restDeleteHeight - 6
+    );
+
+
+    // ----------------------------------------------------
+    // TREBLE STAFF
+    // ----------------------------------------------------
+
+    drawMusicStaff(
+        musicEditorCtx,
+        staffTop,
+        "treble",
+        width,
+        staffGap
+    );
+
+
+    // ----------------------------------------------------
+    // BASS STAFF
+    // ----------------------------------------------------
+
+    drawMusicStaff(
+        musicEditorCtx,
+        bassTop,
+        "bass",
+        width,
+        staffGap
+    );
+
+
+    // ----------------------------------------------------
+    // DRAW ENTERED NOTES
+    // ----------------------------------------------------
+
+    if (musicNotes.length) {
+        const left = 82;
+
+        const availableWidth = Math.max(
+            20,
+            width - left - 18
+        );
+
+        const spacing =
+            availableWidth / musicNotes.length;
+
+        musicNotes.forEach((note, index) => {
+            const x =
+                left + spacing * (index + 0.5);
+
+            drawMusicScoreNote(
+                musicEditorCtx,
+                note,
+                x,
+                staffTop,
+                bassTop,
+                staffGap,
+                index === musicPlayingNoteIndex
+            );
+        });
+
+    } else {
+        musicEditorCtx.fillStyle = "#777";
+        musicEditorCtx.font = "13px Arial";
+        musicEditorCtx.textAlign = "center";
+
+        musicEditorCtx.fillText(
+            "Click the piano keys to enter notes",
+            width / 2,
+            staffBottom + 22
+        );
+    }
+
+
+    // ----------------------------------------------------
+    // REST AND DELETE
+    // ----------------------------------------------------
+
+    drawMusicRestDeleteButtons(
+        musicEditorCtx,
+        width,
+        restDeleteY
+    );
+
+
+    // ----------------------------------------------------
+    // PLAY, STOP, TEMPO, TUNING AND NOTATION
+    // ----------------------------------------------------
+
+    drawMusicControls(
+        musicEditorCtx,
+        width,
+        controlsY
+    );
+
+
+    // ----------------------------------------------------
+    // PIANO KEYBOARD
+    // ----------------------------------------------------
+
+    drawMusicKeyboard(
+        musicEditorCtx,
+        width,
+        keyboardTop,
+        keyboardHeight
+    );
+}
+
+
+function resizeMusicEditorCanvas() {
+    const bounds =
+        musicEditorCanvas.getBoundingClientRect();
+
+    const ratio =
+        window.devicePixelRatio || 1;
+
+    musicEditorCanvas.width = Math.max(
+        1,
+        Math.floor(bounds.width * ratio)
+    );
+
+    musicEditorCanvas.height = Math.max(
+        1,
+        Math.floor(bounds.height * ratio)
+    );
+
+    musicEditorCtx.setTransform(
+        ratio,
+        0,
+        0,
+        ratio,
+        0,
+        0
+    );
+
+    drawMusicEditor();
+}
+
+
+function getMusicCanvasPosition(event) {
+    const bounds =
+        musicEditorCanvas.getBoundingClientRect();
+
+    return {
+        x: event.clientX - bounds.left,
+        y: event.clientY - bounds.top
+    };
+}
+
+
+function hitMusicButton(point) {
+    return musicCanvasButtons.find(button =>
+        point.x >= button.x &&
+        point.x <= button.x + button.width &&
+        point.y >= button.y &&
+        point.y <= button.y + button.height
+    );
+}
+
+
+function hitMusicKey(point) {
+    // Black keys overlap white keys.
+    // Therefore test black keys first.
+
+    const black = musicBlackKeys.find(key =>
+        point.x >= key.x &&
+        point.x <= key.x + key.width &&
+        point.y >= key.y &&
+        point.y <= key.y + key.height
+    );
+
+    if (black) return black;
+
+    return musicWhiteKeys.find(key =>
+        point.x >= key.x &&
+        point.x <= key.x + key.width &&
+        point.y >= key.y &&
+        point.y <= key.y + key.height
+    );
+}
+
+
+function openMusicEditor(item, commitFunction) {
+    if (
+        !item ||
+        item.config.mode !== "ASYNC-MUSIC"
+    ) {
+        return;
+    }
+
+
+    // ----------------------------------------------------
+    // CAPTURE ORIGINAL V/F CONFIGURATION
+    // ----------------------------------------------------
+
+    // Capture exactly what was loaded into interface.js.
+    // This is used to restore the normal train after
+    // temporary DC-PWM music playback.
+
+    musicOriginalInterfaceReady =
+        isInterfaceTrainReady();
+
+    musicOriginalInterfaceTrain =
+        musicOriginalInterfaceReady
+            ? (
+                isAC(currentTrain)
+                    ? getACInterfaceTrain(currentTrain)
+                    : structuredClone(currentTrain)
+            )
+            : null;
+
+    musicTemporaryTrainActive = false;
+
+
+    // ----------------------------------------------------
+    // CREATE ACTIVE MUSIC SESSION
+    // ----------------------------------------------------
+
+    activeMusicSession = {
+        item,
+        commitFunction,
+        data: structuredClone(item.config),
+        wasPaused: getRuntimeSnapshot().paused
+    };
+
+
+    // ----------------------------------------------------
+    // RESET EDITOR STATE
+    // ----------------------------------------------------
+
+    musicNotes = [];
+
+    musicSelectedLength = "crotchet";
+
+    musicNotation = "sharps";
+
+    // Read tempo directly from JSON.
+    // No tempo estimation.
+    musicTempo = musicReadTempo(
+        item.config.tempo
+    );
+
+    musicTuningIndex = 0;
+
+    musicHeldMidi = null;
+    musicHeldPointer = null;
+
+    musicPlayingNoteIndex = -1;
+
+    musicPlaybackID++;
+
+
+    // ----------------------------------------------------
+    // IMPORT NOTES
+    // ----------------------------------------------------
+
+    const frequencies =
+        Array.isArray(item.config.frequencies)
+            ? item.config.frequencies
+            : [];
+
+    const beats =
+        Array.isArray(item.config.beats)
+            ? item.config.beats
+            : [];
+
+
+    // Estimate key only.
+    // This does not calculate or change tempo.
+
+    musicTuningIndex = musicEstimateTuning(
+        frequencies,
+        beats
+    );
+
+
+    // Match frequency and beat entries.
+    const count = Math.min(
+        frequencies.length,
+        beats.length
+    );
+
+    for (let i = 0; i < count; i++) {
+        const frequency = Number(frequencies[i]);
+
+        const beatValue = Number(beats[i]);
+
+        if (
+            !Number.isFinite(frequency) ||
+            !Number.isFinite(beatValue) ||
+            beatValue <= 0
+        ) {
+            continue;
+        }
+
+        const rest = frequency <= 0;
+
+        const midi = rest
+            ? null
+            : musicFrequencyToMidi(frequency);
+
+
+        // Convert JSON beat value directly to note type.
+        const length =
+            musicGetLengthFromBeats(beatValue);
+
+
+        musicNotes.push({
+            midi,
+
+            frequency: rest
+                ? 0
+                : musicTuneFrequency(midi),
+
+            // Keep the exact original beat value.
+            beats: beatValue,
+
+            // Note type determines notation.
+            length: length.key,
+
+            rest
+        });
+    }
+
+
+    // ----------------------------------------------------
+    // STOP NORMAL TRAIN OUTPUT
+    // ----------------------------------------------------
+
+    stopDriveOutput();
+
+
+    // ----------------------------------------------------
+    // PAUSE NORMAL SIMULATION
+    // ----------------------------------------------------
+
+    setSimulationPaused(true);
+
+
+    // ----------------------------------------------------
+    // HIDE NORMAL SIMULATOR
+    // ----------------------------------------------------
+
+    document.querySelector(".app").hidden = true;
+
+    canvas.hidden = true;
+
+    document.querySelector(".status-bar").hidden = true;
+
+    displayArea.hidden = true;
+
+    document.querySelector(".buttons")?.remove();
+
+
+    // ----------------------------------------------------
+    // SHOW MUSIC EDITOR
+    // ----------------------------------------------------
+
+    musicEditorView.hidden = false;
+
+    requestAnimationFrame(
+        resizeMusicEditorCanvas
+    );
+}
+
+
+function closeMusicEditor() {
+    const session = activeMusicSession;
+
+    if (!session) return;
+
+
+    // ----------------------------------------------------
+    // STOP PLAYBACK
+    // ----------------------------------------------------
+
+    musicPlaybackID++;
+
+    musicPlayingNoteIndex = -1;
+
+    stopMusicAudioLoop(true, true);
+
+    musicHeldMidi = null;
+    musicHeldPointer = null;
+
+
+    try {
+
+        // ------------------------------------------------
+        // SAVE TEMPO
+        // ------------------------------------------------
+
+        session.data.tempo = musicTempo;
+
+
+        // ------------------------------------------------
+        // SAVE FREQUENCIES
+        // ------------------------------------------------
+
+        session.data.frequencies =
+            musicNotes.map(note => note.frequency);
+
+
+        // ------------------------------------------------
+        // SAVE BEATS
+        // ------------------------------------------------
+
+        // These are crotchet-relative values.
+        // They are not converted to milliseconds.
+
+        session.data.beats =
+            musicNotes.map(note => note.beats);
+
+
+        // ------------------------------------------------
+        // UPDATE ORIGINAL MUSIC CONFIGURATION
+        // ------------------------------------------------
+
+        session.item.config = normalisePulsingConfig({
+            ...session.item.config,
+            ...session.data
+        });
+
+
+        // ------------------------------------------------
+        // UPDATE INTERFACE AND COMMIT
+        // ------------------------------------------------
+
+session.item.updateFields();
+
+// Restore the original interface BEFORE committing.
+// The commit will then load the newly edited configuration.
+restoreMusicInterfaceTrain(true, true);
+
+session.commitFunction();
+
+    } catch (error) {
+
+        console.error(
+            "Could not save music editor:",
+            error
+        );
+
+        alert(
+            "Could not save music:\n\n" +
+            (error.message ?? error)
+        );
+
+    } finally {
+
+        // ------------------------------------------------
+        // RESTORE ORIGINAL V/F TRAIN
+        // ------------------------------------------------
+
+        // Force restoration in case a temporary DC-PWM
+        // configuration is still loaded.
+
+
+
+
+        // ------------------------------------------------
+        // EXIT EDITOR
+        // ------------------------------------------------
+
+        activeMusicSession = null;
+    resetSimulationSpeed();
+        setSimulationPaused(session.wasPaused);
+
+        musicEditorView.hidden = true;
+
+        document.querySelector(".app").hidden = false;
+
+        canvas.hidden = false;
+
+        document.querySelector(".status-bar").hidden = false;
+    }
+}
+
+
+// PIANO POINTER DOWN
+// ========================================================
+
+musicEditorCanvas.addEventListener(
+    "pointerdown",
+    event => {
+        if (!activeMusicSession) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        const point =
+            getMusicCanvasPosition(event);
+
+        // Check editor buttons first.
+        const button = hitMusicButton(point);
+
+        if (button) {
+            button.action();
+            return;
+        }
+
+        const key = hitMusicKey(point);
+
+        if (!key) return;
+
+        // Cancel any sequence currently playing.
+        musicPlaybackID++;
+
+        musicPlayingNoteIndex = -1;
+
+        // Stop any currently sounding note immediately.
+        stopMusicAudioLoop(true, true);
+
+        if (musicHeldMidi !== null) {
+            releaseMusicKey();
+        }
+
+        musicHeldMidi = key.midi;
+        musicHeldPointer = event.pointerId;
+
+        musicEditorCanvas.setPointerCapture(
+            event.pointerId
+        );
+
+        // Enter the note immediately.
+        addMusicNote(key.midi);
+
+        // Play the key while the pointer remains held.
+        previewMusicKey(key.midi);
+    }
+);
+
+
+// ========================================================
+// POINTER UP
+// ========================================================
+
+window.addEventListener(
+    "pointerup",
+    event => {
+        if (
+            musicHeldPointer !== null &&
+            event.pointerId === musicHeldPointer
+        ) {
+            releaseMusicKey();
+        }
+    }
+);
+
+
+// ========================================================
+// POINTER CANCEL
+// ========================================================
+
+window.addEventListener(
+    "pointercancel",
+    event => {
+        if (
+            musicHeldPointer !== null &&
+            event.pointerId === musicHeldPointer
+        ) {
+            releaseMusicKey();
+        }
+    }
+);
+
+
+// ========================================================
+
+
+// EXIT BUTTON
+// ========================================================
+
+musicEditorBack.addEventListener(
+    "click",
+    closeMusicEditor
+);
+
+
+// ========================================================
+// WINDOW RESIZE
+// ========================================================
+
+window.addEventListener("resize", () => {
+    if (!musicEditorView.hidden) {
+        resizeMusicEditorCanvas();
+    }
+});
+
+///////////////////////////////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ========================================================
+
+
+// NEW TRAIN
+// ========================================================
+
+document.getElementById("new").addEventListener("click", () => {
+    setTrainTab("user");
+
+    loadEditor("New Train", {
+        traction: "AC_PWM",
+        audio_mode: "48T",
+
+        wheel_diameter: 0.84,
+        motor_poles: 4,
+        resonance: 400,
+        gear_ratio_motor_side: 6,
+        gear_ratio_wheel_side: 1,
+
+        max_speed: 120,
+        peak_point: 50,
+
+        decel_cutoff: 1,
+        rolling_resistance: 0.3,
+
+        controls: {
+            acceleration: 2.5,
+            deceleration: 3,
+
+            initial_min_power: 10,
+            initial_max_power: 20,
+
+            peak_min_power: 10,
+            peak_max_power: 100
+        },
+
+        pulsing: [
+            {
+                mode: "ASYNC",
+                min_speed: 0,
+                carrier_frequency: 1500
+            }
+        ]
+    }, { source: "user" });
+});
+
+
+// ========================================================
+
+
+function prepareTrainForSave() {
+    const result = structuredClone(currentTrain);
+
+    delete result.speed_per_motor_hz;
+    delete result.audio;
+
+    result.traction = normaliseTraction(result.traction);
+    result.audio_mode = normaliseAudioMode(audioSelect.value);
+
+    // ----------------------------------------------------
+    // DC MOTOR SOUND PROFILE
+    // ----------------------------------------------------
+
+    if (
+        result.traction === "DC_PWM" ||
+        result.traction === "DC_RESISTOR"
+    ) {
+        const soundProfile = Number(
+            result.sound_profile ?? 1
+        );
+
+        result.sound_profile =
+            Number.isInteger(soundProfile) && soundProfile >= 1
+                ? soundProfile
+                : 1;
+
+    } else {
+        delete result.sound_profile;
+    }
+
+    result.wheel_diameter ??= 0.84;
+    result.gear_ratio_motor_side ??= 6;
+    result.gear_ratio_wheel_side ??= 1;
+    result.max_speed ??= 120;
+    result.rolling_resistance ??= 0.3;
+
+    if (result.traction === "DC_RESISTOR") {
+        delete result.motor_poles;
+        delete result.resonance;
+
+        delete result.peak_point;
+
+        result.decel_cutoff ??= 1;
+        result.taper_off ??= 1;
+
+        result.controls = normalisePowerControls(
+            result.controls,
+            "DC_RESISTOR"
+        );
+
+    } else {
+        delete result.taper_off;
+
+        result.peak_point ??= 50;
+        result.decel_cutoff ??= 1;
+
+        if (result.traction === "AC_PWM") {
+            result.motor_poles ??= 4;
+        } else {
+            delete result.motor_poles;
+        }
+
+        if (result.traction === "AC_PWM") {
+            result.resonance ??= 400;
+        } else {
+            delete result.resonance;
+        }
+
+        result.controls = normalisePowerControls(
+            result.controls,
+            result.traction
+        );
+    }
+
+    const pulsing = (
+        Array.isArray(result.pulsing)
+            ? result.pulsing
+            : []
+    ).map(config =>
+        normalisePulsingConfig(config, result)
+    );
+
+    delete result.pulsing;
+    result.pulsing = pulsing;
+
+    return result;
+}
+
+
+// SAVE USER TRAIN
+// ========================================================
+
+document.getElementById("save-train").addEventListener("click", () => {
+    let name = trainName.trim();
+
+    const isIncludedName = value =>
+        includedTrains.some(item =>
+            item.toLowerCase() === value.toLowerCase()
+        );
+
+    if (!name || isIncludedName(name)) {
+        name = prompt(
+            "Enter a name for your user train:",
+            name ? `${name} (User)` : "My Train"
+        );
+
+        if (name === null) return;
+
+        name = name.trim();
+    }
+
+    if (!name || isIncludedName(name)) {
+        alert("Please choose a different name from the included trains.");
+        return;
+    }
+
+    const existingIndex = userTrains.findIndex(
+        item => item.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (
+        existingIndex >= 0 &&
+        !confirm(`Replace your saved train "${name}"?`)
+    ) {
+        return;
+    }
+
+    const entry = {
+        name,
+        config: prepareTrainForSave()
+    };
+
+    const updated = [...userTrains];
+
+    if (existingIndex >= 0) {
+        updated[existingIndex] = entry;
+    } else {
+        updated.push(entry);
+    }
+
+    try {
+        localStorage.setItem(
+            USER_TRAINS_KEY,
+            JSON.stringify(updated)
+        );
+
+    } catch (error) {
+        console.error("Could not save user train:", error);
+        alert("Could not save the train in browser storage.");
+        return;
+    }
+
+    userTrains = updated;
+    trainName = name;
+    activeTrainSource = "user";
+    setTrainConfiguration(currentTrain, trainName, {
+        reset: false,
+        source: "user"
+    });
+
+    const nameInput = document.getElementById("train-name");
+
+    if (nameInput) {
+        nameInput.value = name;
+    }
+
+    setTrainTab("user");
+    setActiveTrain(name);
+});
+
+
+// ========================================================
+
+
+function saveText(text) {
+    document.querySelector(".buttons")?.remove();
+
+    displayArea.hidden = false;
+    displayArea.value = text;
+
+    const buttons = createElement("div", {}, ["buttons"]);
+
+    const copyButton = createElement("button", {
+        type: "button",
+        textContent: "Copy"
+    });
+
+    const closeButton = createElement("button", {
+        type: "button",
+        textContent: "Close"
+    });
+
+    buttons.append(copyButton, closeButton);
+    document.body.appendChild(buttons);
+
+    copyButton.addEventListener("click", async () => {
+        try {
+            await navigator.clipboard.writeText(displayArea.value);
+        } catch (error) {
+            console.error("Clipboard write failed:", error);
+            alert("Could not copy. Select the text and copy it manually.");
+        }
+    });
+
+    closeButton.addEventListener("click", () => {
+        displayArea.hidden = true;
+        buttons.remove();
+    });
+
+    return buttons;
+}
+
+
+document.getElementById("save").addEventListener("click", () => {
+    const buttons = saveText(JSON.stringify(prepareTrainForSave(), null, "\t"));
+    const loadButton = createElement("button", { type: "button", textContent: "Load JSON" });
+    loadButton.addEventListener("click", () => {
+        try {
+            const json = JSON.parse(displayArea.value);
+            if (!json || typeof json !== "object" || Array.isArray(json)) {
+                throw new Error("The JSON root must be a train object.");
+            }
+            if (json.pulsing != null && !Array.isArray(json.pulsing)) {
+                throw new Error("The pulsing property must be an array.");
+            }
+            loadEditor("JSON", json, { source: "user" });
+            displayArea.hidden = true;
+            buttons.remove();
+        } catch (error) {
+            alert("Could not load JSON:\n\n" + error.message);
+        }
+    });
+    buttons.appendChild(loadButton);
+});
+
+
+// Editor controls are a view of the shared runtime state.
+resetButton.addEventListener("click", () => {
+    resetSimulationSpeed();
+    throttleSlider.value = "0";
+});
+throttleSlider.addEventListener("input", () => {
+    const value = Number(throttleSlider.value);
+    setThrottle(value);
+});
+throttleSlider.addEventListener("change", () => {
+    throttleSlider.value = "0";
+    setThrottle(0);
+});
+hillSlider.addEventListener("input", () => {
+    const value = setHill(hillSlider.value);
+    hillValue.textContent = value.toFixed(2);
+});
+audioSelect.addEventListener("change", () => {
+    applyEditorAudioMode(audioSelect.value);
+    void restartSound();
+});
+window.addEventListener("vf-control-change", event => {
+    const detail = event.detail ?? {};
+    if (Number.isFinite(Number(detail.throttle))) {
+        throttleSlider.value = String(detail.throttle);
+    }
+    if (Number.isFinite(Number(detail.hill))) {
+        hillSlider.value = String(detail.hill);
+        hillValue.textContent = Number(detail.hill).toFixed(2);
+    }
+    refreshPulsingHighlight(getRuntimeSnapshot().speedKmh);
+});
+
+function loadSelectedTrain(name) {
+    if (!name) return;
+    const entry = includedTrainConfigs.get(name.toLowerCase());
+    if (!entry?.config) {
+        console.error("Could not find train configuration:", name);
+        return;
+    }
+    loadEditor(entry.name, structuredClone(entry.config), { source: "included" });
+}
+
+const vfRuntimeReady = initializeVFSimulator({ canvas, status: document.getElementById("status-text") });
+
+window.addEventListener("vf-drive-changed", event => {
+    const detail = event.detail ?? {};
+    if (detail.train && detail.name) {
+        loadEditor(detail.name, detail.train, { source: detail.source ?? "user", runtimeAlreadyLoaded: true });
+    }
+});
+
+vfRuntimeReady.then(() => {
+    includedTrains = getIncludedTrains();
+    includedTrainConfigs = getIncludedTrainConfigs();
+    userTrains = readUserTrains();
+    renderTrainList();
+
+    const initial = getRuntimeSnapshot();
+    if (initial.train && initial.name) {
+        setTrainTab(initial.source === "user" ? "user" : "included");
+        loadEditor(initial.name, initial.train, { source: initial.source, runtimeAlreadyLoaded: true });
+    } else {
+        setTrainTab("included");
+    }
+}).catch(error => {
+    trainListElement.textContent = "Could not load trains.";
+    console.error("Editor initialisation failed:", error);
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Train V/F Simulator Output</title>
+<style>
+:root {
+    color-scheme: dark;
+    --page: #080808;
+    --text: #f0efce;
+    --accent: #f0dc65;
+}
+* { box-sizing: border-box; }
+html, body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: var(--page);
+    color: var(--text);
+    font: 14px "Fira Sans", Arial, sans-serif;
+}
+body {
+    display: flex;
+    flex-direction: column;
+}
+#vf-canvas {
+    position: relative;
+    z-index: 0;
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    background: #000;
+}
+.vf-status-bar {
+    position: relative;
+    z-index: 5;
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: .45rem 1.6rem;
+    min-height: 3.6rem;
+    padding: .65rem 1rem;
+    background: rgba(5, 5, 5, .86);
+    border-top: 1px solid #777;
+}
+#vf-status-text {
+    width: 100%;
+    text-align: center;
+    line-height: 1.5;
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+</style>
+</head>
+<body>
+<canvas id="vf-canvas" aria-label="Train V/F waveform display"></canvas>
+<div class="vf-status-bar" aria-live="polite">
+    <div id="vf-status-text">
+        Frequency: — Hz | Pulsing: — Hz | Power: 0% |
+        Speed: 0.00 km/h | Acceleration: 0.00 km/h/s | Mode: —
+    </div>
+</div>
+
+<!-- These project modules are shared with the original editor page. -->
+<script type="module" src="./pulsing.js"></script>
+<script type="module" src="./render.js"></script>
+<script type="module" src="./sound.js"></script>
+<script type="module" src="./interface.js"></script>
+<script type="module">
+import { initializeVFSimulator } from "./vf-simulator.js";
+
+initializeVFSimulator({
+    canvas: document.getElementById("vf-canvas"),
+    status: document.getElementById("vf-status-text"),
+    assetBaseUrl: "./",
+    vfDataUrl: "./vf.json"
+});
+</script>
+</body>
+</html>

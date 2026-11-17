@@ -7,6 +7,7 @@
 	"audio_mode": "48T",
 	"wheel_diameter": 0.9,
 	"motor_poles": 4,
+	"resonance": 400,
 	"gear_ratio_motor_side": 5,
 	"gear_ratio_wheel_side": 1,
 	"max_speed": 225,
@@ -42,11 +43,120 @@
 },
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	"1967 1972": {
+	"wheel_diameter": 0.71,
+	"gear_ratio_motor_side": 4,
+	"gear_ratio_wheel_side": 1,
+	"controls": {
+		"acceleration": 3.4,
+		"deceleration": 5
+	},
+	"traction": "DC_RESISTOR",
+	"audio_mode": "48T",
+	"max_speed": 75,
+	"rolling_resistance": 0.3,
+	"decel_cutoff": 1,
+	"sound_profile": 1,
+	"taper_off": 1,
+	"pulsing": [
+		{
+			"mode": "NOTCH",
+			"min_speed": 0
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 0.1
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 0.5
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 1
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 4
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 7
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 10
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 13
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 16
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 19
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 22
+		},
+		{
+			"mode": "NOTCH",
+			"min_speed": 25
+		}
+	]
+},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	"Coldplay VF": {
 	"wheel_diameter": 0.8,
 	"gear_ratio_motor_side": 3,
 	"gear_ratio_wheel_side": 1,
 	"motor_poles": 4,
+"resonance": 400,
 	"traction": "AC_PWM",
 	"audio_mode": "48T",
 	"max_speed": 70,
@@ -70,7 +180,8 @@
 		},
 		{
 			"mode": "ASYNC-MUSIC",
-			"min_motor_frequency": 1,
+			"min_speed": 1,
+			"tempo": 130,
 			"frequencies": [
 				628.610816579407,
 				465.63764191067185,
@@ -200,132 +311,132 @@
 				523.8423471495058
 			],
 			"beats": [
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222,
-				222
+				0.5,
+				0.5,
+				0.5,
+				0.5,
+				0.5,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1,
+				1
 			]
 		}
 	]
@@ -336,6 +447,7 @@
 	"gear_ratio_motor_side": 5.8,
 	"gear_ratio_wheel_side": 1,
 	"motor_poles": 4,
+"resonance": 400,
 	"traction": "AC_PWM",
 	"audio_mode": "48T",
 	"max_speed": 100,
@@ -397,6 +509,7 @@
 	"audio_mode": "48T",
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
+"resonance": 400,
 	"pulsing": [
 		{
 			"mode": "ASYNC",
@@ -444,6 +557,7 @@
 	"audio_mode": "48T",
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
+"resonance": 400,
 	"pulsing": [
 		{
 			"mode": "ASYNC",
@@ -491,6 +605,7 @@
 	"audio_mode": "48T",
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
+"resonance": 400,
 	"pulsing": [
 		{
 			"mode": "ASYNC-SWEEP",
@@ -559,6 +674,7 @@
 	"audio_mode": "48T",
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
+"resonance": 400,
 	"pulsing": [
 		{
 			"mode": "ASYNC-SWEEP",
@@ -618,6 +734,7 @@
 	"audio_mode": "48T",
 	"wheel_diameter": 0.84,
 	"motor_poles": 4,
+"resonance": 400,
 	"gear_ratio_motor_side": 6,
 	"gear_ratio_wheel_side": 1,
 	"max_speed": 120,
@@ -679,6 +796,7 @@
 	"rolling_resistance": 0.3,
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
+"resonance": 400,
 	"pulsing": [
 		{
 			"mode": "ASYNC",
@@ -808,6 +926,7 @@
 	"peak_point": 50,
 	"decel_cutoff": 0.3,
 	"motor_poles": 4,
+"resonance": 400,
 	"controls": {
 		"acceleration": 3.2,
 		"deceleration": 4.2,
@@ -844,7 +963,8 @@
 	"wheel_diameter": 0.82,
 	"gear_ratio_motor_side": 3,
 	"gear_ratio_wheel_side": 1,
-	"motor_poles": 8,
+	"motor_poles": 4,
+	"resonance": 400,
 	"traction": "AC_PWM",
 	"audio_mode": "48T",
 	"max_speed": 100,
@@ -868,25 +988,25 @@
 		{
 			"mode": "ASYNC-OSCILLATING",
 			"oscillation_mode": "RANDOM",
-			"min_speed": 14,
+			"min_speed": 20,
 			"min_carrier_frequency": 400,
 			"max_carrier_frequency": 500
 		},
 		{
 			"mode": "SYNC",
-			"min_speed": 35,
+			"min_speed": 40,
 			"pulses": 5
 		},
 		{
 			"mode": "SYNC",
-			"min_speed": 45,
+			"min_speed": 50,
 			"pulses": 3
 		}
 	]
 },
 	"Class 319 DC PWM": {
 	"wheel_diameter": 1,
-	"gear_ratio_motor_side": 3.6,
+	"gear_ratio_motor_side": 3.25,
 	"gear_ratio_wheel_side": 1,
 	"controls": {
 		"acceleration": 3,
@@ -900,8 +1020,9 @@
 	"audio_mode": "48T",
 	"max_speed": 160,
 	"rolling_resistance": 0.3,
-	"peak_point": 30,
+	"peak_point": 40,
 	"decel_cutoff": 160,
+	"sound_profile": 2,
 	"pulsing": [
 		{
 			"mode": "PWM",
@@ -919,7 +1040,7 @@
 
 	"Soviet ER-2":{
 	"wheel_diameter": 0.58,
-	"gear_ratio_motor_side": 7.25,
+	"gear_ratio_motor_side": 3.5,
 	"gear_ratio_wheel_side": 1,
 	"max_speed": 100,
 	"controls": {
@@ -930,6 +1051,8 @@
 	"traction": "DC_RESISTOR",
 	"audio_mode": "48T",
 	"taper_off": 4,
+	"decel_cutoff": 160,
+	"sound_profile": 1,
 	"pulsing": [
 		{
 			"mode": "NOTCH",

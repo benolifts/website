@@ -108,8 +108,10 @@ const routes = [
                 globalThis.freeroamX = 6; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 1; // platform height
                 globalThis.stationprogression = 0; // What is the next station to stop at
-                globalThis.signalprogression = 0; // Which signal should be red to stop the train
-                globalThis.stationsignals = []; // This saves what is the next signal after a station
+                globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
                 globalThis.difficulty = 0; // How hard the game it
 
                 // Track detection
@@ -217,8 +219,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -320,8 +324,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -418,8 +424,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -516,8 +524,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -614,8 +624,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -712,8 +724,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -810,8 +824,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -908,8 +924,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1006,8 +1024,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1104,8 +1124,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1202,8 +1224,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1300,8 +1324,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1398,8 +1424,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1496,8 +1524,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1594,8 +1624,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection
@@ -1698,8 +1730,10 @@ globalThis.flip_out = false;  // The train runs in reverse as default
             globalThis.freeroamX = 3; // When in freeroam mode how far can the player walk away from the train
         globalThis.freeroamY = 0.6; // platform height
             globalThis.stationprogression = 0; // What is the next station to stop at
-            globalThis.signalprogression = 0; // Which signal should be red to stop the train
-            globalThis.stationsignals = []; // This saves what is the next signal after a station
+            globalThis.signalprogression_forwards = 0; // the next signal to be red in forwards direction
+   globalThis.signalprogression_reverse = 4; // the next signal to be red in reverse direction set to 1000 if reverse is not allowed
+   globalThis.signalprogression_reverse_offset = 100;  // how far should reverse signal be from forwards signal  (set to platform length)
+
             globalThis.difficulty = 0; // How hard the game it
 
             // Track detection

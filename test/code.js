@@ -13944,8 +13944,8 @@ function updateStatus() {
     var nearestFree = stations.reduce((best, s) => { var start = Number(s.freeroamstart); var end = Number(s.freeroamend); if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) return best; var boundary = d < start ? start : d > end ? end : d - start <= end - d ? start : end; var gap = Math.abs(boundary - d); return !best || gap < best.gap ? { boundary: boundary, gap: gap } : best; }, null);
 
 
-    var line1 = ('Pos ' + Math.floor(d))
-    var line2 = ('')
+    var line1 = ('Pos ' + Math.floor(Math.floor(d)) + ' speed ' + Math.floor(current_speed) + ' corrected ' + Math.floor(corrected_speed));
+    var line2 = ('');
 
 
 
